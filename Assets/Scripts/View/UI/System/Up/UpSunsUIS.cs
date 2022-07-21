@@ -19,7 +19,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             _needActiveRight = false;
 
 
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.LookInfoAboutSun)
+            if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.LookInfoAboutSun)
             {
                 var isFirstPlayer = _aboutGameC.CurrentPlayerIType == PlayerTypes.First;
 

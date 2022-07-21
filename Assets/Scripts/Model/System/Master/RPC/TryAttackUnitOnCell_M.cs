@@ -8,10 +8,10 @@ namespace Chessy.Model.System
         {
             var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            var canAttack = _e.WhereUnitCanAttackUniqueAttackToEnemyC(idxCellFrom).Can(idxCellTo)
-                || _e.WhereUnitCanAttackSimpleAttackToEnemyC(idxCellFrom).Can(idxCellTo);
+            var canAttack = _whereUniqueAttackCs[idxCellFrom].Can(idxCellTo)
+                || _whereSimpleAttackCs[idxCellFrom].Can(idxCellTo);
 
-            if (canAttack && _e.UnitPlayerT(idxCellFrom).Is(whoDoing) && !_e.UnitMainC(idxCellFrom).HaveCoolDownForAttackAnyUnit)
+            if (canAttack && _unitCs[idxCellFrom].PlayerT == whoDoing && !_unitCs[idxCellFrom].HaveCoolDownForAttackAnyUnit)
             {
                 AttackUnitFromTo(idxCellFrom, idxCellTo);
             }

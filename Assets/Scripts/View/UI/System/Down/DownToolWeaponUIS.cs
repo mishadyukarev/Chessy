@@ -17,7 +17,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             var needActiveZone = false;
 
 
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.GiveTakePickPawn)
+            if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.GiveTakePickPawn)
             {
                 needActiveZone = true;
 
@@ -37,27 +37,27 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                 var needSword = false;
 
 
-                if (_e.LessonT.HaveLesson())
+                if (_aboutGameC.LessonType.HaveLesson())
                 {
                     needPick = true;
 
-                    if (_e.LessonT >= LessonTypes.GiveIronAxe)
+                    if (_aboutGameC.LessonType >= LessonTypes.GiveIronAxe)
                     {
                         needAxe = true;
 
-                        //if (_e.LessonT >= LessonTypes.GiveStaff)
+                        //if (_aboutGameC.LessonType >= LessonTypes.GiveStaff)
                         //{
                         //    needStaff = true;
 
-                        //    if (_e.LessonT >= LessonTypes.GiveBowCrossbow)
+                        //    if (_aboutGameC.LessonType >= LessonTypes.GiveBowCrossbow)
                         //    {
                         //        needBowCrossbow = true;
 
-                        //        if (_e.LessonT >= LessonTypes.GiveShield)
+                        //        if (_aboutGameC.LessonType >= LessonTypes.GiveShield)
                         //        {
                         //            needShield = true;
 
-                        //            if (_e.LessonT >= LessonTypes.GiveSword)
+                        //            if (_aboutGameC.LessonType >= LessonTypes.GiveSword)
                         //            {
                         //                needSword = true;
 

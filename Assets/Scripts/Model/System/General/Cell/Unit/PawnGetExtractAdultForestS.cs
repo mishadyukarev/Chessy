@@ -7,12 +7,12 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractAdultForest = 0;
+                _extractionResourcesWithUnitCs[cellIdxCurrent].HowManyWarriourCanExtractAdultForest = 0;
 
                 if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                 {
-                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed)
-                        && !_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
+                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Relaxed
+                        && !_mainTWC[cellIdxCurrent].ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
                     {
                         var extract = ExtractPawnValues.EXTRACT_PAWM_ADULT_FOREST;
 
@@ -26,9 +26,9 @@ namespace Chessy.Model.System
 
 
 
-                        if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Axe))
+                        if (_mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
                         {
-                            if (_e.MainTWLevelT(cellIdxCurrent).Is(LevelTypes.Second))
+                            if (_mainTWC[cellIdxCurrent].LevelT == LevelTypes.Second)
                             {
                                 extract *= ExtractPawnValues.PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT;
                             }
@@ -36,7 +36,7 @@ namespace Chessy.Model.System
 
                         if (_e.AdultForestC(cellIdxCurrent).Resources < extract) extract = _e.AdultForestC(cellIdxCurrent).Resources;
 
-                        _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractAdultForest = extract;
+                        _extractionResourcesWithUnitCs[cellIdxCurrent].HowManyWarriourCanExtractAdultForest = extract;
                     }
                 }
             }

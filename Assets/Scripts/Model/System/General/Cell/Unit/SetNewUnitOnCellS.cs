@@ -1,16 +1,24 @@
-﻿using Chessy.Model.Values;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Values;
 using UnityEngine;
 
 namespace Chessy.Model.System
 {
-    public partial class SystemsModel
+    sealed class SetNewUnitOnCellS : SystemModelAbstract
     {
-        internal void SetNewUnitOnCellS(in UnitTypes unitT, in PlayerTypes playerT, in byte forSettingCellIdx)
+        internal SetNewUnitOnCellS(in SystemsModel sM, EntitiesModel eM) : base(sM, eM)
         {
-            _e.UnitMainC(forSettingCellIdx).Set((unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false));
-            _e.UnitE(forSettingCellIdx).SetStats(HpUnitValues.MAX, ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
-            _e.UnitExtraTWC(forSettingCellIdx).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None, 0);
-            _e.UnitEffectsC(forSettingCellIdx).Set(0, 0, false);
+        }
+
+        internal void Set(in UnitTypes unitT, in PlayerTypes playerT, in byte forSettingCellIdx)
+        {
+            _unitCs[forSettingCellIdx].Set((unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false));
+
+            _hpUnitCs[forSettingCellIdx].Health = HpUnitValues.MAX;
+            _unitWaterCs[forSettingCellIdx].Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
+
+            _extraTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None, 0);
+            _effectsUnitCs[forSettingCellIdx].Set(0, 0, false);
 
             if (_e.UnitT(forSettingCellIdx).Is(UnitTypes.Pawn))
             {
@@ -23,7 +31,7 @@ namespace Chessy.Model.System
             {
                 _e.PawnPeopleInfoC(playerT).PeopleInCity--;
 
-                _e.MainToolWeaponC(forSettingCellIdx).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                _mainTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
             }
 
             else
@@ -40,17 +48,17 @@ namespace Chessy.Model.System
                     _e.PlayerInfoC(playerT).HaveKingInInventor = false;
                 }
 
-                _e.MainToolWeaponC(forSettingCellIdx).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None);
+                _mainTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None);
             }
 
             for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
             {
                 if (_cellCs[currentCellIdx].IsBorder) continue;
 
-                if (!_e.WhereViewDataUnitC(currentCellIdx).HaveDataReference)
+                if (!_unitWhereViewDataCs[currentCellIdx].HaveDataReference)
                 {
-                    _e.WhereViewDataUnitC(currentCellIdx).DataIdxCell = forSettingCellIdx;
-                    _e.WhereViewDataUnitC(forSettingCellIdx).ViewIdxCell = currentCellIdx;
+                    _unitWhereViewDataCs[currentCellIdx].DataIdxCell = forSettingCellIdx;
+                    _unitWhereViewDataCs[forSettingCellIdx].ViewIdxCell = currentCellIdx;
 
 
                     //var pos_0 = _e.CellE(currentCellIdx).StartPositionC.Possition;
@@ -58,7 +66,7 @@ namespace Chessy.Model.System
 
                     //var t = _e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell / _e.HowManyDistanceNeedForShiftingUnitC(cell_0).HowMany(cell_1);
 
-                    //_e.UnitMainC(currentCellIdx).Possition = Vector3.Lerp(pos_0, pos_1, 1);
+                    //_unitCs[currentCellIdx).Possition = Vector3.Lerp(pos_0, pos_1, 1);
 
 
                     //_e.UnitPossitionOnCellC(currentCellIdx).Position = _e.CellE(forSettingCellIdx).PositionC.Position;

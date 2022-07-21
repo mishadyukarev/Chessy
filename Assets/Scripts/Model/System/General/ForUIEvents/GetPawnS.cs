@@ -7,26 +7,26 @@ namespace Chessy.Model.System
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
 
-            if (!_e.LessonT.Is(LessonTypes.TryBuyingHouse, LessonTypes.HoldPressWarrior))
+            if (!_aboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse, LessonTypes.HoldPressWarrior))
             {
                 if (_e.PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).HaveAnyPeopleInCity)
                 {
                     if (_e.PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).AmountInGame < _e.PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).MaxAvailablePawns(_e.PlayerInfoC(_aboutGameC.CurrentPlayerIT).AmountBuiltHouses))
                     {
-                        _e.SelectedCellIdx = 0;
+                        _cellsC.Selected = 0;
 
-                        _e.SelectedUnitC.UnitT = UnitTypes.Pawn;
-                        _e.SelectedUnitC.LevelT = LevelTypes.First;
+                        _selectedUnitC.UnitT = UnitTypes.Pawn;
+                        _selectedUnitC.LevelT = LevelTypes.First;
 
-                        _e.CellClickT = CellClickTypes.SetUnit;
+                        _aboutGameC.CellClickT = CellClickTypes.SetUnit;
                     }
                     else
                     {
-                        if (_e.LessonT.Is(LessonTypes.SettingPawn))
+                        if (_aboutGameC.LessonT.Is(LessonTypes.SettingPawn))
                         {
                             _s.SetNextLesson();
                         }
-                        else if (_e.LessonT.Is(LessonTypes.OpeningTown, LessonTypes.TryBuyingHouse))
+                        else if (_aboutGameC.LessonT.Is(LessonTypes.OpeningTown, LessonTypes.TryBuyingHouse))
                         {
 
                         }
@@ -50,7 +50,7 @@ namespace Chessy.Model.System
                 }
             }
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
     }
 }

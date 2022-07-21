@@ -12,7 +12,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
         internal override void Sync()
         {
-            var idx_sel = _e.SelectedCellIdx;
+            var idx_sel = _cellsC.Selected;
 
             eUI.LeftEnvEs.Envs[ResourceTypes.Food].TextUI.text = ((int)(100 * _e.WaterOnCellC(idx_sel).ResourcesP)).ToString();
             eUI.LeftEnvEs.Envs[ResourceTypes.Wood].TextUI.text = ((int)(100 * _e.AdultForestC(idx_sel).ResourcesP)).ToString();

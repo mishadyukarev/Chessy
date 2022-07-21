@@ -11,17 +11,17 @@ namespace Chessy.Model
 
         internal void Sound()
         {
-            var cell_0 = _e.CurrentCellIdx;
+            var cell_0 = _cellsC.Current;
 
             if (_e.UnitT(cell_0).HaveUnit()
-                && _e.UnitVisibleC(cell_0).IsVisible(_aboutGameC.CurrentPlayerIT) && !_e.UnitT(cell_0).Is(UnitTypes.Wolf))
+                && _unitVisibleCs[cell_0].IsVisible(_aboutGameC.CurrentPlayerIT) && !_e.UnitT(cell_0).Is(UnitTypes.Wolf))
             {
                 if (_e.UnitT(cell_0).Is(UnitTypes.Tree))
                 {
                     _e.SoundAction(ClipTypes.Leaf).Invoke();
                 }
 
-                else if (_e.UnitT(cell_0).IsMelee(_e.MainToolWeaponT(cell_0)))
+                else if (_e.UnitT(cell_0).IsMelee(_mainTWC[cell_0].ToolWeaponT))
                 {
                     _e.SoundAction(ClipTypes.PickMelee).Invoke();
                 }
@@ -54,7 +54,7 @@ namespace Chessy.Model
 
 
 
-                if (_e.IsCenterCloud(cell_0))
+                if (_cloudCs[cell_0].IsCenterP)
                 {
                     _e.SoundAction(ClipTypes.ShortRain).Invoke();
                 }
@@ -62,7 +62,7 @@ namespace Chessy.Model
                 {
                     foreach (var item in _e.IdxsCellsAround(cell_0))
                     {
-                        if (_e.IsCenterCloud(item))
+                        if (_cloudCs[item].IsCenterP)
                         {
                             _e.SoundAction(ClipTypes.ShortRain).Invoke();
                             break;

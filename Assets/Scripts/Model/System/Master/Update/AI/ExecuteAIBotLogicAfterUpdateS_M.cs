@@ -25,7 +25,7 @@ namespace Chessy.Model.System
 
             for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
-                if (_e.UnitT(cellIdxStart) == UnitTypes.Pawn && _e.UnitPlayerT(cellIdxStart) == playerBotT)
+                if (_e.UnitT(cellIdxStart) == UnitTypes.Pawn && _unitCs[cellIdxStart].PlayerT == playerBotT)
                 {
                     foreach (var cellIdxDirect in _e.IdxsCellsAround(cellIdxStart))
                     {
@@ -33,8 +33,8 @@ namespace Chessy.Model.System
                         {
                             if (!_e.UnitT(cellIdxDirect).IsAnimal())
                             {
-                                if (_e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxStart).Can(cellIdxDirect)
-                                    || _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxStart).Can(cellIdxDirect))
+                                if (_whereSimpleAttackCs[cellIdxStart].Can(cellIdxDirect)
+                                    || _whereUniqueAttackCs[cellIdxStart].Can(cellIdxDirect))
                                 {
                                     _s.AttackUnitFromTo(cellIdxStart, cellIdxDirect);
                                 }

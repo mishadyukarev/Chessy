@@ -28,27 +28,27 @@ namespace Chessy.View.UI.System
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++) _needActive[resT] = false;
 
 
-            if (!_e.LessonT.HaveLesson())
+            if (!_aboutGameC.LessonType.HaveLesson())
             {
                 activeResZone = true;
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++) _needActive[resT] = true;
 
             }
-            else if (_e.LessonT >= LessonTypes.TryBuyingHouse)
+            else if (_aboutGameC.LessonType >= LessonTypes.TryBuyingHouse)
             {
                 activeResZone = true;
 
                 _needActive[ResourceTypes.Wood] = true;
 
-                if (_e.LessonT >= LessonTypes.Build1Farms)
+                if (_aboutGameC.LessonType >= LessonTypes.Build1Farms)
                 {
                     _needActive[ResourceTypes.Food] = true;
 
-                    if (_e.LessonT >= LessonTypes.ExtractHill)
+                    if (_aboutGameC.LessonType >= LessonTypes.ExtractHill)
                     {
                         _needActive[ResourceTypes.Ore] = true;
 
-                        if (_e.LessonT >= LessonTypes.NeedBuildSmelterAndMeltOre + 1)
+                        if (_aboutGameC.LessonType >= LessonTypes.NeedBuildSmelterAndMeltOre + 1)
                         {
                             _needActive[ResourceTypes.Iron] = true;
                             _needActive[ResourceTypes.Gold] = true;
@@ -82,21 +82,21 @@ namespace Chessy.View.UI.System
                 {
 
 
-                    if (_e.UnitPlayerT(idx_0).Is(_aboutGameC.CurrentPlayerIType))
+                    if (_unitCs[idx_0].PlayerType == _aboutGameC.CurrentPlayerIType)
                     {
                         if (_e.UnitT(idx_0).Is(UnitTypes.Pawn))
                         {
                             _extracts[ResourceTypes.Food] -= EconomyValues.FOOD_FOR_FEEDING_ONE_UNIT_AFTER_EVERY_UPDATE;
 
-                            _extracts[ResourceTypes.Ore] += _e.ExtactionResourcesWithWarriorC(idx_0).HowManyWarriourCanExtractHill;
-                            _extracts[ResourceTypes.Wood] += _e.ExtactionResourcesWithWarriorC(idx_0).HowManyWarriourCanExtractAdultForest;
+                            _extracts[ResourceTypes.Ore] += _extractionResourcesWithUnitCs[idx_0].HowManyWarriourCanExtractHill;
+                            _extracts[ResourceTypes.Wood] += _extractionResourcesWithUnitCs[idx_0].HowManyWarriourCanExtractAdultForest;
                         }
                     }
 
-                    if (_e.BuildingPlayerT(idx_0).Is(_aboutGameC.CurrentPlayerIType))
+                    if (_buildingCs[idx_0].PlayerType == _aboutGameC.CurrentPlayerIType)
                     {
-                        _extracts[ResourceTypes.Wood] += _e.WoodcutterExtract(idx_0);
-                        _extracts[ResourceTypes.Food] += _e.FarmExtract(idx_0);
+                        _extracts[ResourceTypes.Wood] += _extractionBuildingCs[idx_0].HowManyWoodcutterCanExtractWood;
+                        _extracts[ResourceTypes.Food] += _extractionBuildingCs[idx_0].HowManyFarmCanExtractFood;
                     }
                 }
 

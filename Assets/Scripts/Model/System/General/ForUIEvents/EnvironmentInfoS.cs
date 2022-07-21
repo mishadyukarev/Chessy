@@ -5,9 +5,9 @@
         public void EnvironmentClick()
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
-            _e.ZoneInfoC.IsActiveEnvironment = !_e.ZoneInfoC.IsActiveEnvironment;
+            _zonesInfoC.IsActiveEnvironment = !_zonesInfoC.IsActiveEnvironment;
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
     }
 }

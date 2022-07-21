@@ -3,14 +3,12 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class EffectsUIS : SystemUIAbstract
     {
-        readonly FromResourcesC _resourcesE;
         readonly EntitiesViewUI _eUI;
 
         readonly bool[] _needActiveButton = new bool[(byte)ButtonTypes.End];
 
-        internal EffectsUIS(in FromResourcesC resources, in EntitiesViewUI eUI, in EntitiesModel eMG) : base(eMG)
+        internal EffectsUIS(in EntitiesViewUI eUI, in EntitiesModel eMG) : base(eMG)
         {
-            _resourcesE = resources;
             _eUI = eUI;
         }
 
@@ -18,23 +16,23 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             var needActiveZone = false;
 
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.UniqueAttackInfo)
+            if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
             {
-                if (_e.CellsC.IsSelectedCell)
+                if (_cellsC.IsSelectedCell)
                 {
-                    var idx_sel = _e.SelectedCellIdx;
+                    var idx_sel = _cellsC.Selected;
 
-                    if (_e.UnitT(_e.SelectedCellIdx).HaveUnit())
+                    if (_e.UnitT(_cellsC.Selected).HaveUnit())
                     {
                         needActiveZone = true;
 
                         for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
                         {
-                            _needActiveButton[(byte)buttonT] = _e.EffectsUnitsRightBarsC(idx_sel).Effect(buttonT) != EffectTypes.None;
+                            _needActiveButton[(byte)buttonT] = _effectsUnitsRightBarsCs[idx_sel].Effect(buttonT) != EffectTypes.None;
 
                             if (_needActiveButton[(byte)buttonT])
                             {
-                                _eUI.RightEs.Effect(buttonT).ImageC.Image.sprite = _resourcesE.Sprite(_e.EffectsUnitsRightBarsC(idx_sel).Effect(buttonT));
+                                _eUI.RightEs.Effect(buttonT).ImageC.Image.sprite = _fromResourcesC.Sprite(_effectsUnitsRightBarsCs[idx_sel].Effect(buttonT));
                             }
 
                             _eUI.RightEs.Effect(buttonT).GO.TrySetActive(_needActiveButton[(byte)buttonT]);

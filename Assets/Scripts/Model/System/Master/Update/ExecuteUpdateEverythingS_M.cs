@@ -64,13 +64,13 @@ namespace Chessy.Model.System
         //void TrySkipLessonWithRiver()
         //{
 
-        //    if (_e.LessonT == LessonTypes.Install1WarriorsNextToTheRiver)
+        //    if (_aboutGameC.LessonT == LessonTypes.Install1WarriorsNextToTheRiver)
         //    {
         //        var amountUnitsNearRiverForLesson = 0;
 
         //        for (byte cellIdx0 = 0; cellIdx0 < IndexCellsValues.CELLS; cellIdx0++)
         //        {
-        //            if (_e.UnitT(cellIdx0) == UnitTypes.Pawn && _e.UnitPlayerT(cellIdx0) == PlayerTypes.First && _e.RiverT(cellIdx0).HaveRiverNear())
+        //            if (_e.UnitT(cellIdx0) == UnitTypes.Pawn && _unitCs[cellIdx0) == PlayerTypes.First && _riverCs[cellIdx0).HaveRiverNear())
         //            {
         //                amountUnitsNearRiverForLesson++;
         //            }
@@ -97,12 +97,12 @@ namespace Chessy.Model.System
             //            {
             //                if (UnityEngine.Random.Range(0f, 1f) <= 0.005f)
             //                {
-            //                    _e.HaveFire(cellE) = true;
+            //                    _fireCs[cellE) = true;
             //                }
             //            }
             //        }
 
-            //        if (_e.RiverT(cellIdxCurrent).HaveRiverNear())
+            //        if (_riverCs[cellIdxCurrent).HaveRiverNear())
             //        {
             //            //Es.UnitE(cell_0).Take(Es, 0.15f);
             //        }
@@ -115,7 +115,7 @@ namespace Chessy.Model.System
 
             //        foreach (var cellE in _e.AroundCellsE(cellIdxCurrent).CellsAround)
             //        {
-            //            if (_e.BuildingOnCellT(cellE).Is(BuildingTypes.IceWall))
+            //            if (_buildingCs[cellE).Is(BuildingTypes.IceWall))
             //            {
             //                //Es.UnitE(cell_0).Take(Es, 0.15f);
             //                break;

@@ -2,12 +2,12 @@
 {
     public struct HasUnitKingEffectHereC
     {
-        readonly bool[] _have;
+        internal readonly bool[] HaveArray;
 
-        public ref bool Has(in PlayerTypes playerT) => ref _have[(byte)playerT];
+        public ref bool Has(in PlayerTypes playerT) => ref HaveArray[(byte)playerT];
 
-        internal HasUnitKingEffectHereC(in bool[] have) => _have = have;
+        internal HasUnitKingEffectHereC(in bool[] have) => HaveArray = have;
 
-        internal void Set(in PlayerTypes playerT, in bool have) => _have[(byte)playerT] = have;
+        internal void Set(in PlayerTypes playerT, in bool have) => HaveArray[(byte)playerT] = have;
     }
 }

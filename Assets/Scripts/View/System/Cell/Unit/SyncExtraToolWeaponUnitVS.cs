@@ -57,25 +57,25 @@ namespace Chessy.View.System
                 }
             }
 
-            if (_e.WhereViewDataUnitC(cellIdxForSync).HaveDataReference)
+            if (_unitWhereViewDataCs[cellIdxForSync].HaveDataReference)
             {
-                var dataUnitIdxCell = _e.WhereViewDataUnitC(cellIdxForSync).DataIdxCellP;
+                var dataUnitIdxCell = _unitWhereViewDataCs[cellIdxForSync].DataIdxCellP;
 
                 if (_e.UnitT(dataUnitIdxCell).HaveUnit())
                 {
-                    if (_e.UnitVisibleC(dataUnitIdxCell).IsVisible(_aboutGameC.CurrentPlayerIType) || _e.UnitT(_e.SelectedCellIdx) == UnitTypes.Elfemale && _e.UnitPlayerT(_e.SelectedCellIdx) == _aboutGameC.CurrentPlayerIType && _e.UnitT(dataUnitIdxCell) == UnitTypes.King)
+                    if (_unitVisibleCs[dataUnitIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType) || _e.UnitT(_cellsC.Selected) == UnitTypes.Elfemale && _unitCs[_cellsC.Selected].PlayerType == _aboutGameC.CurrentPlayerIType && _e.UnitT(dataUnitIdxCell) == UnitTypes.King)
                     {
-                        var nextPlayer = _e.UnitPlayerT(dataUnitIdxCell).NextPlayer();
-                        var isVisibleForNextPlayer = _e.UnitVisibleC(dataUnitIdxCell).IsVisible(nextPlayer);
+                        var nextPlayer = _unitCs[dataUnitIdxCell].PlayerType.NextPlayer();
+                        var isVisibleForNextPlayer = _unitVisibleCs[dataUnitIdxCell].IsVisible(nextPlayer);
 
                         var unitT = _e.UnitT(dataUnitIdxCell);
 
                         if (unitT == UnitTypes.Pawn)
                         {
-                            if (_e.ExtraToolWeaponT(dataUnitIdxCell).HaveToolWeapon())
+                            if (_extraTWC[dataUnitIdxCell].HaveToolWeapon)
                             {
-                                var twT = _e.ExtraToolWeaponT(dataUnitIdxCell);
-                                var levT = _e.ExtraTWLevelT(dataUnitIdxCell);
+                                var twT = _extraTWC[dataUnitIdxCell].ToolWeaponType;
+                                var levT = _extraTWC[dataUnitIdxCell].LevelType;
 
                                 _needActiveExtraTW[cellIdxForSync, (byte)twT, (byte)levT] = true;
                                 _needColorExtraTW[cellIdxForSync, (byte)twT, (byte)levT] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;

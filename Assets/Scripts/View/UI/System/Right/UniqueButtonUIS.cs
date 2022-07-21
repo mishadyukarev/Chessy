@@ -13,54 +13,52 @@ namespace Chessy.View.UI.System
 
         readonly ButtonTypes _buttonT;
         readonly UniqueButtonUIE _buttonE;
-        readonly FromResourcesC _resources;
 
-        internal UniqueButtonUIS(in ButtonTypes buttonT, in UniqueButtonUIE uniqueButtonUIE, in FromResourcesC res, in EntitiesModel ents) : base(ents)
+        internal UniqueButtonUIS(in ButtonTypes buttonT, in UniqueButtonUIE uniqueButtonUIE, in EntitiesModel ents) : base(ents)
         {
             _buttonT = buttonT;
             _buttonE = uniqueButtonUIE;
-            _resources = res;
         }
 
         internal override void Sync()
         {
-            var ability_cur = _e.UnitButtonAbilitiesC(_e.SelectedCellIdx).Ability(_buttonT);
+            var ability_cur = _buttonsAbilitiesUnitCs[_cellsC.Selected].Ability(_buttonT);
 
             _needActive = false;
 
-            if (_e.UnitPlayerT(_e.SelectedCellIdx) == _aboutGameC.CurrentPlayerIType && ability_cur != AbilityTypes.None)
+            if (_unitCs[_cellsC.Selected].PlayerType == _aboutGameC.CurrentPlayerIType && ability_cur != AbilityTypes.None)
             {
                 if (_buttonT == ButtonTypes.First)
                 {
-                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.SeedingPawn)
+                    if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.SeedingPawn)
                     {
                         _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Second)
                 {
-                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build1Farms)
+                    if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.Build1Farms)
                     {
                         _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Third)
                 {
-                    if (!_e.LessonT.HaveLesson())
+                    if (!_aboutGameC.LessonType.HaveLesson())
                     {
                         _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Fourth)
                 {
-                    if (!_e.LessonT.HaveLesson())
+                    if (!_aboutGameC.LessonType.HaveLesson())
                     {
                         _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Fifth)
                 {
-                    if (!_e.LessonT.HaveLesson())
+                    if (!_aboutGameC.LessonType.HaveLesson())
                     {
                         _needActive = true;
                     }
@@ -74,12 +72,12 @@ namespace Chessy.View.UI.System
 
             if (_needActive)
             {
-                _buttonE.CooldonwTextC.SetActiveParent(_e.UnitCooldownAbilitiesC(_e.SelectedCellIdx).HaveCooldown(ability_cur));
-                _buttonE.CooldonwTextC.TextUI.text = _e.UnitCooldownAbilitiesC(_e.SelectedCellIdx).Cooldown(ability_cur).ToString();
+                _buttonE.CooldonwTextC.SetActiveParent(_cooldownAbilityCs[_cellsC.Selected].HaveCooldown(ability_cur));
+                _buttonE.CooldonwTextC.TextUI.text = _cooldownAbilityCs[_cellsC.Selected].Cooldown(ability_cur).ToString();
 
 
 
-                _buttonE.AbilityImageC.Image.sprite = _resources.Sprite(ability_cur);
+                _buttonE.AbilityImageC.Image.sprite = _fromResourcesC.Sprite(ability_cur);
 
                 for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                 {

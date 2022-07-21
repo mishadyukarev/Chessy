@@ -1,9 +1,7 @@
-﻿using Chessy.Model.Cell.Unit;
-using Chessy.Model.Component;
+﻿using Chessy.Model.Component;
 using Chessy.Model.Values;
-using System;
-using System.Collections.Generic;
-namespace Chessy.Model
+
+namespace Chessy.Model.Entity
 {
     public sealed class UnitE
     {

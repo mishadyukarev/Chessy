@@ -23,13 +23,13 @@ namespace Chessy.Model.System
                     var curUnitT_0 = curUnitMainC_0.UnitT;
                     var curUnitPlayerT_0 = curUnitMainC_0.PlayerT;
 
-                    if (curUnitT_0.HaveUnit() && curUnitT_0.IsMelee(_e.MainToolWeaponT(currentCellIdx_0)) && !curUnitT_0.IsAnimal() && !_shiftingUnitCs[currentCellIdx_0].IsShifting)
+                    if (curUnitT_0.HaveUnit() && curUnitT_0.IsMelee(_mainTWC[currentCellIdx_0].ToolWeaponT) && !curUnitT_0.IsAnimal() && !_shiftingUnitCs[currentCellIdx_0].IsShifting)
                     {
                         DirectTypes directT_1 = default;
 
                         foreach (var idx_1 in _e.IdxsCellsAround(currentCellIdx_0))
                         {
-                            directT_1 = _e.DirectionAround(currentCellIdx_0, idx_1);
+                            directT_1 = _e.CellAroundC(currentCellIdx_0, idx_1).DirectT;
 
                             var curUnitMain_1 = _unitCs[idx_1];
                             var curUnitT_1 = curUnitMain_1.UnitT;

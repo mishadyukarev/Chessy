@@ -255,12 +255,6 @@ namespace Chessy
         #endregion
 
 
-        #region RiverT
-
-        public static bool HaveRiverNear(this RiverTypes riverT) => riverT != RiverTypes.None && riverT != RiverTypes.End;
-
-        #endregion
-
 
         #region ToolWeaponT
 

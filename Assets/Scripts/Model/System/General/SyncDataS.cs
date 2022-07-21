@@ -28,11 +28,11 @@ namespace Chessy.Model.System
             //    {
             //        _eCopy.UnitMainC(curCellIdx_0).UnitType = curUnitT;
 
-            //        _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.Cell, curCellIdx_0, CellSyncTypes.UnitType,  curUnitT });
+            //        _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.Cell, curCellIdx_0, CellSyncTypes.UnitType,  curUnitT });
             //    }
 
 
-            //    var whereViewDataUnit = _e.WhereViewDataUnitC(curCellIdx_0);
+            //    var whereViewDataUnit = _unitWhereViewDataCs[curCellIdx_0);
 
 
             //    var curIdxViewUnit = whereViewDataUnit.ViewIdxCell;
@@ -40,7 +40,7 @@ namespace Chessy.Model.System
             //    {
             //        _eCopy.WhereViewDataUnitC(curCellIdx_0).ViewIdxCell = curIdxViewUnit;
 
-            //        _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.Cell, curCellIdx_0, CellSyncTypes.UnitIdxView, curIdxViewUnit });
+            //        _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.Cell, curCellIdx_0, CellSyncTypes.UnitIdxView, curIdxViewUnit });
             //    }
 
             //    var curIdxDataUnit = whereViewDataUnit.DataIdxCell;
@@ -48,7 +48,7 @@ namespace Chessy.Model.System
             //    {
             //        _eCopy.WhereViewDataUnitC(curCellIdx_0).DataIdxCell = curIdxDataUnit;
 
-            //        _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.Cell, curCellIdx_0, CellSyncTypes.UnitIdxData, curIdxDataUnit });
+            //        _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.Cell, curCellIdx_0, CellSyncTypes.UnitIdxData, curIdxDataUnit });
             //    }
 
             //    var curPosUnit = _e.UnitPossitionOnCell(curCellIdx_0);
@@ -56,7 +56,7 @@ namespace Chessy.Model.System
             //    {
             //        _e.UnitPossitionOnCellC(curCellIdx_0).Position = curPosUnit;
 
-            //        _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.Cell, curCellIdx_0, CellSyncTypes.UnitPossition, curPosUnit });
+            //        _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.Cell, curCellIdx_0, CellSyncTypes.UnitPossition, curPosUnit });
             //    }
             //}
 
@@ -64,7 +64,7 @@ namespace Chessy.Model.System
             //var objects = new object[objs.Count];
             //for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
-            //_e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.Others, objects);
+            //_rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, objects);
 
 
 
@@ -143,7 +143,7 @@ namespace Chessy.Model.System
             //    //{
             //    //    _eCopy.WaterUnitC(cell_0).Water = _e.WaterUnit(cell_0);
 
-            //    //    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.WaterUnit, cell_0, _e.WaterUnit(cell_0), });
+            //    //    _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.WaterUnit, cell_0, _e.WaterUnit(cell_0), });
             //    //}
 
             //    //if (_eCopy.WaterOnCellC(cell_0).Resources != _e.WaterOnCellC(cell_0).Resources)
@@ -187,14 +187,14 @@ namespace Chessy.Model.System
 
             //    var needUpdateMainToolWeapon = false;
 
-            //    if (_eCopy.MainToolWeaponT(cell_0) != _e.MainToolWeaponT(cell_0))
+            //    if (_eCopy.MainToolWeaponT(cell_0) != _mainTWC[cell_0))
             //    {
-            //        _eCopy.MainToolWeaponC(cell_0).ToolWeaponT = _e.MainToolWeaponT(cell_0);
+            //        _eCopy.MainToolWeaponC(cell_0).ToolWeaponT = _mainTWC[cell_0);
             //        needUpdateMainToolWeapon = true;
             //    }
-            //    if (_eCopy.MainTWLevelT(cell_0) != _e.MainTWLevelT(cell_0))
+            //    if (_eCopy.MainTWLevelT(cell_0) != _mainTWC[cell_0))
             //    {
-            //        _eCopy.MainToolWeaponC(cell_0).LevelT = _e.MainTWLevelT(cell_0);
+            //        _eCopy.MainToolWeaponC(cell_0).LevelT = _mainTWC[cell_0);
             //        needUpdateMainToolWeapon = true;
             //    }
 
@@ -205,14 +205,14 @@ namespace Chessy.Model.System
             //            nameof(SyncData),
             //            SyncTypes.MainToolWeapon,
             //            cell_0,
-            //            _e.MainToolWeaponT(cell_0),
-            //            _e.MainTWLevelT(cell_0),
+            //            _mainTWC[cell_0),
+            //            _mainTWC[cell_0),
             //        };
 
             //        var objects = new object[objs.Count];
             //        for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
-            //        _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.Others, objects);
+            //        _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, objects);
             //    }
 
 
@@ -225,29 +225,29 @@ namespace Chessy.Model.System
 
             //    var needUpdateCellElse = false;
 
-            //    if (_eCopy.UnitMainC(cell_0).UnitT != _e.UnitMainC(cell_0).UnitT)
+            //    if (_eCopy.UnitMainC(cell_0).UnitT != _unitCs[cell_0).UnitT)
             //    {
-            //        _eCopy.UnitMainC(cell_0).UnitT = _e.UnitMainC(cell_0).UnitT;
+            //        _eCopy.UnitMainC(cell_0).UnitT = _unitCs[cell_0).UnitT;
             //        needUpdateCellElse = true;
             //    }
-            //    if (_eCopy.UnitMainC(cell_0).LevelT != _e.UnitMainC(cell_0).LevelT)
+            //    if (_eCopy.UnitMainC(cell_0).LevelT != _unitCs[cell_0).LevelT)
             //    {
-            //        _eCopy.UnitMainC(cell_0).LevelT = _e.UnitMainC(cell_0).LevelT;
+            //        _eCopy.UnitMainC(cell_0).LevelT = _unitCs[cell_0).LevelT;
             //        needUpdateCellElse = true;
             //    }
-            //    if (_eCopy.UnitMainC(cell_0).PlayerT != _e.UnitMainC(cell_0).PlayerT)
+            //    if (_eCopy.UnitMainC(cell_0).PlayerT != _unitCs[cell_0).PlayerT)
             //    {
-            //        _eCopy.UnitMainC(cell_0).PlayerT = _e.UnitMainC(cell_0).PlayerT;
+            //        _eCopy.UnitMainC(cell_0).PlayerT = _unitCs[cell_0).PlayerT;
             //        needUpdateCellElse = true;
             //    }
-            //    if (_eCopy.UnitMainC(cell_0).ConditionT != _e.UnitMainC(cell_0).ConditionT)
+            //    if (_eCopy.UnitMainC(cell_0).ConditionT != _unitCs[cell_0).ConditionT)
             //    {
-            //        _eCopy.UnitMainC(cell_0).ConditionT = _e.UnitMainC(cell_0).ConditionT;
+            //        _eCopy.UnitMainC(cell_0).ConditionT = _unitCs[cell_0).ConditionT;
             //        needUpdateCellElse = true;
             //    }
-            //    if (_eCopy.UnitMainC(cell_0).IsArcherDirectedToRight != _e.UnitMainC(cell_0).IsArcherDirectedToRight)
+            //    if (_eCopy.UnitMainC(cell_0).IsArcherDirectedToRight != _unitCs[cell_0).IsArcherDirectedToRight)
             //    {
-            //        _eCopy.UnitMainC(cell_0).IsArcherDirectedToRight = _e.UnitMainC(cell_0).IsArcherDirectedToRight;
+            //        _eCopy.UnitMainC(cell_0).IsArcherDirectedToRight = _unitCs[cell_0).IsArcherDirectedToRight;
             //        needUpdateCellElse = true;
             //    }
             //    if (_eCopy.ShiftingInfoForUnitC(cell_0).WhereIdxCell != _e.ShiftingInfoForUnitC(cell_0).WhereIdxCell)
@@ -271,14 +271,14 @@ namespace Chessy.Model.System
             //        needUpdateCellElse = true;
             //    }
 
-            //    //if (_eCopy.ExtraToolWeaponT(cell_0) != _e.ExtraToolWeaponT(cell_0))
+            //    //if (_eCopy.ExtraToolWeaponT(cell_0) != _extraTWC[cell_0))
             //    //{
-            //    //    _eCopy.SetExtraToolWeaponT(cell_0, _e.ExtraToolWeaponT(cell_0));
+            //    //    _eCopy.SetExtraToolWeaponT(cell_0, _extraTWC[cell_0));
             //    //    needUpdate = true;
             //    //}
-            //    //if (_eCopy.ExtraTWLevelT(cell_0) != _e.ExtraTWLevelT(cell_0))
+            //    //if (_eCopy.ExtraTWLevelT(cell_0) != _extraTWC[cell_0))
             //    //{
-            //    //    _eCopy.SetExtraTWLevelT(cell_0, _e.ExtraTWLevelT(cell_0));
+            //    //    _eCopy.SetExtraTWLevelT(cell_0, _extraTWC[cell_0));
             //    //    needUpdate = true;
             //    //}
             //    //if (_eCopy.ExtraTWProtection(cell_0) != _e.ExtraTWProtection(cell_0))
@@ -317,9 +317,9 @@ namespace Chessy.Model.System
 
             //    //#region Building
 
-            //    //if (_eCopy.BuildingOnCellT(cell_0) != _e.BuildingOnCellT(cell_0))
+            //    //if (_eCopy.BuildingOnCellT(cell_0) != _buildingCs[cell_0))
             //    //{
-            //    //    _eCopy.BuildingC(cell_0).BuildingT = _e.BuildingOnCellT(cell_0);
+            //    //    _eCopy.BuildingC(cell_0).BuildingT = _buildingCs[cell_0);
             //    //    needUpdate = true;
             //    //}
             //    //if (_eCopy.BuildingLevelT(cell_0) != _e.BuildingLevelT(cell_0))
@@ -344,35 +344,35 @@ namespace Chessy.Model.System
 
             //    //if (_eCopy.HaveFire(cell_0) != _e.EffectE(cell_0).HaveFire)
             //    //{
-            //    //    _eCopy.EffectE(cell_0).HaveFire = _e.HaveFire(cell_0);
+            //    //    _eCopy.EffectE(cell_0).HaveFire = _fireCs[cell_0);
             //    //    needUpdate = true;
             //    //}
 
 
             //    for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
             //    {
-            //        if (_eCopy.UnitVisibleC(cell_0).IsVisible(playerT) != _e.UnitVisibleC(cell_0).IsVisible(playerT))
+            //        if (_eCopy.UnitVisibleC(cell_0).IsVisible(playerT) != _unitVisibleCs[cell_0).IsVisible(playerT))
             //        {
-            //            _eCopy.UnitVisibleC(cell_0).Set(playerT, _e.UnitVisibleC(cell_0).IsVisible(playerT));
+            //            _eCopy.UnitVisibleC(cell_0).Set(playerT, _unitVisibleCs[cell_0).IsVisible(playerT));
             //            needUpdateCellElse = true;
             //        }
             //    }
 
             //    //objs.Add(_e.UnitButtonAbilitiesC(cell_0).AbilityTypesClone);
-            //    //objs.Add(_e.UnitCooldownAbilitiesC(cell_0).CooldonwsFloat);
+            //    //objs.Add(_cooldownAbilityCs[cell_0).CooldonwsFloat);
 
 
             //    //#region Building
 
-            //    //objs.Add(_e.BuildingVisibleC(cell_0).IsVisibleClone);
+            //    //objs.Add(_visibleBuildingCs[cell_0).IsVisibleClone);
 
             //    //#endregion
 
-            //    //objs.Add(_e.RiverT(cell_0));
-            //    //objs.Add(_e.HaveRiverC(cell_0).HaveRives);
+            //    //objs.Add(_riverCs[cell_0));
+            //    //objs.Add(_haveRiverAroundCellCs[cell_0).HaveRives);
 
             //    //objs.Add(_e.TrailVisibleC(cell_0).IsVisibleClone);
-            //    //objs.Add(_e.HealthTrail(cell_0).Healths);
+            //    //objs.Add(_hpTrailCs[cell_0).Healths);
 
 
             //    if (needUpdateCellElse)
@@ -384,8 +384,8 @@ namespace Chessy.Model.System
             //            cell_0,
             //            _e.UnitT(cell_0),
             //            _e.UnitLevelT(cell_0),
-            //            _e.UnitPlayerT(cell_0),
-            //            _e.UnitConditionT(cell_0),
+            //            _unitCs[cell_0),
+            //            _unitCs[cell_0),
             //            _e.IsRightArcherUnit(cell_0),
             //            _e.ShiftingInfoForUnitC(cell_0).WhereIdxCell,
             //            _e.HpUnit(cell_0),
@@ -393,8 +393,8 @@ namespace Chessy.Model.System
             //            _e.DamageSimpleAttack(cell_0),
             //            _e.DamageOnCell(cell_0),
 
-            //            //_e.ExtraToolWeaponT(cell_0),
-            //            //_e.ExtraTWLevelT(cell_0),
+            //            //_extraTWC[cell_0),
+            //            //_extraTWC[cell_0),
             //            //_e.ExtraTWProtection(cell_0),
 
             //            //_e.HowManyWarriourCanExtractAdultForest(cell_0),
@@ -404,19 +404,19 @@ namespace Chessy.Model.System
             //            //_e.ProtectionRainyMagicShield(cell_0),
             //            //_e.HaveFrozenArrawArcher(cell_0),
 
-            //            //_e.HaveFire(cell_0),
+            //            //_fireCs[cell_0),
             //        };
 
             //        for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
             //        {
-            //            objs.Add(_e.UnitVisibleC(cell_0).IsVisible(playerT));
+            //            objs.Add(_unitVisibleCs[cell_0).IsVisible(playerT));
             //        }
 
 
             //        var objects = new object[objs.Count];
             //        for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
-            //        _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.Others, objects);
+            //        _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, objects);
             //    }
             //}
         }
@@ -444,13 +444,13 @@ namespace Chessy.Model.System
             //            var objects = new object[objs.Count];
             //            for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
-            //            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.Others, objects);
+            //            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, objects);
             //        }
             //        break;
 
             //    case SyncTypes.WaterOnCell:
             //        {
-            //            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.WaterOnCell, cellIdx, _eCopy.WaterOnCellC(cellIdx).Resources, });
+            //            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.WaterOnCell, cellIdx, _eCopy.WaterOnCellC(cellIdx).Resources, });
             //        }
             //        break;
 
@@ -480,7 +480,7 @@ namespace Chessy.Model.System
             //            var objects = new object[objs.Count];
             //            for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
-            //            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.Others, objects);
+            //            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, objects);
             //        }
             //        break;
 
@@ -508,15 +508,15 @@ namespace Chessy.Model.System
     //                    switch (cellSyncT)
     //                    {
     //                        case CellSyncTypes.UnitType:
-    //                            _e.UnitMainC(curCellIdx_0).UnitType = (UnitTypes)objects[idxCurrent++];
+    //                            _unitCs[curCellIdx_0).UnitType = (UnitTypes)objects[idxCurrent++];
     //                            break;
 
     //                        case CellSyncTypes.UnitIdxView:
-    //                            _e.WhereViewDataUnitC(curCellIdx_0).ViewIdxCell = (byte)objects[idxCurrent++];
+    //                            _unitWhereViewDataCs[curCellIdx_0).ViewIdxCell = (byte)objects[idxCurrent++];
     //                            break;
 
     //                        case CellSyncTypes.UnitIdxData:
-    //                            _e.WhereViewDataUnitC(curCellIdx_0).DataIdxCell = (byte)objects[idxCurrent++];
+    //                            _unitWhereViewDataCs[curCellIdx_0).DataIdxCell = (byte)objects[idxCurrent++];
     //                            break;
 
     //                        case CellSyncTypes.UnitPossition:
@@ -532,22 +532,22 @@ namespace Chessy.Model.System
     //        }
 
 
-    //        _e.NeedUpdateView = true;
+    //        _updateAllViewC.NeedUpdateView = true;
 
     //        //switch (syncT)
     //        //{
     //        //    case SyncTypes.Cell:
     //        //        var idxCell = (byte)objects[idxCurrent++];
-    //        //        _e.UnitMainC(idxCell).UnitT = (UnitTypes)objects[idxCurrent++];
-    //        //        _e.UnitMainC(idxCell).LevelT = (LevelTypes)objects[idxCurrent++];
-    //        //        _e.UnitMainC(idxCell).PlayerT = (PlayerTypes)objects[idxCurrent++];
-    //        //        _e.UnitMainC(idxCell).ConditionT = (ConditionUnitTypes)objects[idxCurrent++];
-    //        //        _e.UnitMainC(idxCell).IsArcherDirectedToRight = (bool)objects[idxCurrent++];
+    //        //        _unitCs[idxCell).UnitT = (UnitTypes)objects[idxCurrent++];
+    //        //        _unitCs[idxCell).LevelT = (LevelTypes)objects[idxCurrent++];
+    //        //        _unitCs[idxCell).PlayerT = (PlayerTypes)objects[idxCurrent++];
+    //        //        _unitCs[idxCell).ConditionT = (ConditionUnitTypes)objects[idxCurrent++];
+    //        //        _unitCs[idxCell).IsArcherDirectedToRight = (bool)objects[idxCurrent++];
     //        //        _e.ShiftingInfoForUnitC(idxCell).WhereIdxCell = (byte)objects[idxCurrent++];
-    //        //        _e.HpUnitC(idxCell).Health = (double)objects[idxCurrent++];
-    //        //        _e.WaterUnitC(idxCell).Water = (double)objects[idxCurrent++];
-    //        //        _e.UnitMainC(idxCell).DamageSimpleAttack = (double)objects[idxCurrent++];
-    //        //        _e.UnitMainC(idxCell).DamageOnCell = (double)objects[idxCurrent++];
+    //        //        _hpUnitCs[idxCell).Health = (double)objects[idxCurrent++];
+    //        //        _unitWaterCs[idxCell).Water = (double)objects[idxCurrent++];
+    //        //        _unitCs[idxCell).DamageSimpleAttack = (double)objects[idxCurrent++];
+    //        //        _unitCs[idxCell).DamageOnCell = (double)objects[idxCurrent++];
 
     //        //        //_e.UnitExtraTWC(idxCell).ToolWeaponT = (ToolsWeaponsWarriorTypes)objects[idxCurrent++];
     //        //        //_e.UnitExtraTWC(idxCell).LevelT = (LevelTypes)objects[idxCurrent++];
@@ -556,9 +556,9 @@ namespace Chessy.Model.System
     //        //        //_e.ExtactionResourcesWithWarriorC(idxCell).HowManyWarriourCanExtractAdultForest = (float)objects[idxCurrent++];
     //        //        //_e.ExtactionResourcesWithWarriorC(idxCell).HowManyWarriourCanExtractHill = (float)objects[idxCurrent++];
 
-    //        //        //_e.UnitEffectsC(idxCell).StunHowManyUpdatesNeedStay = (float)objects[idxCurrent++];
-    //        //        //_e.UnitEffectsC(idxCell).ProtectionRainyMagicShield = (float)objects[idxCurrent++];
-    //        //        //_e.UnitEffectsC(idxCell).HaveFrozenArrawArcher = (bool)objects[idxCurrent++];
+    //        //        //_effectsUnitCs[idxCell).StunHowManyUpdatesNeedStay = (float)objects[idxCurrent++];
+    //        //        //_effectsUnitCs[idxCell).ProtectionRainyMagicShield = (float)objects[idxCurrent++];
+    //        //        //_effectsUnitCs[idxCell).HaveFrozenArrawArcher = (bool)objects[idxCurrent++];
 
 
 
@@ -566,7 +566,7 @@ namespace Chessy.Model.System
 
     //        //        for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
     //        //        {
-    //        //            _e.UnitVisibleC(idxCell).Set(playerT, (bool)objects[idxCurrent++]);
+    //        //            _unitVisibleCs[idxCell).Set(playerT, (bool)objects[idxCurrent++]);
     //        //        }
     //        //        break;
 
@@ -600,7 +600,7 @@ namespace Chessy.Model.System
     //        //    case SyncTypes.WaterUnit:
     //        //        {
     //        //            idxCell = (byte)objects[idxCurrent++];
-    //        //            _e.WaterUnitC(idxCell).Water = (double)objects[idxCurrent++];
+    //        //            _unitWaterCs[idxCell).Water = (double)objects[idxCurrent++];
     //        //        }
     //        //        break;
 
@@ -623,17 +623,17 @@ namespace Chessy.Model.System
     //        //                //_e.SetUnitLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
     //        //                //_e.SetUnitPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
     //        //                //_e.SetUnitConditionT(cell_0, (ConditionUnitTypes)objects[idxCurrent++]);
-    //        //                //_e.UnitMainC(cell_0).IsArcherDirectedToRight = (bool)objects[idxCurrent++];
+    //        //                //_unitCs[cell_0).IsArcherDirectedToRight = (bool)objects[idxCurrent++];
     //        //                //for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
-    //        //                //    _e.UnitVisibleC(cell_0).Set(playerT, (bool)objects[idxCurrent++]);
+    //        //                //    _unitVisibleCs[cell_0).Set(playerT, (bool)objects[idxCurrent++]);
 
 
-    //        //                //_e.HpUnitC(cell_0).Health = (double)objects[idxCurrent++];
+    //        //                //_hpUnitCs[cell_0).Health = (double)objects[idxCurrent++];
     //        //                //_e.EnergyUnitC(cell_0).Energy = (double)objects[idxCurrent++];
-    //        //                //_e.WaterUnitC(cell_0).Water = (double)objects[idxCurrent++];
+    //        //                //_unitWaterCs[cell_0).Water = (double)objects[idxCurrent++];
 
-    //        //                //_e.UnitMainC(cell_0).DamageSimpleAttack = (double)objects[idxCurrent++];
-    //        //                //_e.UnitMainC(cell_0).DamageOnCell = (double)objects[idxCurrent++];
+    //        //                //_unitCs[cell_0).DamageSimpleAttack = (double)objects[idxCurrent++];
+    //        //                //_unitCs[cell_0).DamageOnCell = (double)objects[idxCurrent++];
 
     //        //                //_e.SetMainToolWeaponT(cell_0, (ToolsWeaponsWarriorTypes)objects[idxCurrent++]);
     //        //                //_e.SetMainTWLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
@@ -650,11 +650,11 @@ namespace Chessy.Model.System
     //        //                //_e.SetLastDiedPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
 
     //        //                //_e.UnitButtonAbilitiesC(cell_0).Sync((byte[])objects[idxCurrent++]);
-    //        //                //_e.UnitCooldownAbilitiesC(cell_0).Sync((float[])objects[idxCurrent++]);
+    //        //                //_cooldownAbilityCs[cell_0).Sync((float[])objects[idxCurrent++]);
 
-    //        //                //_e.UnitEffectsC(cell_0).StunHowManyUpdatesNeedStay = (float)objects[idxCurrent++];
-    //        //                //_e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = (float)objects[idxCurrent++];
-    //        //                //_e.UnitEffectsC(cell_0).HaveFrozenArrawArcher = (bool)objects[idxCurrent++];
+    //        //                //_effectsUnitCs[cell_0).StunHowManyUpdatesNeedStay = (float)objects[idxCurrent++];
+    //        //                //_effectsUnitCs[cell_0).ProtectionRainyMagicShield = (float)objects[idxCurrent++];
+    //        //                //_effectsUnitCs[cell_0).HaveFrozenArrawArcher = (bool)objects[idxCurrent++];
 
 
     //        //                //#region Building
@@ -663,7 +663,7 @@ namespace Chessy.Model.System
     //        //                //_e.SetBuildingLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
     //        //                //_e.SetBuildingPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
     //        //                //_e.BuildingHpC(cell_0).Health = (double)objects[idxCurrent++];
-    //        //                //_e.BuildingVisibleC(cell_0).Sync((bool[])objects[idxCurrent++]);
+    //        //                //_visibleBuildingCs[cell_0).Sync((bool[])objects[idxCurrent++]);
 
     //        //                //#endregion
 
@@ -675,12 +675,12 @@ namespace Chessy.Model.System
     //        //                //_e.WaterOnCellC(cell_0).Resources = (float)objects[idxCurrent++];
 
     //        //                //_e.SetRiverT(cell_0, (RiverTypes)objects[idxCurrent++]);
-    //        //                //_e.HaveRiverC(cell_0).Sync((bool[])objects[idxCurrent++]);
+    //        //                //_haveRiverAroundCellCs[cell_0).Sync((bool[])objects[idxCurrent++]);
 
-    //        //                //_e.HaveFire(cell_0) = (bool)objects[idxCurrent++];
+    //        //                //_fireCs[cell_0) = (bool)objects[idxCurrent++];
 
     //        //                //_e.TrailVisibleC(cell_0).Sync((bool[])objects[idxCurrent++]);
-    //        //                //_e.HealthTrail(cell_0).Sync((float[])objects[idxCurrent++]);
+    //        //                //_hpTrailCs[cell_0).Sync((float[])objects[idxCurrent++]);
     //        //                //}
 
     //        //                //_e.IsStartedGame = (bool)objects[idxCurrent++];
@@ -728,7 +728,7 @@ namespace Chessy.Model.System
     //        //    default: throw new Exception();
     //        //}
 
-    //        ////_e.NeedUpdateView = true;
+    //        ////_updateAllViewC.NeedUpdateView = true;
     //    }
     }
 }

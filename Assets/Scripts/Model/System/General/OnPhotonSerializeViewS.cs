@@ -16,7 +16,7 @@ namespace Chessy.Model.System
 
         internal OnPhotonSerializeViewS(in SystemsModel sM, in EntitiesModel eM) : base(sM, eM)
         {
-            _eCopy = new EntitiesModel(eM.DataFromViewC, eM.RpcC.PunRPCName, new List<object>() { eM.RpcC.Action0, eM.RpcC.Action1 }, eM.AboutGameC.TestModeT);
+            _eCopy = new EntitiesModel(_dataFromViewC, eM.CommonGameE.RpcC.PunRPCName, new List<object>() { eM.CommonGameE.RpcC.Action0, eM.CommonGameE.RpcC.Action1 }, _aboutGameC.TestModeT);
         }
 
         internal void OnPhotonSerializeView0(in SyncTypes syncType, PhotonStream stream, PhotonMessageInfo info)
@@ -27,8 +27,8 @@ namespace Chessy.Model.System
                     {
                         if (stream.IsWriting)
                         {
-                            TryAddDataForSync(_aboutGameC.IsStartedGame, ref _eCopy.AboutGameC.IsStartedGame, _canSync, _objsForSync);
-                            TryAddDataForSync(_aboutGameC.WinnerPlayerT, ref _eCopy.AboutGameC.WinnerPlayerT, _canSync, _objsForSync);
+                            TryAddDataForSync(_aboutGameC.IsStartedGame, ref _eCopy.CommonGameE.CommonInfoAboutGameC.IsStartedGame, _canSync, _objsForSync);
+                            TryAddDataForSync(_aboutGameC.WinnerPlayerT, ref _eCopy.CommonGameE.CommonInfoAboutGameC.WinnerPlayerT, _canSync, _objsForSync);
                             var weatherE = _eCopy.WeatherE;
                             var windC = weatherE.WindC;
                             TryAddDataForSync(_windC.DirectT, ref windC.DirectT, _canSync, _objsForSync);
@@ -114,6 +114,25 @@ namespace Chessy.Model.System
                                 var unitMainC = unitE.MainC;
                                 var unitMainCCopy = unitECopy.MainC;
 
+                                var buildingC = _buildingCs[curCellIdx_0];
+                                var buildingCCopy = cellEsCopy.BuildingE.BuildingMainC;
+
+                                var unitHpC = unitE.HealthC;
+                                var unitHpCCopy = unitECopy.HealthC;
+
+                                var unitMainTwC = unitE.MainToolWeaponC;
+                                var unitMainTwCCopy = unitECopy.MainToolWeaponC;
+
+                                var unitExtraTwC = unitE.ExtraToolWeaponC;
+                                var unitExtraTwCCopy = unitECopy.ExtraToolWeaponC;
+
+                                var unitDataViewC = unitE.WhereViewDataUnitC;
+                                var unitDataViewCCopy = unitECopy.WhereViewDataUnitC;
+
+                                var trailHealthCCopy = cellEsCopy.TrailE.HealthC;
+                                var cloudECopy = cellEsCopy.CloudE;
+
+
                                 TryAddDataForSync(unitMainC.UnitT, ref unitMainCCopy.UnitT, _canSync, _objsForSync);
                                 TryAddDataForSync(unitMainC.LevelT, ref unitMainCCopy.LevelT, _canSync, _objsForSync);
                                 TryAddDataForSync(unitMainC.PlayerType, ref unitMainCCopy.PlayerT, _canSync, _objsForSync);
@@ -122,31 +141,21 @@ namespace Chessy.Model.System
                                 TryAddDataForSync(unitMainC.DamageSimpleAttack, ref unitMainCCopy.DamageSimpleAttack, _canSync, _objsForSync);
                                 TryAddDataForSync(unitMainC.DamageOnCell, ref unitMainCCopy.DamageOnCell, _canSync, _objsForSync);
 
-                                var unitHpC = unitE.HealthC;
-                                var unitHpCCopy = unitECopy.HealthC;
                                 TryAddDataForSync(unitHpC.Health, ref unitHpCCopy.Health, _canSync, _objsForSync);
 
-                                var unitMainTwC = unitE.MainToolWeaponC;
-                                var unitMainTwCCopy = unitECopy.MainToolWeaponC;
                                 TryAddDataForSync(unitMainTwC.ToolWeaponT, ref unitMainTwCCopy.ToolWeaponT, _canSync, _objsForSync);
                                 TryAddDataForSync(unitMainTwC.LevelT, ref unitMainTwCCopy.LevelT, _canSync, _objsForSync);
 
-                                var unitExtraTwC = unitE.ExtraToolWeaponC;
-                                var unitExtraTwCCopy = unitECopy.ExtraToolWeaponC;
                                 TryAddDataForSync(unitExtraTwC.ToolWeaponT, ref unitExtraTwCCopy.ToolWeaponT, _canSync, _objsForSync);
                                 TryAddDataForSync(unitExtraTwC.LevelT, ref unitExtraTwCCopy.LevelT, _canSync, _objsForSync);
                                 TryAddDataForSync(unitExtraTwC.ProtectionShield, ref unitExtraTwCCopy.ProtectionShield, _canSync, _objsForSync);
 
-                                var unitDataViewC = unitE.WhereViewDataUnitC;
-                                var unitDataViewCCopy = unitECopy.WhereViewDataUnitC;
                                 TryAddDataForSync(unitDataViewC.DataIdxCell, ref unitDataViewCCopy.DataIdxCell, _canSync, _objsForSync);
                                 TryAddDataForSync(unitDataViewC.ViewIdxCell, ref unitDataViewCCopy.ViewIdxCell, _canSync, _objsForSync);
-                                TryAddDataForSync(_e.ShiftingInfoForUnitC(curCellIdx_0).WhereNeedShiftIdxCell, ref _eCopy.ShiftingInfoForUnitC(curCellIdx_0).WhereNeedShiftIdxCell, _canSync, _objsForSync);
-                                TryAddDataForSync(_e.StunUnit(curCellIdx_0), ref _eCopy.UnitEffectsC(curCellIdx_0).StunHowManyUpdatesNeedStay, _canSync, _objsForSync);
+                                TryAddDataForSync(_shiftingUnitCs[curCellIdx_0].WhereNeedShiftIdxCell, ref unitECopy.ShiftingInfoForUnitC.WhereNeedShiftIdxCell, _canSync, _objsForSync);
+                                TryAddDataForSync(_effectsUnitCs[curCellIdx_0].StunHowManyUpdatesNeedStay, ref unitECopy.EffectsC.StunHowManyUpdatesNeedStay, _canSync, _objsForSync);
 
                                 TrySync(stream, _canSync, _objsForSync);
-
-
 
 
                                 TryAddDataForSync(_e.YoungForestC(curCellIdx_0).Resources, ref _eCopy.YoungForestC(curCellIdx_0).Resources, _canSync, _objsForSync);
@@ -154,14 +163,15 @@ namespace Chessy.Model.System
                                 TryAddDataForSync(_e.HillC(curCellIdx_0).Resources, ref _eCopy.HillC(curCellIdx_0).Resources, _canSync, _objsForSync);
                                 TryAddDataForSync(_e.MountainC(curCellIdx_0).Resources, ref _eCopy.MountainC(curCellIdx_0).Resources, _canSync, _objsForSync);
 
-                                TryAddDataForSync(_e.HaveFire(curCellIdx_0), ref _eCopy.HaveFire(curCellIdx_0), _canSync, _objsForSync);
+                                TryAddDataForSync(_fireCs[curCellIdx_0].HaveFire, ref cellEsCopy.EffectE.FireC.HaveFire, _canSync, _objsForSync);
 
-                                TryAddDataForSync(_e.ProtectionRainyMagicShield(curCellIdx_0), ref _eCopy.UnitEffectsC(curCellIdx_0).ProtectionRainyMagicShield, _canSync, _objsForSync);
-                                TryAddDataForSync(_e.HaveFrozenArrawArcher(curCellIdx_0), ref _eCopy.UnitEffectsC(curCellIdx_0).HaveFrozenArrawArcher, _canSync, _objsForSync);
+                                TryAddDataForSync(_effectsUnitCs[curCellIdx_0].ProtectionRainyMagicShield, ref _eCopy.CellEs(curCellIdx_0).UnitE.EffectsC.ProtectionRainyMagicShield, _canSync, _objsForSync);
+                                TryAddDataForSync(_effectsUnitCs[curCellIdx_0].HaveFrozenArrawArcher, ref _eCopy.CellEs(curCellIdx_0).UnitE.EffectsC.HaveFrozenArrawArcher, _canSync, _objsForSync);
 
-                                TryAddDataForSync(_e.BuildingOnCellT(curCellIdx_0), ref _eCopy.BuildingC(curCellIdx_0).BuildingT, _canSync, _objsForSync);
-                                TryAddDataForSync(_e.BuildingLevelT(curCellIdx_0), ref _eCopy.BuildingC(curCellIdx_0).LevelT, _canSync, _objsForSync);
-                                TryAddDataForSync(_e.BuildingPlayerT(curCellIdx_0), ref _eCopy.BuildingC(curCellIdx_0).PlayerT, _canSync, _objsForSync);
+
+                                TryAddDataForSync(buildingC.BuildingT, ref buildingCCopy.BuildingT, _canSync, _objsForSync);
+                                TryAddDataForSync(buildingC.LevelT, ref buildingCCopy.LevelT, _canSync, _objsForSync);
+                                TryAddDataForSync(buildingC.PlayerT, ref buildingCCopy.PlayerT, _canSync, _objsForSync);
 
                                 TrySync(stream, _canSync, _objsForSync);
 
@@ -170,7 +180,7 @@ namespace Chessy.Model.System
 
                                 for (var abilityT = (AbilityTypes)1; abilityT < AbilityTypes.End; abilityT++)
                                 {
-                                    TryAddDataForSync(_e.UnitCooldownAbilitiesC(curCellIdx_0).Cooldown(abilityT), ref _eCopy.UnitCooldownAbilitiesC(curCellIdx_0).Cooldown(abilityT), _canSync, _objsForSync);
+                                    TryAddDataForSync(_cooldownAbilityCs[curCellIdx_0].Cooldown(abilityT), ref unitECopy.CooldownsC.Cooldown(abilityT), _canSync, _objsForSync);
                                 }
 
                                 TrySync(stream, _canSync, _objsForSync);
@@ -180,7 +190,7 @@ namespace Chessy.Model.System
                                 //for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
                                 //{
                                 //    TryAddDataForSync(_e.UnitButtonAbilitiesC(curCellIdx_0).Ability(buttonT), ref _eCopy.UnitButtonAbilitiesC(curCellIdx_0).Ability(buttonT), _canSync, _objsForSync);
-                                //    TryAddDataForSync(_e.EffectsUnitsRightBarsC(curCellIdx_0).Effect(buttonT), ref _eCopy.EffectsUnitsRightBarsC(curCellIdx_0).Effect(buttonT), _canSync, _objsForSync);
+                                //    TryAddDataForSync(_effectsUnitsRightBarsCs[curCellIdx_0).Effect(buttonT), ref _eCopy.EffectsUnitsRightBarsC(curCellIdx_0).Effect(buttonT), _canSync, _objsForSync);
                                 //}
 
                                 //TrySync(stream, _canSync, _objsForSync);
@@ -190,9 +200,9 @@ namespace Chessy.Model.System
                                 //for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
                                 //{
                                 //    TryAddDataForSync(_e.HasKingEffectHereC(curCellIdx_0).Has(playerT), ref _eCopy.HasKingEffectHereC(curCellIdx_0).Has(playerT), _canSync, _objsForSync);
-                                //    TryAddDataForSync(_e.UnitVisibleC(curCellIdx_0).IsVisible(playerT), ref _eCopy.UnitVisibleC(curCellIdx_0).IsVisible(playerT), _canSync, _objsForSync);
+                                //    TryAddDataForSync(_unitVisibleCs[curCellIdx_0).IsVisible(playerT), ref _eCopy.UnitVisibleC(curCellIdx_0).IsVisible(playerT), _canSync, _objsForSync);
                                 //    TryAddDataForSync(_e.TrailVisibleC(curCellIdx_0).IsVisible(playerT), ref _eCopy.TrailVisibleC(curCellIdx_0).IsVisible(playerT), _canSync, _objsForSync);
-                                //    TryAddDataForSync(_e.BuildingVisibleC(curCellIdx_0).IsVisible(playerT), ref _eCopy.BuildingVisibleC(curCellIdx_0).IsVisible(playerT), _canSync, _objsForSync);
+                                //    TryAddDataForSync(_visibleBuildingCs[curCellIdx_0).IsVisible(playerT), ref _eCopy.BuildingVisibleC(curCellIdx_0).IsVisible(playerT), _canSync, _objsForSync);
                                 //}
 
                                 //TrySync(stream, _canSync, _objsForSync);
@@ -200,21 +210,21 @@ namespace Chessy.Model.System
 
                                 for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                                 {
-                                    TryAddDataForSync(_e.HealthTrail(curCellIdx_0).Health(directT), ref _eCopy.HealthTrail(curCellIdx_0).Health(directT), _canSync, _objsForSync);
+                                    TryAddDataForSync(_hpTrailCs[curCellIdx_0].Health(directT), ref trailHealthCCopy.Health(directT), _canSync, _objsForSync);
                                 }
                                 TrySync(stream, _canSync, _objsForSync);
 
 
 
                                 TryAddDataForSync(_e.WaterOnCellC(curCellIdx_0).Resources, ref _eCopy.WaterOnCellC(curCellIdx_0).Resources, _canSync, _objsForSync);
-                                TryAddDataForSync(_e.WaterUnitC(curCellIdx_0).Water, ref _eCopy.WaterUnitC(curCellIdx_0).Water, _canSync, _objsForSync);
-                                TryAddDataForSync(_e.UnitMainC(curCellIdx_0).CooldownForAttackAnyUnitInSeconds, ref _eCopy.UnitMainC(curCellIdx_0).CooldownForAttackAnyUnitInSeconds, _canSync, _objsForSync);
+                                TryAddDataForSync(_unitWaterCs[curCellIdx_0].Water, ref unitECopy.WaterC.Water, _canSync, _objsForSync);
+                                TryAddDataForSync(_unitCs[curCellIdx_0].CooldownForAttackAnyUnitInSeconds, ref unitMainCCopy.CooldownForAttackAnyUnitInSeconds, _canSync, _objsForSync);
                                 TryAddDataForSync(unitMainC.HowManySecondUnitWasHereInThisCondition, ref unitMainCCopy.HowManySecondUnitWasHereInThisCondition, _canSync, _objsForSync);
 
                                 TrySync(stream, _canSync, _objsForSync);
 
 
-                                TryAddDataForSync(_e.CloudC(curCellIdx_0).IsCenter, ref _eCopy.CloudC(curCellIdx_0).IsCenter, _canSync, _objsForSync);
+                                TryAddDataForSync(_cloudCs[curCellIdx_0].IsCenter, ref cloudECopy.CloudC.IsCenter, _canSync, _objsForSync);
                                 TryAddDataForSync(_e.CloudWhereViewDataOnCellC(curCellIdx_0).DataIdxCell, ref _eCopy.CloudWhereViewDataOnCellC(curCellIdx_0).DataIdxCell, _canSync, _objsForSync);
                                 TryAddDataForSync(_e.CloudWhereViewDataOnCellC(curCellIdx_0).ViewIdxCell, ref _eCopy.CloudWhereViewDataOnCellC(curCellIdx_0).ViewIdxCell, _canSync, _objsForSync);
 
@@ -292,32 +302,32 @@ namespace Chessy.Model.System
 
                                 if ((bool)stream.ReceiveNext())
                                 {
-                                    if ((bool)stream.ReceiveNext()) _e.SetUnitOnCellT(curCellIdx_0, (UnitTypes)stream.ReceiveNext());
-                                    if ((bool)stream.ReceiveNext()) _e.SetUnitLevelT(curCellIdx_0, (LevelTypes)stream.ReceiveNext());
-                                    if ((bool)stream.ReceiveNext()) _e.SetUnitPlayerT(curCellIdx_0, (PlayerTypes)stream.ReceiveNext());
-                                    if ((bool)stream.ReceiveNext()) _e.SetUnitConditionT(curCellIdx_0, (ConditionUnitTypes)stream.ReceiveNext());
+                                    if ((bool)stream.ReceiveNext()) _unitCs[curCellIdx_0].UnitT = (UnitTypes)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _unitCs[curCellIdx_0].LevelT = (LevelTypes)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _unitCs[curCellIdx_0].PlayerT = (PlayerTypes)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _unitCs[curCellIdx_0].ConditionT = (ConditionUnitTypes)stream.ReceiveNext();
                                     if ((bool)stream.ReceiveNext()) unitMainC.IsArcherDirectedToRight = (bool)stream.ReceiveNext();
                                     if ((bool)stream.ReceiveNext()) unitMainC.DamageSimpleAttack = (double)stream.ReceiveNext();
                                     if ((bool)stream.ReceiveNext()) unitMainC.DamageOnCell = (double)stream.ReceiveNext();
 
 
-                                    if ((bool)stream.ReceiveNext()) _e.HpUnitC(curCellIdx_0).Health = (double)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _hpUnitCs[curCellIdx_0].Health = (double)stream.ReceiveNext();
 
 
                                     var unitMainTWC = unitE.MainToolWeaponC;
                                     if ((bool)stream.ReceiveNext()) unitMainTWC.ToolWeaponT = (ToolsWeaponsWarriorTypes)stream.ReceiveNext();
                                     if ((bool)stream.ReceiveNext()) unitMainTWC.LevelT = (LevelTypes)stream.ReceiveNext();
 
-                                    if ((bool)stream.ReceiveNext()) _e.SetExtraToolWeaponT(curCellIdx_0, (ToolsWeaponsWarriorTypes)stream.ReceiveNext());
-                                    if ((bool)stream.ReceiveNext()) _e.SetExtraTWLevelT(curCellIdx_0, (LevelTypes)stream.ReceiveNext());
-                                    if ((bool)stream.ReceiveNext()) _e.SetExtraTWProtection(curCellIdx_0, (float)stream.ReceiveNext());
+                                    if ((bool)stream.ReceiveNext()) _extraTWC[curCellIdx_0].ToolWeaponT = (ToolsWeaponsWarriorTypes)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _extraTWC[curCellIdx_0].LevelT = (LevelTypes)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _extraTWC[curCellIdx_0].ProtectionShield = (float)stream.ReceiveNext();
 
-                                    if ((bool)stream.ReceiveNext()) _e.WhereViewDataUnitC(curCellIdx_0).DataIdxCell = (byte)stream.ReceiveNext();
-                                    if ((bool)stream.ReceiveNext()) _e.WhereViewDataUnitC(curCellIdx_0).ViewIdxCell = (byte)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _unitWhereViewDataCs[curCellIdx_0].DataIdxCell = (byte)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _unitWhereViewDataCs[curCellIdx_0].ViewIdxCell = (byte)stream.ReceiveNext();
 
-                                    if ((bool)stream.ReceiveNext()) _e.ShiftingInfoForUnitC(curCellIdx_0).WhereNeedShiftIdxCell = (byte)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _shiftingUnitCs[curCellIdx_0].WhereNeedShiftIdxCell = (byte)stream.ReceiveNext();
 
-                                    if ((bool)stream.ReceiveNext()) _e.UnitEffectsC(curCellIdx_0).StunHowManyUpdatesNeedStay = (float)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _effectsUnitCs[curCellIdx_0].StunHowManyUpdatesNeedStay = (float)stream.ReceiveNext();
                                 }
 
                                 if ((bool)stream.ReceiveNext())
@@ -327,14 +337,14 @@ namespace Chessy.Model.System
                                     if ((bool)stream.ReceiveNext()) _e.HillC(curCellIdx_0).Resources = (float)stream.ReceiveNext();
                                     if ((bool)stream.ReceiveNext()) _e.MountainC(curCellIdx_0).Resources = (float)stream.ReceiveNext();
 
-                                    if ((bool)stream.ReceiveNext()) _e.EffectE(curCellIdx_0).HaveFire = (bool)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _fireCs[curCellIdx_0].HaveFire = (bool)stream.ReceiveNext();
 
-                                    if ((bool)stream.ReceiveNext()) _e.UnitEffectsC(curCellIdx_0).ProtectionRainyMagicShield = (float)stream.ReceiveNext();
-                                    if ((bool)stream.ReceiveNext()) _e.UnitEffectsC(curCellIdx_0).HaveFrozenArrawArcher = (bool)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _effectsUnitCs[curCellIdx_0].ProtectionRainyMagicShield = (float)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _effectsUnitCs[curCellIdx_0].HaveFrozenArrawArcher = (bool)stream.ReceiveNext();
 
-                                    if ((bool)stream.ReceiveNext()) _e.BuildingC(curCellIdx_0).BuildingT = (BuildingTypes)stream.ReceiveNext();
-                                    if ((bool)stream.ReceiveNext()) _e.BuildingC(curCellIdx_0).LevelT = (LevelTypes)stream.ReceiveNext();
-                                    if ((bool)stream.ReceiveNext()) _e.BuildingC(curCellIdx_0).PlayerT = (PlayerTypes)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _buildingCs[curCellIdx_0].BuildingT = (BuildingTypes)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _buildingCs[curCellIdx_0].LevelT = (LevelTypes)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _buildingCs[curCellIdx_0].PlayerT = (PlayerTypes)stream.ReceiveNext();
                                 }
 
 
@@ -342,7 +352,7 @@ namespace Chessy.Model.System
                                 {
                                     for (var abilityT = (AbilityTypes)1; abilityT < AbilityTypes.End; abilityT++)
                                     {
-                                        if ((bool)stream.ReceiveNext()) _e.UnitCooldownAbilitiesC(curCellIdx_0).Cooldown(abilityT) = (int)stream.ReceiveNext();
+                                        if ((bool)stream.ReceiveNext()) _cooldownAbilityCs[curCellIdx_0].Cooldown(abilityT) = (int)stream.ReceiveNext();
                                     }
                                 }
 
@@ -354,7 +364,7 @@ namespace Chessy.Model.System
                                 //    for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
                                 //    {
                                 //        if ((bool)stream.ReceiveNext()) _e.UnitButtonAbilitiesC(curCellIdx_0).SetAbility(buttonT, (AbilityTypes)stream.ReceiveNext());
-                                //        if ((bool)stream.ReceiveNext()) _e.EffectsUnitsRightBarsC(curCellIdx_0).Set(buttonT, (EffectTypes)stream.ReceiveNext());
+                                //        if ((bool)stream.ReceiveNext()) _effectsUnitsRightBarsCs[curCellIdx_0).Set(buttonT, (EffectTypes)stream.ReceiveNext());
                                 //    }
                                 //}
 
@@ -363,9 +373,9 @@ namespace Chessy.Model.System
                                 //    for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
                                 //    {
                                 //        if ((bool)stream.ReceiveNext()) _e.HasKingEffectHereC(curCellIdx_0).Set(playerT, (bool)stream.ReceiveNext());
-                                //        if ((bool)stream.ReceiveNext()) _e.UnitVisibleC(curCellIdx_0).Set(playerT, (bool)stream.ReceiveNext());
+                                //        if ((bool)stream.ReceiveNext()) _unitVisibleCs[curCellIdx_0).Set(playerT, (bool)stream.ReceiveNext());
                                 //        if ((bool)stream.ReceiveNext()) _e.TrailVisibleC(curCellIdx_0).Set(playerT, (bool)stream.ReceiveNext());
-                                //        if ((bool)stream.ReceiveNext()) _e.BuildingVisibleC(curCellIdx_0).Set(playerT, (bool)stream.ReceiveNext());
+                                //        if ((bool)stream.ReceiveNext()) _visibleBuildingCs[curCellIdx_0).Set(playerT, (bool)stream.ReceiveNext());
                                 //    }
                                 //}
 
@@ -374,21 +384,21 @@ namespace Chessy.Model.System
                                 {
                                     for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                                     {
-                                        if ((bool)stream.ReceiveNext()) _e.HealthTrail(curCellIdx_0).Set(directT, (float)stream.ReceiveNext());
+                                        if ((bool)stream.ReceiveNext()) _hpTrailCs[curCellIdx_0].Set(directT, (float)stream.ReceiveNext());
                                     }
                                 }
 
                                 if ((bool)stream.ReceiveNext())
                                 {
                                     if ((bool)stream.ReceiveNext()) _e.WaterOnCellC(curCellIdx_0).Resources = (float)stream.ReceiveNext();
-                                    if ((bool)stream.ReceiveNext()) _e.WaterUnitC(curCellIdx_0).Water = (double)stream.ReceiveNext();
-                                    if ((bool)stream.ReceiveNext()) _e.UnitMainC(curCellIdx_0).CooldownForAttackAnyUnitInSeconds = (int)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _unitWaterCs[curCellIdx_0].Water = (double)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _unitCs[curCellIdx_0].CooldownForAttackAnyUnitInSeconds = (int)stream.ReceiveNext();
                                     if ((bool)stream.ReceiveNext()) unitMainC.HowManySecondUnitWasHereInThisCondition = (int)stream.ReceiveNext();
                                 }
 
                                 if ((bool)stream.ReceiveNext())
                                 {
-                                    if ((bool)stream.ReceiveNext()) _e.CloudC(curCellIdx_0).IsCenter = (bool)stream.ReceiveNext();
+                                    if ((bool)stream.ReceiveNext()) _cloudCs[curCellIdx_0].IsCenter = (bool)stream.ReceiveNext();
 
                                     if ((bool)stream.ReceiveNext()) _e.CloudWhereViewDataOnCellC(curCellIdx_0).DataIdxCell = (byte)stream.ReceiveNext();
                                     if ((bool)stream.ReceiveNext()) _e.CloudWhereViewDataOnCellC(curCellIdx_0).ViewIdxCell = (byte)stream.ReceiveNext();
@@ -397,7 +407,7 @@ namespace Chessy.Model.System
                             }
 
                             _s.GetDataCellsS.GetDataCells();
-                            _e.NeedUpdateView = true;
+                            _updateAllViewC.NeedUpdateView = true;
 
 
                             Debug.Log("Synchronization");

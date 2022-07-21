@@ -18,7 +18,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
             if (_aboutGameC.GameModeType.Is(GameModeTypes.WithFriendOffline))
             {
-                if (_e.ZoneInfoC.IsActiveFriend)
+                if (_zonesInfoC.IsActiveFriend)
                 {
                     _needActive = true;
 

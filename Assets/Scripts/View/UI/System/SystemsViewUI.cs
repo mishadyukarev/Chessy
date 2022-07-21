@@ -44,7 +44,7 @@ namespace Chessy.View.UI.System
                 //Right
                 new ProtectUIS(eUI.RightEs.ProtectE, eM).Sync,
                 new RelaxUIS(eUI.RightEs.RelaxE,  eM).Sync,
-                new EffectsUIS(eM.Resources, eUI, eM).Sync,
+                new EffectsUIS(eUI, eM).Sync,
                 new RightZoneUIS(eUI, eM).Sync,
                 new StatsUIS(eUI.RightEs.StatsEs, eM).Sync,
 
@@ -67,26 +67,26 @@ namespace Chessy.View.UI.System
                     }
 
 
-                    if(eM.MistakeT == MistakeTypes.NeedMoreSteps)
+                    if(_mistakeC.MistakeT == MistakeTypes.NeedMoreSteps)
                     {
                         eUI.RightEs.StatsEs.EnergyE.AnimationC.Play();
                     }
 
-                    if (eM.LessonT == LessonTypes.RelaxExtractPawn)
+                    if (_aboutGameC.LessonType == LessonTypes.RelaxExtractPawn)
                     {
                         eUI.RightEs.RelaxE.AnimationC.Play();
                     }
 
-                    else if (eM.LessonT == LessonTypes.SettingPawn)
+                    else if (_aboutGameC.LessonType == LessonTypes.SettingPawn)
                     {
                         eUI.DownEs.PawnE.AnimationC.Play();
                     }
 
 
-                    eUI.UpEs.SettingsButtonC.SetActiveParent(!eM.LessonT.HaveLesson());
-                    eUI.UpEs.DiscordButtonC.SetActive(!eM.LessonT.HaveLesson());
-                    eUI.UpEs.LeaveButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT >= LessonTypes.MenuInfo);
-                    eUI.DownEs.BookLittleE.ButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT > LessonTypes.HoldPressWarrior);
+                    eUI.UpEs.SettingsButtonC.SetActiveParent(!_aboutGameC.LessonType.HaveLesson());
+                    eUI.UpEs.DiscordButtonC.SetActive(!_aboutGameC.LessonType.HaveLesson());
+                    eUI.UpEs.LeaveButtonC.SetActiveParent(!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.MenuInfo);
+                    eUI.DownEs.BookLittleE.ButtonC.SetActiveParent(!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType > LessonTypes.HoldPressWarrior);
 
                     eUI.GameCanvasGOC.TrySetActive(_aboutGameC.SceneType == SceneTypes.Game);
                     eUI.ShopE.ShopZoneGOC.TrySetActive(_shopC.IsOpenedShopZone);
@@ -97,13 +97,13 @@ namespace Chessy.View.UI.System
 
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
-                _syncUpdates.Add(new UniqueButtonUIS(buttonT, eUI.RightEs.Unique(buttonT), eM.Resources, eM).Sync);
+                _syncUpdates.Add(new UniqueButtonUIS(buttonT, eUI.RightEs.Unique(buttonT), eM).Sync);
             }
         }
 
         public void Update()
         {
-            if (_e.NeedUpdateView)
+            if (_updateAllViewC.NeedUpdateView)
             {         
                 _syncUpdates.ForEach((Action action) => action());
             }

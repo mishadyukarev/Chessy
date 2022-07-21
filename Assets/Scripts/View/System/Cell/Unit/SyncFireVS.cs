@@ -23,7 +23,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.HaveFire(cellIdxCurrent))
+                if (_fireCs[cellIdxCurrent].HaveFire)
                 {
                     _needActive[cellIdxCurrent] = true;
                 }

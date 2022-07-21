@@ -20,7 +20,7 @@ namespace Chessy.Model.System
                 }
                 else
                 {
-                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuyBuildingInTownM), buildT });
+                    _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuyBuildingInTownM), buildT });
                 }
             }
 
@@ -29,7 +29,7 @@ namespace Chessy.Model.System
             switch (buildT)
             {
                 case BuildingTypes.House:
-                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuyBuildingInTownM), buildT });
+                    _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuyBuildingInTownM), buildT });
                     break;
 
                 case BuildingTypes.Market:
@@ -47,7 +47,7 @@ namespace Chessy.Model.System
                 default: throw new Exception();
             }
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
     }
 }

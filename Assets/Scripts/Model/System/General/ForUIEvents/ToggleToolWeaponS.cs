@@ -9,7 +9,7 @@ namespace Chessy.Model.System
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
 
-            _e.SelectedCellIdx = 0;
+            _cellsC.Selected = 0;
 
             if (_aboutGameC.CurrentPlayerIT.Is(_aboutGameC.CurrentPlayerIT))
             {
@@ -37,7 +37,7 @@ namespace Chessy.Model.System
 
                     if (twT == ToolsWeaponsWarriorTypes.Shield || twT == ToolsWeaponsWarriorTypes.BowCrossbow)
                     {
-                        if (_e.CellClickT.Is(CellClickTypes.GiveTakeTW))
+                        if (_aboutGameC.CellClickT.Is(CellClickTypes.GiveTakeTW))
                         {
                             if (twT == ToolsWeaponsWarriorTypes.Shield || twT == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
@@ -59,29 +59,29 @@ namespace Chessy.Model.System
                     _selectedToolWeaponC.LevelT = levT;
 
 
-                    _e.CellClickT = CellClickTypes.GiveTakeTW;
+                    _aboutGameC.CellClickT = CellClickTypes.GiveTakeTW;
                 }
                 else
                 {
-                    _e.MistakeT = MistakeTypes.NeedPawnsInGame;
-                    _e.MistakeTimer = 0;
+                    _mistakeC.MistakeT = MistakeTypes.NeedPawnsInGame;
+                    _mistakeC.Timer = 0;
                     _e.SoundAction(ClipTypes.WritePensil).Invoke();
                 }
             }
             else
             {
-                _e.MistakeT = MistakeTypes.NeedWaitQueue;
-                _e.MistakeTimer = 0;
+                _mistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
+                _mistakeC.Timer = 0;
                 _e.SoundAction(ClipTypes.WritePensil).Invoke();
             }
 
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
 
         public void Melt()
         {
-            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryMeltInMelterBuildingM) });
+            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryMeltInMelterBuildingM) });
         }
     }
 }

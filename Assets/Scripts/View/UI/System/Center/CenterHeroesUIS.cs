@@ -20,9 +20,9 @@ namespace Chessy.Model
 
             var isActiveKingZone = _eUI.CenterEs.KingE.Paren.IsActiveSelf;
 
-            if (!isActiveKingZone && _e.PlayerInfoE(_aboutGameC.CurrentPlayerIType).GodInfoC.UnitT.Is(UnitTypes.None) && _e.CellClickT != CellClickTypes.SetUnit)
+            if (!isActiveKingZone && _e.PlayerInfoE(_aboutGameC.CurrentPlayerIType).GodInfoC.UnitT.Is(UnitTypes.None) && _aboutGameC.CellClickType != CellClickTypes.SetUnit)
             {
-                if (!_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn))
+                if (!_aboutGameC.LessonType.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn))
                 {
                     _needActiveZone = true;
                 }

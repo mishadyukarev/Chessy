@@ -13,7 +13,7 @@ namespace Chessy.Model.System
         {
             var whoseMove = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (!_e.HaveBuildingOnCell(cell_0) || _e.BuildingOnCellT(cell_0).Is(BuildingTypes.Camp))
+            if (!_buildingCs[cell_0].HaveBuilding || _buildingCs[cell_0].BuildingT == BuildingTypes.Camp)
             {
                 if (!_e.AdultForestC(cell_0).HaveAnyResources)
                 {
@@ -45,7 +45,7 @@ namespace Chessy.Model.System
                         _e.YoungForestC(cell_0).Resources = 0;
                         _e.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, ValuesChessy.MAX_HP_ANY_BUILDING, cell_0);
 
-                        if (_e.LessonT == LessonTypes.Build1Farms)
+                        if (_aboutGameC.LessonT == LessonTypes.Build1Farms)
                         {
                             SetNextLesson();
                         }

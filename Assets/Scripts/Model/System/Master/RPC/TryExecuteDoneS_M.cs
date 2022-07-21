@@ -81,11 +81,11 @@ namespace Chessy.Model.System
 
         //    for (byte idx = 0; idx < IndexCellsValues.CELLS; idx++)
         //    {
-        //        _e.UnitEffectsC(idx).StunHowManyUpdatesNeedStay -= taking;
+        //        _effectsUnitCs[idx).StunHowManyUpdatesNeedStay -= taking;
 
         //        for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
         //        {
-        //            _e.UnitCooldownAbilitiesC(idx).Take(abilityT, taking);
+        //            _cooldownAbilityCs[idx).Take(abilityT, taking);
         //        }
         //    }
         //}

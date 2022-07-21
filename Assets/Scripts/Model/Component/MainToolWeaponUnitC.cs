@@ -1,9 +1,12 @@
-﻿namespace Chessy.Model.Cell.Unit
+﻿namespace Chessy.Model.Component
 {
     public sealed class MainToolWeaponUnitC
     {
         internal ToolsWeaponsWarriorTypes ToolWeaponT;
         internal LevelTypes LevelT;
+
+        public ToolsWeaponsWarriorTypes ToolWeaponType => ToolWeaponT;
+        public LevelTypes LevelType => LevelT;
 
         internal void Clone(in MainToolWeaponUnitC mainToolWeaponUnitC)
         {

@@ -10,19 +10,19 @@ namespace Chessy.Model.System
 
             _e.IsSelectedCity = !_e.IsSelectedCity;
 
-            if (_e.LessonT.Is(LessonTypes.OpeningTown))
+            if (_aboutGameC.LessonT.Is(LessonTypes.OpeningTown))
             {
                 _s.SetNextLesson();
 
             }
-            if (_e.LessonT.Is(LessonTypes.TryBuyingHouse))
+            if (_aboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse))
             {
                 if (!_e.IsSelectedCity) _s.SetPreviousLesson();
             }
 
 
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
     }
 }

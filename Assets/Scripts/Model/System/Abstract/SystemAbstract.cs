@@ -10,10 +10,19 @@ namespace Chessy.Model
 
         protected readonly CellC[] _cellCs = new CellC[IndexCellsValues.CELLS];
         protected readonly PositionC[] _possitionCellCs = new PositionC[IndexCellsValues.CELLS];
+        protected readonly XyCellC[] _xyCellsCs = new XyCellC[IndexCellsValues.CELLS];
+        protected readonly IsStartedCellC[] _isStartedCellCs = new IsStartedCellC[IndexCellsValues.CELLS];
+
+
+        #region Unit
 
         protected readonly UnitOnCellC[] _unitCs = new UnitOnCellC[IndexCellsValues.CELLS];
+        protected readonly HealthC[] _hpUnitCs = new HealthC[IndexCellsValues.CELLS];
+        protected readonly WaterAmountC[] _unitWaterCs = new WaterAmountC[IndexCellsValues.CELLS];
         protected readonly EffectsUnitC[] _effectsUnitCs = new EffectsUnitC[IndexCellsValues.CELLS];
         protected readonly ShiftingObjectC[] _shiftingUnitCs = new ShiftingObjectC[IndexCellsValues.CELLS];
+        protected readonly MainToolWeaponUnitC[] _mainTWC = new MainToolWeaponUnitC[IndexCellsValues.CELLS];
+        protected readonly ExtraToolWeaponUnitC[] _extraTWC = new ExtraToolWeaponUnitC[IndexCellsValues.CELLS];
         protected readonly HowManyDistanceNeedForShiftingUnitC[] _howManyDistanceNeedForShiftingUnitCs = new HowManyDistanceNeedForShiftingUnitC[IndexCellsValues.CELLS];
         protected readonly WhereUnitCanAttackToEnemyC[] _whereSimpleAttackCs = new WhereUnitCanAttackToEnemyC[IndexCellsValues.CELLS];
         protected readonly WhereUnitCanAttackToEnemyC[] _whereUniqueAttackCs = new WhereUnitCanAttackToEnemyC[IndexCellsValues.CELLS];
@@ -21,10 +30,33 @@ namespace Chessy.Model
         protected readonly bool[][] _whereUnque = new bool[IndexCellsValues.CELLS][];
         protected readonly VisibleToOtherPlayerOrNotC[] _unitVisibleCs = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
         protected readonly WhereViewIdxCellC[] _unitWhereViewDataCs = new WhereViewIdxCellC[IndexCellsValues.CELLS];
+        protected readonly HasUnitKingEffectHereC[] _hasUnitKingEffectHereCs = new HasUnitKingEffectHereC[IndexCellsValues.CELLS];
+        protected readonly CooldownAbilitiesInSecondsC[] _cooldownAbilityCs = new CooldownAbilitiesInSecondsC[IndexCellsValues.CELLS];
+        protected readonly WhereUnitCanShiftC[] _whereUnitCanShiftCs = new WhereUnitCanShiftC[IndexCellsValues.CELLS];
+        protected readonly ButtonsAbilitiesUnitC[] _buttonsAbilitiesUnitCs = new ButtonsAbilitiesUnitC[IndexCellsValues.CELLS];
+        protected readonly EffectsUnitsRightBarsC[] _effectsUnitsRightBarsCs = new EffectsUnitsRightBarsC[IndexCellsValues.CELLS];
+        protected readonly NeedUpdateViewC[] _updateViewUnitCs = new NeedUpdateViewC[IndexCellsValues.CELLS];
+        protected readonly ExtractionResourcesWithUnitC[] _extractionResourcesWithUnitCs = new ExtractionResourcesWithUnitC[IndexCellsValues.CELLS];
+        protected readonly WhereUnitCanFireAdultForestC[] _whereUnitCanFireAdultForestCs = new WhereUnitCanFireAdultForestC[IndexCellsValues.CELLS];
+
+        #endregion
+
+
+        protected readonly BuildingOnCellC[] _buildingCs = new BuildingOnCellC[IndexCellsValues.CELLS];
+        protected readonly BuildingExtractionOnCellC[] _extractionBuildingCs = new BuildingExtractionOnCellC[IndexCellsValues.CELLS];
+        protected readonly VisibleToOtherPlayerOrNotC[] _visibleBuildingCs = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
 
         protected readonly CloudC[] _cloudCs = new CloudC[IndexCellsValues.CELLS];
         protected readonly WhereViewIdxCellC[] _cloudWhereViewDataCs = new WhereViewIdxCellC[IndexCellsValues.CELLS];
+        protected readonly ShiftingObjectC[] _shiftCloudCs = new ShiftingObjectC[IndexCellsValues.CELLS];
 
+        protected readonly RiverC[] _riverCs = new RiverC[IndexCellsValues.CELLS];
+        protected readonly HaveRiverAroundCellC[] _haveRiverAroundCellCs = new HaveRiverAroundCellC[IndexCellsValues.CELLS];
+
+        protected readonly FireC[] _fireCs = new FireC[IndexCellsValues.CELLS];
+
+        protected readonly HealthTrailC[] _hpTrailCs = new HealthTrailC[IndexCellsValues.CELLS];
+        protected readonly VisibleToOtherPlayerOrNotC[] _visibleTrailCs = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
 
         #region Else
 
@@ -35,6 +67,14 @@ namespace Chessy.Model
         protected readonly SelectedToolWeaponC _selectedToolWeaponC;
         protected readonly SettingsC _settingsC;
         protected readonly ShopC _shopC;
+        protected readonly CellsC _cellsC;
+        protected readonly RpcPoolC _rpcC;
+        protected readonly DataFromViewC _dataFromViewC;
+        protected readonly MistakeC _mistakeC;
+        protected readonly UpdateAllViewC _updateAllViewC;
+        protected readonly ZonesInfoC _zonesInfoC;
+        protected readonly SelectedUnitC _selectedUnitC;
+        protected readonly FromResourcesC _fromResourcesC;
 
 
         protected readonly WeatherE _weatherE;
@@ -56,14 +96,24 @@ namespace Chessy.Model
                 var cellE = cellEs.CellE;
                 var unitE = cellEs.UnitE;
                 var cloudE = cellEs.CloudE;
+                var buildingE = cellEs.BuildingE;
+                var riverE = cellEs.RiverE;
+                var effectE = cellEs.EffectE;
+                var trailE = cellEs.TrailE;
 
 
                 _cellCs[cellIdx_0] = cellE.CellC;
                 _possitionCellCs[cellIdx_0] = cellE.PositionC;
+                _xyCellsCs[cellIdx_0] = cellE.XyCellC;
+                _isStartedCellCs[cellIdx_0] = cellE.IsStartedCellC;
 
                 _unitCs[cellIdx_0] = unitE.MainC;
+                _hpUnitCs[cellIdx_0] = unitE.HealthC;
+                _unitWaterCs[cellIdx_0] = unitE.WaterC;
                 _effectsUnitCs[cellIdx_0] = unitE.EffectsC;
                 _shiftingUnitCs[cellIdx_0] = unitE.ShiftingInfoForUnitC;
+                _mainTWC[cellIdx_0] = unitE.MainToolWeaponC;
+                _extraTWC[cellIdx_0] = unitE.ExtraToolWeaponC;
                 _howManyDistanceNeedForShiftingUnitCs[cellIdx_0] = unitE.HowManyDistanceNeedForShiftingUnitC;
                 _whereSimpleAttackCs[cellIdx_0] = unitE.WhereCanAttackSimpleAttackToEnemyC;
                 _whereUniqueAttackCs[cellIdx_0] = unitE.WhereCanAttackUniqueAttackToEnemyC;
@@ -71,9 +121,30 @@ namespace Chessy.Model
                 _whereUnque[cellIdx_0] = _whereUniqueAttackCs[cellIdx_0].WhereUnitCanAttack;
                 _unitVisibleCs[cellIdx_0] = unitE.VisibleToOtherPlayerOrNotC;
                 _unitWhereViewDataCs[cellIdx_0] = unitE.WhereViewDataUnitC;
+                _hasUnitKingEffectHereCs[cellIdx_0] = unitE.HasKingEffectHereC;
+                _cooldownAbilityCs[cellIdx_0] = unitE.CooldownsC;
+                _whereUnitCanShiftCs[cellIdx_0] = unitE.WhereCanShiftC;
+                _buttonsAbilitiesUnitCs[cellIdx_0] = unitE.UniqueButtonsC;
+                _effectsUnitsRightBarsCs[cellIdx_0] = unitE.EffectsUnitsRightBarsC;
+                _updateViewUnitCs[cellIdx_0] = unitE.NeedUpdateViewC;
+                _extractionResourcesWithUnitCs[cellIdx_0] = unitE.ExtractionResourcesC;
+                _whereUnitCanFireAdultForestCs[cellIdx_0] = unitE.WhereUnitCanFireAdultForestC;
+
+                _buildingCs[cellIdx_0] = buildingE.BuildingMainC;
+                _extractionBuildingCs[cellIdx_0] = buildingE.ExtractionC;
+                _visibleBuildingCs[cellIdx_0] = buildingE.VisibleToOtherPlayerC;
 
                 _cloudCs[cellIdx_0] = cloudE.CloudC;
                 _cloudWhereViewDataCs[cellIdx_0] = cloudE.WhereSkinAndWhereDataInfoC;
+                _shiftCloudCs[cellIdx_0] = cloudE.ShiftingC;
+
+                _riverCs[cellIdx_0] = riverE.RiverC;
+                _haveRiverAroundCellCs[cellIdx_0] = riverE.HaveRiverC;
+
+                _fireCs[cellIdx_0] = effectE.FireC;
+
+                _hpTrailCs[cellIdx_0] = trailE.HealthC;
+                _visibleTrailCs[cellIdx_0] = trailE.VisibleC;
             }
 
             var commonInfoE = _e.CommonGameE;
@@ -85,6 +156,14 @@ namespace Chessy.Model
             _selectedToolWeaponC = commonInfoE.SelectedToolWeaponC;
             _settingsC = commonInfoE.SettingsC;
             _shopC = commonInfoE.ShopC;
+            _cellsC = commonInfoE.CellsC;
+            _rpcC = commonInfoE.RpcC;
+            _dataFromViewC = commonInfoE.DataFromViewC;
+            _mistakeC = commonInfoE.MistakeC;
+            _updateAllViewC = commonInfoE.UpdateAllViewC;
+            _zonesInfoC = commonInfoE.ZoneInfoC;
+            _selectedUnitC = commonInfoE.SelectedUnitC;
+            _fromResourcesC = commonInfoE.Resources;
 
             _weatherE = _e.WeatherE;
             _sunC = _weatherE.SunC;

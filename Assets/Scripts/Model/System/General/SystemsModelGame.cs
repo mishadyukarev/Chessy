@@ -19,10 +19,10 @@ namespace Chessy.Model.System
         internal readonly ExecuteUpdateEverythingMS ExecuteUpdateEverythingMS;
         internal readonly RpcInternetSs RpcSs;
         internal readonly ForPhotonSceneS ForPhotonSceneS;
-        internal readonly SyncDataS SyncDataS;
         internal readonly TryShiftCloudsMS TryShiftCloudsMS;
         internal readonly TryExecuteShiftingUnitS TryExecuteShiftingUnitS;
         internal readonly OnPhotonSerializeViewS OnPhotonSerializeViewS;
+        internal readonly SetNewUnitOnCellS SetNewUnitOnCellS;
 
         public readonly ForButtonsSystemsModel ForUISs;
 
@@ -46,6 +46,7 @@ namespace Chessy.Model.System
             RpcSs = new RpcInternetSs(this, eM);
             TryShiftCloudsMS = new TryShiftCloudsMS(this, eM);
             TryExecuteShiftingUnitS = new TryExecuteShiftingUnitS(this, eM);
+            SetNewUnitOnCellS = new SetNewUnitOnCellS(this, eM);
 
             ForPhotonSceneS = new ForPhotonSceneS(this, eM);
             ForUISs = new ForButtonsSystemsModel(this, eM);
@@ -98,11 +99,11 @@ namespace Chessy.Model.System
             {
                 if (_e.UnitT(cellIdxDirect).HaveUnit())
                 {
-                    if (_e.UnitPlayerT(cellIdx) == _e.UnitPlayerT(cellIdxDirect))
+                    if (_unitCs[cellIdx].PlayerT == _unitCs[cellIdxDirect].PlayerT)
                     {
                         TryExecuteAddingUnitAnimationM(cellIdxDirect);
 
-                        _e.WaterUnitC(cellIdxDirect).Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
+                        _unitWaterCs[cellIdxDirect].Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
                     }
                 }
             }
@@ -110,21 +111,21 @@ namespace Chessy.Model.System
 
         internal void TryExecuteAddingUnitAnimationM(in byte cellIdx)
         {
-            if (ValuesChessy.MAX_WATER_FOR_ANY_UNIT - _e.WaterUnitC(cellIdx).Water >= ValuesChessy.WATER_FOR_ADDING_WATER_ANIMATION)
+            if (ValuesChessy.MAX_WATER_FOR_ANY_UNIT - _unitWaterCs[cellIdx].Water >= ValuesChessy.WATER_FOR_ADDING_WATER_ANIMATION)
             {
-                var idxCellView = _e.WhereViewDataUnitC(cellIdx).ViewIdxCell;
+                var idxCellView = _unitWhereViewDataCs[cellIdx].ViewIdxCell;
 
                 RpcSs.ExecuteAnimationCellDirectlyToGeneral(idxCellView, CellAnimationDirectlyTypes.AddingWaterUnit, RpcTarget.All);
 
-                _e.DataFromViewC.AnimationCellDirectly(CellAnimationDirectlyTypes.AddingWaterUnit).Invoke(idxCellView);
+                _dataFromViewC.AnimationCellDirectly(CellAnimationDirectlyTypes.AddingWaterUnit).Invoke(idxCellView);
             }
         }
 
         internal void ExecuteSoundActionClip(in ClipTypes clipT) => _e.SoundAction(clipT).Invoke();
         internal void ExecuteSoundActionAbility(in AbilityTypes abilityT) => _e.SoundAction(abilityT).Invoke();
 
-        internal void ExecuteAnimationClip(in byte cellIdx, in AnimationCellTypes animationCellT) => _e.DataFromViewC.AnimationCell(cellIdx, animationCellT).Invoke();
-        internal void ExecuteAnimationCellDirectlyClip(in byte cellIdx, in CellAnimationDirectlyTypes cellAnimationDirectlyT) => _e.DataFromViewC.AnimationCellDirectly(cellAnimationDirectlyT).Invoke(cellIdx);
+        internal void ExecuteAnimationClip(in byte cellIdx, in AnimationCellTypes animationCellT) => _dataFromViewC.AnimationCell(cellIdx, animationCellT).Invoke();
+        internal void ExecuteAnimationCellDirectlyClip(in byte cellIdx, in CellAnimationDirectlyTypes cellAnimationDirectlyT) => _dataFromViewC.AnimationCellDirectly(cellAnimationDirectlyT).Invoke(cellIdx);
 
         internal void ExecuteMistake(in MistakeTypes mistakeT, in float[] needRes)
         {
@@ -149,15 +150,15 @@ namespace Chessy.Model.System
 
         internal void SetNextLesson()
         {
-            if (_e.AboutGameC.LessonT == LessonTypes.End - 1)
+            if (_aboutGameC.LessonT == LessonTypes.End - 1)
             {
-                _e.AboutGameC.LessonT = LessonTypes.None;
+                _aboutGameC.LessonT = LessonTypes.None;
             }
-            else _e.AboutGameC.LessonT++;
+            else _aboutGameC.LessonT++;
         }
         internal void SetPreviousLesson()
         {
-            _e.AboutGameC.LessonT--;
+            _aboutGameC.LessonT--;
         }
     }
 }

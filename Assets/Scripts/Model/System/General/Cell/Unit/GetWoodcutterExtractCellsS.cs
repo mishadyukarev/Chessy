@@ -15,9 +15,9 @@ namespace Chessy.Model.System
 
         public void GetWoodcutterExtractCells(in byte cellIdx)
         {
-            _e.BuildingExtractionC(cellIdx).HowManyWoodcutterCanExtractWood = 0;
+            _extractionBuildingCs[cellIdx].HowManyWoodcutterCanExtractWood = 0;
 
-            if (_e.IsBuildingOnCell(cellIdx, BuildingTypes.Woodcutter))
+            if (_buildingCs[cellIdx].BuildingT == BuildingTypes.Woodcutter)
             {
                 var extract = ValuesChessy.WOODCUTTER_EXTRACT;
 
@@ -30,7 +30,7 @@ namespace Chessy.Model.System
                 if (_e.AdultForestC(cellIdx).Resources < extract) extract = _e.AdultForestC(cellIdx).Resources;
 
 
-                _e.BuildingExtractionC(cellIdx).HowManyWoodcutterCanExtractWood = extract;
+                _extractionBuildingCs[cellIdx].HowManyWoodcutterCanExtractWood = extract;
             }
         }
     }

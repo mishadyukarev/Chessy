@@ -13,7 +13,7 @@ namespace Chessy.Model.System
         internal void OnLeftRoom()
         {
             _aboutGameC.SceneT = SceneTypes.Menu;
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
         internal void OnPlayerLeftRoom(in Player otherPlayer)
         {
@@ -40,11 +40,11 @@ namespace Chessy.Model.System
         }
         internal void OnConnected()
         {
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
         internal void OnConnectedToMaster()
         {
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
         internal void OnJoinedRoom()
         {

@@ -35,7 +35,7 @@ namespace Chessy.Model
 
             //    _theMostBigPointForShiftUnit = 0;
 
-            //    if (_e.UnitT(idxCellStart) == UnitTypes.Pawn && _e.UnitPlayerT(idxCellStart) == playerBotT)
+            //    if (_e.UnitT(idxCellStart) == UnitTypes.Pawn && _unitCs[idxCellStart) == playerBotT)
             //    {
             //        foreach (var idxCellDirect in _e.AroundCellsE(idxCellStart).CellsAround)
             //        {

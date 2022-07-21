@@ -7,7 +7,7 @@ namespace Chessy.Model.System
     {
         internal void TrySeedYoungForestOnCellWithPawnM(in AbilityTypes abilityT, in Player sender, in byte cell_0)
         {
-            if (_e.HaveBuildingOnCell(cell_0) && !_e.BuildingOnCellT(cell_0).Is(BuildingTypes.Camp))
+            if (_buildingCs[cell_0].HaveBuilding && _buildingCs[cell_0].BuildingT != BuildingTypes.Camp)
             {
                 RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
             }
@@ -24,7 +24,7 @@ namespace Chessy.Model.System
 
                         _e.AmountPlantedYoungForests++;
 
-                        if (_e.LessonT == LessonTypes.SeedingPawn)
+                        if (_aboutGameC.LessonT == LessonTypes.SeedingPawn)
                         {
                             //if (_e.AmountPlantedYoungForests >= ValuesChessy.NEED_PLANTED_YOUNG_FOREST_FOR_SKIP_LESSON)
                             //{

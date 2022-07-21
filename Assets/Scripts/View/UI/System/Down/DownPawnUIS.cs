@@ -15,7 +15,7 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.SettingPawn)
+            if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.SettingPawn)
             {
                 _pawnE.ParenGOC.TrySetActive(true);
 

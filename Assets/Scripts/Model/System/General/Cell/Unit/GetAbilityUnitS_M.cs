@@ -7,14 +7,8 @@ namespace Chessy.Model.System
 {
     sealed class GetAbilityUnitS_M : SystemModelAbstract
     {
-        readonly ButtonsAbilitiesUnitC[] _buttonsAbilitiesUnitCs = new ButtonsAbilitiesUnitC[IndexCellsValues.CELLS];
-
         internal GetAbilityUnitS_M(in SystemsModel sM, EntitiesModel eM) : base(sM, eM)
         {
-            for (byte cellIdxCurrent_0 = 0; cellIdxCurrent_0 < IndexCellsValues.CELLS; cellIdxCurrent_0++)
-            {
-                _buttonsAbilitiesUnitCs[cellIdxCurrent_0] = _e.UnitButtonAbilitiesC(cellIdxCurrent_0);
-            }
         }
 
         internal void GetAbilityUnit()
@@ -43,12 +37,12 @@ namespace Chessy.Model.System
 
                         case UnitTypes.Pawn:
 
-                            if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
+                            if (_mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
                                 _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.First, AbilityTypes.FireArcher);
                                 _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Second, AbilityTypes.ChangeCornerArcher);
                             }
-                            else if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Staff))
+                            else if (_mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Staff)
                             {
 
                             }
@@ -56,7 +50,7 @@ namespace Chessy.Model.System
                             {
                                 _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.First, AbilityTypes.Seed);
 
-                                if (_e.HaveBuildingOnCell(cellIdxCurrent))
+                                if (_buildingCs[cellIdxCurrent].HaveBuilding)
                                 {
                                     _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Second, AbilityTypes.DestroyBuilding);
                                 }
@@ -65,7 +59,7 @@ namespace Chessy.Model.System
                                     _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Second, AbilityTypes.SetFarm);
                                 }
 
-                                if (_e.HaveFire(cellIdxCurrent)) _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Third, AbilityTypes.PutOutFirePawn);
+                                if (_fireCs[cellIdxCurrent].HaveFire) _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Third, AbilityTypes.PutOutFirePawn);
                                 else _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Third, AbilityTypes.FirePawn);
 
 
@@ -105,7 +99,7 @@ namespace Chessy.Model.System
                             _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.First, AbilityTypes.Resurrect);
                             _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Second, AbilityTypes.SetTeleport);
                             _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Third, AbilityTypes.InvokeSkeletons);
-                            if (_e.HaveBuildingOnCell(cellIdxCurrent)) _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Fourth, AbilityTypes.DestroyBuilding);
+                            if (_buildingCs[cellIdxCurrent].HaveBuilding) _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Fourth, AbilityTypes.DestroyBuilding);
                             break;
 
                         case UnitTypes.Hell:
@@ -123,7 +117,7 @@ namespace Chessy.Model.System
                         default: throw new Exception();
                     }
 
-                    if (_e.IsBuildingOnCell(cellIdxCurrent, BuildingTypes.Teleport))
+                    if (_buildingCs[cellIdxCurrent].BuildingT == BuildingTypes.Teleport)
                     {
                         _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Fifth, AbilityTypes.Teleport);
                     }

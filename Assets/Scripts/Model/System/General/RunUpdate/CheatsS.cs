@@ -38,7 +38,7 @@ namespace Chessy.Model
 
                 if (Input.GetKeyDown(KeyCode.Mouse2))
                 {
-                    _e.LessonT = LessonTypes.None;
+                    _aboutGameC.LessonT = LessonTypes.None;
                 }
 
                 if (Input.GetKeyDown(KeyCode.R))
@@ -55,7 +55,7 @@ namespace Chessy.Model
 
                 if (Input.GetKeyDown(KeyCode.T))
                 {
-                    _e.SetUnitOnCellT(_e.CurrentCellIdx, UnitTypes.None);
+                    _unitCs[_cellsC.Current].UnitT =  UnitTypes.None;
                 }
             }
         }

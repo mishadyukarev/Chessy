@@ -10,7 +10,7 @@ namespace Chessy.Model.System
             {
                 for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
                 {
-                    _e.UnitVisibleC(cellIdxCurrent).Set(playerT, true);
+                    _unitVisibleCs[cellIdxCurrent].Set(playerT, true);
                 }
 
                 if (_e.UnitT(cellIdxCurrent).HaveUnit())
@@ -32,14 +32,14 @@ namespace Chessy.Model.System
 
                                 if (_e.UnitT(cell_1).HaveUnit())
                                 {
-                                    if (_e.UnitPlayerT(cell_1).Is(PlayerTypes.First)) isVisForFirst = true;
-                                    if (_e.UnitPlayerT(cell_1).Is(PlayerTypes.Second)) isVisForSecond = true;
+                                    if (_unitCs[cell_1].PlayerT == PlayerTypes.First) isVisForFirst = true;
+                                    if (_unitCs[cell_1].PlayerT == PlayerTypes.Second) isVisForSecond = true;
                                 }
                             }
                         }
 
-                        _e.UnitVisibleC(cellIdxCurrent).Set(PlayerTypes.First, isVisForFirst);
-                        _e.UnitVisibleC(cellIdxCurrent).Set(PlayerTypes.Second, isVisForSecond);
+                        _unitVisibleCs[cellIdxCurrent].Set(PlayerTypes.First, isVisForFirst);
+                        _unitVisibleCs[cellIdxCurrent].Set(PlayerTypes.Second, isVisForSecond);
                     }
 
                     else
@@ -54,7 +54,7 @@ namespace Chessy.Model.System
                                 {
                                     if (!_e.UnitT(idx_1).IsAnimal())
                                     {
-                                        if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCurrent)))
+                                        if (_unitCs[idx_1].PlayerT != _unitCs[cellIdxCurrent].PlayerT)
                                         {
                                             isVisibledNextPlayer = true;
                                         }
@@ -62,7 +62,7 @@ namespace Chessy.Model.System
                                 }
                             }
 
-                            _e.UnitVisibleC(cellIdxCurrent).Set(_e.UnitPlayerT(cellIdxCurrent).NextPlayer(), isVisibledNextPlayer);
+                            _unitVisibleCs[cellIdxCurrent].Set(_unitCs[cellIdxCurrent].PlayerT.NextPlayer(), isVisibledNextPlayer);
                         }
                     }
                 }

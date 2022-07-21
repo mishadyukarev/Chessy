@@ -20,8 +20,8 @@ namespace Chessy.Model.System
                 if (!_cloudCs[cell_0].IsCenter) continue;
 
 
-                var cell_1 = _e.CloudShiftingC(cell_0).WhereNeedShiftIdxCell;
-                var directXy_1 = _e.XyCellC(cell_1).Xy;
+                var cell_1 = _shiftCloudCs[cell_0].WhereNeedShiftIdxCell;
+                var directXy_1 = _xyCellsCs[cell_1].Xy;
 
 
                 var isInSquareNextCell = directXy_1[0] >= 4 && directXy_1[0] <= 11 && directXy_1[1] >= 3 && directXy_1[1] <= 7;
@@ -30,9 +30,9 @@ namespace Chessy.Model.System
                 {
                     var adding = Time.deltaTime * _windC.Speed * 0.25f;
 
-                    _e.CloudShiftingC(cell_0).Distance += adding;
+                    _shiftCloudCs[cell_0].Distance += adding;
 
-                    if (_e.CloudShiftingC(cell_0).Distance >= 1)
+                    if (_shiftCloudCs[cell_0].Distance >= 1)
                     {
                         var savedIdxsAround = new List<CloudOnCellE>();
 
@@ -43,7 +43,7 @@ namespace Chessy.Model.System
                         }
 
                         ShiftCloud(cell_0, cell_1);
-                        _e.CloudShiftingC(cell_1).WhereNeedShiftIdxCell = _e.GetIdxCellByDirectAround(cell_1, _windC.DirectT);
+                        _shiftCloudCs[cell_1].WhereNeedShiftIdxCell = _e.GetIdxCellByDirectAround(cell_1, _windC.DirectT);
 
 
                         byte idx = 0;
@@ -58,17 +58,17 @@ namespace Chessy.Model.System
                     }
 
 
-                    var pos_0 = _e.CellPossitionC(cell_0).Position;
-                    var pos_1 = _e.CellPossitionC(cell_1).Position;
+                    var pos_0 = _possitionCellCs[cell_0].Position;
+                    var pos_1 = _possitionCellCs[cell_1].Position;
 
-                    var t = _e.CloudShiftingC(cell_0).Distance;
+                    var t = _shiftCloudCs[cell_0].Distance;
 
                     _e.CloudPossitionC(_e.CloudWhereViewDataOnCellC(cell_0).ViewIdxCell).Position = Vector3.Lerp(pos_0, pos_1, t);
 
                     foreach (var aroundCell_0 in _e.IdxsCellsAround(cell_0))
                     {
-                        pos_0 = _e.CellPossitionC(aroundCell_0).Position;
-                        pos_1 = _e.CellPossitionC(_e.GetIdxCellByDirectAround(aroundCell_0, _windC.DirectT)).Position;
+                        pos_0 = _possitionCellCs[aroundCell_0].Position;
+                        pos_1 = _possitionCellCs[_e.GetIdxCellByDirectAround(aroundCell_0, _windC.DirectT)].Position;
 
                         _e.CloudPossitionC(_e.CloudWhereViewDataOnCellC(aroundCell_0).ViewIdxCell).Position = Vector3.Lerp(pos_0, pos_1, t);
                     }
@@ -78,7 +78,7 @@ namespace Chessy.Model.System
                     _windC.DirectT = (DirectTypes)Random.Range(1, (byte)DirectTypes.End);
 
 
-                    _e.CloudShiftingC(cell_0).WhereNeedShiftIdxCell = _e.GetIdxCellByDirectAround(cell_0, _windC.DirectT);
+                    _shiftCloudCs[cell_0].WhereNeedShiftIdxCell = _e.GetIdxCellByDirectAround(cell_0, _windC.DirectT);
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace Chessy.Model.System
 
 
 
-            _e.CloudShiftingC(cellIdx_1).Dispose();
+            _shiftCloudCs[cellIdx_1].Dispose();
         }
     }
 }

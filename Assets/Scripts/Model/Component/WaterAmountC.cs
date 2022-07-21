@@ -5,5 +5,6 @@
         internal double Water;
 
         public double WaterP => Water;
+        public bool HaveAnyWater => Water > 0;
     }
 }

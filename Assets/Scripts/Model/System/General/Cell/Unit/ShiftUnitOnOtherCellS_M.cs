@@ -7,10 +7,10 @@ namespace Chessy.Model.System
     {
         internal void ShiftUnitOnOtherCellM(in byte fromCellIdx, in byte toCellIdx)
         {
-            var dataFromIdxCell = _e.WhereViewDataUnitC(fromCellIdx).DataIdxCell;
+            var dataFromIdxCell = _unitWhereViewDataCs[fromCellIdx].DataIdxCell;
             //var possitionFrom = _e.UnitPossitionOnCellC(fromCellIdx).Position;
 
-            var dataToIdxCell = _e.WhereViewDataUnitC(toCellIdx).DataIdxCell;
+            var dataToIdxCell = _unitWhereViewDataCs[toCellIdx].DataIdxCell;
             //var possitionTo = _e.UnitPossitionOnCellC(toCellIdx).Position;
 
 
@@ -20,8 +20,8 @@ namespace Chessy.Model.System
 
 
 
-            _e.WhereViewDataUnitC(fromCellIdx).DataIdxCell = dataFromIdxCell;
-            _e.WhereViewDataUnitC(toCellIdx).DataIdxCell = dataToIdxCell;  
+            _unitWhereViewDataCs[fromCellIdx].DataIdxCell = dataFromIdxCell;
+            _unitWhereViewDataCs[toCellIdx].DataIdxCell = dataToIdxCell;  
 
             //_e.UnitPossitionOnCellC(fromCellIdx).Position = possitionFrom;
             //_e.UnitPossitionOnCellC(toCellIdx).Position = possitionTo;
@@ -30,20 +30,20 @@ namespace Chessy.Model.System
 
             
 
-            if(!_e.WhereViewDataUnitC(toCellIdx).HaveDataReference)
+            if(!_unitWhereViewDataCs[toCellIdx].HaveDataReference)
             {
-                //_e.UnitPossitionOnCellC(_e.WhereViewDataUnitC(toCellIdx).ViewIdxCell).Position = _e.CellE(toCellIdx).PositionC.Position;
+                //_e.UnitPossitionOnCellC(_unitWhereViewDataCs[toCellIdx).ViewIdxCell).Position = _e.CellE(toCellIdx).PositionC.Position;
             }
-            _e.WhereViewDataUnitC(_e.WhereViewDataUnitC(toCellIdx).ViewIdxCell).DataIdxCell = toCellIdx;
+            _unitWhereViewDataCs[_unitWhereViewDataCs[toCellIdx].ViewIdxCell].DataIdxCell = toCellIdx;
 
 
-            _e.SetUnitConditionT(toCellIdx, ConditionUnitTypes.None);
+            _unitCs[toCellIdx].ConditionT = ConditionUnitTypes.None;
 
-            _e.UnitMainC(toCellIdx).HowManySecondUnitWasHereInThisCondition = 0;
+            _unitCs[toCellIdx].HowManySecondUnitWasHereInThisCondition = 0;
 
            
 
-            var directT = _e.DirectionAround(fromCellIdx, toCellIdx);
+            var directT = _e.CellAroundC(fromCellIdx, toCellIdx).DirectT;
 
             if (!_e.UnitT(toCellIdx).Is(UnitTypes.Undead))
             {
@@ -51,7 +51,7 @@ namespace Chessy.Model.System
                 {
                     if (toCellIdx == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                     {
-                        if (_e.LessonT.Is(LessonTypes.ShiftPawnHere))
+                        if (_aboutGameC.LessonT.Is(LessonTypes.ShiftPawnHere))
                         {
                              SetNextLesson();
                         }
@@ -59,17 +59,17 @@ namespace Chessy.Model.System
 
                     if (toCellIdx == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter)
                     {
-                        if (_e.LessonT == LessonTypes.StepAwayFromWoodcutter)
+                        if (_aboutGameC.LessonT == LessonTypes.StepAwayFromWoodcutter)
                         {
                              SetNextLesson();
                         }
                     }
 
-                    if (_e.LessonT == LessonTypes.ComeToYourKing)
+                    if (_aboutGameC.LessonT == LessonTypes.ComeToYourKing)
                     {
                         foreach (var cellIdx in _e.IdxsCellsAround(toCellIdx))
                         {
-                            if (_e.UnitT(cellIdx) == UnitTypes.King && _e.UnitPlayerT(cellIdx) == _e.UnitPlayerT(toCellIdx))
+                            if (_e.UnitT(cellIdx) == UnitTypes.King && _unitCs[cellIdx].PlayerT == _unitCs[toCellIdx].PlayerT)
                             {
                                 SetNextLesson();
                                 break;
@@ -84,32 +84,32 @@ namespace Chessy.Model.System
 
                 if (_e.UnitT(toCellIdx).Is(UnitTypes.Snowy))
                 {
-                    if (_e.WaterUnitC(toCellIdx).HaveAnyWater())
+                    if (_unitWaterCs[toCellIdx].HaveAnyWater())
                     {
                         _e.WaterOnCellC(toCellIdx).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
-                        _e.HaveFire(toCellIdx) = false;
-                        _e.WaterUnitC(toCellIdx).Water -= ValuesChessy.TAKING_WATER_AFTER_SHIFT_SNOWY;
+                        _fireCs[toCellIdx].HaveFire = false;
+                        _unitWaterCs[toCellIdx].Water -= ValuesChessy.TAKING_WATER_AFTER_SHIFT_SNOWY;
                     }
                 }
 
                 if (_e.AdultForestC(fromCellIdx).HaveAnyResources)
                 {
-                    _e.HealthTrail(fromCellIdx).Health(directT) = ValuesChessy.HEALTH_TRAIL_ANY_TRAIL;
+                    _hpTrailCs[fromCellIdx].Health(directT) = ValuesChessy.HEALTH_TRAIL_ANY_TRAIL;
                 }
                 if (_e.AdultForestC(toCellIdx).HaveAnyResources)
                 {
                     var dirTrail = directT.Invert();
 
-                    _e.HealthTrail(toCellIdx).Health(dirTrail) = ValuesChessy.HEALTH_TRAIL_ANY_TRAIL;
+                    _hpTrailCs[toCellIdx].Health(dirTrail) = ValuesChessy.HEALTH_TRAIL_ANY_TRAIL;
                 }
 
-                if (_e.RiverT(toCellIdx).HaveRiverNear())
+                if (_riverCs[toCellIdx].HaveRiverNear)
                 {
                     TryExecuteAddingUnitAnimationM(toCellIdx);
 
-                    _e.WaterUnitC(toCellIdx).Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
+                    _unitWaterCs[toCellIdx].Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
 
-                    if (_e.LessonT == LessonTypes.Install1WarriorsNextToTheRiver) SetNextLesson();
+                    if (_aboutGameC.LessonT == LessonTypes.Install1WarriorsNextToTheRiver) SetNextLesson();
                 }
             }
 
@@ -135,16 +135,16 @@ namespace Chessy.Model.System
                 case UnitTypes.Hell:
                     if (_e.AdultForestC(toCellIdx).HaveAnyResources)
                     {
-                        _e.HaveFire(toCellIdx) = true;
+                        _fireCs[toCellIdx].HaveFire = true;
                     }
                     break;
             }
 
-            if (_e.HaveBuildingOnCell(toCellIdx) && !_e.BuildingOnCellT(toCellIdx).Is(BuildingTypes.City))
+            if (_buildingCs[toCellIdx].HaveBuilding)
             {
-                if (!_e.BuildingPlayerT(toCellIdx).Is(_e.UnitPlayerT(toCellIdx)))
+                if (!_buildingCs[toCellIdx].PlayerT.Is(_unitCs[toCellIdx].PlayerT))
                 {
-                    _e.SetBuildingOnCellT(toCellIdx, BuildingTypes.None);
+                    _buildingCs[toCellIdx].BuildingT = BuildingTypes.None;
                 }
             }
         }

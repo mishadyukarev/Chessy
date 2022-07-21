@@ -19,6 +19,9 @@
         public ConditionUnitTypes ConditionType => ConditionT;
         public bool IsArcherDirectedToRightP => IsArcherDirectedToRight;
 
+        public double DamageSimpleAttackP => DamageSimpleAttack;
+        public double DamageOnCellP => DamageOnCell;
+
         public bool HaveCoolDownForAttackAnyUnit => CooldownForAttackAnyUnitInSeconds > 0;
         public bool HaveUnit => UnitT.HaveUnit();
 

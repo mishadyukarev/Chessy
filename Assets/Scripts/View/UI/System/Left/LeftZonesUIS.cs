@@ -21,9 +21,9 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             }
             else
             {
-                if (_e.CellsC.IsSelectedCell)
+                if (_cellsC.IsSelectedCell)
                 {
-                    if (!_e.LessonT.HaveLesson())
+                    if (!_aboutGameC.LessonType.HaveLesson())
                     {
                         needActiveEnvironment = true;
                     }

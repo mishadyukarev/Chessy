@@ -5,20 +5,16 @@ namespace Chessy.Model.System
     {
         public void Click(in ConditionUnitTypes conditionT)
         {
-            //if (_aboutGameC.CurrentPlayerIT.Is(_e.WhoseMovePlayerT))
-            //{
-                if (_e.UnitConditionT(_e.SelectedCellIdx).Is(conditionT))
-                {
-                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySetConditionUnitOnCellM), ConditionUnitTypes.None, _e.SelectedCellIdx });
-                }
-                else
-                {
-                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySetConditionUnitOnCellM), conditionT, _e.SelectedCellIdx });
-                }
-            //}
-            //else _s.Mistake(MistakeTypes.NeedWaitQueue);
+            if (_unitCs[_cellsC.Selected].ConditionT == conditionT)
+            {
+                _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySetConditionUnitOnCellM), ConditionUnitTypes.None, _cellsC.Selected });
+            }
+            else
+            {
+                _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySetConditionUnitOnCellM), conditionT, _cellsC.Selected });
+            }
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
     }
 }

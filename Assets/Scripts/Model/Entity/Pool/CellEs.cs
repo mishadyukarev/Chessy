@@ -13,7 +13,7 @@ namespace Chessy.Model.Entity
         public readonly UnitE UnitE = new();
         public readonly BuildingE BuildingE = new();
         public readonly EnvironmentE EnvironmentE = new();
-        public readonly EffectE EffectE = new();
+        public readonly EffectsOnCellE EffectE = new();
         public readonly RiverE RiverE = new();
         public readonly TrailE TrailE = new();
         public readonly CloudOnCellE CloudE = new();
@@ -26,6 +26,11 @@ namespace Chessy.Model.Entity
 
 
             _aroundEs = new CellAroundE[IndexCellsValues.CELLS];
+
+            for (var cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
+            {
+                _aroundEs[cellIdx] = new CellAroundE(default, default, default, default);
+            }
 
             if (!dataFromViewC.IsBorder(idxCell))
             {

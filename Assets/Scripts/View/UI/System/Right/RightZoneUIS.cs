@@ -23,12 +23,12 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            var idx_sel = _e.SelectedCellIdx;
+            var idx_sel = _cellsC.Selected;
 
             _needAppear = false;
 
 
-            if (_e.SelectedCellIdx > 0)
+            if (_cellsC.Selected > 0)
             {
                 if (_unitCs[idx_sel].UnitType.HaveUnit())
                 {

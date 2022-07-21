@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model.Values;
+﻿using Chessy.Model.Values;
 
 namespace Chessy.Model.System
 {
@@ -11,7 +10,7 @@ namespace Chessy.Model.System
             {
                 for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
                 {
-                    _e.TrailVisibleC(cellIdxCurrent).Set(playerT, false);
+                    _visibleTrailCs[cellIdxCurrent].Set(playerT, false);
                 }
             }
 
@@ -19,17 +18,17 @@ namespace Chessy.Model.System
             {
                 if (!_cellCs[cellIdxCurrent].IsBorder)
                 {
-                    if (_e.HealthTrail(cellIdxCurrent).HaveAnyTrail)
+                    if (_hpTrailCs[cellIdxCurrent].HaveAnyTrail)
                     {
                         if (_e.UnitT(cellIdxCurrent).HaveUnit())
-                            _e.TrailVisibleC(cellIdxCurrent).Set(_e.UnitPlayerT(cellIdxCurrent), true);
+                            _visibleTrailCs[cellIdxCurrent].Set(_unitCs[cellIdxCurrent].PlayerT, true);
 
 
                         foreach (var cellIdx1 in _e.IdxsCellsAround(cellIdxCurrent))
                         {
                             if (_e.UnitT(cellIdx1).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
                             {
-                                _e.TrailVisibleC(cellIdxCurrent).Set(_e.UnitPlayerT(cellIdx1), true);
+                                _visibleTrailCs[cellIdxCurrent].Set(_unitCs[cellIdx1].PlayerT, true);
                             }
                         }
                     }

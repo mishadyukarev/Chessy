@@ -7,14 +7,14 @@ namespace Chessy.Model.System
     {
         internal void TryGrowAdultForestWithElfemaleM(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            if (!_e.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
+            if (!_cooldownAbilityCs[cell_0].HaveCooldown(abilityT))
             {
                 if (_e.YoungForestC(cell_0).HaveAnyResources)
                 {
                     _e.YoungForestC(cell_0).Resources = 0;
                     _e.AdultForestC(cell_0).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
 
-                    _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
+                    _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
                     foreach (var idx_1 in _e.IdxsCellsAround(cell_0))
                     {

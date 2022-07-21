@@ -33,7 +33,7 @@ namespace Chessy.Model
                 _pointsCellsForSettingKing[cellIdxStart] = 0;
                 _pointsCellsForSettingPawn[cellIdxStart] = 0;
 
-                if (!_e.IsStartedCellC(cellIdxStart).IsStartedCell(playerBotT) || _e.UnitT(cellIdxStart).HaveUnit()) continue;
+                if (!_isStartedCellCs[cellIdxStart].IsStartedCell(playerBotT) || _e.UnitT(cellIdxStart).HaveUnit()) continue;
 
                 _pointsCellsForSettingKing[cellIdxStart]++;
                 _pointsCellsForSettingPawn[cellIdxStart]++;
@@ -50,12 +50,12 @@ namespace Chessy.Model
                     _pointsCellsForSettingPawn[cellIdxStart]++;
                 }
 
-                if (_e.YCell(cellIdxStart) == 8)
+                if (_xyCellsCs[cellIdxStart].Y == 8)
                 {
                     _pointsCellsForSettingKing[cellIdxStart] += 3;
                     _pointsCellsForSettingPawn[cellIdxStart] += 3;
 
-                    if (_e.XCell(cellIdxStart) >= 4 && _e.XCell(cellIdxStart) <= 7)
+                    if (_xyCellsCs[cellIdxStart].X >= 4 && _xyCellsCs[cellIdxStart].X <= 7)
                     {
                         _pointsCellsForSettingKing[cellIdxStart]++;
                         _pointsCellsForSettingPawn[cellIdxStart]++;
@@ -78,7 +78,7 @@ namespace Chessy.Model
                 byte cellIdx = 85;
 
                 _s.ClearAllEnvironment(cellIdx);
-                _s.SetNewUnitOnCellS(UnitTypes.King, playerBotT, cellIdx);
+                _s.SetNewUnitOnCellS.Set(UnitTypes.King, playerBotT, cellIdx);
 
                 //TrySetUnit(ref _theMostBigPointForSettingKing, _pointsCellsForSettingKing, UnitTypes.King, playerBotT);
             }
@@ -108,7 +108,7 @@ namespace Chessy.Model
                         {
                             if (Random.Range(0, 1f) < 0.75f)
                             {
-                                _s.SetNewUnitOnCellS(unitT, playerBotT, idxCell);
+                                _s.SetNewUnitOnCellS.Set(unitT, playerBotT, idxCell);
 
                                 if (unitT == UnitTypes.King)
                                 {

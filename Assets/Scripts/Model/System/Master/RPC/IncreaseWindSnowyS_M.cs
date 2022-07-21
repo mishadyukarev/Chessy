@@ -6,13 +6,13 @@ namespace Chessy.Model.System
     {
         internal void IncreaseWindWithRainyM(in byte cell_0, in AbilityTypes abilityT, in Player sender, in bool needIncrese = true)
         {
-            if (!_e.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
+            if (!_cooldownAbilityCs[cell_0].HaveCooldown(abilityT))
             {
                 if (needIncrese)
                 {
                     if (!_e.WeatherE.WindC.IsMaxSpeed())
                     {
-                        _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
+                        _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
                         _windC.Speed++;
 
@@ -28,7 +28,7 @@ namespace Chessy.Model.System
                 {
                     if (!_e.WeatherE.WindC.IsMinSpeed())
                     {
-                        _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
+                        _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
                         _windC.Speed--;
 

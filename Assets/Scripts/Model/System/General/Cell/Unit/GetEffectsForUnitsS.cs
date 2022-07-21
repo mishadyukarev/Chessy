@@ -1,5 +1,5 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model.Values;
+﻿using Chessy.Model.Values;
+
 namespace Chessy.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
@@ -10,7 +10,7 @@ namespace Chessy.Model.System
             {
                 for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
                 {
-                    _e.HasKingEffectHereC(cellIdxCurrent).Set(playerT, false);
+                    _hasUnitKingEffectHereCs[cellIdxCurrent].Set(playerT, false);
                 }
             }
 
@@ -23,7 +23,7 @@ namespace Chessy.Model.System
                     {
                         foreach (var cellIdxNext in _e.IdxsCellsAround(cellIdxCurrent))
                         {
-                            _e.HasKingEffectHereC(cellIdxNext).Set(_e.UnitPlayerT(cellIdxCurrent), true);
+                            _hasUnitKingEffectHereCs[cellIdxNext].Set(_unitCs[cellIdxCurrent].PlayerT, true);
                         }
                     }
                 }

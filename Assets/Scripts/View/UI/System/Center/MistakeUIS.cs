@@ -25,11 +25,11 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             }
 
 
-            if (_e.MistakeT != MistakeTypes.None)
+            if (_mistakeC.MistakeT != MistakeTypes.None)
             {
-                if (_e.MistakeT == MistakeTypes.Economy)
+                if (_mistakeC.MistakeT == MistakeTypes.Economy)
                 {
-                    _needActiveMistakeZone[(byte)_e.MistakeT] = true;
+                    _needActiveMistakeZone[(byte)_mistakeC.MistakeT] = true;
 
                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                     {
@@ -45,7 +45,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
                 else
                 {
-                    _needActiveMistakeZone[(byte)_e.MistakeT] = true;
+                    _needActiveMistakeZone[(byte)_mistakeC.MistakeT] = true;
                 }
             }
 

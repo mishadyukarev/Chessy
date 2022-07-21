@@ -41,7 +41,7 @@ namespace Chessy.Model
 
                     if (_buttonT != ButtonTypes.None)
                     {
-                        switch (_e.UnitButtonAbilitiesC(_e.SelectedCellIdx).Ability(_buttonT))
+                        switch (_buttonsAbilitiesUnitCs[_cellsC.Selected].Ability(_buttonT))
                         {
                             case AbilityTypes.CircularAttack:
                                 _bookC.OpenedNowPageBookT = PageBookTypes.CircularAttackKing;
@@ -113,7 +113,7 @@ namespace Chessy.Model
 
                     else if (_effectButtonT != 0)
                     {
-                        switch (_e.EffectsUnitsRightBarsC(_e.SelectedCellIdx).Effect((ButtonTypes)_effectButtonT))
+                        switch (_effectsUnitsRightBarsCs[_cellsC.Selected].Effect((ButtonTypes)_effectButtonT))
                         {
                             case EffectTypes.Shield:
                                 _bookC.OpenedNowPageBookT = PageBookTypes.FrozenShield;
@@ -140,7 +140,7 @@ namespace Chessy.Model
 
                     else
                     {
-                        if (_e.LessonT == Enum.LessonTypes.HoldPressWarrior)
+                        if (_aboutGameC.LessonT == Enum.LessonTypes.HoldPressWarrior)
                         {
                             /*if (_neededPageBookT == PageBookTypes.Town)  */_s.SetNextLesson();
                         }
@@ -150,7 +150,7 @@ namespace Chessy.Model
 
 
 
-                    _e.NeedUpdateView = true;
+                    _updateAllViewC.NeedUpdateView = true;
                 }
             }
             else _timer = 0;

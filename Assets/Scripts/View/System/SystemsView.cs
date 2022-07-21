@@ -27,8 +27,6 @@ namespace Chessy.View.System
         readonly ShiftUnitVS _shiftUnitVS;
         readonly CloudShiftVS _cloudShiftVS;
 
-        readonly UpdateAllViewC _needUpdateViewC;
-
 
         public SystemsView(in EntitiesView eV, in EntitiesModel eM) : base(eM)
         {
@@ -139,29 +137,26 @@ namespace Chessy.View.System
 
             _shiftUnitVS = new ShiftUnitVS(eV, eM);
             _cloudShiftVS = new CloudShiftVS(eV, eM);
-
-
-            _needUpdateViewC = _e.UpdateAllViewC;
         }
 
         public void Update()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_eM.UnitNeedUpdateViewC(cellIdxCurrent).NeedUpdateView)
+                if (_updateViewUnitCs[cellIdxCurrent].NeedUpdateView)
                 {
                     _syncUnitVS.Sync(cellIdxCurrent);
                     _syncMainToolWeaponUnitVS.Sync(cellIdxCurrent);
                     _syncExtraToolWeaponUnitVS.Sync(cellIdxCurrent);
-                    _eM.UnitNeedUpdateViewC(cellIdxCurrent).NeedUpdateView = false;
+                    _updateViewUnitCs[cellIdxCurrent].NeedUpdateView = false;
                 }
             }
 
-            if (_needUpdateViewC.NeedUpdateView)
+            if (_updateAllViewC.NeedUpdateView)
             {
                 _updates.ForEach((Action action) => action.Invoke());
 
-                _needUpdateViewC.NeedUpdateView = false;
+                _updateAllViewC.NeedUpdateView = false;
             }
 
             _shiftUnitVS.Sync();

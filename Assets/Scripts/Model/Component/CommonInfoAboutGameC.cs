@@ -13,6 +13,8 @@ namespace Chessy
         internal PlayerTypes CurrentPlayerIT;
         internal bool IsStartedGame;
         internal AbilityTypes AbilityT;
+        internal RaycastTypes RaycastT;
+        internal CellClickTypes CellClickT;
 
         public readonly TestModeTypes TestModeT;
         public readonly DateTime StartGameTime;
@@ -24,6 +26,8 @@ namespace Chessy
         public PlayerTypes CurrentPlayerIType => CurrentPlayerIT;
         public bool IsStartedGameP => IsStartedGame;
         public AbilityTypes AbilityType => AbilityT;
+        public RaycastTypes RaycastType => RaycastT;
+        public CellClickTypes CellClickType => CellClickT;
 
         internal CommonInfoAboutGameC(in TestModeTypes testModeT, in DateTime startGameTime)
         {
@@ -34,6 +38,8 @@ namespace Chessy
         internal void Dispose()
         {
             IsStartedGame = default;
+            LessonT = default;
+            CellClickT = default;
         }
     }
 }

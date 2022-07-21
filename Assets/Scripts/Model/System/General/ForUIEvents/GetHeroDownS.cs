@@ -4,7 +4,7 @@
     {
         public void OpenHeroClick()
         {
-            _e.SelectedCellIdx = 0;
+            _cellsC.Selected = 0;
             //TryOnHint(VideoClipTypes.CreatingHero);
 
             _e.SoundAction(ClipTypes.Click).Invoke();
@@ -17,15 +17,15 @@
             {
                 if (!_e.PlayerInfoE(_aboutGameC.CurrentPlayerIT).GodInfoC.HaveCooldown)
                 {
-                    _e.SelectedUnitC.UnitT = myHeroT;
-                    _e.SelectedUnitC.LevelT = LevelTypes.First;
+                    _selectedUnitC.UnitT = myHeroT;
+                    _selectedUnitC.LevelT = LevelTypes.First;
 
 
-                    _e.CellClickT = CellClickTypes.SetUnit;
+                    _aboutGameC.CellClickT = CellClickTypes.SetUnit;
                 }
             }
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
     }
 }

@@ -28,14 +28,14 @@ namespace Chessy.View.System
                 _needActive[cell_start] = false;
 
 
-                switch (_e.CellClickT)
+                switch (_aboutGameC.CellClickType)
                 {
                     case CellClickTypes.UniqueAbility:
 
                         switch (_aboutGameC.AbilityType)
                         {
                             case AbilityTypes.ChangeDirectionWind:
-                                if (_e.HaveFire(cell_start))
+                                if (_fireCs[cell_start].HaveFire)
                                 {
                                     _needActive[cell_start] = true;
                                     _needColor[cell_start] = ColorsValues.Color(_aboutGameC.AbilityType);
@@ -52,17 +52,17 @@ namespace Chessy.View.System
 
             }
 
-            _needActive[_e.SelectedCellIdx] = true;
-            _needColor[_e.SelectedCellIdx] = ColorsValues.Color(SupportCellVisionTypes.Selector);
+            _needActive[_cellsC.Selected] = true;
+            _needColor[_cellsC.Selected] = ColorsValues.Color(SupportCellVisionTypes.Selector);
 
 
-            if (_e.CellClickT.Is(CellClickTypes.UniqueAbility))
+            if (_aboutGameC.CellClickType == CellClickTypes.UniqueAbility)
             {
                 if (_aboutGameC.AbilityType == AbilityTypes.ChangeDirectionWind)
                 {
                     for (byte curCellIdx = 0; curCellIdx < IndexCellsValues.CELLS; curCellIdx++)
                     {
-                        if (_e.IsCenterCloud(curCellIdx))
+                        if (_cloudCs[curCellIdx].IsCenterP)
                         {
                             foreach (var item in _e.IdxsCellsAround(curCellIdx))
                             {
@@ -77,7 +77,7 @@ namespace Chessy.View.System
                 {
                     for (byte idxCell = 0; idxCell < IndexCellsValues.CELLS; idxCell++)
                     {
-                        if (_e.WhereUnitCanFireAdultForestC(_e.SelectedCellIdx).Can(idxCell))
+                        if (_whereUnitCanFireAdultForestCs[_cellsC.Selected].Can(idxCell))
                         {
                             _needActive[idxCell] = true;
                             _needColor[idxCell] = ColorsValues.Color(AbilityTypes.FireArcher);
@@ -89,27 +89,27 @@ namespace Chessy.View.System
 
             else
             {
-                if (_e.UnitT(_e.SelectedCellIdx).HaveUnit())
+                if (_e.UnitT(_cellsC.Selected).HaveUnit())
                 {
-                    if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_aboutGameC.CurrentPlayerIType))
+                    if (_unitCs[_cellsC.Selected].PlayerType == _aboutGameC.CurrentPlayerIType)
                     {
-                        if (!_e.CellClickT.Is(CellClickTypes.GiveTakeTW))
+                        if (_aboutGameC.CellClickType != CellClickTypes.GiveTakeTW)
                         {
                             for (byte idxCell = 0; idxCell < IndexCellsValues.CELLS; idxCell++)
                             {
-                                if (_e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(idxCell))
+                                if (_whereUnitCanShiftCs[_cellsC.Selected].CanShiftHere(idxCell))
                                 {
                                     _needActive[idxCell] = true;
                                     _needColor[idxCell] = ColorsValues.Color(SupportCellVisionTypes.Shift);
                                 }
 
-                                if (_e.WhereUnitCanAttackSimpleAttackToEnemyC(_e.SelectedCellIdx).Can(idxCell))
+                                if (_whereSimpleAttackCs[_cellsC.Selected].Can(idxCell))
                                 {
                                     _needActive[idxCell] = true;
                                     _needColor[idxCell] = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
                                 }
 
-                                if (_e.WhereUnitCanAttackUniqueAttackToEnemyC(_e.SelectedCellIdx).Can(idxCell))
+                                if (_whereUniqueAttackCs[_cellsC.Selected].Can(idxCell))
                                 {
                                     _needActive[idxCell] = true;
                                     _needColor[idxCell] = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);

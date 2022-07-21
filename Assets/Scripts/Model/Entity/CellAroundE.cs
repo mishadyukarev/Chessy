@@ -7,7 +7,7 @@ namespace Chessy.Model
     {
         public readonly IdxCellC IdxC;
         public readonly XyCellC XyC;
-        public readonly CellAroundC CellAroundC;
+        public readonly CellAroundC CellAroundC = new();
 
         internal CellAroundE(in byte cellIdx, in byte[] xy, in DirectTypes dirT, in DistanceFromCellTypes levelFromCellT)
         {

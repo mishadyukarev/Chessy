@@ -11,9 +11,9 @@ namespace Chessy.Model.System
             if (!_e.UnitT(cellIdxForKilling).HaveUnit()) throw new Exception();
 
 
-            if (_e.UnitPlayerT(cellIdxForKilling) == PlayerTypes.Second)
+            if (_unitCs[cellIdxForKilling].PlayerT == PlayerTypes.Second)
             {
-                if (_e.LessonT == LessonTypes.Kill1Enemy) SetNextLesson();
+                if (_aboutGameC.LessonT == LessonTypes.Kill1Enemy) SetNextLesson();
             }
 
 
@@ -47,28 +47,28 @@ namespace Chessy.Model.System
                     default: throw new Exception();
                 }
 
-                _e.PlayerInfoE(_e.UnitPlayerT(cellIdxForKilling)).GodInfoC.CooldownInSecondsForNextAppearance = cooldown;
-                _e.PlayerInfoE(_e.UnitPlayerT(cellIdxForKilling)).GodInfoC.HaveGodInInventor = true;
+                _e.PlayerInfoE(_unitCs[cellIdxForKilling].PlayerT).GodInfoC.CooldownInSecondsForNextAppearance = cooldown;
+                _e.PlayerInfoE(_unitCs[cellIdxForKilling].PlayerT).GodInfoC.HaveGodInInventor = true;
             }
 
             if (_e.UnitT(cellIdxForKilling).Is(UnitTypes.Tree)) _e.HaveTreeUnit = false;
 
 
-            _e.SetLastDiedUnitOnCell(cellIdxForKilling);
+            //_e.SetLastDiedUnitOnCell(cellIdxForKilling);
 
             if (_e.UnitT(cellIdxForKilling).Is(UnitTypes.Pawn))
             {
-                _e.PawnPeopleInfoC(_e.UnitPlayerT(cellIdxForKilling)).AmountInGame--;
+                _e.PawnPeopleInfoC(_unitCs[cellIdxForKilling].PlayerT).AmountInGame--;
             }
 
-            _e.WhereViewDataUnitC(_e.WhereViewDataUnitC(cellIdxForKilling).ViewIdxCell).DataIdxCell = 0;
+            _unitWhereViewDataCs[_unitWhereViewDataCs[cellIdxForKilling].ViewIdxCell].DataIdxCell = 0;
 
 
-            var dataIdxCell = _e.WhereViewDataUnitC(cellIdxForKilling).DataIdxCell;
+            var dataIdxCell = _unitWhereViewDataCs[cellIdxForKilling].DataIdxCell;
 
             _e.UnitE(cellIdxForKilling).Dispose();
 
-            _e.WhereViewDataUnitC(cellIdxForKilling).DataIdxCell = dataIdxCell;
+            _unitWhereViewDataCs[cellIdxForKilling].DataIdxCell = dataIdxCell;
         }
     }
 }

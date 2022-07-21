@@ -36,7 +36,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
         internal override void Sync()
         {
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.ClickWindInfo)
+            if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.ClickWindInfo)
             {
                 _eUI.UpEs.ParentWindGOC.TrySetActive(true);
 

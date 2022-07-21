@@ -28,20 +28,20 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.WhereViewDataUnitC(cellIdxCurrent).HaveDataReference)
+                if (_unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
                 {
-                    var dataIdxCell = _e.WhereViewDataUnitC(cellIdxCurrent).DataIdxCellP;
+                    var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
-                    if (_e.UnitVisibleC(dataIdxCell).IsVisible(_aboutGameC.CurrentPlayerIType))
+                    if (_unitVisibleCs[dataIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType))
                     {
                         if (_e.UnitT(dataIdxCell).HaveUnit() && !_e.UnitT(dataIdxCell).IsAnimal())
                         {
                             _needActiveBar[cellIdxCurrent] = true;
 
-                            var xCordinate = (float)(_e.HpUnit(dataIdxCell) / HpUnitValues.MAX);
+                            var xCordinate = (float)(_hpUnitCs[dataIdxCell].HealthP / HpUnitValues.MAX);
                             _hpBarSRC[cellIdxCurrent].Transform.localScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                            _needSetColorToBar[cellIdxCurrent] = _e.UnitPlayerT(dataIdxCell) == PlayerTypes.First ? Color.blue : Color.red;
+                            _needSetColorToBar[cellIdxCurrent] = _unitCs[dataIdxCell].PlayerType == PlayerTypes.First ? Color.blue : Color.red;
                         }
                     }
                 }

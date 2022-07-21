@@ -27,7 +27,7 @@ namespace Chessy.View.System
             //    {
             //        var dataIdxCell = _e.SkinInfoUnitC(currentCellIdx).DataIdxCell;
 
-            //        _possitions[currentCellIdx] = _e.UnitMainC(currentCellIdx).Possition;
+            //        _possitions[currentCellIdx] = _unitCs[currentCellIdx).Possition;
             //    }
             //}
 

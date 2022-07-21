@@ -24,7 +24,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.IsCenterCloud(cellIdxCurrent))
+                if (_cloudCs[cellIdxCurrent].IsCenterP)
                 {
                     _needActive[_e.CloudWhereViewDataOnCellC(cellIdxCurrent).ViewIdxCellP] = true;
 

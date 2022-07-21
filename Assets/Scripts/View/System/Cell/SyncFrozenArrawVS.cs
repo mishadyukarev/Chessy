@@ -25,20 +25,20 @@ namespace Chessy.View.System
                 _needActiveUp[cellIdxCurrent] = false;
                 _needActiveRight[cellIdxCurrent] = false;
 
-                if (_e.WhereViewDataUnitC(cellIdxCurrent).HaveDataReference)
+                if (_unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
                 {
-                    var dataIdxCell = _e.WhereViewDataUnitC(cellIdxCurrent).DataIdxCellP;
+                    var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
 
                     if (_e.UnitT(dataIdxCell).HaveUnit())
                     {
-                        if (_e.UnitVisibleC(dataIdxCell).IsVisible(_aboutGameC.CurrentPlayerIType))
+                        if (_unitVisibleCs[dataIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType))
                         {
-                            if (_e.MainToolWeaponT(dataIdxCell).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
+                            if (_mainTWC[dataIdxCell].ToolWeaponType == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
-                                if (_e.UnitEffectsC(dataIdxCell).HaveFrozenArrawArcherP)
+                                if (_effectsUnitCs[dataIdxCell].HaveFrozenArrawArcherP)
                                 {
-                                    if (_e.IsRightArcherUnit(dataIdxCell))
+                                    if (_unitCs[dataIdxCell].IsArcherDirectedToRightP)
                                     {
                                         _needActiveRight[cellIdxCurrent] = true;
                                     }

@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct BuildingExtractionOnCellC
+    public sealed class BuildingExtractionOnCellC
     {
         public float HowManyWoodcutterCanExtractWood { get; internal set; }
         public float HowManyFarmCanExtractFood { get; internal set; }

@@ -7,9 +7,9 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _e.BuildingExtractionC(cellIdxCurrent).HowManyFarmCanExtractFood = 0;
+                _extractionBuildingCs[cellIdxCurrent].HowManyFarmCanExtractFood = 0;
 
-                if (_e.IsBuildingOnCell(cellIdxCurrent, BuildingTypes.Farm))
+                if (_buildingCs[cellIdxCurrent].BuildingT == BuildingTypes.Farm)
                 {
                     if (_e.WaterOnCellC(cellIdxCurrent).HaveAnyResources)
                     {
@@ -22,7 +22,7 @@ namespace Chessy.Model.System
 
                         if (_e.WaterOnCellC(cellIdxCurrent).Resources < extract) extract = _e.WaterOnCellC(cellIdxCurrent).Resources;
 
-                        _e.BuildingExtractionC(cellIdxCurrent).HowManyFarmCanExtractFood = extract;
+                        _extractionBuildingCs[cellIdxCurrent].HowManyFarmCanExtractFood = extract;
                     }
                 }
             }

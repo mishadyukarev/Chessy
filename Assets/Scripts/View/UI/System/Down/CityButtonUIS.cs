@@ -17,7 +17,7 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            _needActive = !_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.OpeningTown;
+            _needActive = !_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.OpeningTown;
 
             _cityButtonUIE.ParentGOC.TrySetActive(_needActive);
         }

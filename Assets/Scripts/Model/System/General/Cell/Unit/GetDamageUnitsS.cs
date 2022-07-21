@@ -11,12 +11,14 @@ namespace Chessy.Model.System
             {
                 var powerDamage = 0f;
 
-                if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                var curUnitT_0 = _unitCs[cellIdxCurrent].UnitT;
+
+                if (curUnitT_0.HaveUnit())
                 {
-                    switch (_e.UnitLevelT(cellIdxCurrent))
+                    switch (_unitCs[cellIdxCurrent].LevelT)
                     {
                         case LevelTypes.First:
-                            switch (_e.UnitT(cellIdxCurrent))
+                            switch (curUnitT_0)
                             {
                                 case UnitTypes.King:
                                     powerDamage = DamageUnitValues.KING_DAMAGE;
@@ -61,46 +63,46 @@ namespace Chessy.Model.System
 
 
 
-                    if (_e.HasKingEffectHereC(cellIdxCurrent).Has(_e.UnitPlayerT(cellIdxCurrent)))//Separate player effect
+                    if (_hasUnitKingEffectHereCs[cellIdxCurrent].Has(_unitCs[cellIdxCurrent].PlayerT))//Separate player effect
                     {
                         powerDamage *= DamageUnitValues.KING_EFFECT_ON_NEAR_UNITS;
                     }
 
 
-                    if (_e.MainToolWeaponT(cellIdxCurrent).HaveToolWeapon())
+                    if (_mainTWC[cellIdxCurrent].ToolWeaponT.HaveToolWeapon())
                     {
-                        if (_e.MainTWLevelT(cellIdxCurrent).Is(LevelTypes.Second))
+                        if (_mainTWC[cellIdxCurrent].LevelT == LevelTypes.Second)
                         {
-                            if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
+                            if (_mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
                                 powerDamage += DamageUnitValues.BOW_CROSSBOW_SECOND_ADDING;
                             }
                         }
                     }
-                    if (_e.ExtraToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Sword)) powerDamage += DamageUnitValues.SWORD_ADDING;
+                    if (_extraTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Sword) powerDamage += DamageUnitValues.SWORD_ADDING;
 
-                    if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Staff)) powerDamage -= DamageUnitValues.STAFF_EFFECT_ON_PAWN_TAKING;
-
-
-                    _e.UnitMainC(cellIdxCurrent).DamageSimpleAttack = powerDamage;
+                    if (_mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Staff) powerDamage -= DamageUnitValues.STAFF_EFFECT_ON_PAWN_TAKING;
 
 
+                    _unitCs[cellIdxCurrent].DamageSimpleAttack = powerDamage;
 
 
-                    if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Protected))
+
+
+                    if (_unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Protected)
                     {
                         powerDamage += powerDamage * DamageUnitValues.PROTECTED;
                     }
-                    else if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed))
+                    else if (_unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Relaxed)
                     {
                         powerDamage += powerDamage * DamageUnitValues.RELAXED;
                     }
 
-                    if (_e.HaveBuildingOnCell(cellIdxCurrent))
+                    if (_buildingCs[cellIdxCurrent].HaveBuilding)
                     {
                         var p = 0f;
 
-                        switch (_e.BuildingOnCellT(cellIdxCurrent))
+                        switch (_buildingCs[cellIdxCurrent].BuildingT)
                         {
                             case BuildingTypes.Farm:
                                 p = DamageUnitValues.FARM;
@@ -126,7 +128,7 @@ namespace Chessy.Model.System
 
                     powerDamage += powerDamage * protectionPercent;
 
-                    _e.UnitMainC(cellIdxCurrent).DamageOnCell = powerDamage;
+                    _unitCs[cellIdxCurrent].DamageOnCell = powerDamage;
                 }
             }
         }

@@ -13,14 +13,14 @@ namespace Chessy.Model
 
         internal void Update()
         {
-            if (_e.MistakeT != MistakeTypes.None)
+            if (_mistakeC.MistakeT != MistakeTypes.None)
             {
-                _e.MistakeTimer += Time.deltaTime;
+                _mistakeC.Timer += Time.deltaTime;
 
-                if (_e.MistakeTimer >= NEED_TIME_FOR_FADING)
+                if (_mistakeC.Timer >= NEED_TIME_FOR_FADING)
                 {
-                    _e.MistakeT = MistakeTypes.None;
-                    _e.NeedUpdateView = true;
+                    _mistakeC.MistakeT = MistakeTypes.None;
+                    _updateAllViewC.NeedUpdateView = true;
                 }
             }
 
@@ -28,7 +28,7 @@ namespace Chessy.Model
             //{
             //    _e.MotionTimer -= Time.deltaTime;
 
-            //    if (_e.MotionTimer <= 0) _e.NeedUpdateView = true;
+            //    if (_e.MotionTimer <= 0) _updateAllViewC.NeedUpdateView = true;
             //}
         }
     }

@@ -47,7 +47,7 @@ namespace Chessy.Model.System
             GetCellForArsonArcher();
             FillEffectsForVision();
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
 
         void FillEffectsForVision()
@@ -61,26 +61,26 @@ namespace Chessy.Model.System
                 {
                     for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
                     {
-                        _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.None);
+                        _effectsUnitsRightBarsCs[cellIdxCurrent].Set(buttonT, EffectTypes.None);
 
                         if (!_isFilled[(byte)EffectTypes.Shield] && _effectsUnitCs[cellIdxCurrent].HaveAnyProtectionRainyMagicShield)
                         {
-                            _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.Shield);
+                            _effectsUnitsRightBarsCs[cellIdxCurrent].Set(buttonT, EffectTypes.Shield);
                             _isFilled[(byte)EffectTypes.Shield] = true;
                         }
                         else if (!_isFilled[(byte)EffectTypes.Arraw] && _effectsUnitCs[cellIdxCurrent].HaveFrozenArrawArcher)
                         {
-                            _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.Arraw);
+                            _effectsUnitsRightBarsCs[cellIdxCurrent].Set(buttonT, EffectTypes.Arraw);
                             _isFilled[(byte)EffectTypes.Arraw] = true;
                         }
                         else if (!_isFilled[(byte)EffectTypes.Stun] && _effectsUnitCs[cellIdxCurrent].IsStunned)
                         {
-                            _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.Stun);
+                            _effectsUnitsRightBarsCs[cellIdxCurrent].Set(buttonT, EffectTypes.Stun);
                             _isFilled[(byte)EffectTypes.Stun] = true;
                         }
-                        else if (!_isFilled[(byte)EffectTypes.DamageAdd] && _e.HasKingEffectHereC(cellIdxCurrent).Has(_e.UnitPlayerT(cellIdxCurrent)))
+                        else if (!_isFilled[(byte)EffectTypes.DamageAdd] && _hasUnitKingEffectHereCs[cellIdxCurrent].Has(_unitCs[cellIdxCurrent].PlayerT))
                         {
-                            _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.DamageAdd);
+                            _effectsUnitsRightBarsCs[cellIdxCurrent].Set(buttonT, EffectTypes.DamageAdd);
                             _isFilled[(byte)EffectTypes.DamageAdd] = true;
                         }
                     }

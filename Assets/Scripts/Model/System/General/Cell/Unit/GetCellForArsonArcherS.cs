@@ -8,21 +8,21 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _e.WhereUnitCanFireAdultForestC(cellIdxCurrent).Set(cellIdxCurrent, false);
+                _whereUnitCanFireAdultForestCs[cellIdxCurrent].Set(cellIdxCurrent, false);
 
-                if (!_e.UnitEffectsC(cellIdxCurrent).IsStunned)
+                if (!_effectsUnitCs[cellIdxCurrent].IsStunned)
                 {
-                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
+                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
                     {
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
                             var idx_1 = _e.GetIdxCellByDirectAround(cellIdxCurrent, dirT);
 
-                            if (!_e.HaveFire(idx_1))
+                            if (!_fireCs[idx_1].HaveFire)
                             {
                                 if (_e.AdultForestC(idx_1).HaveAnyResources)
                                 {
-                                    _e.WhereUnitCanFireAdultForestC(cellIdxCurrent).Set(idx_1, true);
+                                    _whereUnitCanFireAdultForestCs[cellIdxCurrent].Set(idx_1, true);
                                 }
                             }
                         }

@@ -12,14 +12,14 @@ namespace Chessy.Model.System
 
             foreach (var item in _e.IdxsCellsAround(idx_to))
             {
-                if (_e.IsCenterCloud(item))
+                if (_cloudCs[item].IsCenterP)
                 {
-                    _windC.DirectT = _e.DirectionAround(idx_to, item).Invert();
+                    _windC.DirectT = _e.CellAroundC(idx_to, item).DirectT.Invert();
                     for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
                     {
-                        if (_e.IsCenterCloud(cellIdx))
+                        if (_cloudCs[cellIdx].IsCenterP)
                         {
-                            _e.CloudShiftingC(cellIdx).WhereNeedShiftIdxCell = _e.GetIdxCellByDirectAround(cellIdx, _windC.DirectT);
+                            _shiftCloudCs[cellIdx].WhereNeedShiftIdxCell = _e.GetIdxCellByDirectAround(cellIdx, _windC.DirectT);
                         }
                     }
 
@@ -32,7 +32,7 @@ namespace Chessy.Model.System
 
             if (canChange)
             {
-                _e.UnitCooldownAbilitiesC(snowyCellFrom_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
+                _cooldownAbilityCs[snowyCellFrom_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
                 _s.RpcSs.SoundToGeneral(RpcTarget.All, abilityT);
             }

@@ -6,10 +6,10 @@ namespace Chessy.Model.System
     {
         internal void AttackUnitFromTo(in byte idx_from, in byte idx_to)
         {
-            _e.SetUnitConditionT(idx_from, ConditionUnitTypes.None);
-            _e.UnitMainC(idx_from).CooldownForAttackAnyUnitInSeconds = ValuesChessy.COOLDOWN_AFTER_ATTACK;
+            _unitCs[idx_from].ConditionT = ConditionUnitTypes.None;
+            _unitCs[idx_from].CooldownForAttackAnyUnitInSeconds = ValuesChessy.COOLDOWN_AFTER_ATTACK;
 
-            _e.UnitMainC(idx_from).HowManySecondUnitWasHereInThisCondition = 0;
+            _unitCs[idx_from].HowManySecondUnitWasHereInThisCondition = 0;
 
 
             if (_e.UnitT(idx_to).IsAnimal())
@@ -18,7 +18,7 @@ namespace Chessy.Model.System
             }
             else
             {
-                if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
+                if (_e.UnitT(idx_from).IsMelee(_mainTWC[idx_from].ToolWeaponT))
                 {
                     RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
                 }
@@ -28,7 +28,7 @@ namespace Chessy.Model.System
                 }
             }
 
-            if (_e.UnitVisibleC(idx_from).IsVisible(_e.UnitPlayerT(idx_from).NextPlayer()))
+            if (_unitVisibleCs[idx_from].IsVisible(_unitCs[idx_from].PlayerT.NextPlayer()))
             {
                 RpcSs.AnimationCellToGeneral(idx_from, AnimationCellTypes.AttackSword, RpcTarget.All);
             }
@@ -39,16 +39,16 @@ namespace Chessy.Model.System
             RpcSs.AnimationCellToGeneral(idx_to, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
 
 
-            var powerDam_from = _e.DamageSimpleAttack(idx_from);
-            if (_e.WhereUnitCanAttackUniqueAttackToEnemyC(idx_from).Can(idx_to))
+            var powerDam_from = _unitCs[idx_from].DamageSimpleAttack;
+            if (_whereUniqueAttackCs[idx_from].Can(idx_to))
             {
                 powerDam_from *= DamageUnitValues.UNIQUE_ATTACK_PERCENT_DAMAGE;
             }
 
-            var powerDam_to = _e.DamageSimpleAttack(idx_to);
+            var powerDam_to = _unitCs[idx_to].DamageSimpleAttack;
 
 
-            var dirAttack = _e.DirectionAround(idx_from, idx_to);
+            var dirAttack = _e.CellAroundC(idx_from, idx_to).DirectT;
 
             if (_sunC.IsAcitveSun)
             {
@@ -117,38 +117,38 @@ namespace Chessy.Model.System
                 }
             }
 
-            if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
+            if (_e.UnitT(idx_from).IsMelee(_mainTWC[idx_from].ToolWeaponT))
             {
-                if (_e.UnitEffectsC(idx_from).ProtectionRainyMagicShield >= 1)
+                if (_effectsUnitCs[idx_from].ProtectionRainyMagicShield >= 1)
                 {
-                    _e.UnitEffectsC(idx_from).ProtectionRainyMagicShield--;
+                    _effectsUnitCs[idx_from].ProtectionRainyMagicShield--;
                 }
 
-                else if (_e.ExtraToolWeaponT(idx_from).Is(ToolsWeaponsWarriorTypes.Shield))
+                else if (_extraTWC[idx_from].ToolWeaponT == ToolsWeaponsWarriorTypes.Shield)
                 {
                     UnitSs.AttackShield(1f, idx_from);
                 }
 
                 else if (minus_from > 0)
                 {
-                    AttackUnitOnCell(minus_from, _e.UnitPlayerT(idx_from).NextPlayer(), idx_from);
+                    AttackUnitOnCell(minus_from, _unitCs[idx_from].PlayerT.NextPlayer(), idx_from);
                 }
             }
             else
             {
-                if (_e.UnitEffectsC(idx_from).HaveFrozenArrawArcher)
+                if (_effectsUnitCs[idx_from].HaveFrozenArrawArcher)
                 {
-                    _e.UnitEffectsC(idx_from).HaveFrozenArrawArcher = false;
-                    _e.UnitEffectsC(idx_to).StunHowManyUpdatesNeedStay = StunUnitValues.AFTER_FROZEN_ARRAW_PAWN;
+                    _effectsUnitCs[idx_from].HaveFrozenArrawArcher = false;
+                    _effectsUnitCs[idx_to].StunHowManyUpdatesNeedStay = StunUnitValues.AFTER_FROZEN_ARRAW_PAWN;
                 }
             }
 
-            if (_e.UnitEffectsC(idx_to).ProtectionRainyMagicShield >= 1)
+            if (_effectsUnitCs[idx_to].ProtectionRainyMagicShield >= 1)
             {
-                _e.UnitEffectsC(idx_to).ProtectionRainyMagicShield--;
+                _effectsUnitCs[idx_to].ProtectionRainyMagicShield--;
             }
 
-            else if (_e.ExtraToolWeaponT(idx_to).Is(ToolsWeaponsWarriorTypes.Shield))
+            else if (_extraTWC[idx_to].ToolWeaponT == ToolsWeaponsWarriorTypes.Shield)
             {
                 UnitSs.AttackShield(1f, idx_to);
             }
@@ -159,11 +159,11 @@ namespace Chessy.Model.System
 
                 if (_e.UnitT(idx_to).IsAnimal())
                 {
-                    killer = _e.UnitPlayerT(idx_from);
+                    killer = _unitCs[idx_from].PlayerT;
                 }
                 else
                 {
-                    killer = _e.UnitPlayerT(idx_to).NextPlayer();
+                    killer = _unitCs[idx_to].PlayerT.NextPlayer();
                 }
 
 
@@ -175,7 +175,7 @@ namespace Chessy.Model.System
                 {
                     if (_e.UnitT(idx_from).HaveUnit())
                     {
-                        if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
+                        if (_e.UnitT(idx_from).IsMelee(_mainTWC[idx_from].ToolWeaponT))
                         {
                             //ShiftUnitOnOtherCellM(idx_from, idx_to);
                         }
@@ -183,7 +183,7 @@ namespace Chessy.Model.System
 
                     if (wasUnitT_to == UnitTypes.Wolf)
                     {
-                        _e.ResourcesInInventoryC(_e.UnitPlayerT(idx_from)).Add(ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL);
+                        _e.ResourcesInInventoryC(_unitCs[idx_from].PlayerT).Add(ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL);
                     }
                 }
             }

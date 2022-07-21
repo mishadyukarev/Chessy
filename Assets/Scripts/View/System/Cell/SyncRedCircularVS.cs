@@ -56,7 +56,7 @@ namespace Chessy.Model
                     {
                         if (currentUnitT_0 == UnitTypes.King)
                         {
-                            if (_e.UnitPlayerT(currentIdxCell) == PlayerTypes.Second)
+                            if (_unitCs[currentIdxCell].PlayerType == PlayerTypes.Second)
                             {
                                 needActiveRef = true;
                             }

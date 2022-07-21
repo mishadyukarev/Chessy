@@ -8,17 +8,17 @@ namespace Chessy.Model.System
         {
             var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (_e.WhereUnitCanShiftC(cellIdxFrom).CanShiftHere(cellIdxTo) && _e.UnitPlayerT(cellIdxFrom).Is(whoDoing))
+            if (_whereUnitCanShiftCs[cellIdxFrom].CanShiftHere(cellIdxTo) && _unitCs[cellIdxFrom].PlayerT == whoDoing)
             {
-                _e.SetUnitConditionT(cellIdxFrom, ConditionUnitTypes.None);
+                _unitCs[cellIdxFrom].ConditionT = ConditionUnitTypes.None;
 
-                if (_e.ShiftingInfoForUnitC(cellIdxFrom).WhereNeedShiftIdxCell != 0)
+                if (_shiftingUnitCs[cellIdxFrom].WhereNeedShiftIdxCell != 0)
                 {
-                    _e.ShiftingInfoForUnitC(cellIdxFrom).NeedReturnBack = true;
+                    _shiftingUnitCs[cellIdxFrom].NeedReturnBack = true;
                 }
                 else
                 {
-                    _e.ShiftingInfoForUnitC(cellIdxFrom).WhereNeedShiftIdxCell = cellIdxTo;
+                    _shiftingUnitCs[cellIdxFrom].WhereNeedShiftIdxCell = cellIdxTo;
                 }
 
                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.SoundRunningUnit);

@@ -5,14 +5,14 @@ namespace Chessy.Model.System
     {
         public void GetHeroClickCenter(in UnitTypes unitT)
         {
-            if (unitT == UnitTypes.Elfemale && _e.LessonT.HaveLesson()) return;
+            if (unitT == UnitTypes.Elfemale && _aboutGameC.LessonT.HaveLesson()) return;
 
 
             _e.SoundAction(ClipTypes.Click).Invoke();
 
-            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.GetHeroInCenterM), unitT });
+            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.GetHeroInCenterM), unitT });
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
     }
 }

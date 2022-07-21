@@ -160,16 +160,16 @@ namespace Chessy.Model.System
             
             //_s.SyncDataS.TrySyncDataM();
         }
-        internal void ExecuteSoundActionToGeneral(in RpcTarget rpcTargetT, in ClipTypes clipT) => _e.RpcC.Rpc(rpcTargetT, new object[] { nameof(_s.ExecuteSoundActionClip), clipT });
-        internal void ExecuteSoundActionToGeneral(in Player playerTo, ClipTypes clipT) => _e.RpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteSoundActionClip), clipT });
-        internal void SoundToGeneral(RpcTarget rpcTarget, AbilityTypes abilityT) => _e.RpcC.Rpc(rpcTarget, new object[] { nameof(_s.ExecuteSoundActionAbility), abilityT });
-        internal void SoundToGeneral(Player playerTo, AbilityTypes abilityT) => _e.RpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteSoundActionAbility), abilityT });
+        internal void ExecuteSoundActionToGeneral(in RpcTarget rpcTargetT, in ClipTypes clipT) => _rpcC.Rpc(rpcTargetT, new object[] { nameof(_s.ExecuteSoundActionClip), clipT });
+        internal void ExecuteSoundActionToGeneral(in Player playerTo, ClipTypes clipT) => _rpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteSoundActionClip), clipT });
+        internal void SoundToGeneral(RpcTarget rpcTarget, AbilityTypes abilityT) => _rpcC.Rpc(rpcTarget, new object[] { nameof(_s.ExecuteSoundActionAbility), abilityT });
+        internal void SoundToGeneral(Player playerTo, AbilityTypes abilityT) => _rpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteSoundActionAbility), abilityT });
 
-        internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in RpcTarget rpcTarget) => _e.RpcC.Rpc(rpcTarget, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
-        internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in Player sender) => _e.RpcC.Rpc(sender, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
-        internal void ExecuteAnimationCellDirectlyToGeneral(in byte cellIdx, in CellAnimationDirectlyTypes animationCellT, in RpcTarget rpcTarget) => _e.RpcC.Rpc(rpcTarget, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
+        internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in RpcTarget rpcTarget) => _rpcC.Rpc(rpcTarget, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
+        internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in Player sender) => _rpcC.Rpc(sender, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
+        internal void ExecuteAnimationCellDirectlyToGeneral(in byte cellIdx, in CellAnimationDirectlyTypes animationCellT, in RpcTarget rpcTarget) => _rpcC.Rpc(rpcTarget, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
 
-        internal void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => _e.RpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteMistake), mistakeType });
+        internal void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => _rpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteMistake), mistakeType });
         internal void SimpleMistakeToGeneral(Player playerTo, Dictionary<ResourceTypes, float> needRes)
         {
             var needRes2 = new float[(int)ResourceTypes.End];
@@ -179,7 +179,7 @@ namespace Chessy.Model.System
             needRes2[3] = needRes[ResourceTypes.Iron];
             needRes2[4] = needRes[ResourceTypes.Gold];
 
-            _e.RpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteMistake), MistakeTypes.Economy, needRes2 });
+            _rpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteMistake), MistakeTypes.Economy, needRes2 });
         }
     }
 }

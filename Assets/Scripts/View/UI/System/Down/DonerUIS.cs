@@ -18,7 +18,7 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            //if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.HoldPressReady)
+            //if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.HoldPressReady)
             //{
             //    _donerE.ButtonC.SetActiveParent(false);
             //    _donerE.WaitGoC.SetActive(false);

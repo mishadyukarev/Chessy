@@ -19,7 +19,7 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            var idx_0 = _e.SelectedCellIdx;
+            var idx_0 = _cellsC.Selected;
 
             var activeButt = false;
 
@@ -32,17 +32,17 @@ namespace Chessy.View.UI.System
 
             if (_e.UnitT(idx_0).HaveUnit())
             {
-                if (_e.UnitPlayerT(idx_0).Is(_aboutGameC.CurrentPlayerIType))
+                if (_unitCs[idx_0].PlayerType == _aboutGameC.CurrentPlayerIType)
                 {
-                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.RelaxExtractPawn)
+                    if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.RelaxExtractPawn)
                     {
                         activeButt = true;
 
-                        _relaxUIE.ImageC.Image.color = _e.UnitConditionT(idx_0).Is(ConditionUnitTypes.Relaxed) ? Color.green : Color.white;
+                        _relaxUIE.ImageC.Image.color = _unitCs[idx_0].ConditionType == ConditionUnitTypes.Relaxed ? Color.green : Color.white;
 
                         if (_e.UnitT(idx_0).Is(UnitTypes.Pawn))
                         {
-                            if (_e.MainToolWeaponT(idx_0).Is(ToolsWeaponsWarriorTypes.Axe))
+                            if (_mainTWC[idx_0].ToolWeaponType == ToolsWeaponsWarriorTypes.Axe)
                             {
                                 _needActiveZone[(byte)_e.UnitT(idx_0)] = true;
                             }

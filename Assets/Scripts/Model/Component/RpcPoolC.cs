@@ -3,7 +3,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 namespace Chessy.Model
 {
-    sealed class RpcPoolC
+    public sealed class RpcPoolC
     {
         internal readonly ActionMy<string, RpcTarget, object[]> Action0;
         internal readonly ActionMy<string, Player, object[]> Action1;

@@ -26,15 +26,15 @@ namespace Chessy.View.UI.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.WhereViewDataUnitC(cellIdxCurrent).HaveDataReference)
+                if (_unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
                 {
-                    var dataIdxCell = _e.WhereViewDataUnitC(cellIdxCurrent).DataIdxCellP;
+                    var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
-                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build1Farms)
+                    if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.Build1Farms)
                     {
                         if (_e.UnitT(dataIdxCell).Is(UnitTypes.Pawn))
                         {
-                            if (_e.UnitPlayerT(dataIdxCell).Is(_aboutGameC.CurrentPlayerIType))
+                            if (_unitCs[dataIdxCell].PlayerType == _aboutGameC.CurrentPlayerIType)
                             {
                                 _needActive[cellIdxCurrent] = _e.ResourcesInInventory(_aboutGameC.CurrentPlayerIType, ResourceTypes.Food) < 1;
                             }

@@ -17,26 +17,26 @@ namespace Chessy.Model.System
                 //{
                 if (twT == ToolsWeaponsWarriorTypes.BowCrossbow || twT == ToolsWeaponsWarriorTypes.Staff)
                 {
-                    if (_e.ExtraToolWeaponT(cellIdxForDoing).HaveToolWeapon())
+                    if (_extraTWC[cellIdxForDoing].HaveToolWeapon)
                     {
-                        _e.AddToolWeaponsInInventor(_e.UnitPlayerT(cellIdxForDoing), _e.ExtraTWLevelT(cellIdxForDoing), _e.ExtraToolWeaponT(cellIdxForDoing));
-                        _e.SetExtraToolWeaponT(cellIdxForDoing, ToolsWeaponsWarriorTypes.None);
+                        _e.AddToolWeaponsInInventor(_unitCs[cellIdxForDoing].PlayerT, _extraTWC[cellIdxForDoing].LevelT, _extraTWC[cellIdxForDoing].ToolWeaponT);
+                        _extraTWC[cellIdxForDoing].ToolWeaponT = ToolsWeaponsWarriorTypes.None;
                     }
                     else
                     {
 
 
-                        if (_e.MainToolWeaponT(cellIdxForDoing).Is(ToolsWeaponsWarriorTypes.Axe))
+                        if (_mainTWC[cellIdxForDoing].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
                         {
 
 
-                            if (_e.MainTWLevelT(cellIdxForDoing).Is(LevelTypes.First))
+                            if (_mainTWC[cellIdxForDoing].LevelT == LevelTypes.First)
                             {
                                 if (_e.ToolWeaponsInInventor(whoseMove, levTW, twT) > 0)
                                 {
                                     _e.SubtractToolWeaponsInInventor(whoseMove, levTW, twT);
 
-                                    _e.MainToolWeaponC(cellIdxForDoing).Set(twT, levTW);
+                                    _mainTWC[cellIdxForDoing].Set(twT, levTW);
 
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -58,11 +58,11 @@ namespace Chessy.Model.System
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                             _e.ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
 
-                                        _e.MainToolWeaponC(cellIdxForDoing).Set(twT, levTW);
+                                        _mainTWC[cellIdxForDoing].Set(twT, levTW);
 
                                         RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
-                                        //if (_e.LessonT.Is(LessonTypes.GiveStaff, LessonTypes.GiveBowCrossbow))
+                                        //if (_aboutGameC.LessonT.Is(LessonTypes.GiveStaff, LessonTypes.GiveBowCrossbow))
                                         //{
                                         //     SetNextLesson();
                                         //}
@@ -76,30 +76,30 @@ namespace Chessy.Model.System
                             }
                             else
                             {
-                                _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
-                                _e.MainToolWeaponC(cellIdxForDoing).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                                _e.AddToolWeaponsInInventor(whoseMove, _mainTWC[cellIdxForDoing].LevelT, _mainTWC[cellIdxForDoing].ToolWeaponT);
+                                _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
 
                             }
                         }
 
                         else
                         {
-                            _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
-                            _e.MainToolWeaponC(cellIdxForDoing).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                            _e.AddToolWeaponsInInventor(whoseMove, _mainTWC[cellIdxForDoing].LevelT, _mainTWC[cellIdxForDoing].ToolWeaponT);
+                            _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
                         }
                     }
                 }
 
                 else if (twT == ToolsWeaponsWarriorTypes.Axe)
                 {
-                    if (_e.MainToolWeaponT(cellIdxForDoing).Is(ToolsWeaponsWarriorTypes.Axe))
+                    if (_mainTWC[cellIdxForDoing].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
                     {
-                        if (_e.MainTWLevelT(cellIdxForDoing).Is(LevelTypes.First))
+                        if (_mainTWC[cellIdxForDoing].LevelT == LevelTypes.First)
                         {
                             if (_e.ToolWeaponsInInventor(whoseMove, levTW, twT) > 0)
                             {
                                 _e.SubtractToolWeaponsInInventor(whoseMove, levTW, twT);
-                                _e.MainToolWeaponC(cellIdxForDoing).Set(twT, levTW);
+                                _mainTWC[cellIdxForDoing].Set(twT, levTW);
 
                                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -121,11 +121,11 @@ namespace Chessy.Model.System
                                     for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                         _e.ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
 
-                                    _e.MainToolWeaponC(cellIdxForDoing).Set(twT, levTW);
+                                    _mainTWC[cellIdxForDoing].Set(twT, levTW);
 
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
-                                    if (_e.LessonT == LessonTypes.GiveIronAxe)
+                                    if (_aboutGameC.LessonT == LessonTypes.GiveIronAxe)
                                     {
                                         SetNextLesson();
                                     }
@@ -141,15 +141,15 @@ namespace Chessy.Model.System
 
                         else
                         {
-                            _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
-                            _e.MainToolWeaponC(cellIdxForDoing).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                            _e.AddToolWeaponsInInventor(whoseMove, _mainTWC[cellIdxForDoing].LevelT, _mainTWC[cellIdxForDoing].ToolWeaponT);
+                            _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
                         }
                     }
 
                     else
                     {
-                        _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
-                        _e.MainToolWeaponC(cellIdxForDoing).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                        _e.AddToolWeaponsInInventor(whoseMove, _mainTWC[cellIdxForDoing].LevelT, _mainTWC[cellIdxForDoing].ToolWeaponT);
+                        _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
 
                         RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                     }
@@ -157,22 +157,22 @@ namespace Chessy.Model.System
 
                 else
                 {
-                    var ownUnit_0 = _e.UnitPlayerT(cellIdxForDoing);
+                    var ownUnit_0 = _unitCs[cellIdxForDoing].PlayerT;
 
-                    if (_e.MainToolWeaponT(cellIdxForDoing).Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
+                    if (_mainTWC[cellIdxForDoing].ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
                     {
-                        _e.AddToolWeaponsInInventor(_e.UnitPlayerT(cellIdxForDoing), _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
-                        _e.MainToolWeaponC(cellIdxForDoing).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                        _e.AddToolWeaponsInInventor(_unitCs[cellIdxForDoing].PlayerT, _mainTWC[cellIdxForDoing].LevelT, _mainTWC[cellIdxForDoing].ToolWeaponT);
+                        _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
                     }
 
                     else
                     {
-                        if (_e.MainToolWeaponT(cellIdxForDoing).Is(ToolsWeaponsWarriorTypes.Axe))
+                        if (_mainTWC[cellIdxForDoing].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
                         {
-                            if (_e.ExtraToolWeaponT(cellIdxForDoing).HaveToolWeapon())
+                            if (_extraTWC[cellIdxForDoing].HaveToolWeapon)
                             {
-                                _e.AddToolWeaponsInInventor(ownUnit_0, _e.ExtraTWLevelT(cellIdxForDoing), _e.ExtraToolWeaponT(cellIdxForDoing));
-                                _e.SetExtraToolWeaponT(cellIdxForDoing, ToolsWeaponsWarriorTypes.None);
+                                _e.AddToolWeaponsInInventor(ownUnit_0, _extraTWC[cellIdxForDoing].LevelT, _extraTWC[cellIdxForDoing].ToolWeaponT);
+                                _extraTWC[cellIdxForDoing].ToolWeaponT = ToolsWeaponsWarriorTypes.None;
 
                                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -182,7 +182,7 @@ namespace Chessy.Model.System
                                 _e.SubtractToolWeaponsInInventor(ownUnit_0, levTW, twT, 1);
 
 
-                                _e.UnitExtraTWC(cellIdxForDoing).Set(twT, levTW, ValuesChessy.MaxShieldProtection(levTW));
+                                _extraTWC[cellIdxForDoing].Set(twT, levTW, ValuesChessy.MaxShieldProtection(levTW));
 
                                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -213,13 +213,13 @@ namespace Chessy.Model.System
                                             : ValuesChessy.SHIELD_MAX_PROTECTION_LEVEL_SECOND;
                                     }
 
-                                    _e.UnitExtraTWC(cellIdxForDoing).Set(twT, levTW, protection);
+                                    _extraTWC[cellIdxForDoing].Set(twT, levTW, protection);
 
 
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
 
-                                    if (_e.LessonT == LessonTypes.GiveTakePickPawn)
+                                    if (_aboutGameC.LessonT == LessonTypes.GiveTakePickPawn)
                                     {
 
                                         SetNextLesson();

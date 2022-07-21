@@ -32,7 +32,7 @@ namespace Chessy.View.System
             {
                 if (_cellCs[cellIdxCurrent_0].IsBorder) continue;
 
-                if (_e.SelectedCellIdx == cellIdxCurrent_0 && _sunC.IsAcitveSun)
+                if (_cellsC.Selected == cellIdxCurrent_0 && _sunC.IsAcitveSun)
                 {
                     _simpleUnqiueCells.Clear();
 
@@ -56,7 +56,7 @@ namespace Chessy.View.System
                         {
                             var invertSunDirectT = sunDirectT.Invert();
 
-                            if (_e.DirectionAround(cellIdxCurrent_0, cellIdxAttack) == invertSunDirectT)
+                            if (_e.CellAroundC(cellIdxCurrent_0, cellIdxAttack).DirectT == invertSunDirectT)
                             {
                                 _needActive[cellIdxAttack] = true;
                             }

@@ -38,7 +38,7 @@ namespace Chessy.Model.System
                     _e.ResourcesInInventoryC(whoDoing).Subtract(resT, needRes[resT]);
                 }
 
-                if (_e.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
+                if (_aboutGameC.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
                 {
                     SetNextLesson();
                     _e.IsSelectedCity = true;

@@ -25,10 +25,10 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.BuildingOnCellT(cellIdxCurrent).HaveBuilding())
+                if (_buildingCs[cellIdxCurrent].HaveBuilding)
                 {
                     _needActive[cellIdxCurrent] = true;
-                    _flagSRCs[cellIdxCurrent].Color = _e.BuildingPlayerT(cellIdxCurrent).Is(PlayerTypes.First) ? Color.blue : Color.red;
+                    _flagSRCs[cellIdxCurrent].Color = _buildingCs[cellIdxCurrent].PlayerType == PlayerTypes.First ? Color.blue : Color.red;
                 }
             }
 

@@ -11,7 +11,7 @@
 //                {
 //                    if (_e.UnitT(cell_0) == UnitTypes.Snowy)
 //                    {
-//                        if (!_e.LessonT.HaveLesson())
+//                        if (!_aboutGameC.LessonT.HaveLesson())
 //                        {
 //                            _s.RainyGiveWaterToUnitsAround(cell_0);
 //                        }

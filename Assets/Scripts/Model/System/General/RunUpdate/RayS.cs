@@ -24,11 +24,11 @@ namespace Chessy.Model
             var two = raycast.transform.gameObject.GetInstanceID();
 
 
-            _e.RaycastT = RaycastTypes.None;
+            _aboutGameC.RaycastT = RaycastTypes.None;
 
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                _e.RaycastT = RaycastTypes.UI;
+                _aboutGameC.RaycastT = RaycastTypes.UI;
             }
             else if (raycast)
             {
@@ -38,23 +38,23 @@ namespace Chessy.Model
 
                     if (one == two)
                     {
-                        if (_e.CurrentCellIdx != _e.CellsC.PreviousVision)
+                        if (_cellsC.Current != _cellsC.PreviousVision)
                         {
-                            if (_e.CellClickT.Is(CellClickTypes.SetUnit))
+                            if (_aboutGameC.CellClickT.Is(CellClickTypes.SetUnit))
                             {
-                                _e.UnitNeedUpdateViewC(_e.CurrentCellIdx).NeedUpdateView = true;
-                                _e.UnitNeedUpdateViewC(_e.CellsC.PreviousVision).NeedUpdateView = true;
+                                _updateViewUnitCs[_cellsC.Current].NeedUpdateView = true;
+                                _updateViewUnitCs[_cellsC.PreviousVision].NeedUpdateView = true;
                             }
 
-                            _e.CellsC.PreviousVision = _e.CurrentCellIdx;
+                            _cellsC.PreviousVision = _cellsC.Current;
                         }
 
-                        _e.CurrentCellIdx = cell_0;
-                        _e.RaycastT = RaycastTypes.Cell;
+                        _cellsC.Current = cell_0;
+                        _aboutGameC.RaycastT = RaycastTypes.Cell;
                     }
                 }
 
-                if (_e.RaycastT == RaycastTypes.None) _e.RaycastT = RaycastTypes.Background;
+                if (_aboutGameC.RaycastT == RaycastTypes.None) _aboutGameC.RaycastT = RaycastTypes.Background;
             }
 
 
@@ -67,7 +67,7 @@ namespace Chessy.Model
             {
                 if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                 {
-                    _e.RaycastT = RaycastTypes.UI;
+                    _aboutGameC.RaycastT = RaycastTypes.UI;
                 }
             }
 #endif

@@ -143,7 +143,7 @@ namespace Chessy.Model.System
                         //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns + E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns);
                         _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse += _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse;
 
-                        if (_e.LessonT == LessonTypes.BuildHouseForWarrior)
+                        if (_aboutGameC.LessonT == LessonTypes.BuildHouseForWarrior)
                         {
                             SetNextLesson();
                         }
@@ -169,7 +169,7 @@ namespace Chessy.Model.System
 
             else
             {
-                if (_e.LessonT.Is(Enum.LessonTypes.TryBuyingHouse))
+                if (_aboutGameC.LessonT.Is(Enum.LessonTypes.TryBuyingHouse))
                 {
                      SetNextLesson();
                 }

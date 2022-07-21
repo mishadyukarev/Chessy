@@ -55,7 +55,7 @@ namespace Chessy.View.System
                 _needActiveOre[cellIdxCurrent] = false;
             }
 
-            if (_e.ZoneInfoC.IsActiveEnvironment)
+            if (_zonesInfoC.IsActiveEnvironment)
             {
                 for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                 {

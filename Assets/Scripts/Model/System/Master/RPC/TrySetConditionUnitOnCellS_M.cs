@@ -8,39 +8,39 @@ namespace Chessy.Model.System
     {
         internal void TrySetConditionUnitOnCellM(in ConditionUnitTypes condT, in byte cellIdx, in Player sender)
         {
-            if (!_e.UnitEffectsC(cellIdx).IsStunned)
+            if (!_effectsUnitCs[cellIdx].IsStunned)
             {
                 switch (condT)
                 {
                     case ConditionUnitTypes.None:
-                        _e.SetUnitConditionT(cellIdx, ConditionUnitTypes.None);
+                        _unitCs[cellIdx].ConditionT = ConditionUnitTypes.None;
                         break;
 
                     case ConditionUnitTypes.Protected:
-                        if (_e.UnitConditionT(cellIdx).Is(ConditionUnitTypes.Protected))
+                        if (_unitCs[cellIdx].ConditionT == ConditionUnitTypes.Protected)
                         {
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _e.SetUnitConditionT(cellIdx, ConditionUnitTypes.None);
+                            _unitCs[cellIdx].ConditionT = ConditionUnitTypes.None;
                         }
                         else
                         {
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _e.SetUnitConditionT(cellIdx, condT);
+                            _unitCs[cellIdx].ConditionT = condT;
 
-                            //if (_e.LessonT == LessonTypes.ClickDefend) SetNextLesson();
+                            //if (_aboutGameC.LessonT == LessonTypes.ClickDefend) SetNextLesson();
                         }
                         break;
 
 
                     case ConditionUnitTypes.Relaxed:
-                        if (_e.UnitConditionT(cellIdx).Is(ConditionUnitTypes.Relaxed))
+                        if (_unitCs[cellIdx].ConditionT == ConditionUnitTypes.Relaxed)
                         {
                             //RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _e.SetUnitConditionT(cellIdx, ConditionUnitTypes.None);
+                            _unitCs[cellIdx].ConditionT = ConditionUnitTypes.None;
                         }
                         else
                         {
-                            _e.SetUnitConditionT(cellIdx, condT);
+                            _unitCs[cellIdx].ConditionT = condT;
 
                             var clipT = ClipTypes.SighUnit;
 
@@ -48,14 +48,14 @@ namespace Chessy.Model.System
                             {
                                 if (_e.AdultForestC(cellIdx).HaveAnyResources)
                                 {
-                                    if (!_e.HaveBuildingOnCell(cellIdx))
+                                    if (!_buildingCs[cellIdx].HaveBuilding)
                                     {
 
-                                        if (_e.HpUnitC(cellIdx).Health >= HpUnitValues.MAX)
+                                        if (_hpUnitCs[cellIdx].Health >= HpUnitValues.MAX)
                                         {
-                                            if (_e.PlayerInfoE(_e.UnitPlayerT(cellIdx)).GodInfoC.UnitType.Is(UnitTypes.Elfemale))
+                                            if (_e.PlayerInfoE(_unitCs[cellIdx].PlayerT).GodInfoC.UnitType.Is(UnitTypes.Elfemale))
                                             {
-                                                _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cellIdx), ValuesChessy.MAX_HP_ANY_BUILDING, cellIdx);
+                                                _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _unitCs[cellIdx].PlayerT, ValuesChessy.MAX_HP_ANY_BUILDING, cellIdx);
                                             }
                                         }
                                     }
@@ -74,7 +74,7 @@ namespace Chessy.Model.System
                         throw new Exception();
                 }
 
-                _e.UnitMainC(cellIdx).HowManySecondUnitWasHereInThisCondition = 0;
+                _unitCs[cellIdx].HowManySecondUnitWasHereInThisCondition = 0;
             }
 
             else

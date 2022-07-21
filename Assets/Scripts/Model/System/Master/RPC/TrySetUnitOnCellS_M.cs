@@ -9,25 +9,25 @@ namespace Chessy.Model.System
         {
             var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (_e.IsStartedCellC(cellIdx).IsStartedCell(whoDoing) && !_e.UnitT(cellIdx).HaveUnit())
+            if (_isStartedCellCs[cellIdx].IsStartedCell(whoDoing) && !_e.UnitT(cellIdx).HaveUnit())
             {
                 if (unitT == UnitTypes.King)
                 {
-                    if (_e.LessonT == LessonTypes.SettingKing)
+                    if (_aboutGameC.LessonT == LessonTypes.SettingKing)
                     {
                          SetNextLesson();
                     }
                 }
                 else if (unitT.IsGod())
                 {
-                    if (_e.LessonT == LessonTypes.SettingGod)
+                    if (_aboutGameC.LessonT == LessonTypes.SettingGod)
                     {
                          SetNextLesson();
                     }
                 }
 
 
-                SetNewUnitOnCellS(unitT, whoDoing, cellIdx);
+                SetNewUnitOnCellS.Set(unitT, whoDoing, cellIdx);
 
 
                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);

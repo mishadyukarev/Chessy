@@ -7,42 +7,42 @@ namespace Chessy.Model.System
         public void Click(in ButtonTypes uniqueButton)
         {
 
-            var cellIdxSelected = _e.SelectedCellIdx;
+            var cellIdxSelected = _cellsC.Selected;
 
-            var abil = _e.UnitButtonAbilitiesC(cellIdxSelected).Ability(uniqueButton);
+            var abil = _buttonsAbilitiesUnitCs[cellIdxSelected].Ability(uniqueButton);
 
-            if (!_e.UnitEffectsC(cellIdxSelected).IsStunned)
+            if (!_effectsUnitCs[cellIdxSelected].IsStunned)
             {
-                if (!_e.UnitCooldownAbilitiesC(cellIdxSelected).HaveCooldown(abil))
+                if (!_cooldownAbilityCs[cellIdxSelected].HaveCooldown(abil))
                 {
                     switch (abil)
                     {
                         case AbilityTypes.FirePawn:
-                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithSimplePawnM), cellIdxSelected });
+                            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithSimplePawnM), cellIdxSelected });
                             break;
 
                         case AbilityTypes.PutOutFirePawn:
-                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryPutOutFireForestWithSimplePawnM), cellIdxSelected });
+                            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryPutOutFireForestWithSimplePawnM), cellIdxSelected });
                             break;
 
                         case AbilityTypes.Seed:
-                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySeedYoungForestOnCellWithPawnM), cellIdxSelected });
+                            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySeedYoungForestOnCellWithPawnM), cellIdxSelected });
 
                             break;
 
                         case AbilityTypes.FireArcher:
                             _aboutGameC.AbilityT = AbilityTypes.FireArcher;
-                            _e.CellClickT = CellClickTypes.UniqueAbility;
+                            _aboutGameC.CellClickT = CellClickTypes.UniqueAbility;
                             break;
 
                         case AbilityTypes.CircularAttack:
-                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.CircularAttackKingM), cellIdxSelected });
+                            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.CircularAttackKingM), cellIdxSelected });
                             break;
 
                         case AbilityTypes.StunElfemale:
                             {
                                 _aboutGameC.AbilityT = AbilityTypes.StunElfemale;
-                                _e.CellClickT = CellClickTypes.UniqueAbility;
+                                _aboutGameC.CellClickT = CellClickTypes.UniqueAbility;
                             }
                             break;
 
@@ -55,34 +55,34 @@ namespace Chessy.Model.System
                         //Snowy
 
                         case AbilityTypes.IncreaseWindSnowy:
-                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.IncreaseWindWithRainyM), cellIdxSelected });
+                            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.IncreaseWindWithRainyM), cellIdxSelected });
                             break;
 
                         case AbilityTypes.DecreaseWindSnowy:
-                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.DecreaseWindWithRainyM), cellIdxSelected });
+                            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.DecreaseWindWithRainyM), cellIdxSelected });
                             break;
 
                         case AbilityTypes.ChangeCornerArcher:
-                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher), cellIdxSelected });
+                            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher), cellIdxSelected });
                             break;
 
                         case AbilityTypes.GrowAdultForest:
-                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryGrowAdultForestWithElfemaleM), cellIdxSelected });
+                            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryGrowAdultForestWithElfemaleM), cellIdxSelected });
                             break;
 
                         case AbilityTypes.ChangeDirectionWind:
                             {
                                 _aboutGameC.AbilityT = AbilityTypes.ChangeDirectionWind;
-                                _e.CellClickT = CellClickTypes.UniqueAbility;
+                                _aboutGameC.CellClickT = CellClickTypes.UniqueAbility;
                             }
                             break;
 
                         case AbilityTypes.SetFarm:
-                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuildFarmOnCellWithSimplePawnM), cellIdxSelected });
+                            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuildFarmOnCellWithSimplePawnM), cellIdxSelected });
                             break;
 
                         case AbilityTypes.DestroyBuilding:
-                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.TryDestroyBuildingWithSimplePawnM), cellIdxSelected });
+                            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.TryDestroyBuildingWithSimplePawnM), cellIdxSelected });
                             break;
 
 

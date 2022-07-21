@@ -18,9 +18,6 @@ namespace Chessy.View.System
 
         readonly Vector3 _vector0 = new Vector3(0, 0, 0);
         readonly Vector3 _vector1 = new Vector3(0, 0, 180);
-
-        readonly VisibleToOtherPlayerOrNotC[] _trailVisible = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
-
         internal SyncTrailVS(in SpriteRenderer[,] trailSRs, in EntitiesModel eM) : base(eM)
         {
             _trailSRs = trailSRs;
@@ -31,8 +28,6 @@ namespace Chessy.View.System
                 {
                     _gOs[cellIdx, (byte)directT] = trailSRs[cellIdx, (byte)directT].gameObject;
                 }
-
-                _trailVisible[cellIdx] = eM.TrailVisibleC(cellIdx);
             }
         }
 
@@ -53,9 +48,9 @@ namespace Chessy.View.System
                     var directTbyte = (byte)directT;
 
 
-                    if (_trailVisible[cellIdxCurrent].IsVisible(_aboutGameC.CurrentPlayerIType))
+                    if (_visibleTrailCs[cellIdxCurrent].IsVisible(_aboutGameC.CurrentPlayerIType))
                     {
-                        _needActive[cellIdxCurrent, directTbyte] = _e.HealthTrail(cellIdxCurrent).IsAlive(directT);
+                        _needActive[cellIdxCurrent, directTbyte] = _hpTrailCs[cellIdxCurrent].IsAlive(directT);
                     }
 
                     if (directT == DirectTypes.Up)

@@ -36,6 +36,7 @@ namespace Chessy.Model.Entity
         {
             ZoneInfoC.Dispose();
             CommonInfoAboutGameC.Dispose();
+            MistakeC.Dispose();
         }
     }
 }

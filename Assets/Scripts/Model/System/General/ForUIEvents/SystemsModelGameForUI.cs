@@ -15,16 +15,16 @@ namespace Chessy.Model.System
 
         public void TryBuyFromMarketBuilding(in MarketBuyTypes marketBuyT)
         {
-            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuyFromMarketBuildingM), marketBuyT });
+            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuyFromMarketBuildingM), marketBuyT });
         }
         public void ClickFriendReadyButtonInGame()
         {
-            _e.ZoneInfoC.IsActiveFriend = false;
-            _e.NeedUpdateView = true;
+            _zonesInfoC.IsActiveFriend = false;
+            _updateAllViewC.NeedUpdateView = true;
         }
         public void ClickWindButtonUp()
         {
-            if (_e.LessonT == LessonTypes.ClickWindInfo)
+            if (_aboutGameC.LessonT == LessonTypes.ClickWindInfo)
             {
                 _sunC.SunSideT = SunSideTypes.Dawn;
                  _s.SetNextLesson();
@@ -43,7 +43,7 @@ namespace Chessy.Model.System
                 }
             }
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
         public void ClickSettingUpGame()
         {
@@ -57,7 +57,7 @@ namespace Chessy.Model.System
         public void ClickSettingsCenterMenu()
         {
             _settingsC.IsOpenedBarWithSettings = !_settingsC.IsOpenedBarWithSettings;
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
         public void ClickBuyPremiumProduct()
         {
@@ -94,35 +94,35 @@ namespace Chessy.Model.System
             }
 
             _e.SoundAction(_bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
         public void ClickPremiumButtonInHeroZoneInGame()
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
             _shopC.IsOpenedShopZone = true;
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
         public void ClickExitSmelterBarInGame()
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
             _selectedBuildingsInTownC.Set(BuildingTypes.Smelter, false);
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
         public void ClickExitMarketBarInGame()
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
             _selectedBuildingsInTownC.Set(BuildingTypes.Market, false);
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
         public void ClickPremiumButtonLeftInGame()
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
             _shopC.IsOpenedShopZone = true;
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
         public void ClickLeaveButtonInGame()
         {
@@ -139,7 +139,7 @@ namespace Chessy.Model.System
                 _bookC.OpenedNowPageBookT++;
                 _e.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
 
-                _e.NeedUpdateView = true;
+                _updateAllViewC.NeedUpdateView = true;
             }
         }
         public void ClickBackButtonInBookZone()
@@ -149,7 +149,7 @@ namespace Chessy.Model.System
                 _bookC.OpenedNowPageBookT--;
                 _e.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
 
-                _e.NeedUpdateView = true;
+                _updateAllViewC.NeedUpdateView = true;
             }
         }
         public void ClickExitBookInBookZone()
@@ -159,7 +159,7 @@ namespace Chessy.Model.System
 
             _e.SoundAction(ClipTypes.CloseBook).Invoke();
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
 
         #endregion
@@ -172,7 +172,7 @@ namespace Chessy.Model.System
             _settingsC.IsOpenedBarWithSettings = false;
             //eVCommon.Sound(ClipTypes.Click).Play();
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
 
         #endregion
@@ -197,7 +197,7 @@ namespace Chessy.Model.System
 
             _e.SoundAction(_bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
 
-            _e.NeedUpdateView = true;
+            _updateAllViewC.NeedUpdateView = true;
         }
 
         public void ClickConnectOnlineMenu()

@@ -8,36 +8,29 @@ namespace Chessy.Model.System
     {
         internal void TryStunEnemyWithElfemaleM(in byte cell_from, in byte cell_to, in AbilityTypes abilityT, in Player sender)
         {
-            if (!_e.UnitCooldownAbilitiesC(cell_from).HaveCooldown(abilityT))
+            if (!_cooldownAbilityCs[cell_from].HaveCooldown(abilityT))
             {
                 if (_e.AdultForestC(cell_to).HaveAnyResources)
                 {
-                    //if (_e.EnergyUnitC(cell_from).Energy >= StepValues.STUN_ELFEMALE)
-                    //{
-                        if (!_e.UnitPlayerT(cell_from).Is(_e.UnitPlayerT(cell_to)))
+                    if (_unitCs[cell_from].PlayerT != _unitCs[cell_to].PlayerT)
+                    {
+                        _effectsUnitCs[cell_to].StunHowManyUpdatesNeedStay = StunUnitValues.AMOUNT_STUN_AFTER_ABILITY_ELFEMALE;
+                        _cooldownAbilityCs[cell_from].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
+
+                        _s.RpcSs.SoundToGeneral(RpcTarget.All, abilityT);
+
+
+                        foreach (var idx_1 in _e.IdxsCellsAround(cell_to))
                         {
-                            _e.UnitEffectsC(cell_to).StunHowManyUpdatesNeedStay = StunUnitValues.AMOUNT_STUN_AFTER_ABILITY_ELFEMALE;
-                            _e.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
-
-                            //_e.EnergyUnitC(cell_from).Energy -= StepValues.STUN_ELFEMALE;
-
-                            _s.RpcSs.SoundToGeneral(RpcTarget.All, abilityT);
-
-
-                            foreach (var idx_1 in _e.IdxsCellsAround(cell_to))
+                            if (_e.AdultForestC(idx_1).HaveAnyResources)
                             {
-                                if (_e.AdultForestC(idx_1).HaveAnyResources)
+                                if (_e.UnitT(idx_1).HaveUnit() && _unitCs[idx_1].PlayerT == _unitCs[cell_to].PlayerT)
                                 {
-                                    if (_e.UnitT(idx_1).HaveUnit() && _e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cell_to)))
-                                    {
-                                        _e.UnitEffectsC(idx_1).StunHowManyUpdatesNeedStay = StunUnitValues.AMOUNT_STUN_AFTER_ABILITY_ELFEMALE;
-                                    }
+                                    _effectsUnitCs[idx_1].StunHowManyUpdatesNeedStay = StunUnitValues.AMOUNT_STUN_AFTER_ABILITY_ELFEMALE;
                                 }
                             }
                         }
-                    //}
-
-                    //else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    }
                 }
             }
 

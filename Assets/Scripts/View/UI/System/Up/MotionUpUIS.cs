@@ -16,7 +16,7 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            //if (_e.LessonT.HaveLesson())
+            //if (_aboutGameC.LessonType.HaveLesson())
             //{
             //    _motionTextC.GameObject.SetActive(false);
             //}

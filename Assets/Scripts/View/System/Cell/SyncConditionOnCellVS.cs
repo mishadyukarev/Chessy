@@ -24,21 +24,21 @@ namespace Chessy.View.System
                 _needActive[cellIdxCurrent] = false;
                 _needColor[cellIdxCurrent] = Color.white;
 
-                if (_e.WhereViewDataUnitC(cellIdxCurrent).HaveDataReference)
+                if (_unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
                 {
-                    var dataIdxCell = _e.WhereViewDataUnitC(cellIdxCurrent).DataIdxCellP;
+                    var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
-                    if (_e.UnitVisibleC(dataIdxCell).IsVisible(_aboutGameC.CurrentPlayerIType))
+                    if (_unitVisibleCs[dataIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType))
                     {
                         if (_e.UnitT(dataIdxCell).HaveUnit() && !_e.UnitT(dataIdxCell).IsAnimal())
                         {
-                            if (_e.UnitConditionT(dataIdxCell) == ConditionUnitTypes.Protected)
+                            if (_unitCs[dataIdxCell].ConditionType == ConditionUnitTypes.Protected)
                             {
                                 _needActive[cellIdxCurrent] = true;
                                 _needColor[cellIdxCurrent] = Color.yellow;
                             }
 
-                            else if (_e.UnitConditionT(dataIdxCell) == ConditionUnitTypes.Relaxed)
+                            else if (_unitCs[dataIdxCell].ConditionType == ConditionUnitTypes.Relaxed)
                             {
                                 _needActive[cellIdxCurrent] = true;
                                 _needColor[cellIdxCurrent] = Color.green;

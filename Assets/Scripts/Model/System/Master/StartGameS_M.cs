@@ -10,8 +10,8 @@ namespace Chessy.Model.System
         {
             _e.Dispose();
 
-            _e.ZoneInfoC.IsActiveFriend = _aboutGameC.GameModeT.Is(GameModeTypes.WithFriendOffline);
-            _e.CellClickT = StartGameValues.CELL_CLICK;
+            _zonesInfoC.IsActiveFriend = _aboutGameC.GameModeT.Is(GameModeTypes.WithFriendOffline);
+            _aboutGameC.CellClickT = StartGameValues.CELL_CLICK;
 
             _windC.Set(StartGameValues.DIRECT_WIND, StartGameValues.SPEED_WIND);
             _sunC.SunSideT = StartGameValues.SUN_SIDE;
@@ -23,7 +23,7 @@ namespace Chessy.Model.System
             _selectedToolWeaponC.ToolWeaponT = StartGameValues.SELECTED_TOOL_WEAPON;
             _selectedToolWeaponC.LevelT = StartGameValues.SELECTED_LEVEL_TOOL_WEAPON;
 
-            _e.LessonT = withTraining ? (LessonTypes)1 : 0;
+            _aboutGameC.LessonT = withTraining ? (LessonTypes)1 : 0;
 
 
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
@@ -75,10 +75,10 @@ namespace Chessy.Model.System
 
                 for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
-                    var x = _e.XCell(cell_0);
-                    var y = _e.YCell(cell_0);
+                    var x = _xyCellsCs[cell_0].X;
+                    var y = _xyCellsCs[cell_0].Y;
 
-                    _e.HaveFire(cell_0) = false;
+                    _fireCs[cell_0].HaveFire = false;
 
 
                     if (!_cellCs[cell_0].IsBorder)
@@ -114,32 +114,32 @@ namespace Chessy.Model.System
 
                         if (x >= 3 && x < 4 && y == 5)
                         {
-                            _e.SetRiverT(cell_0, RiverTypes.Start);
-                            _e.HaveRiverC(cell_0).HaveRive(DirectTypes.Up) = true;
+                            _riverCs[cell_0].RiverT = RiverTypes.Start;
+                            _haveRiverAroundCellCs[cell_0].HaveRive(DirectTypes.Up) = true;
                         }
                         else if (x == 4 && y == 5)
                         {
                             corners.Add(DirectTypes.UpRight);
                             corners.Add(DirectTypes.Down);
 
-                            _e.SetRiverT(cell_0, RiverTypes.Start);
-                            _e.HaveRiverC(cell_0).HaveRive(DirectTypes.Up) = true;
-                            _e.HaveRiverC(cell_0).HaveRive(DirectTypes.Right) = true;
+                            _riverCs[cell_0].RiverT = RiverTypes.Start;
+                            _haveRiverAroundCellCs[cell_0].HaveRive(DirectTypes.Up) = true;
+                            _haveRiverAroundCellCs[cell_0].HaveRive(DirectTypes.Right) = true;
                         }
                         else if (x >= 5 && x < 7 && y == 4)
                         {
-                            _e.SetRiverT(cell_0, RiverTypes.Start);
-                            _e.HaveRiverC(cell_0).HaveRive(DirectTypes.Up) = true;
+                            _riverCs[cell_0].RiverT = RiverTypes.Start;
+                            _haveRiverAroundCellCs[cell_0].HaveRive(DirectTypes.Up) = true;
                         }
 
 
                         for (var dir = DirectTypes.Up; dir <= DirectTypes.Left; dir++)
                         {
-                            if (_e.HaveRiverC(cell_0).HaveRive(dir))
+                            if (_haveRiverAroundCellCs[cell_0].HaveRive(dir))
                             {
                                 var idx_next = _e.GetIdxCellByDirectAround(cell_0, dir);
 
-                                _e.SetRiverT(idx_next, RiverTypes.EndRiver);
+                                _riverCs[idx_next].RiverT = RiverTypes.EndRiver;
                             }
                         }
 
@@ -147,7 +147,7 @@ namespace Chessy.Model.System
                         {
                             var idx_next = _e.GetIdxCellByDirectAround(cell_0, dir);
 
-                            _e.SetRiverT(idx_next, RiverTypes.Corner);
+                            _riverCs[idx_next].RiverT = RiverTypes.Corner;
                         }
 
 
@@ -171,7 +171,7 @@ namespace Chessy.Model.System
 
                                 if (UnityEngine.Random.Range(0f, 1f) <= 0.7)
                                 {
-                                    if (!_e.MountainC(_e.GetIdxCellByDirectAround(cell_0, dirT)).HaveAnyResources && !_e.HaveBuildingOnCell(idx_1))
+                                    if (!_e.MountainC(_e.GetIdxCellByDirectAround(cell_0, dirT)).HaveAnyResources && !_buildingCs[idx_1].HaveBuilding)
                                     {
                                         _e.HillC(idx_1).Resources = UnityEngine.Random.Range(0.5f, 1f);
                                     }
@@ -191,8 +191,8 @@ namespace Chessy.Model.System
 
                 for (byte cellUdxCurrent = 0; cellUdxCurrent < IndexCellsValues.CELLS; cellUdxCurrent++)
                 {
-                    var x = _e.XCell(cellUdxCurrent);
-                    var y = _e.YCell(cellUdxCurrent);
+                    var x = _xyCellsCs[cellUdxCurrent].X;
+                    var y = _xyCellsCs[cellUdxCurrent].Y;
 
                     if (x == 7 && y == 8)
                     {
@@ -202,7 +202,7 @@ namespace Chessy.Model.System
 
                         TryDestroyAdultForest(cellUdxCurrent);
 
-                        SetNewUnitOnCellS(UnitTypes.King, PlayerTypes.Second, cellUdxCurrent);
+                        SetNewUnitOnCellS.Set(UnitTypes.King, PlayerTypes.Second, cellUdxCurrent);
                         //}
                     }
 
@@ -217,20 +217,20 @@ namespace Chessy.Model.System
                         //{
                         _e.MountainC(cellUdxCurrent).Resources = 0;
 
-                        SetNewUnitOnCellS(UnitTypes.Pawn, PlayerTypes.Second, cellUdxCurrent);
+                        SetNewUnitOnCellS.Set(UnitTypes.Pawn, PlayerTypes.Second, cellUdxCurrent);
 
 
-                        _e.UnitExtraTWC(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.Second, ValuesChessy.MaxShieldProtection(LevelTypes.Second));
+                        _extraTWC[cellUdxCurrent].Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.Second, ValuesChessy.MaxShieldProtection(LevelTypes.Second));
 
                         var needShield = UnityEngine.Random.Range(0f, 1f) >= StartGameValues.PERCENT_SHIELD_LEVEL_FIRST_OR_SECOND_FOR_BOT;
 
                         if (needShield)
                         {
-                            _e.UnitExtraTWC(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.Second, ValuesChessy.MaxShieldProtection(LevelTypes.Second));
+                            _extraTWC[cellUdxCurrent].Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.Second, ValuesChessy.MaxShieldProtection(LevelTypes.Second));
                         }
                         else
                         {
-                            _e.UnitExtraTWC(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.First, ValuesChessy.MaxShieldProtection(LevelTypes.First));
+                            _extraTWC[cellUdxCurrent].Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.First, ValuesChessy.MaxShieldProtection(LevelTypes.First));
                         }
                         //}
                     }
@@ -265,10 +265,10 @@ namespace Chessy.Model.System
 
         internal void SetClouds(in byte centerCellIdx)
         {
-            _e.CloudC(centerCellIdx).IsCenter = true;
+            _cloudCs[centerCellIdx].IsCenter = true;
             SetDataAndSkinCloud(centerCellIdx);
 
-            _e.CloudShiftingC(centerCellIdx).WhereNeedShiftIdxCell = _e.GetIdxCellByDirectAround(centerCellIdx, _windC.DirectT);
+            _shiftCloudCs[centerCellIdx].WhereNeedShiftIdxCell = _e.GetIdxCellByDirectAround(centerCellIdx, _windC.DirectT);
 
             foreach (var aroundCell_0 in _e.IdxsCellsAround(centerCellIdx))
             {

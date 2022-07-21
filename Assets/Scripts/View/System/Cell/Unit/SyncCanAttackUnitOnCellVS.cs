@@ -25,17 +25,17 @@ namespace Chessy.View.System
                 _needColor[cellIdxCurrent] = Color.white;
 
 
-                if (_e.WhereViewDataUnitC(cellIdxCurrent).HaveDataReference)
+                if (_unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
                 {
-                    var dataCellIdx = _e.WhereViewDataUnitC(cellIdxCurrent).DataIdxCellP;
+                    var dataCellIdx = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
-                    if (_e.UnitVisibleC(dataCellIdx).IsVisible(_aboutGameC.CurrentPlayerIType))
+                    if (_unitVisibleCs[dataCellIdx].IsVisible(_aboutGameC.CurrentPlayerIType))
                     {
                         if (_e.UnitT(dataCellIdx).HaveUnit() && !_e.UnitT(dataCellIdx).IsAnimal())
                         {
-                            _needActive[cellIdxCurrent] = !_e.UnitMainC(dataCellIdx).HaveCoolDownForAttackAnyUnit;
+                            _needActive[cellIdxCurrent] = !_unitCs[dataCellIdx].HaveCoolDownForAttackAnyUnit;
 
-                            if (_e.UnitPlayerT(dataCellIdx).Is(PlayerTypes.First))
+                            if (_unitCs[dataCellIdx].PlayerType == PlayerTypes.First)
                             {
                                 _needColor[cellIdxCurrent] = Color.blue;
                             }
