@@ -9,9 +9,9 @@ namespace Chessy.Model.System
         {
             //var senderPlayerT = PhotonNetwork.OfflineMode ? _e.WhoseMovePlayerT : sender.GetPlayer();
 
-            //if (!_e.PlayerInfoE(senderPlayerT).PlayerInfoC.HaveKingInInventor)
+            //if (!PlayerInfoE(senderPlayerT).PlayerInfoC.HaveKingInInventor)
             //{
-            //    if (_e.PlayerInfoE(senderPlayerT).GodInfoC.UnitT.HaveUnit())
+            //    if (PlayerInfoE(senderPlayerT).GodInfoC.UnitT.HaveUnit())
             //    {
             //        if (_e.WhoseMovePlayerT == senderPlayerT)
             //        {
@@ -76,7 +76,7 @@ namespace Chessy.Model.System
         //{
         //    for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
         //    {
-        //        _e.PlayerInfoE(playerT).GodInfoC.Cooldown -= taking;
+        //        PlayerInfoE(playerT).GodInfoC.Cooldown -= taking;
         //    }
 
         //    for (byte idx = 0; idx < IndexCellsValues.CELLS; idx++)

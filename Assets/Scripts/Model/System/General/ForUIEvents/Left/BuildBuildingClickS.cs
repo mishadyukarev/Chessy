@@ -11,12 +11,12 @@ namespace Chessy.Model.System
                 if (_selectedBuildingsInTownC.Is(buildT))
                 {
                     _selectedBuildingsInTownC.Set(buildT, false);
-                    _e.SoundAction(ClipTypes.Click).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
                 }
-                else if (_e.PlayerInfoE(_aboutGameC.CurrentPlayerIT).BuildingsInTownInfoC.HaveBuilding(buildT))
+                else if (PlayerInfoE(_aboutGameC.CurrentPlayerIT).BuildingsInTownInfoC.HaveBuilding(buildT))
                 {
                     _selectedBuildingsInTownC.Set(buildT, true);
-                    _e.SoundAction(ClipTypes.Click).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
                 }
                 else
                 {

@@ -64,7 +64,7 @@ namespace Chessy.View.System
                     {
                         if (_cloudCs[curCellIdx].IsCenterP)
                         {
-                            foreach (var item in _e.IdxsCellsAround(curCellIdx))
+                            foreach (var item in _idxsAroundCellCs[curCellIdx].IdxCellsAroundArray)
                             {
                                 _needActive[item] = true;
                                 _needColor[item] = ColorsValues.Color(SupportCellVisionTypes.Shift);
@@ -89,7 +89,7 @@ namespace Chessy.View.System
 
             else
             {
-                if (_e.UnitT(_cellsC.Selected).HaveUnit())
+                if (_unitCs[_cellsC.Selected].HaveUnit)
                 {
                     if (_unitCs[_cellsC.Selected].PlayerType == _aboutGameC.CurrentPlayerIType)
                     {

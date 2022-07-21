@@ -11,7 +11,7 @@ namespace Chessy.Model.System
 
                 if (_buildingCs[cellIdxCurrent].BuildingT == BuildingTypes.Farm)
                 {
-                    if (_e.WaterOnCellC(cellIdxCurrent).HaveAnyResources)
+                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Fertilizer))
                     {
                         var extract = ValuesChessy.FARM_EXTRACT;
 
@@ -20,7 +20,7 @@ namespace Chessy.Model.System
                         //    extract += Environment_Values.FARM_CENTER_UPGRADE;
                         //}
 
-                        if (_e.WaterOnCellC(cellIdxCurrent).Resources < extract) extract = _e.WaterOnCellC(cellIdxCurrent).Resources;
+                        if (_environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Fertilizer) < extract) extract = _environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Fertilizer);
 
                         _extractionBuildingCs[cellIdxCurrent].HowManyFarmCanExtractFood = extract;
                     }

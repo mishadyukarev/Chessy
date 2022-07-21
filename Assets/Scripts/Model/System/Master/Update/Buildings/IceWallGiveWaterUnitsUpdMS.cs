@@ -20,7 +20,7 @@
 
 //                    foreach (var cell_01 in eMGame.CellEs(cell_0).IdxsAround)
 //                    {
-//                        if (eMGame.UnitTC(cell_01).HaveUnit() && eMGame.UnitPlayerTC(cell_01).Is(eMGame.BuildingPlayerTC(cell_0).Player))
+//                        if (eMGame.UnitTC(cell_01].HaveUnit && eMGame.UnitPlayerTC(cell_01).Is(eMGame.BuildingPlayerTC(cell_0).Player))
 //                        {
 //                            eMGame.UnitWaterC(cell_01).Water = WaterValues.MAX;
 //                        }

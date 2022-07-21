@@ -41,7 +41,7 @@ namespace Chessy.Model.System
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > _e.ResourcesInInventory(whoDoing, resT))
+                if (needRes[resT] > ResourcesInInventoryC(whoDoing).Resources(resT))
                 {
                     canBuy = false;
                     break;
@@ -52,24 +52,24 @@ namespace Chessy.Model.System
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.ResourcesInInventoryC(whoDoing).Subtract(resT, needRes[resT]);
+                    ResourcesInInventoryC(whoDoing).Subtract(resT, needRes[resT]);
                 }
                 switch (marketBuyT)
                 {
                     case MarketBuyTypes.FoodToWood:
-                        _e.ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Wood, EconomyValues.AFTER_BUY_FROM_MARKET_FOOD_TO_WOOD);
+                        ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Wood, EconomyValues.AFTER_BUY_FROM_MARKET_FOOD_TO_WOOD);
                         break;
 
                     case MarketBuyTypes.WoodToFood:
-                        _e.ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Food, EconomyValues.AFTER_BUY_FROM_MARKET_WOOD_TO_FOOD);
+                        ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Food, EconomyValues.AFTER_BUY_FROM_MARKET_WOOD_TO_FOOD);
                         break;
 
                     case MarketBuyTypes.GoldToFood:
-                        _e.ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Food, EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_FOOD);
+                        ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Food, EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_FOOD);
                         break;
 
                     case MarketBuyTypes.GoldToWood:
-                        _e.ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Wood, EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_WOOD);
+                        ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Wood, EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_WOOD);
                         break;
                 }
 

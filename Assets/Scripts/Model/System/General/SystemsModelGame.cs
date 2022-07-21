@@ -95,9 +95,9 @@ namespace Chessy.Model.System
 
         internal void RainyGiveWaterToUnitsAround(in byte cellIdx)
         {
-            foreach (var cellIdxDirect in _e.IdxsCellsAround(cellIdx))
+            foreach (var cellIdxDirect in _idxsAroundCellCs[cellIdx].IdxCellsAroundArray)
             {
-                if (_e.UnitT(cellIdxDirect).HaveUnit())
+                if (_unitCs[cellIdxDirect].HaveUnit)
                 {
                     if (_unitCs[cellIdx].PlayerT == _unitCs[cellIdxDirect].PlayerT)
                     {
@@ -121,8 +121,8 @@ namespace Chessy.Model.System
             }
         }
 
-        internal void ExecuteSoundActionClip(in ClipTypes clipT) => _e.SoundAction(clipT).Invoke();
-        internal void ExecuteSoundActionAbility(in AbilityTypes abilityT) => _e.SoundAction(abilityT).Invoke();
+        internal void ExecuteSoundActionClip(in ClipTypes clipT) => _dataFromViewC.SoundAction(clipT).Invoke();
+        internal void ExecuteSoundActionAbility(in AbilityTypes abilityT) => _dataFromViewC.SoundAction(abilityT).Invoke();
 
         internal void ExecuteAnimationClip(in byte cellIdx, in AnimationCellTypes animationCellT) => _dataFromViewC.AnimationCell(cellIdx, animationCellT).Invoke();
         internal void ExecuteAnimationCellDirectlyClip(in byte cellIdx, in CellAnimationDirectlyTypes cellAnimationDirectlyT) => _dataFromViewC.AnimationCellDirectly(cellAnimationDirectlyT).Invoke(cellIdx);
@@ -130,21 +130,21 @@ namespace Chessy.Model.System
         internal void ExecuteMistake(in MistakeTypes mistakeT, in float[] needRes)
         {
             Mistake(mistakeT);
-            _e.SoundAction(ClipTypes.WritePensil).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
 
             if (mistakeT == MistakeTypes.Economy)
             {
-                _e.MistakeEconomy(ResourceTypes.Food).Resources = 0;
-                _e.MistakeEconomy(ResourceTypes.Wood).Resources = 0;
-                _e.MistakeEconomy(ResourceTypes.Ore).Resources = 0;
-                _e.MistakeEconomy(ResourceTypes.Iron).Resources = 0;
-                _e.MistakeEconomy(ResourceTypes.Gold).Resources = 0;
+                _mistakeC.NeedResourcesRef(ResourceTypes.Food) = 0;
+                _mistakeC.NeedResourcesRef(ResourceTypes.Wood) = 0;
+                _mistakeC.NeedResourcesRef(ResourceTypes.Ore) = 0;
+                _mistakeC.NeedResourcesRef(ResourceTypes.Iron) = 0;
+                _mistakeC.NeedResourcesRef(ResourceTypes.Gold) = 0;
 
-                _e.MistakeEconomy(ResourceTypes.Food).Resources = needRes[0];
-                _e.MistakeEconomy(ResourceTypes.Wood).Resources = needRes[1];
-                _e.MistakeEconomy(ResourceTypes.Ore).Resources = needRes[2];
-                _e.MistakeEconomy(ResourceTypes.Iron).Resources = needRes[3];
-                _e.MistakeEconomy(ResourceTypes.Gold).Resources = needRes[4];
+                _mistakeC.NeedResourcesRef(ResourceTypes.Food) = needRes[0];
+                _mistakeC.NeedResourcesRef(ResourceTypes.Wood) = needRes[1];
+                _mistakeC.NeedResourcesRef(ResourceTypes.Ore) = needRes[2];
+                _mistakeC.NeedResourcesRef(ResourceTypes.Iron) = needRes[3];
+                _mistakeC.NeedResourcesRef(ResourceTypes.Gold) = needRes[4];
             }
         }
 

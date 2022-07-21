@@ -15,10 +15,10 @@ namespace Chessy.Model
             //e.SetBuildingPlayerT(cell_0, playerT);
             //e.BuildingHpC(cell_0).Health = hp;
 
-            if (buildingT == BuildingTypes.Farm)
-            {
-                e.PlayerInfoE(playerT).PlayerInfoC.AmountFarmsInGame++;
-            }
+            //if (buildingT == BuildingTypes.Farm)
+            //{
+            //    e.PlayerInfoE(playerT).PlayerInfoC.AmountFarmsInGame++;
+            //}
         }
     }
 }

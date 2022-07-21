@@ -84,7 +84,7 @@ namespace Chessy.View.UI.System
 
                     if (_unitCs[idx_0].PlayerType == _aboutGameC.CurrentPlayerIType)
                     {
-                        if (_e.UnitT(idx_0).Is(UnitTypes.Pawn))
+                        if (_unitCs[idx_0].UnitType == UnitTypes.Pawn)
                         {
                             _extracts[ResourceTypes.Food] -= EconomyValues.FOOD_FOR_FEEDING_ONE_UNIT_AFTER_EVERY_UPDATE;
 
@@ -113,11 +113,11 @@ namespace Chessy.View.UI.System
                     string name = default;
                     if (res == ResourceTypes.Iron || res == ResourceTypes.Gold)
                     {
-                        name = _e.ResourcesInInventory(_aboutGameC.CurrentPlayerIType, res).ToString();
+                        name = ResourcesInInventoryC(_aboutGameC.CurrentPlayerIType).Resources(res).ToString();
                     }
                     else
                     {
-                        name = ((int)(100 * _e.ResourcesInInventory(_aboutGameC.CurrentPlayerIType, res))).ToString();
+                        name = ((int)(100 * ResourcesInInventoryC(_aboutGameC.CurrentPlayerIType).Resources(res))).ToString();
                     }
 
                     _economyUIE.Economy(res).TextUI.text = name;

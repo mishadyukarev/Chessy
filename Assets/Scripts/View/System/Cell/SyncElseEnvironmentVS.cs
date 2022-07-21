@@ -43,18 +43,18 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
-                    _needActiveHillOver[cellIdxCurrent] = _e.HillC(cellIdxCurrent).HaveAnyResources;
+                    _needActiveHillOver[cellIdxCurrent] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill);
                 }
                 else
                 {
-                    _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Hill] = _e.HillC(cellIdxCurrent).HaveAnyResources;
+                    _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Hill] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill);
                 }
 
-                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Fertilizer] = _e.WaterOnCellC(cellIdxCurrent).HaveAnyResources;
-                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.YoungForest] = _e.YoungForestC(cellIdxCurrent).HaveAnyResources;
-                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Mountain] = _e.MountainC(cellIdxCurrent).HaveAnyResources;
+                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Fertilizer] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Fertilizer);
+                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.YoungForest] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.YoungForest);
+                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Mountain] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Mountain);
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)

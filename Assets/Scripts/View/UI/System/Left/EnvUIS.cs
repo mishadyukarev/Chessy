@@ -14,9 +14,9 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             var idx_sel = _cellsC.Selected;
 
-            eUI.LeftEnvEs.Envs[ResourceTypes.Food].TextUI.text = ((int)(100 * _e.WaterOnCellC(idx_sel).ResourcesP)).ToString();
-            eUI.LeftEnvEs.Envs[ResourceTypes.Wood].TextUI.text = ((int)(100 * _e.AdultForestC(idx_sel).ResourcesP)).ToString();
-            eUI.LeftEnvEs.Envs[ResourceTypes.Ore].TextUI.text = ((int)(100 * _e.HillC(idx_sel).ResourcesP)).ToString();
+            eUI.LeftEnvEs.Envs[ResourceTypes.Food].TextUI.text = ((int)(100 * _environmentCs[idx_sel].Resources(EnvironmentTypes.Fertilizer))).ToString();
+            eUI.LeftEnvEs.Envs[ResourceTypes.Wood].TextUI.text = ((int)(100 * _environmentCs[idx_sel].Resources(EnvironmentTypes.AdultForest))).ToString();
+            eUI.LeftEnvEs.Envs[ResourceTypes.Ore].TextUI.text = ((int)(100 * _environmentCs[idx_sel].Resources(EnvironmentTypes.Hill))).ToString();
         }
     }
 }

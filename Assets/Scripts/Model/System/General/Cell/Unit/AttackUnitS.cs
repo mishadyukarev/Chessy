@@ -7,7 +7,7 @@ namespace Chessy.Model.System
     {
         internal void AttackUnitOnCell(in double damage, in PlayerTypes whoKiller, in byte cellIdx)
         {
-            if (!_e.UnitT(cellIdx).HaveUnit()) throw new Exception();
+            if (!_unitCs[cellIdx].HaveUnit) throw new Exception();
             if (damage <= 0) throw new Exception();
             if (_cellCs[cellIdx].IsBorder) throw new Exception();
 

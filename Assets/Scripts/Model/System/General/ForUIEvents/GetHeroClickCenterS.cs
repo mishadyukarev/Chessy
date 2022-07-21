@@ -8,7 +8,7 @@ namespace Chessy.Model.System
             if (unitT == UnitTypes.Elfemale && _aboutGameC.LessonT.HaveLesson()) return;
 
 
-            _e.SoundAction(ClipTypes.Click).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
             _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.GetHeroInCenterM), unitT });
 

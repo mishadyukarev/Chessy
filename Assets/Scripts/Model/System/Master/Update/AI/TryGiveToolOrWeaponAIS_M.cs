@@ -17,7 +17,7 @@ namespace Chessy.Model
 
             for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
-                if (_e.UnitT(cellIdxStart) == UnitTypes.Pawn && _unitCs[cellIdxStart].PlayerT == playerBotT)
+                if (_unitCs[cellIdxStart].UnitT == UnitTypes.Pawn && _unitCs[cellIdxStart].PlayerT == playerBotT)
                 {
                     if (!_extraTWC[cellIdxStart].HaveToolWeapon)
                     {

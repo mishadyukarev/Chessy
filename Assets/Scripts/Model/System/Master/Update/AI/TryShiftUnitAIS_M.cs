@@ -35,18 +35,18 @@ namespace Chessy.Model
 
             //    _theMostBigPointForShiftUnit = 0;
 
-            //    if (_e.UnitT(idxCellStart) == UnitTypes.Pawn && _unitCs[idxCellStart) == playerBotT)
+            //    if (_unitCs[idxCellStart) == UnitTypes.Pawn && _unitCs[idxCellStart) == playerBotT)
             //    {
             //        foreach (var idxCellDirect in _e.AroundCellsE(idxCellStart).CellsAround)
             //        {
             //            if (!_e.CellC(idxCellDirect).IsBorder)
             //            {
-            //                if (!_e.UnitT(idxCellDirect).HaveUnit() && !_e.MountainC(idxCellDirect).HaveAnyResources)
+            //                if (!_unitCs[idxCellDirect].HaveUnit && !_e.MountainC(idxCellDirect].HaveEnvironment(EnvironmentTypes.AdultForest))
             //                {
             //                    _pointsCellsForShiftUnit[idxCellDirect]++;
             //                    _theMostBigPointForShiftUnit++;
 
-            //                    if (_e.AdultForestC(idxCellDirect).HaveAnyResources)
+            //                    if (_environmentCs[idxCellDirect].HaveEnvironment(EnvironmentTypes.AdultForest))
             //                    {
             //                        _pointsCellsForShiftUnit[idxCellDirect]++;
             //                        _theMostBigPointForShiftUnit++;

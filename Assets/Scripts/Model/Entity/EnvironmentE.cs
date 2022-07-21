@@ -1,20 +1,14 @@
-﻿namespace Chessy.Model
+﻿using Chessy.Model.Component;
+
+namespace Chessy.Model
 {
     public sealed class EnvironmentE
     {
-        public ResourcesC FertilizeC;
-        public ResourcesC YoungForestC;
-        public ResourcesC HillC;
-        public ResourcesC AdultForestC;
-        public ResourcesC MountainC;
+        public readonly EnvironmentC EnvironmentC = new(new float[(byte)EnvironmentTypes.End]);
 
         internal void Dispose()
         {
-            FertilizeC.Resources = 0;
-            YoungForestC.Resources = 0;
-            HillC.Resources = 0;
-            AdultForestC.Resources = 0;
-            MountainC.Resources = 0;
+            EnvironmentC.Dispose();
         }
     }
 }

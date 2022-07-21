@@ -22,7 +22,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                 {
                     var idx_sel = _cellsC.Selected;
 
-                    if (_e.UnitT(_cellsC.Selected).HaveUnit())
+                    if (_unitCs[_cellsC.Selected].HaveUnit)
                     {
                         needActiveZone = true;
 

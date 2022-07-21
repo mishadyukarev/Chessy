@@ -57,7 +57,7 @@ namespace Chessy.Model.System
         //    {
         //        for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
         //        {
-        //            _e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity++;
+        //            PlayerInfoE(playerT).PawnInfoC.PeopleInCity++;
         //        }
         //    }
         //}
@@ -70,7 +70,7 @@ namespace Chessy.Model.System
 
         //        for (byte cellIdx0 = 0; cellIdx0 < IndexCellsValues.CELLS; cellIdx0++)
         //        {
-        //            if (_e.UnitT(cellIdx0) == UnitTypes.Pawn && _unitCs[cellIdx0) == PlayerTypes.First && _riverCs[cellIdx0).HaveRiverNear())
+        //            if (_unitCs[cellIdx0) == UnitTypes.Pawn && _unitCs[cellIdx0) == PlayerTypes.First && _riverCs[cellIdx0).HaveRiverNear())
         //            {
         //                amountUnitsNearRiverForLesson++;
         //            }
@@ -89,11 +89,11 @@ namespace Chessy.Model.System
         {
             //for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             //{
-            //    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Hell))
+            //    if (_unitCs[cellIdxCurrent).Is(UnitTypes.Hell))
             //    {
             //        foreach (var cellE in _e.AroundCellsE(cellIdxCurrent).CellsAround)
             //        {
-            //            if (_e.AdultForestC(cellE).HaveAnyResources)
+            //            if (_environmentCs[cellE].HaveEnvironment(EnvironmentTypes.AdultForest))
             //            {
             //                if (UnityEngine.Random.Range(0f, 1f) <= 0.005f)
             //                {

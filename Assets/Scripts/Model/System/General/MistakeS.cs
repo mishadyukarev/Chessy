@@ -6,7 +6,7 @@
         {
             _mistakeC.MistakeT = mistakeT;
             _mistakeC.Timer = 0;
-            _e.SoundAction(ClipTypes.WritePensil).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
         }
     }
 }

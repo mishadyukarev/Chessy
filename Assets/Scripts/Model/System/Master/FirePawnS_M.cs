@@ -7,7 +7,7 @@ namespace Chessy.Model.System
     {
         internal void TryFireForestWithSimplePawnM(in byte cellIdxForFire, in Player sender)
         {
-            if (_e.AdultForestC(cellIdxForFire).HaveAnyResources)
+            if (_environmentCs[cellIdxForFire].HaveEnvironment(EnvironmentTypes.AdultForest))
             {
                 _s.RpcSs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 

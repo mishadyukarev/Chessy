@@ -28,7 +28,7 @@ namespace Chessy.Model.System
                     {
                         if (stream.IsWriting)
                         {
-                            //stream.SendNext(_e.UnitT(_cellIdx));
+                            //stream.SendNext(_unitCs[_cellIdx));
                             //stream.SendNext(_e.UnitLevelT(_cellIdx));
                             //stream.SendNext(_unitCs[_cellIdx));
                             //stream.SendNext(_unitCs[_cellIdx));
@@ -46,8 +46,8 @@ namespace Chessy.Model.System
                             //stream.SendNext(_e.HpUnit(_cellIdx));
 
                             //stream.SendNext(_e.YoungForestC(_cellIdx).Resources);
-                            //stream.SendNext(_e.AdultForestC(_cellIdx).Resources);
-                            //stream.SendNext(_e.HillC(_cellIdx).Resources);
+                            //stream.SendNext(_environmentCs[_cellIdx).Resources);
+                            //stream.SendNext(_environmentCs[_cellIdx).Resources);
                             //stream.SendNext(_e.MountainC(_cellIdx).Resources);
 
                             //stream.SendNext(_fireCs[_cellIdx));
@@ -112,8 +112,8 @@ namespace Chessy.Model.System
 
 
                             //_e.YoungForestC(_cellIdx).Resources = (float)stream.ReceiveNext();
-                            //_e.AdultForestC(_cellIdx).Resources = (float)stream.ReceiveNext();
-                            //_e.HillC(_cellIdx).Resources = (float)stream.ReceiveNext();
+                            //_environmentCs[_cellIdx).Resources = (float)stream.ReceiveNext();
+                            //_environmentCs[_cellIdx).Resources = (float)stream.ReceiveNext();
                             //_e.MountainC(_cellIdx).Resources = (float)stream.ReceiveNext();
 
                             //_e.EffectE(_cellIdx).HaveFire = (bool)stream.ReceiveNext();
@@ -177,7 +177,7 @@ namespace Chessy.Model.System
                             //stream.SendNext(_e.UnitPossitionOnCell(_cellIdx));
 
                             //stream.SendNext(_e.WaterUnit(_cellIdx));
-                            //stream.SendNext(_e.WaterOnCellC(_cellIdx).Resources);
+                            //stream.SendNext(_environmentCs[_cellIdx).Resources);
 
                             //for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                             //{
@@ -201,7 +201,7 @@ namespace Chessy.Model.System
                             //_e.UnitPossitionOnCellC(_cellIdx).Position = (Vector3)stream.ReceiveNext();
 
                             //_unitWaterCs[_cellIdx).Water = (double)stream.ReceiveNext();
-                            //_e.WaterOnCellC(_cellIdx).Resources = (float)stream.ReceiveNext();
+                            //_environmentCs[_cellIdx).Resources = (float)stream.ReceiveNext();
 
                             //for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                             //{

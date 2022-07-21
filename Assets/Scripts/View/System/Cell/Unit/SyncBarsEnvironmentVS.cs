@@ -60,29 +60,29 @@ namespace Chessy.View.System
                 for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                 {
 
-                    if (_e.WaterOnCellC(cellIdxCurrent).HaveAnyResources)
+                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Fertilizer))
                     {
                         _needActiveFood[cellIdxCurrent] = true;
 
                         _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Food).Transform.localScale
-                            = new Vector3(_e.WaterOnCellC(cellIdxCurrent).ResourcesP / (float)ValuesChessy.MAX_RESOURCES_ENVIRONMENT, 0.15f, 1);
+                            = new Vector3(_environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Fertilizer) / (float)ValuesChessy.MAX_RESOURCES_ENVIRONMENT, 0.15f, 1);
                     }
 
-                    if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
                     {
                         _needActiveWood[cellIdxCurrent] = true;
 
                         _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Wood).Transform.localScale =
-                            new Vector3(_e.AdultForestC(cellIdxCurrent).ResourcesP
+                            new Vector3(_environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.AdultForest)
                             / (float)ValuesChessy.MAX_RESOURCES_ENVIRONMENT, 0.15f, 1);
                     }
 
-                    if (_e.HillC(cellIdxCurrent).HaveAnyResources)
+                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill))
                     {
                         _needActiveOre[cellIdxCurrent] = true;
 
                         _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Ore).Transform.localScale
-                            = new Vector3(_e.HillC(cellIdxCurrent).ResourcesP
+                            = new Vector3(_environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Hill)
                             / (float)ValuesChessy.MAX_RESOURCES_ENVIRONMENT, 0.15f, 1);
                     }
                 }

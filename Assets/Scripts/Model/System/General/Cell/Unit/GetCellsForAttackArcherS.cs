@@ -27,19 +27,19 @@ namespace Chessy.Model.System
 
                 if (!curUnitT.IsMelee(_mainTWC[cellIdxCell_0].ToolWeaponT))
                 {
-                    foreach (var idx_1 in _e.IdxsCellsAround(cellIdxCell_0))
+                    foreach (var idx_1 in _idxsAroundCellCs[cellIdxCell_0].IdxCellsAroundArray)
                     {
-                        var directShotingT = _e.CellAroundC(cellIdxCell_0, idx_1).DirectT;
+                        var directShotingT = _cellAroundCs[cellIdxCell_0, idx_1].DirectT;
 
                         var isRight_0 = _unitCs[cellIdxCell_0].IsArcherDirectedToRight;
 
-                        if (!_cellCs[idx_1].IsBorder && !_e.MountainC(idx_1).HaveAnyResources)
+                        if (!_cellCs[idx_1].IsBorder && !_environmentCs[idx_1].HaveEnvironment(EnvironmentTypes.Mountain))
                         {
-                            if (_e.UnitT(idx_1).HaveUnit() && !_shiftingUnitCs[idx_1].IsShifting)
+                            if (_unitCs[idx_1].HaveUnit && !_shiftingUnitCs[idx_1].IsShifting)
                             {
                                 if (_unitCs[idx_1].PlayerT != _unitCs[cellIdxCell_0].PlayerT)
                                 {
-                                    if (_e.UnitT(cellIdxCell_0).Is(UnitTypes.Pawn) && _mainTWC[cellIdxCell_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
+                                    if (_unitCs[cellIdxCell_0].UnitT == UnitTypes.Pawn && _mainTWC[cellIdxCell_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
                                     {
                                         if (isRight_0)
                                         {
@@ -65,14 +65,14 @@ namespace Chessy.Model.System
                                 }
                             }
 
-                            var idx_2 = _e.GetIdxCellByDirectAround(idx_1, directShotingT);
+                            var idx_2 = _cellsByDirectAroundC[idx_1].Get(directShotingT);
 
 
-                            if (_e.UnitT(idx_2).HaveUnit() && !_shiftingUnitCs[idx_2].IsShifting && !_e.UnitT(idx_2).IsAnimal()
+                            if (_unitCs[idx_2].HaveUnit && !_shiftingUnitCs[idx_2].IsShifting && !_unitCs[idx_2].UnitT.IsAnimal()
                                 && _unitVisibleCs[idx_2].IsVisible(_unitCs[cellIdxCell_0].PlayerT)
                                 && _unitCs[idx_2].PlayerT != _unitCs[cellIdxCell_0].PlayerT)
                             {
-                                if (_e.UnitT(cellIdxCell_0).Is(UnitTypes.Pawn) && _mainTWC[cellIdxCell_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
+                                if (_unitCs[cellIdxCell_0].UnitT == UnitTypes.Pawn && _mainTWC[cellIdxCell_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
                                 {
                                     if (!isRight_0)
                                     {

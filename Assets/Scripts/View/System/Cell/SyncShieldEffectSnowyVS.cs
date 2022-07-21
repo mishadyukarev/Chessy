@@ -27,7 +27,7 @@ namespace Chessy.View.System
 
                     if (_effectsUnitCs[dataIdxCell].HaveAnyProtectionRainyMagicShield)
                     {
-                        if (_e.UnitT(dataIdxCell).HaveUnit())
+                        if (_unitCs[dataIdxCell].HaveUnit)
                         {
                             if (_unitVisibleCs[dataIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType))
                             {

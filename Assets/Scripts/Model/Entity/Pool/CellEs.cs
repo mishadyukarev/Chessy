@@ -95,7 +95,7 @@ namespace Chessy.Model.Entity
 
                     var xy_0 = new[] { x, y };
 
-                    var idxCellStart = e.GetIdxCellByXy(xy_0);
+                    var idxCellStart = e.CommonGameE.IndexesByXyC.GetIdxCellByXy(xy_0);
 
                     _aroundEs[idxCellStart] = new CellAroundE(idxCellStart, xy_0, startDirectionT, DistanceFromCellTypes.First);
 
@@ -116,7 +116,7 @@ namespace Chessy.Model.Entity
 
                         var nextXy = new[] { x, y };
 
-                        var nextIdxCell = e.GetIdxCellByXy(nextXy);
+                        var nextIdxCell = e.CommonGameE.IndexesByXyC.GetIdxCellByXy(nextXy);
 
                         _aroundEs[nextIdxCell] = new CellAroundE(nextIdxCell, nextXy, startDirectionT, DistanceFromCellTypes.Second);
                     }

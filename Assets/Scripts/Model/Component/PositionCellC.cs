@@ -2,7 +2,7 @@
 
 namespace Chessy.Model.Component
 {
-    public sealed class PositionC
+    public sealed class PositionCellC
     {
         internal Vector3 Position;
 
@@ -23,7 +23,7 @@ namespace Chessy.Model.Component
         {
             Position = default;
         }
-        internal void Clone(in PositionC positionC)
+        internal void Clone(in PositionCellC positionC)
         {
             Position = positionC.Position;
         }

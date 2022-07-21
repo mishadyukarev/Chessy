@@ -13,24 +13,24 @@ namespace Chessy.Model.System
                     _unitVisibleCs[cellIdxCurrent].Set(playerT, true);
                 }
 
-                if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                if (_unitCs[cellIdxCurrent].HaveUnit)
                 {
 
-                    if (_e.UnitT(cellIdxCurrent).IsAnimal())
+                    if (_unitCs[cellIdxCurrent].UnitT.IsAnimal())
                     {
                         var isVisForFirst = true;
                         var isVisForSecond = true;
 
-                        if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                        if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
                         {
                             isVisForFirst = false;
                             isVisForSecond = false;
 
                             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                var cell_1 = _e.GetIdxCellByDirectAround(cellIdxCurrent, dirT);
+                                var cell_1 = _cellsByDirectAroundC[cellIdxCurrent].Get(dirT);
 
-                                if (_e.UnitT(cell_1).HaveUnit())
+                                if (_unitCs[cell_1].HaveUnit)
                                 {
                                     if (_unitCs[cell_1].PlayerT == PlayerTypes.First) isVisForFirst = true;
                                     if (_unitCs[cell_1].PlayerT == PlayerTypes.Second) isVisForSecond = true;
@@ -44,15 +44,15 @@ namespace Chessy.Model.System
 
                     else
                     {
-                        if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                        if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
                         {
                             var isVisibledNextPlayer = false;
 
-                            foreach (var idx_1 in _e.IdxsCellsAround(cellIdxCurrent))
+                            foreach (var idx_1 in _idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
                             {
-                                if (_e.UnitT(idx_1).HaveUnit())
+                                if (_unitCs[idx_1].HaveUnit)
                                 {
-                                    if (!_e.UnitT(idx_1).IsAnimal())
+                                    if (!_unitCs[idx_1].UnitT.IsAnimal())
                                     {
                                         if (_unitCs[idx_1].PlayerT != _unitCs[cellIdxCurrent].PlayerT)
                                         {

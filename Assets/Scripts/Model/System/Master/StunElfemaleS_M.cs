@@ -10,7 +10,7 @@ namespace Chessy.Model.System
         {
             if (!_cooldownAbilityCs[cell_from].HaveCooldown(abilityT))
             {
-                if (_e.AdultForestC(cell_to).HaveAnyResources)
+                if (_environmentCs[cell_to].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
                     if (_unitCs[cell_from].PlayerT != _unitCs[cell_to].PlayerT)
                     {
@@ -20,11 +20,11 @@ namespace Chessy.Model.System
                         _s.RpcSs.SoundToGeneral(RpcTarget.All, abilityT);
 
 
-                        foreach (var idx_1 in _e.IdxsCellsAround(cell_to))
+                        foreach (var idx_1 in _idxsAroundCellCs[cell_to].IdxCellsAroundArray)
                         {
-                            if (_e.AdultForestC(idx_1).HaveAnyResources)
+                            if (_environmentCs[idx_1].HaveEnvironment(EnvironmentTypes.AdultForest))
                             {
-                                if (_e.UnitT(idx_1).HaveUnit() && _unitCs[idx_1].PlayerT == _unitCs[cell_to].PlayerT)
+                                if (_unitCs[idx_1].HaveUnit && _unitCs[idx_1].PlayerT == _unitCs[cell_to].PlayerT)
                                 {
                                     _effectsUnitCs[idx_1].StunHowManyUpdatesNeedStay = StunUnitValues.AMOUNT_STUN_AFTER_ABILITY_ELFEMALE;
                                 }

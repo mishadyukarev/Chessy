@@ -8,13 +8,23 @@ namespace Chessy.Model
     {
         protected readonly EntitiesModel _e;
 
+
+        #region Cells
+
         protected readonly CellC[] _cellCs = new CellC[IndexCellsValues.CELLS];
-        protected readonly PositionC[] _possitionCellCs = new PositionC[IndexCellsValues.CELLS];
+        protected readonly PositionCellC[] _possitionCellCs = new PositionCellC[IndexCellsValues.CELLS];
         protected readonly XyCellC[] _xyCellsCs = new XyCellC[IndexCellsValues.CELLS];
         protected readonly IsStartedCellC[] _isStartedCellCs = new IsStartedCellC[IndexCellsValues.CELLS];
+        protected readonly CellsByDirectAroundC[] _cellsByDirectAroundC = new CellsByDirectAroundC[IndexCellsValues.CELLS];
+        protected readonly IdxsAroundCellC[] _idxsAroundCellCs = new IdxsAroundCellC[IndexCellsValues.CELLS];
+
+        protected readonly CellAroundC[,] _cellAroundCs = new CellAroundC[IndexCellsValues.CELLS, IndexCellsValues.CELLS];
+        
 
 
         #region Unit
+
+        protected readonly UnitE[] _unitEs = new UnitE[IndexCellsValues.CELLS];
 
         protected readonly UnitOnCellC[] _unitCs = new UnitOnCellC[IndexCellsValues.CELLS];
         protected readonly HealthC[] _hpUnitCs = new HealthC[IndexCellsValues.CELLS];
@@ -46,6 +56,9 @@ namespace Chessy.Model
         protected readonly BuildingExtractionOnCellC[] _extractionBuildingCs = new BuildingExtractionOnCellC[IndexCellsValues.CELLS];
         protected readonly VisibleToOtherPlayerOrNotC[] _visibleBuildingCs = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
 
+        protected readonly EnvironmentC[] _environmentCs = new EnvironmentC[IndexCellsValues.CELLS];
+
+        protected readonly CloudOnCellE[] _cloudOnCellEs = new CloudOnCellE[IndexCellsValues.CELLS];
         protected readonly CloudC[] _cloudCs = new CloudC[IndexCellsValues.CELLS];
         protected readonly WhereViewIdxCellC[] _cloudWhereViewDataCs = new WhereViewIdxCellC[IndexCellsValues.CELLS];
         protected readonly ShiftingObjectC[] _shiftCloudCs = new ShiftingObjectC[IndexCellsValues.CELLS];
@@ -57,6 +70,9 @@ namespace Chessy.Model
 
         protected readonly HealthTrailC[] _hpTrailCs = new HealthTrailC[IndexCellsValues.CELLS];
         protected readonly VisibleToOtherPlayerOrNotC[] _visibleTrailCs = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
+
+        #endregion
+
 
         #region Else
 
@@ -76,14 +92,29 @@ namespace Chessy.Model
         protected readonly SelectedUnitC _selectedUnitC;
         protected readonly FromResourcesC _fromResourcesC;
 
-
         protected readonly WeatherE _weatherE;
         protected readonly SunC _sunC;
         protected readonly WindC _windC;
 
-
+        protected readonly PlayerInfoE[] _playerInfoEs = new PlayerInfoE[(byte)PlayerTypes.End];
+        protected readonly PlayerInfoC[] _playerInfoCs = new PlayerInfoC[(byte)PlayerTypes.End];
+        protected readonly GodInfoC[] _godInfoCs = new GodInfoC[(byte)PlayerTypes.End];
+        protected readonly PawnPeopleInfoC[] _pawnPeopleInfoCs = new PawnPeopleInfoC[(byte)PlayerTypes.End];
+        protected readonly BuildingsInTownInfoC[] _buildingsInTownInfoCs = new BuildingsInTownInfoC[(byte)PlayerTypes.End];
+        protected readonly ResourcesInInventoryC[] _resourcesInInventoryCs = new ResourcesInInventoryC[(byte)PlayerTypes.End];
+        protected readonly HowManyToolWeaponsInInventoryC[] _howManyToolWeaponsInInventoryCs = new HowManyToolWeaponsInInventoryC[(byte)PlayerTypes.End];
 
         #endregion
+
+
+        public PlayerInfoE PlayerInfoE(in PlayerTypes player) => _playerInfoEs[(byte)player];
+        public PlayerInfoC PlayerInfoC(in PlayerTypes playerT) => _playerInfoCs[(byte)playerT];
+        public GodInfoC GodInfoC(in PlayerTypes playerT) => _godInfoCs[(byte)playerT];
+        public PawnPeopleInfoC PawnPeopleInfoC(in PlayerTypes playerT) => _pawnPeopleInfoCs[(byte)playerT];
+        public BuildingsInTownInfoC BuildingsInTownInfoC(in PlayerTypes playerT) => _buildingsInTownInfoCs[(byte)playerT];
+        public ResourcesInInventoryC ResourcesInInventoryC(in PlayerTypes playerT) => _resourcesInInventoryCs[(byte)playerT];
+        public HowManyToolWeaponsInInventoryC ToolWeaponsInInventoryC(in PlayerTypes playerT) => _howManyToolWeaponsInInventoryCs[(byte)playerT];
+
 
         protected SystemAbstract(in EntitiesModel eM)
         {
@@ -93,6 +124,11 @@ namespace Chessy.Model
             {
                 var cellEs = _e.CellEs(cellIdx_0);
 
+                for (byte cellIdx_1 = 0; cellIdx_1 < IndexCellsValues.CELLS; cellIdx_1++)
+                {
+                    _cellAroundCs[cellIdx_0, cellIdx_1] = cellEs.AroundCellE(cellIdx_1).CellAroundC;
+                }
+
                 var cellE = cellEs.CellE;
                 var unitE = cellEs.UnitE;
                 var cloudE = cellEs.CloudE;
@@ -100,13 +136,17 @@ namespace Chessy.Model
                 var riverE = cellEs.RiverE;
                 var effectE = cellEs.EffectE;
                 var trailE = cellEs.TrailE;
+                var environmentE = cellEs.EnvironmentE;
 
 
                 _cellCs[cellIdx_0] = cellE.CellC;
                 _possitionCellCs[cellIdx_0] = cellE.PositionC;
                 _xyCellsCs[cellIdx_0] = cellE.XyCellC;
                 _isStartedCellCs[cellIdx_0] = cellE.IsStartedCellC;
+                _cellsByDirectAroundC[cellIdx_0] = cellE.CellsByDirectAroundC;
+                _idxsAroundCellCs[cellIdx_0] = cellE.IdxsAroundCellC;
 
+                _unitEs[cellIdx_0] = unitE;
                 _unitCs[cellIdx_0] = unitE.MainC;
                 _hpUnitCs[cellIdx_0] = unitE.HealthC;
                 _unitWaterCs[cellIdx_0] = unitE.WaterC;
@@ -134,6 +174,9 @@ namespace Chessy.Model
                 _extractionBuildingCs[cellIdx_0] = buildingE.ExtractionC;
                 _visibleBuildingCs[cellIdx_0] = buildingE.VisibleToOtherPlayerC;
 
+                _environmentCs[cellIdx_0] = environmentE.EnvironmentC;
+
+                _cloudOnCellEs[cellIdx_0] = cloudE;
                 _cloudCs[cellIdx_0] = cloudE.CloudC;
                 _cloudWhereViewDataCs[cellIdx_0] = cloudE.WhereSkinAndWhereDataInfoC;
                 _shiftCloudCs[cellIdx_0] = cloudE.ShiftingC;
@@ -169,7 +212,20 @@ namespace Chessy.Model
             _sunC = _weatherE.SunC;
             _windC = _weatherE.WindC;
 
+            for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
+            {
+                var playerTByte = (byte)playerT;
 
+                var playerInfoE = eM.PlayerInfoE(playerTByte);
+
+                _playerInfoCs[playerTByte] = playerInfoE.PlayerInfoC;
+                _playerInfoEs[playerTByte] = playerInfoE;
+                _godInfoCs[playerTByte] = playerInfoE.GodInfoC;
+                _pawnPeopleInfoCs[playerTByte] = playerInfoE.PawnInfoC;
+                _buildingsInTownInfoCs[playerTByte] = playerInfoE.BuildingsInTownInfoC;
+                _resourcesInInventoryCs[playerTByte] = playerInfoE.ResourcesInInventoryC;
+                _howManyToolWeaponsInInventoryCs[playerTByte] = playerInfoE.HowManyToolWeaponsInInventoryC;
+            }
         }
     }
 }

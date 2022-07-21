@@ -5,13 +5,13 @@ namespace Chessy.Model.System
     {
         public void GetPawn()
         {
-            _e.SoundAction(ClipTypes.Click).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
             if (!_aboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse, LessonTypes.HoldPressWarrior))
             {
-                if (_e.PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).HaveAnyPeopleInCity)
+                if (PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).HaveAnyPeopleInCity)
                 {
-                    if (_e.PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).AmountInGame < _e.PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).MaxAvailablePawns(_e.PlayerInfoC(_aboutGameC.CurrentPlayerIT).AmountBuiltHouses))
+                    if (PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).AmountInGame < PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).MaxAvailablePawns(PlayerInfoC(_aboutGameC.CurrentPlayerIT).AmountBuiltHouses))
                     {
                         _cellsC.Selected = 0;
 
@@ -35,15 +35,15 @@ namespace Chessy.Model.System
                         {
 
                             _s.SetMistake(MistakeTypes.NeedBuildingHouses, 0);
-                            _e.SoundAction(ClipTypes.WritePensil).Invoke();
-                            _e.IsSelectedCity = true;
+                            _dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
+                            _aboutGameC.IsSelectedCity = true;
                         }
 
                     }
                 }
                 else
                 {
-                    _e.SoundAction(ClipTypes.WritePensil).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
 
                     _s.SetMistake(MistakeTypes.NeedMorePeopleInCity, 0);
                     //..E.Sound(ClipTypes.Mistake).Action.Invoke();

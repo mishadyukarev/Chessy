@@ -29,7 +29,7 @@ namespace Chessy.Model.System
 
 
 
-            //    if (e.UnitT(cellIdxCurrent).HaveUnit())
+            //    if (e.UnitT(cellIdxCurrent].HaveUnit)
             //    {
             //        if (e.AboutGameC.GameModeT.Is(GameModeTypes.TrainingOffline))
             //        {
@@ -68,7 +68,7 @@ namespace Chessy.Model.System
 
             //    else
             //    {
-            //        if (e.YoungForestC(cellIdxCurrent).HaveAnyResources)
+            //        if (e.YoungForestC(cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
             //        {
             //            e.YoungForestC(cellIdxCurrent).Resources = 0;
 

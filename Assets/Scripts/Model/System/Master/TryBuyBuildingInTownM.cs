@@ -46,7 +46,7 @@ namespace Chessy.Model.System
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse;
+                                need = PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse;
                                 break;
 
                             case BuildingTypes.Market:
@@ -126,22 +126,22 @@ namespace Chessy.Model.System
                 }
 
                 needRes.Add(resT, need);
-                if (need > _e.ResourcesInInventory(whoseMove, resT)) canBuild = false;
+                if (need > ResourcesInInventoryC(whoseMove).Resources(resT)) canBuild = false;
             }
 
             if (canBuild)
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.ResourcesInInventoryC(whoseMove).Subtract(resT, needRes[resT]);
+                    ResourcesInInventoryC(whoseMove).Subtract(resT, needRes[resT]);
                 }
 
                 switch (buildT)
                 {
                     case BuildingTypes.House:
-                        _e.PlayerInfoC(whoseMove).AmountBuiltHouses++;
+                        PlayerInfoC(whoseMove).AmountBuiltHouses++;
                         //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns + E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns);
-                        _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse += _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse;
+                        PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse += PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse;
 
                         if (_aboutGameC.LessonT == LessonTypes.BuildHouseForWarrior)
                         {
@@ -150,11 +150,11 @@ namespace Chessy.Model.System
                         break;
 
                     case BuildingTypes.Market:
-                        _e.PlayerInfoE(whoseMove).BuildingsInTownInfoC.Build(BuildingTypes.Market);
+                        PlayerInfoE(whoseMove).BuildingsInTownInfoC.Build(BuildingTypes.Market);
                         break;
 
                     case BuildingTypes.Smelter:
-                        _e.PlayerInfoE(whoseMove).BuildingsInTownInfoC.Build(BuildingTypes.Smelter);
+                        PlayerInfoE(whoseMove).BuildingsInTownInfoC.Build(BuildingTypes.Smelter);
                         break;
 
                     default: throw new Exception();

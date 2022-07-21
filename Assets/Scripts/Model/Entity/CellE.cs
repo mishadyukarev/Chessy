@@ -8,14 +8,16 @@ namespace Chessy.Model.Entity
         public readonly XyCellC XyCellC;
         public readonly IdxCellC IdxCellC;
         public readonly IsStartedCellC IsStartedCellC;
-        public readonly PositionC PositionC;
+        public readonly PositionCellC PositionC;
+        public IdxsAroundCellC IdxsAroundCellC;
+        public CellsByDirectAroundC CellsByDirectAroundC;
 
         internal CellE(in DataFromViewC dataFromViewC, in byte idxCell, in int instanceID, params byte[] xy)
         {
             CellC = new CellC(dataFromViewC.IsBorder(idxCell), instanceID);
             XyCellC = new XyCellC(xy);
             IdxCellC = new IdxCellC(idxCell);
-            PositionC = new PositionC() { Position = dataFromViewC.PossitionCell(idxCell) };
+            PositionC = new PositionCellC() { Position = dataFromViewC.PossitionCell(idxCell) };
 
             var x = xy[0];
             var y = xy[1];

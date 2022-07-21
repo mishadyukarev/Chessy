@@ -17,7 +17,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
             if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
             {
-                if (_e.UnitT(_cellsC.Selected).HaveUnit())
+                if (_unitCs[_cellsC.Selected].HaveUnit)
                 {
                     if (_unitCs[_cellsC.Selected].PlayerType == _aboutGameC.CurrentPlayerIType)
                     {
@@ -27,7 +27,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                         _protectUIE.Button(UnitTypes.Pawn).TrySetActive(false);
                         _protectUIE.Button(UnitTypes.Elfemale).TrySetActive(false);
 
-                        _protectUIE.Button(_e.UnitT(_cellsC.Selected)).TrySetActive(true);
+                        _protectUIE.Button(_unitCs[_cellsC.Selected].UnitType).TrySetActive(true);
 
                         if (_unitCs[_cellsC.Selected].ConditionType == ConditionUnitTypes.Protected)
                         {

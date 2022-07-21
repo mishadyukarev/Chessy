@@ -17,7 +17,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             var idx_sel = _cellsC.Selected;
 
 
-            if (_e.UnitT(idx_sel).HaveUnit() && !_e.UnitT(idx_sel).IsAnimal())
+            if (_unitCs[idx_sel].HaveUnit && !_unitCs[idx_sel].UnitType.IsAnimal())
             {
                 var damageOnCell = _unitCs[idx_sel].DamageOnCellP;
                 var damageAttack = _unitCs[idx_sel].DamageSimpleAttackP;
@@ -41,7 +41,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
                 if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.Install1WarriorsNextToTheRiver)
                 {
-                    //if (!_e.UnitT(idx_sel).Is(UnitTypes.Elfemale))
+                    //if (!_unitCs[idx_sel).Is(UnitTypes.Elfemale))
                     //{
                         needActiveWater = true;
                     //}

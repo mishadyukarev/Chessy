@@ -16,7 +16,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             var readyBut = eUI.CenterEs.ReadyButtonC;
 
-            readyBut.Image.color = _e.PlayerInfoE(_aboutGameC.CurrentPlayerIType).PlayerInfoC.IsReadyForStartOnlineGameP ? Color.red : Color.white;
+            readyBut.Image.color = PlayerInfoE(_aboutGameC.CurrentPlayerIType).PlayerInfoC.IsReadyForStartOnlineGameP ? Color.red : Color.white;
 
             if (_aboutGameC.IsStartedGameP || PhotonNetwork.OfflineMode)
             {

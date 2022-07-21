@@ -28,24 +28,24 @@ namespace Chessy.Model.System
 
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
             {
-                _e.PawnPeopleInfoC(playerT).PeopleInCity = StartGameValues.PEOPLE_IN_CITY;
+                PawnPeopleInfoC(playerT).PeopleInCity = StartGameValues.PEOPLE_IN_CITY;
 
                 if (playerT == PlayerTypes.Second)
                 {
                     if (_aboutGameC.GameModeT == GameModeTypes.TrainingOffline)
-                        _e.PlayerInfoC(playerT).AmountBuiltHouses += 5;
+                        PlayerInfoC(playerT).AmountBuiltHouses += 5;
                 }
 
 
 
-                _e.PlayerInfoE(playerT).PlayerInfoC.HaveKingInInventor = true;
-                _e.PlayerInfoE(playerT).PlayerInfoC.WoodForBuyHouse = StartGameValues.NEED_WOOD_FOR_BUILDING_HOUSE;
+                PlayerInfoE(playerT).PlayerInfoC.HaveKingInInventor = true;
+                PlayerInfoE(playerT).PlayerInfoC.WoodForBuyHouse = StartGameValues.NEED_WOOD_FOR_BUILDING_HOUSE;
 
-                _e.PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = true;
+                PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = true;
 
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.SetResourcesInInventory(playerT, resT, StartGameValues.AmountResourceEveryone(resT));
+                    ResourcesInInventoryC(playerT).Set(resT, StartGameValues.AmountResourceEveryone(resT));
                 }
 
                 if (withTraining)
@@ -87,7 +87,7 @@ namespace Chessy.Model.System
                         {
                             if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= StartGameValues.SpawnPercentEnvironment(EnvironmentTypes.Mountain))
                             {
-                                _e.MountainC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
+                                _environmentCs[cell_0].SetRandom(EnvironmentTypes.Mountain, ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                                 amountMountains++;
                             }
 
@@ -97,7 +97,7 @@ namespace Chessy.Model.System
                             {
                                 if (UnityEngine.Random.Range(0f, 1f) <= StartGameValues.SpawnPercentEnvironment(EnvironmentTypes.AdultForest))
                                 {
-                                    _e.AdultForestC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
+                                    _environmentCs[cell_0].SetRandom(EnvironmentTypes.AdultForest, ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                                 }
                             }
                         }
@@ -106,7 +106,7 @@ namespace Chessy.Model.System
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= StartGameValues.SpawnPercentEnvironment(EnvironmentTypes.AdultForest))
                             {
-                                _e.AdultForestC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
+                                _environmentCs[cell_0].SetRandom(EnvironmentTypes.AdultForest, ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                             }
                         }
 
@@ -137,7 +137,7 @@ namespace Chessy.Model.System
                         {
                             if (_haveRiverAroundCellCs[cell_0].HaveRive(dir))
                             {
-                                var idx_next = _e.GetIdxCellByDirectAround(cell_0, dir);
+                                var idx_next = _cellsByDirectAroundC[cell_0].Get(dir);
 
                                 _riverCs[idx_next].RiverT = RiverTypes.EndRiver;
                             }
@@ -145,7 +145,7 @@ namespace Chessy.Model.System
 
                         foreach (var dir in corners)
                         {
-                            var idx_next = _e.GetIdxCellByDirectAround(cell_0, dir);
+                            var idx_next = _cellsByDirectAroundC[cell_0].Get(dir);
 
                             _riverCs[idx_next].RiverT = RiverTypes.Corner;
                         }
@@ -153,7 +153,7 @@ namespace Chessy.Model.System
 
                         if (cell_0 == StartGameValues.CELL_IDX_FOR_CLEARING_FOREST_FOR_1_PLAYER || cell_0 == StartGameValues.CELL_IDX_FOR_CLEARING_FOREST_FOR_2_PLAYER)
                         {
-                            ClearAllEnvironment(cell_0);
+                            _environmentCs[cell_0].Dispose();
                         }
                     }
                 }
@@ -163,17 +163,17 @@ namespace Chessy.Model.System
                 {
                     if (!_cellCs[cell_0].IsBorder)
                     {
-                        if (_e.MountainC(cell_0).HaveAnyResources)
+                        if (_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.Mountain))
                         {
                             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                var idx_1 = _e.GetIdxCellByDirectAround(cell_0, dirT);
+                                var idx_1 = _cellsByDirectAroundC[cell_0].Get(dirT);
 
                                 if (UnityEngine.Random.Range(0f, 1f) <= 0.7)
                                 {
-                                    if (!_e.MountainC(_e.GetIdxCellByDirectAround(cell_0, dirT)).HaveAnyResources && !_buildingCs[idx_1].HaveBuilding)
+                                    if (!_environmentCs[_cellsByDirectAroundC[cell_0].Get(dirT)].HaveEnvironment(EnvironmentTypes.Mountain) && !_buildingCs[idx_1].HaveBuilding)
                                     {
-                                        _e.HillC(idx_1).Resources = UnityEngine.Random.Range(0.5f, 1f);
+                                        _environmentCs[idx_1].ResourcesRef(EnvironmentTypes.Hill) = UnityEngine.Random.Range(0.5f, 1f);
                                     }
                                 }
                             }
@@ -186,7 +186,7 @@ namespace Chessy.Model.System
 
             if (_aboutGameC.GameModeT.Is(GameModeTypes.TrainingOffline))
             {
-                _e.SetResourcesInInventory(PlayerTypes.Second, ResourceTypes.Food, 999999);
+                ResourcesInInventoryC(PlayerTypes.Second).Set(ResourceTypes.Food, 999999);
 
 
                 for (byte cellUdxCurrent = 0; cellUdxCurrent < IndexCellsValues.CELLS; cellUdxCurrent++)
@@ -198,7 +198,7 @@ namespace Chessy.Model.System
                     {
                         //if (withTraining)
                         //{
-                        _e.MountainC(cellUdxCurrent).Resources = 0;
+                        _environmentCs[cellUdxCurrent].Set(EnvironmentTypes.Mountain, 0);
 
                         TryDestroyAdultForest(cellUdxCurrent);
 
@@ -208,14 +208,14 @@ namespace Chessy.Model.System
 
                     if (x == 8 && y == 3)
                     {
-                        _e.AdultForestC(cellUdxCurrent).Resources = 1;
+                        _environmentCs[cellUdxCurrent].Set(EnvironmentTypes.AdultForest, 1);
                     }
 
                     else if (x == 6 && y == 8 || x == 8 && y == 8 || x <= 8 && x >= 6 && y == 7 || x <= 8 && x >= 6 && y == 9)
                     {
                         //if (withTraining)
                         //{
-                        _e.MountainC(cellUdxCurrent).Resources = 0;
+                        _environmentCs[cellUdxCurrent].Set(EnvironmentTypes.Mountain, 0);
 
                         SetNewUnitOnCellS.Set(UnitTypes.Pawn, PlayerTypes.Second, cellUdxCurrent);
 
@@ -237,11 +237,11 @@ namespace Chessy.Model.System
 
                     if (cellUdxCurrent == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                     {
-                        _e.AdultForestC(cellUdxCurrent).Resources = 0.4f;
+                        _environmentCs[cellUdxCurrent].Set(EnvironmentTypes.AdultForest, 0.4f);
                     }
                     else if (cellUdxCurrent == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter)
                     {
-                        ClearAllEnvironment(cellUdxCurrent);
+                        _environmentCs[cellUdxCurrent].Dispose();
                     }
                     //else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
                     //{
@@ -254,8 +254,8 @@ namespace Chessy.Model.System
                     //}
                     else if (cellUdxCurrent == KeyIndexCellsForLesson.CELL_MOUNTAIN_LESSON)
                     {
-                        ClearAllEnvironment(cellUdxCurrent);
-                        _e.MountainC(cellUdxCurrent).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
+                        _environmentCs[cellUdxCurrent].Dispose();
+                        _environmentCs[cellUdxCurrent].Set(EnvironmentTypes.Mountain, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                     }
                 }
             }
@@ -268,9 +268,9 @@ namespace Chessy.Model.System
             _cloudCs[centerCellIdx].IsCenter = true;
             SetDataAndSkinCloud(centerCellIdx);
 
-            _shiftCloudCs[centerCellIdx].WhereNeedShiftIdxCell = _e.GetIdxCellByDirectAround(centerCellIdx, _windC.DirectT);
+            _shiftCloudCs[centerCellIdx].WhereNeedShiftIdxCell = _cellsByDirectAroundC[centerCellIdx].Get(_windC.DirectT);
 
-            foreach (var aroundCell_0 in _e.IdxsCellsAround(centerCellIdx))
+            foreach (var aroundCell_0 in _idxsAroundCellCs[centerCellIdx].IdxCellsAroundArray)
             {
                 SetDataAndSkinCloud(aroundCell_0);
             }
@@ -281,10 +281,10 @@ namespace Chessy.Model.System
                 {
                     if (_cellCs[currentCellIdx].IsBorder) continue;
 
-                    if (_e.CloudWhereViewDataOnCellC(currentCellIdx).HaveDataReference) continue;
+                    if (_cloudWhereViewDataCs[currentCellIdx].HaveDataReference) continue;
 
-                    _e.CloudWhereViewDataOnCellC(currentCellIdx).DataIdxCell = cellIdx;
-                    _e.CloudWhereViewDataOnCellC(cellIdx).ViewIdxCell = currentCellIdx;
+                    _cloudWhereViewDataCs[currentCellIdx].DataIdxCell = cellIdx;
+                    _cloudWhereViewDataCs[cellIdx].ViewIdxCell = currentCellIdx;
 
 
                     break;

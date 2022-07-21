@@ -122,9 +122,9 @@ namespace Chessy.Model.System
 
                     float protectionPercent = 0;
 
-                    //if (e.FertilizeC(cell_0).HaveAnyResources) protectionPercent += DamageValues.FERTILIZER;
-                    if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources) protectionPercent += DamageUnitValues.ADULT_FOREST;
-                    if (_e.HillC(cellIdxCurrent).HaveAnyResources) protectionPercent += DamageUnitValues.HILL;
+                    //if (e.FertilizeC(cell_0].HaveEnvironment(EnvironmentTypes.AdultForest)) protectionPercent += DamageValues.FERTILIZER;
+                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest)) protectionPercent += DamageUnitValues.ADULT_FOREST;
+                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill)) protectionPercent += DamageUnitValues.HILL;
 
                     powerDamage += powerDamage * protectionPercent;
 

@@ -44,16 +44,16 @@ namespace Chessy.Model.System
 
                             var clipT = ClipTypes.SighUnit;
 
-                            if (_e.UnitT(cellIdx).Is(UnitTypes.Pawn))
+                            if (_unitCs[cellIdx].UnitT == UnitTypes.Pawn)
                             {
-                                if (_e.AdultForestC(cellIdx).HaveAnyResources)
+                                if (_environmentCs[cellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
                                 {
                                     if (!_buildingCs[cellIdx].HaveBuilding)
                                     {
 
                                         if (_hpUnitCs[cellIdx].Health >= HpUnitValues.MAX)
                                         {
-                                            if (_e.PlayerInfoE(_unitCs[cellIdx].PlayerT).GodInfoC.UnitType.Is(UnitTypes.Elfemale))
+                                            if (PlayerInfoE(_unitCs[cellIdx].PlayerT).GodInfoC.UnitType.Is(UnitTypes.Elfemale))
                                             {
                                                 _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _unitCs[cellIdx].PlayerT, ValuesChessy.MAX_HP_ANY_BUILDING, cellIdx);
                                             }

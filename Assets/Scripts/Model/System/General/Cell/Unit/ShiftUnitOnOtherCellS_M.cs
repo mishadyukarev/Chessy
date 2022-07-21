@@ -15,8 +15,8 @@ namespace Chessy.Model.System
 
 
 
-            _e.UnitE(toCellIdx).Clone(_e.UnitE(fromCellIdx));
-            _e.UnitE(fromCellIdx).Dispose();
+            _unitEs[toCellIdx].Clone(_unitEs[fromCellIdx]);
+            _unitEs[fromCellIdx].Dispose();
 
 
 
@@ -43,11 +43,11 @@ namespace Chessy.Model.System
 
            
 
-            var directT = _e.CellAroundC(fromCellIdx, toCellIdx).DirectT;
+            var directT = _cellAroundCs[fromCellIdx, toCellIdx].DirectT;
 
-            if (!_e.UnitT(toCellIdx).Is(UnitTypes.Undead))
+            if (_unitCs[toCellIdx].UnitT != UnitTypes.Undead)
             {
-                if (_e.UnitT(toCellIdx).Is(UnitTypes.Pawn))
+                if (_unitCs[toCellIdx].UnitT == UnitTypes.Pawn)
                 {
                     if (toCellIdx == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                     {
@@ -67,9 +67,9 @@ namespace Chessy.Model.System
 
                     if (_aboutGameC.LessonT == LessonTypes.ComeToYourKing)
                     {
-                        foreach (var cellIdx in _e.IdxsCellsAround(toCellIdx))
+                        foreach (var cellIdx in _idxsAroundCellCs[toCellIdx].IdxCellsAroundArray)
                         {
-                            if (_e.UnitT(cellIdx) == UnitTypes.King && _unitCs[cellIdx].PlayerT == _unitCs[toCellIdx].PlayerT)
+                            if (_unitCs[cellIdx].UnitT == UnitTypes.King && _unitCs[cellIdx].PlayerT == _unitCs[toCellIdx].PlayerT)
                             {
                                 SetNextLesson();
                                 break;
@@ -82,21 +82,21 @@ namespace Chessy.Model.System
 
 
 
-                if (_e.UnitT(toCellIdx).Is(UnitTypes.Snowy))
+                if (_unitCs[toCellIdx].UnitT == UnitTypes.Snowy)
                 {
                     if (_unitWaterCs[toCellIdx].HaveAnyWater())
                     {
-                        _e.WaterOnCellC(toCellIdx).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
+                        _environmentCs[toCellIdx].Set(EnvironmentTypes.Fertilizer, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                         _fireCs[toCellIdx].HaveFire = false;
                         _unitWaterCs[toCellIdx].Water -= ValuesChessy.TAKING_WATER_AFTER_SHIFT_SNOWY;
                     }
                 }
 
-                if (_e.AdultForestC(fromCellIdx).HaveAnyResources)
+                if (_environmentCs[fromCellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
                     _hpTrailCs[fromCellIdx].Health(directT) = ValuesChessy.HEALTH_TRAIL_ANY_TRAIL;
                 }
-                if (_e.AdultForestC(toCellIdx).HaveAnyResources)
+                if (_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
                     var dirTrail = directT.Invert();
 
@@ -114,26 +114,26 @@ namespace Chessy.Model.System
             }
 
 
-            if (_e.UnitT(toCellIdx) == UnitTypes.Snowy)
+            if (_unitCs[toCellIdx].UnitT == UnitTypes.Snowy)
             {
                 RainyGiveWaterToUnitsAround(toCellIdx);
             }
 
 
-            switch (_e.UnitT(toCellIdx))
+            switch (_unitCs[toCellIdx].UnitT)
             {
                 case UnitTypes.Elfemale:
-                    if (!_e.AdultForestC(toCellIdx).HaveAnyResources && !_e.HillC(toCellIdx).HaveAnyResources)
+                    if (!_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.AdultForest) && !_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.Hill))
                     {
                         if (Random.Range(0, 1f) <= ValuesChessy.PERCENT_FOR_SEEDING_YOUNG_FOREST_AFTER_SHIFT_ELFEMALE)
                         {
-                            _e.YoungForestC(toCellIdx).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
+                            _environmentCs[toCellIdx].Set(EnvironmentTypes.YoungForest, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                         }
                     }
                     break;
 
                 case UnitTypes.Hell:
-                    if (_e.AdultForestC(toCellIdx).HaveAnyResources)
+                    if (_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
                     {
                         _fireCs[toCellIdx].HaveFire = true;
                     }

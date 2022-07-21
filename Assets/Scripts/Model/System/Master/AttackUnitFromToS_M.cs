@@ -12,13 +12,13 @@ namespace Chessy.Model.System
             _unitCs[idx_from].HowManySecondUnitWasHereInThisCondition = 0;
 
 
-            if (_e.UnitT(idx_to).IsAnimal())
+            if (_unitCs[idx_to].IsAnimal)
             {
                 RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackAnimal);
             }
             else
             {
-                if (_e.UnitT(idx_from).IsMelee(_mainTWC[idx_from].ToolWeaponT))
+                if (_unitCs[idx_from].UnitT.IsMelee(_mainTWC[idx_from].ToolWeaponT))
                 {
                     RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
                 }
@@ -48,7 +48,7 @@ namespace Chessy.Model.System
             var powerDam_to = _unitCs[idx_to].DamageSimpleAttack;
 
 
-            var dirAttack = _e.CellAroundC(idx_from, idx_to).DirectT;
+            var dirAttack = _cellAroundCs[idx_from, idx_to].DirectT;
 
             if (_sunC.IsAcitveSun)
             {
@@ -117,7 +117,7 @@ namespace Chessy.Model.System
                 }
             }
 
-            if (_e.UnitT(idx_from).IsMelee(_mainTWC[idx_from].ToolWeaponT))
+            if (_unitCs[idx_from].UnitT.IsMelee(_mainTWC[idx_from].ToolWeaponT))
             {
                 if (_effectsUnitCs[idx_from].ProtectionRainyMagicShield >= 1)
                 {
@@ -157,7 +157,7 @@ namespace Chessy.Model.System
             {
                 var killer = PlayerTypes.None;
 
-                if (_e.UnitT(idx_to).IsAnimal())
+                if (_unitCs[idx_to].IsAnimal)
                 {
                     killer = _unitCs[idx_from].PlayerT;
                 }
@@ -167,15 +167,15 @@ namespace Chessy.Model.System
                 }
 
 
-                var wasUnitT_to = _e.UnitT(idx_to);
+                var wasUnitT_to = _unitCs[idx_to].UnitT;
 
                 AttackUnitOnCell(minus_to, killer, idx_to);
 
-                if (!_e.UnitT(idx_to).HaveUnit())
+                if (!_unitCs[idx_to].HaveUnit)
                 {
-                    if (_e.UnitT(idx_from).HaveUnit())
+                    if (_unitCs[idx_from].HaveUnit)
                     {
-                        if (_e.UnitT(idx_from).IsMelee(_mainTWC[idx_from].ToolWeaponT))
+                        if (_unitCs[idx_from].UnitT.IsMelee(_mainTWC[idx_from].ToolWeaponT))
                         {
                             //ShiftUnitOnOtherCellM(idx_from, idx_to);
                         }
@@ -183,7 +183,7 @@ namespace Chessy.Model.System
 
                     if (wasUnitT_to == UnitTypes.Wolf)
                     {
-                        _e.ResourcesInInventoryC(_unitCs[idx_from].PlayerT).Add(ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL);
+                        ResourcesInInventoryC(_unitCs[idx_from].PlayerT).Add(ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL);
                     }
                 }
             }

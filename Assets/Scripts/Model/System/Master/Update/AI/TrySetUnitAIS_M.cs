@@ -33,18 +33,18 @@ namespace Chessy.Model
                 _pointsCellsForSettingKing[cellIdxStart] = 0;
                 _pointsCellsForSettingPawn[cellIdxStart] = 0;
 
-                if (!_isStartedCellCs[cellIdxStart].IsStartedCell(playerBotT) || _e.UnitT(cellIdxStart).HaveUnit()) continue;
+                if (!_isStartedCellCs[cellIdxStart].IsStartedCell(playerBotT) || _unitCs[cellIdxStart].HaveUnit) continue;
 
                 _pointsCellsForSettingKing[cellIdxStart]++;
                 _pointsCellsForSettingPawn[cellIdxStart]++;
 
 
-                if (_e.AdultForestC(cellIdxStart).HaveAnyResources)
+                if (_environmentCs[cellIdxStart].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
                     _pointsCellsForSettingKing[cellIdxStart]++;
                     _pointsCellsForSettingPawn[cellIdxStart]++;
                 }
-                if (_e.HillC(cellIdxStart).HaveAnyResources)
+                if (_environmentCs[cellIdxStart].HaveEnvironment(EnvironmentTypes.Hill))
                 {
                     _pointsCellsForSettingKing[cellIdxStart]++;
                     _pointsCellsForSettingPawn[cellIdxStart]++;
@@ -73,17 +73,17 @@ namespace Chessy.Model
                 }
             }
 
-            if (_e.PlayerInfoE(playerBotT).PlayerInfoC.HaveKingInInventor)
+            if (PlayerInfoE(playerBotT).PlayerInfoC.HaveKingInInventor)
             {
                 byte cellIdx = 85;
 
-                _s.ClearAllEnvironment(cellIdx);
+                _environmentCs[cellIdx].Dispose();
                 _s.SetNewUnitOnCellS.Set(UnitTypes.King, playerBotT, cellIdx);
 
                 //TrySetUnit(ref _theMostBigPointForSettingKing, _pointsCellsForSettingKing, UnitTypes.King, playerBotT);
             }
 
-            if (_e.PawnPeopleInfoC(playerBotT).CanGetPawn(_e.PlayerInfoC(playerBotT).AmountBuiltHouses))
+            if (PawnPeopleInfoC(playerBotT).CanGetPawn(PlayerInfoC(playerBotT).AmountBuiltHouses))
             {
                 TrySetUnit(ref _theMostBigPointForSettingPawn, _pointsCellsForSettingPawn, UnitTypes.Pawn, playerBotT);
             }
@@ -104,7 +104,7 @@ namespace Chessy.Model
 
                     if (theMostBigPoint == currentPoint)
                     {
-                        if (!_e.UnitT(idxCell).HaveUnit())
+                        if (!_unitCs[idxCell].HaveUnit)
                         {
                             if (Random.Range(0, 1f) < 0.75f)
                             {
@@ -112,7 +112,7 @@ namespace Chessy.Model
 
                                 if (unitT == UnitTypes.King)
                                 {
-                                    _s.ClearAllEnvironment(idxCell);
+                                    _environmentCs[idxCell].Dispose();
                                 }
 
                                 break;
@@ -134,10 +134,10 @@ namespace Chessy.Model
 
                 if (unitT == UnitTypes.King)
                 {
-                    if (!_e.PlayerInfoE(playerBotT).PlayerInfoC.HaveKingInInventor) break;
+                    if (!PlayerInfoE(playerBotT).PlayerInfoC.HaveKingInInventor) break;
                 }
 
-                if (!_e.PawnPeopleInfoC(playerBotT).CanGetPawn(_e.PlayerInfoC(playerBotT).AmountBuiltHouses))
+                if (!PawnPeopleInfoC(playerBotT).CanGetPawn(PlayerInfoC(playerBotT).AmountBuiltHouses))
                 {
                     break;
                 }

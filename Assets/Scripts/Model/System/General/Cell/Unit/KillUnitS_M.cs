@@ -8,7 +8,7 @@ namespace Chessy.Model.System
     {
         internal void KillUnit(in PlayerTypes whoKiller, in byte cellIdxForKilling)
         {
-            if (!_e.UnitT(cellIdxForKilling).HaveUnit()) throw new Exception();
+            if (!_unitCs[cellIdxForKilling].HaveUnit) throw new Exception();
 
 
             if (_unitCs[cellIdxForKilling].PlayerT == PlayerTypes.Second)
@@ -19,14 +19,14 @@ namespace Chessy.Model.System
 
             if (whoKiller != PlayerTypes.None)
             {
-                if (_e.UnitT(cellIdxForKilling) == UnitTypes.King) _aboutGameC.WinnerPlayerT = whoKiller;
+                if (_unitCs[cellIdxForKilling].UnitT == UnitTypes.King) _aboutGameC.WinnerPlayerT = whoKiller;
             }
 
-            if (_e.UnitT(cellIdxForKilling).IsGod())
+            if (_unitCs[cellIdxForKilling].UnitT.IsGod())
             {
                 var cooldown = 0;
 
-                switch (_e.UnitT(cellIdxForKilling))
+                switch (_unitCs[cellIdxForKilling].UnitT)
                 {
                     case UnitTypes.Elfemale:
                         cooldown = HeroCooldownValues.Elfemale;
@@ -47,18 +47,18 @@ namespace Chessy.Model.System
                     default: throw new Exception();
                 }
 
-                _e.PlayerInfoE(_unitCs[cellIdxForKilling].PlayerT).GodInfoC.CooldownInSecondsForNextAppearance = cooldown;
-                _e.PlayerInfoE(_unitCs[cellIdxForKilling].PlayerT).GodInfoC.HaveGodInInventor = true;
+                PlayerInfoE(_unitCs[cellIdxForKilling].PlayerT).GodInfoC.CooldownInSecondsForNextAppearance = cooldown;
+                PlayerInfoE(_unitCs[cellIdxForKilling].PlayerT).GodInfoC.HaveGodInInventor = true;
             }
 
-            if (_e.UnitT(cellIdxForKilling).Is(UnitTypes.Tree)) _e.HaveTreeUnit = false;
+            if (_unitCs[cellIdxForKilling].UnitT.Is(UnitTypes.Tree)) _aboutGameC.HaveTreeUnit = false;
 
 
             //_e.SetLastDiedUnitOnCell(cellIdxForKilling);
 
-            if (_e.UnitT(cellIdxForKilling).Is(UnitTypes.Pawn))
+            if (_unitCs[cellIdxForKilling].UnitT.Is(UnitTypes.Pawn))
             {
-                _e.PawnPeopleInfoC(_unitCs[cellIdxForKilling].PlayerT).AmountInGame--;
+                PawnPeopleInfoC(_unitCs[cellIdxForKilling].PlayerT).AmountInGame--;
             }
 
             _unitWhereViewDataCs[_unitWhereViewDataCs[cellIdxForKilling].ViewIdxCell].DataIdxCell = 0;
@@ -66,7 +66,7 @@ namespace Chessy.Model.System
 
             var dataIdxCell = _unitWhereViewDataCs[cellIdxForKilling].DataIdxCell;
 
-            _e.UnitE(cellIdxForKilling).Dispose();
+            _unitEs[cellIdxForKilling].Dispose();
 
             _unitWhereViewDataCs[cellIdxForKilling].DataIdxCell = dataIdxCell;
         }

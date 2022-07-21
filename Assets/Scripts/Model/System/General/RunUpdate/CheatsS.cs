@@ -18,11 +18,11 @@ namespace Chessy.Model
             {
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
                 {
-                    if (Input.GetKey(KeyCode.Alpha1)) _e.ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Food, 0.5f);
-                    if (Input.GetKey(KeyCode.Alpha2)) _e.ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Wood, 0.5f);
-                    if (Input.GetKey(KeyCode.Alpha3)) _e.ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Ore, 0.5f);
-                    if (Input.GetKey(KeyCode.Alpha4)) _e.ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Iron, 1);
-                    if (Input.GetKey(KeyCode.Alpha5)) _e.ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Gold, 1);
+                    if (Input.GetKey(KeyCode.Alpha1)) ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Food, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha2)) ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Wood, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha3)) ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Ore, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha4)) ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Iron, 1);
+                    if (Input.GetKey(KeyCode.Alpha5)) ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Gold, 1);
                 }
 
 
@@ -45,7 +45,7 @@ namespace Chessy.Model
                 {
                     for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                     {
-                        if (_e.AdultForestC(cell_0).HaveAnyResources)
+                        if (_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.AdultForest))
                         {
                             _s.TryDestroyAdultForest(cell_0);
                         }

@@ -7,7 +7,7 @@ namespace Chessy.Model.System
     {
         public void ToggleToolWeapon(in ToolsWeaponsWarriorTypes twT)
         {
-            _e.SoundAction(ClipTypes.Click).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
             _cellsC.Selected = 0;
 
@@ -21,7 +21,7 @@ namespace Chessy.Model.System
                 //    }
                 //}
 
-                if (_e.PlayerInfoE(_aboutGameC.CurrentPlayerIT).PawnInfoC.AmountInGame > 0)
+                if (PlayerInfoE(_aboutGameC.CurrentPlayerIT).PawnInfoC.AmountInGame > 0)
                 {
                     //if (tw == ToolWeaponTypes.Pick)
                     //{
@@ -65,14 +65,14 @@ namespace Chessy.Model.System
                 {
                     _mistakeC.MistakeT = MistakeTypes.NeedPawnsInGame;
                     _mistakeC.Timer = 0;
-                    _e.SoundAction(ClipTypes.WritePensil).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
                 }
             }
             else
             {
                 _mistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
                 _mistakeC.Timer = 0;
-                _e.SoundAction(ClipTypes.WritePensil).Invoke();
+                _dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
             }
 
 

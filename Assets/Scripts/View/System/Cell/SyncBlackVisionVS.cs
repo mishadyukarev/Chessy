@@ -48,7 +48,7 @@ namespace Chessy.View.System
                     {
                         case LessonTypes.ClickWindInfo:
                             {
-                                //if (_e.UnitT(currentCellIdx) != UnitTypes.Snowy && _e.CenterCloudCellIdx != currentCellIdx && !_e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround.Contains(currentCellIdx))
+                                //if (_unitCs[currentCellIdx) != UnitTypes.Snowy && _e.CenterCloudCellIdx != currentCellIdx && !_e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround.Contains(currentCellIdx))
                                 //{
                                 //    _isActive[currentCellIdx] = true;
                                 //}
@@ -115,11 +115,11 @@ namespace Chessy.View.System
                     switch (_aboutGameC.AbilityType)
                     {
                         case AbilityTypes.FireArcher:
-                            if (!_e.AdultForestC(currentCellIdx_0).HaveAnyResources) _needActive[currentCellIdx_0] = true;
+                            if (!_environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest)) _needActive[currentCellIdx_0] = true;
                             break;
 
                         case AbilityTypes.StunElfemale:
-                            if (!_e.AdultForestC(currentCellIdx_0).HaveAnyResources) _needActive[currentCellIdx_0] = true;
+                            if (!_environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest)) _needActive[currentCellIdx_0] = true;
                             break;
 
                         case AbilityTypes.ChangeDirectionWind:
@@ -146,7 +146,7 @@ namespace Chessy.View.System
 
 
 
-                            //if (!e.AdultForestC(idx_0).HaveAnyResources) _isActive = true;
+                            //if (!e.AdultForestC(idx_0].HaveEnvironment(EnvironmentTypes.AdultForest)) _isActive = true;
                             break;
                     }
                 }
@@ -173,7 +173,7 @@ namespace Chessy.View.System
 
                 if (_mistakeC.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
                 {
-                    if (_e.AdultForestC(currentCellIdx_0).HaveAnyResources || _e.MountainC(currentCellIdx_0).HaveAnyResources || _e.HillC(currentCellIdx_0).HaveAnyResources
+                    if (_environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest) || _environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Mountain) || _environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Hill)
                         || _buildingCs[currentCellIdx_0].HaveBuilding)
                     {
                         _needActive[currentCellIdx_0] = true;
@@ -182,8 +182,8 @@ namespace Chessy.View.System
 
                 else if (_mistakeC.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
                 {
-                    if (_e.AdultForestC(currentCellIdx_0).HaveAnyResources || _e.MountainC(currentCellIdx_0).HaveAnyResources || _e.HillC(currentCellIdx_0).HaveAnyResources
-                        || _e.YoungForestC(currentCellIdx_0).HaveAnyResources || _buildingCs[currentCellIdx_0].HaveBuilding)
+                    if (_environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest) || _environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Mountain) || _environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Hill)
+                        || _environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.YoungForest) || _buildingCs[currentCellIdx_0].HaveBuilding)
                     {
                         _needActive[currentCellIdx_0] = true;
                     }
@@ -192,7 +192,7 @@ namespace Chessy.View.System
 
                 else if (_mistakeC.MistakeT == MistakeTypes.NeedOtherPlaceGrowAdultForest)
                 {
-                    if (!_e.YoungForestC(currentCellIdx_0).HaveAnyResources)
+                    if (!_environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.YoungForest))
                     {
                         _needActive[currentCellIdx_0] = true;
                     }

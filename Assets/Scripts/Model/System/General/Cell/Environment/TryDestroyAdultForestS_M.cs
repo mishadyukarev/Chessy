@@ -4,9 +4,9 @@
     {
         internal void TryDestroyAdultForest(in byte cellIdx)
         {
-            if (_e.AdultForestC(cellIdx).HaveAnyResources)
+            if (_environmentCs[cellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
             {
-                _e.AdultForestC(cellIdx).Resources = 0;
+                _environmentCs[cellIdx].Set(EnvironmentTypes.AdultForest, 0);
 
                 TrySeedNewYoungForestOnCell(cellIdx);
                 _e.TryDestroyAllTrailsOnCell(cellIdx);

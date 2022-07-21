@@ -27,7 +27,7 @@ namespace Chessy.Model.System
                 //}
 
 
-                if (_e.AdultForestC(cellIdx).Resources < extract) extract = _e.AdultForestC(cellIdx).Resources;
+                if (_environmentCs[cellIdx].Resources(EnvironmentTypes.AdultForest) < extract) extract = _environmentCs[cellIdx].Resources(EnvironmentTypes.AdultForest);
 
 
                 _extractionBuildingCs[cellIdx].HowManyWoodcutterCanExtractWood = extract;

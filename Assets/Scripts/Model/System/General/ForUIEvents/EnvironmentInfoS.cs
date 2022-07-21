@@ -4,7 +4,7 @@
     {
         public void EnvironmentClick()
         {
-            _e.SoundAction(ClipTypes.Click).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
             _zonesInfoC.IsActiveEnvironment = !_zonesInfoC.IsActiveEnvironment;
 
             _updateAllViewC.NeedUpdateView = true;

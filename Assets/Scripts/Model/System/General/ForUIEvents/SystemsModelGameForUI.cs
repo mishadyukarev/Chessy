@@ -34,12 +34,12 @@ namespace Chessy.Model.System
                 if (_bookC.IsOpenedBook())
                 {
                     _bookC.OpenedNowPageBookT = PageBookTypes.None;
-                    _e.SoundAction(ClipTypes.CloseBook).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.CloseBook).Invoke();
                 }
                 else
                 {
                     _bookC.OpenedNowPageBookT = PageBookTypes.Wind;
-                    _e.SoundAction(ClipTypes.OpenBook).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.OpenBook).Invoke();
                 }
             }
 
@@ -48,7 +48,7 @@ namespace Chessy.Model.System
         public void ClickSettingUpGame()
         {
             _settingsC.IsOpenedBarWithSettings = !_settingsC.IsOpenedBarWithSettings;
-            _e.SoundAction(ClipTypes.Click);
+            _dataFromViewC.SoundAction(ClipTypes.Click);
         }
         public void ClickDiscordUpButton()
         {
@@ -93,12 +93,12 @@ namespace Chessy.Model.System
                 _bookC.OpenBook();
             }
 
-            _e.SoundAction(_bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
+            _dataFromViewC.SoundAction(_bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
             _updateAllViewC.NeedUpdateView = true;
         }
         public void ClickPremiumButtonInHeroZoneInGame()
         {
-            _e.SoundAction(ClipTypes.Click).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
             _shopC.IsOpenedShopZone = true;
             _updateAllViewC.NeedUpdateView = true;
 
@@ -106,21 +106,21 @@ namespace Chessy.Model.System
         }
         public void ClickExitSmelterBarInGame()
         {
-            _e.SoundAction(ClipTypes.Click).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
             _selectedBuildingsInTownC.Set(BuildingTypes.Smelter, false);
 
             _updateAllViewC.NeedUpdateView = true;
         }
         public void ClickExitMarketBarInGame()
         {
-            _e.SoundAction(ClipTypes.Click).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
             _selectedBuildingsInTownC.Set(BuildingTypes.Market, false);
 
             _updateAllViewC.NeedUpdateView = true;
         }
         public void ClickPremiumButtonLeftInGame()
         {
-            _e.SoundAction(ClipTypes.Click).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
             _shopC.IsOpenedShopZone = true;
             _updateAllViewC.NeedUpdateView = true;
         }
@@ -137,7 +137,7 @@ namespace Chessy.Model.System
             if (_bookC.OpenedNowPageBookT < PageBookTypes.End - 1)
             {
                 _bookC.OpenedNowPageBookT++;
-                _e.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
+                _dataFromViewC.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
 
                 _updateAllViewC.NeedUpdateView = true;
             }
@@ -147,7 +147,7 @@ namespace Chessy.Model.System
             if (_bookC.OpenedNowPageBookT > 0)
             {
                 _bookC.OpenedNowPageBookT--;
-                _e.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
+                _dataFromViewC.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
 
                 _updateAllViewC.NeedUpdateView = true;
             }
@@ -157,7 +157,7 @@ namespace Chessy.Model.System
             _bookC.WasOpenedBookT = _bookC.OpenedNowPageBookT;
             _bookC.OpenedNowPageBookT = PageBookTypes.None;
 
-            _e.SoundAction(ClipTypes.CloseBook).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.CloseBook).Invoke();
 
             _updateAllViewC.NeedUpdateView = true;
         }
@@ -195,7 +195,7 @@ namespace Chessy.Model.System
         {
             _bookC.TryOpenBook();
 
-            _e.SoundAction(_bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
+            _dataFromViewC.SoundAction(_bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
 
             _updateAllViewC.NeedUpdateView = true;
         }

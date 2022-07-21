@@ -18,7 +18,7 @@
 //                        {
 //                            var idx_1 = E.CellEs(cell_0).AroundCellE(dirT).IdxC.Idx;
 
-//                            if (E.AdultForestC(idx_1).HaveAnyResources)
+//                            if (E.AdultForestC(idx_1].HaveEnvironment(EnvironmentTypes.AdultForest))
 //                            {
 //                                if (!E.BuildingTC(idx_1).HaveBuilding)
 //                                {

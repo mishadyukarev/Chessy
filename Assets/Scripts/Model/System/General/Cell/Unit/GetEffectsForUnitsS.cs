@@ -19,9 +19,9 @@ namespace Chessy.Model.System
             {
                 if (!_cellCs[cellIdxCurrent].IsBorder)
                 {
-                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.King))
+                    if (_unitCs[cellIdxCurrent].UnitT == UnitTypes.King)
                     {
-                        foreach (var cellIdxNext in _e.IdxsCellsAround(cellIdxCurrent))
+                        foreach (var cellIdxNext in _idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
                         {
                             _hasUnitKingEffectHereCs[cellIdxNext].Set(_unitCs[cellIdxCurrent].PlayerT, true);
                         }

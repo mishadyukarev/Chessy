@@ -37,7 +37,7 @@ namespace Chessy.Model
 
                 if (_timer >= TIMER)
                 {
-                    _e.SoundAction(ClipTypes.OpenBook).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.OpenBook).Invoke();
 
                     if (_buttonT != ButtonTypes.None)
                     {

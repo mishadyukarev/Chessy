@@ -9,18 +9,18 @@ namespace Chessy.Model.System
         {
             if (!_cooldownAbilityCs[cell_0].HaveCooldown(abilityT))
             {
-                if (_e.YoungForestC(cell_0).HaveAnyResources)
+                if (_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.YoungForest))
                 {
-                    _e.YoungForestC(cell_0).Resources = 0;
-                    _e.AdultForestC(cell_0).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
+                    _environmentCs[cell_0].Set(EnvironmentTypes.YoungForest, 0);
+                    _environmentCs[cell_0].Set(EnvironmentTypes.AdultForest, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
 
                     _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
-                    foreach (var idx_1 in _e.IdxsCellsAround(cell_0))
+                    foreach (var idx_1 in _idxsAroundCellCs[cell_0].IdxCellsAroundArray)
                     {
-                        if (_e.YoungForestC(idx_1).HaveAnyResources)
+                        if (_environmentCs[idx_1].HaveEnvironment(EnvironmentTypes.YoungForest))
                         {
-                            _e.AdultForestC(idx_1).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
+                            _environmentCs[idx_1].Set(EnvironmentTypes.AdultForest, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                         }
                     }
                     _s.RpcSs.SoundToGeneral(sender, abilityT);

@@ -31,7 +31,7 @@ namespace Chessy.View.System
 
                     if (_unitVisibleCs[dataCellIdx].IsVisible(_aboutGameC.CurrentPlayerIType))
                     {
-                        if (_e.UnitT(dataCellIdx).HaveUnit() && !_e.UnitT(dataCellIdx).IsAnimal())
+                        if (_unitCs[dataCellIdx].HaveUnit && !_unitCs[dataCellIdx].UnitType.IsAnimal())
                         {
                             _needActive[cellIdxCurrent] = !_unitCs[dataCellIdx].HaveCoolDownForAttackAnyUnit;
 

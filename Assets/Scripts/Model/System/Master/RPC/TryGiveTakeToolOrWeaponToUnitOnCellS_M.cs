@@ -11,7 +11,7 @@ namespace Chessy.Model.System
         {
             var whoseMove = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (_e.UnitT(cellIdxForDoing).Is(UnitTypes.Pawn))
+            if (_unitCs[cellIdxForDoing].UnitT == UnitTypes.Pawn)
             {
                 //if (_e.EnergyUnitC(cellIdxForDoing).Energy >= StepValues.FOR_GIVE_TAKE_TOOLWEAPON)
                 //{
@@ -19,7 +19,7 @@ namespace Chessy.Model.System
                 {
                     if (_extraTWC[cellIdxForDoing].HaveToolWeapon)
                     {
-                        _e.AddToolWeaponsInInventor(_unitCs[cellIdxForDoing].PlayerT, _extraTWC[cellIdxForDoing].LevelT, _extraTWC[cellIdxForDoing].ToolWeaponT);
+                        ToolWeaponsInInventoryC(_unitCs[cellIdxForDoing].PlayerT).Add(_extraTWC[cellIdxForDoing].ToolWeaponT, _extraTWC[cellIdxForDoing].LevelT);
                         _extraTWC[cellIdxForDoing].ToolWeaponT = ToolsWeaponsWarriorTypes.None;
                     }
                     else
@@ -32,9 +32,9 @@ namespace Chessy.Model.System
 
                             if (_mainTWC[cellIdxForDoing].LevelT == LevelTypes.First)
                             {
-                                if (_e.ToolWeaponsInInventor(whoseMove, levTW, twT) > 0)
+                                if (ToolWeaponsInInventoryC(whoseMove).ToolWeapons(twT, levTW) > 0)
                                 {
-                                    _e.SubtractToolWeaponsInInventor(whoseMove, levTW, twT);
+                                    ToolWeaponsInInventoryC(whoseMove).Subtract(twT, levTW);
 
                                     _mainTWC[cellIdxForDoing].Set(twT, levTW);
 
@@ -47,7 +47,7 @@ namespace Chessy.Model.System
 
                                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                     {
-                                        var difAmountRes = _e.ResourcesInInventory(whoseMove, res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
+                                        var difAmountRes = ResourcesInInventoryC(whoseMove).Resources(res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
                                         needRes.Add(res, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res));
 
                                         if (canBuy) canBuy = difAmountRes >= 0;
@@ -56,7 +56,7 @@ namespace Chessy.Model.System
                                     if (canBuy)
                                     {
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                            _e.ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
+                                            ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
 
                                         _mainTWC[cellIdxForDoing].Set(twT, levTW);
 
@@ -76,7 +76,7 @@ namespace Chessy.Model.System
                             }
                             else
                             {
-                                _e.AddToolWeaponsInInventor(whoseMove, _mainTWC[cellIdxForDoing].LevelT, _mainTWC[cellIdxForDoing].ToolWeaponT);
+                                ToolWeaponsInInventoryC(whoseMove).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
                                 _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
 
                             }
@@ -84,7 +84,7 @@ namespace Chessy.Model.System
 
                         else
                         {
-                            _e.AddToolWeaponsInInventor(whoseMove, _mainTWC[cellIdxForDoing].LevelT, _mainTWC[cellIdxForDoing].ToolWeaponT);
+                            ToolWeaponsInInventoryC(whoseMove).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
                             _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
                         }
                     }
@@ -96,9 +96,9 @@ namespace Chessy.Model.System
                     {
                         if (_mainTWC[cellIdxForDoing].LevelT == LevelTypes.First)
                         {
-                            if (_e.ToolWeaponsInInventor(whoseMove, levTW, twT) > 0)
+                            if (ToolWeaponsInInventoryC(whoseMove).ToolWeapons(twT, levTW) > 0)
                             {
-                                _e.SubtractToolWeaponsInInventor(whoseMove, levTW, twT);
+                                ToolWeaponsInInventoryC(whoseMove).Subtract(twT, levTW);
                                 _mainTWC[cellIdxForDoing].Set(twT, levTW);
 
                                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
@@ -110,7 +110,7 @@ namespace Chessy.Model.System
 
                                 for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                 {
-                                    var difAmountRes = _e.ResourcesInInventory(whoseMove, res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
+                                    var difAmountRes = ResourcesInInventoryC(whoseMove).Resources(res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
                                     needRes.Add(res, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res));
 
                                     if (canBuy) canBuy = difAmountRes >= 0;
@@ -119,7 +119,7 @@ namespace Chessy.Model.System
                                 if (canBuy)
                                 {
                                     for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                        _e.ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
+                                        ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
 
                                     _mainTWC[cellIdxForDoing].Set(twT, levTW);
 
@@ -141,14 +141,14 @@ namespace Chessy.Model.System
 
                         else
                         {
-                            _e.AddToolWeaponsInInventor(whoseMove, _mainTWC[cellIdxForDoing].LevelT, _mainTWC[cellIdxForDoing].ToolWeaponT);
+                            ToolWeaponsInInventoryC(whoseMove).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
                             _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
                         }
                     }
 
                     else
                     {
-                        _e.AddToolWeaponsInInventor(whoseMove, _mainTWC[cellIdxForDoing].LevelT, _mainTWC[cellIdxForDoing].ToolWeaponT);
+                        ToolWeaponsInInventoryC(whoseMove).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
                         _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
 
                         RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
@@ -161,7 +161,7 @@ namespace Chessy.Model.System
 
                     if (_mainTWC[cellIdxForDoing].ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
                     {
-                        _e.AddToolWeaponsInInventor(_unitCs[cellIdxForDoing].PlayerT, _mainTWC[cellIdxForDoing].LevelT, _mainTWC[cellIdxForDoing].ToolWeaponT);
+                        ToolWeaponsInInventoryC(_unitCs[cellIdxForDoing].PlayerT).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
                         _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
                     }
 
@@ -171,15 +171,15 @@ namespace Chessy.Model.System
                         {
                             if (_extraTWC[cellIdxForDoing].HaveToolWeapon)
                             {
-                                _e.AddToolWeaponsInInventor(ownUnit_0, _extraTWC[cellIdxForDoing].LevelT, _extraTWC[cellIdxForDoing].ToolWeaponT);
+                                ToolWeaponsInInventoryC(ownUnit_0).Add(_extraTWC[cellIdxForDoing].ToolWeaponT, _extraTWC[cellIdxForDoing].LevelT);
                                 _extraTWC[cellIdxForDoing].ToolWeaponT = ToolsWeaponsWarriorTypes.None;
 
                                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                             }
 
-                            else if (_e.ToolWeaponsInInventor(ownUnit_0, levTW, twT) > 0)
+                            else if (ToolWeaponsInInventoryC(ownUnit_0).ToolWeapons(twT, levTW) > 0)
                             {
-                                _e.SubtractToolWeaponsInInventor(ownUnit_0, levTW, twT, 1);
+                                ToolWeaponsInInventoryC(ownUnit_0).Subtract(twT, levTW);
 
 
                                 _extraTWC[cellIdxForDoing].Set(twT, levTW, ValuesChessy.MaxShieldProtection(levTW));
@@ -194,7 +194,7 @@ namespace Chessy.Model.System
 
                                 for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                 {
-                                    var difAmountRes = _e.ResourcesInInventory(whoseMove, res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
+                                    var difAmountRes = ResourcesInInventoryC(whoseMove).Resources(res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
                                     needRes.Add(res, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res));
 
                                     if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -203,7 +203,7 @@ namespace Chessy.Model.System
                                 if (canCreatBuild)
                                 {
                                     for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                        _e.ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
+                                        ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
 
                                     var protection = 0f;
 

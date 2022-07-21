@@ -10,9 +10,9 @@
 //            //{
 //            //    if (!_e.BuildingTC(cell_0).HaveBuilding)
 //            //    {
-//            //        if (!_e.AdultForestC(cell_0).HaveAnyResources)
+//            //        if (!_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.AdultForest))
 //            //        {
-//            //            _e.AdultForestC(cell_0).Resources = 0;
+//            //            _environmentCs[cell_0).Resources = 0;
 //            //            _e.FertilizeC(cell_0).Resources = 0;
 
 //            //            if (_e.UnitStepC(cell_0).Steps >= StepValues.BUILDING_ICE_WALL)

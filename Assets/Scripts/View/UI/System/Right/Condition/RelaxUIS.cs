@@ -30,7 +30,7 @@ namespace Chessy.View.UI.System
             }
 
 
-            if (_e.UnitT(idx_0).HaveUnit())
+            if (_unitCs[idx_0].HaveUnit)
             {
                 if (_unitCs[idx_0].PlayerType == _aboutGameC.CurrentPlayerIType)
                 {
@@ -40,16 +40,16 @@ namespace Chessy.View.UI.System
 
                         _relaxUIE.ImageC.Image.color = _unitCs[idx_0].ConditionType == ConditionUnitTypes.Relaxed ? Color.green : Color.white;
 
-                        if (_e.UnitT(idx_0).Is(UnitTypes.Pawn))
+                        if (_unitCs[idx_0].UnitType == UnitTypes.Pawn)
                         {
                             if (_mainTWC[idx_0].ToolWeaponType == ToolsWeaponsWarriorTypes.Axe)
                             {
-                                _needActiveZone[(byte)_e.UnitT(idx_0)] = true;
+                                _needActiveZone[(byte)_unitCs[idx_0].UnitType] = true;
                             }
                         }
                         else
                         {
-                            _needActiveZone[(byte)_e.UnitT(idx_0)] = true;
+                            _needActiveZone[(byte)_unitCs[idx_0].UnitType] = true;
                         }
                     }
                 }

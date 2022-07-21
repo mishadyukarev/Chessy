@@ -12,15 +12,15 @@ namespace Chessy.Model.System
                 {
                     _visibleBuildingCs[cellIdxCurrent].Set(_buildingCs[cellIdxCurrent].PlayerT, true);
 
-                    if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
                     {
                         var isVisibledNextPlayer = false;
 
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            var idx_1 = _e.GetIdxCellByDirectAround(cellIdxCurrent, dirT);
+                            var idx_1 = _cellsByDirectAroundC[cellIdxCurrent].Get(dirT);
 
-                            if (_e.UnitT(idx_1).HaveUnit())
+                            if (_unitCs[idx_1].HaveUnit)
                             {
                                 if (_unitCs[idx_1].PlayerT != _buildingCs[cellIdxCurrent].PlayerT)
                                 {

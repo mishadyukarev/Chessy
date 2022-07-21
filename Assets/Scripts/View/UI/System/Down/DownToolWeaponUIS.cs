@@ -122,12 +122,12 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
                 var curPlayerI = _aboutGameC.CurrentPlayerIType;
 
-                _twE.TextC(ToolsWeaponsWarriorTypes.Pick).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.First, ToolsWeaponsWarriorTypes.Pick).ToString();
-                _twE.TextC(ToolsWeaponsWarriorTypes.Sword).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.Second, ToolsWeaponsWarriorTypes.Sword).ToString();
-                _twE.TextC(ToolsWeaponsWarriorTypes.Axe).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.Second, ToolsWeaponsWarriorTypes.Axe).ToString();
-                _twE.TextC(ToolsWeaponsWarriorTypes.Shield).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _selectedToolWeaponC.LevelT, ToolsWeaponsWarriorTypes.Shield).ToString();
-                _twE.TextC(ToolsWeaponsWarriorTypes.BowCrossbow).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _selectedToolWeaponC.LevelT, ToolsWeaponsWarriorTypes.BowCrossbow).ToString();
-                _twE.TextC(ToolsWeaponsWarriorTypes.Staff).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.First, ToolsWeaponsWarriorTypes.Staff).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Pick).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Pick, LevelTypes.First).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Sword).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Sword, LevelTypes.Second).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Axe).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Axe, LevelTypes.Second).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Shield).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Shield, _selectedToolWeaponC.LevelT).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.BowCrossbow).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.BowCrossbow, _selectedToolWeaponC.LevelT).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Staff).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Staff, LevelTypes.First).ToString();
             }
         }
     }

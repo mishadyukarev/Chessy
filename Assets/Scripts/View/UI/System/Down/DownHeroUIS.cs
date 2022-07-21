@@ -17,13 +17,13 @@ namespace Chessy.View.UI.System
         {
             var curPlayerI = _aboutGameC.CurrentPlayerIType;
 
-            var myHeroT = _e.PlayerInfoE(curPlayerI).GodInfoC.UnitT;
+            var myHeroT = PlayerInfoE(curPlayerI).GodInfoC.UnitT;
 
-            if (myHeroT != UnitTypes.None && _e.PlayerInfoE(curPlayerI).GodInfoC.HaveGodInInventorP)
+            if (myHeroT != UnitTypes.None && PlayerInfoE(curPlayerI).GodInfoC.HaveGodInInventorP)
             {
                 _downHeroUIE.Parent.TrySetActive(true);
 
-                var cooldown = _e.PlayerInfoE(curPlayerI).GodInfoC.CooldownInSecondsForNextAppearanceP;
+                var cooldown = PlayerInfoE(curPlayerI).GodInfoC.CooldownInSecondsForNextAppearanceP;
 
                 for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
                 {

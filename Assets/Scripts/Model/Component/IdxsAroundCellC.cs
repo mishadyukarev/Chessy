@@ -1,14 +1,14 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Assets.Scripts.Model.Component
+﻿namespace Chessy.Model.Component
 {
-    public class IdxsAroundCellC : ScriptableObject
+    public sealed class IdxsAroundCellC
     {
-        [MenuItem("Tools/MyTool/Do It in C#")]
-        static void DoIt()
+        readonly byte[] _idxCellsAroundArray;
+
+        public byte[] IdxCellsAroundArray => (byte[])_idxCellsAroundArray.Clone();
+
+        internal IdxsAroundCellC(in byte[] cellsAround)
         {
-            EditorUtility.DisplayDialog("MyTool", "Do It in C# !", "OK", "");
+            _idxCellsAroundArray = cellsAround;
         }
     }
 }

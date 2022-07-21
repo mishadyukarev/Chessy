@@ -15,7 +15,7 @@ namespace Chessy.Model.System
 
             if (!_buildingCs[cell_0].HaveBuilding || _buildingCs[cell_0].BuildingT == BuildingTypes.Camp)
             {
-                if (!_e.AdultForestC(cell_0).HaveAnyResources)
+                if (!_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
                     var needRes = new Dictionary<ResourceTypes, float>();
                     var canBuild = true;
@@ -31,18 +31,18 @@ namespace Chessy.Model.System
                             needRes.Add(resT, 0);
                         }
 
-                        if (needRes[resT] > _e.ResourcesInInventory(whoseMove, resT)) canBuild = false;
+                        if (needRes[resT] > ResourcesInInventoryC(whoseMove).Resources(resT)) canBuild = false;
                     }
 
                     if (canBuild)
                     {
                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                         {
-                            _e.ResourcesInInventoryC(whoseMove).Subtract(resT, needRes[resT]);
+                            ResourcesInInventoryC(whoseMove).Subtract(resT, needRes[resT]);
                         }
 
                         RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
-                        _e.YoungForestC(cell_0).Resources = 0;
+                        _environmentCs[cell_0].Set(EnvironmentTypes.YoungForest, 0);
                         _e.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, ValuesChessy.MAX_HP_ANY_BUILDING, cell_0);
 
                         if (_aboutGameC.LessonT == LessonTypes.Build1Farms)

@@ -14,8 +14,8 @@ namespace Chessy.Model.System
                  SetNextLesson();
             }
 
-            _e.PlayerInfoE(whoDoing).GodInfoC.UnitType = unitT;
-            _e.PlayerInfoE(whoDoing).GodInfoC.HaveGodInInventor = true;
+            PlayerInfoE(whoDoing).GodInfoC.UnitType = unitT;
+            PlayerInfoE(whoDoing).GodInfoC.HaveGodInInventor = true;
         }
     }
 }

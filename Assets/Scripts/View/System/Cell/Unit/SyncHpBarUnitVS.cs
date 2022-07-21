@@ -34,7 +34,7 @@ namespace Chessy.View.System
 
                     if (_unitVisibleCs[dataIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType))
                     {
-                        if (_e.UnitT(dataIdxCell).HaveUnit() && !_e.UnitT(dataIdxCell).IsAnimal())
+                        if (_unitCs[dataIdxCell].HaveUnit && !_unitCs[dataIdxCell].UnitType.IsAnimal())
                         {
                             _needActiveBar[cellIdxCurrent] = true;
 

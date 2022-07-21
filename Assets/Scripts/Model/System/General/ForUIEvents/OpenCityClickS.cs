@@ -5,10 +5,10 @@ namespace Chessy.Model.System
     {
         public void OpenCityClick()
         {
-            _e.SoundAction(ClipTypes.Click).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
 
-            _e.IsSelectedCity = !_e.IsSelectedCity;
+            _aboutGameC.IsSelectedCity = !_aboutGameC.IsSelectedCity;
 
             if (_aboutGameC.LessonT.Is(LessonTypes.OpeningTown))
             {
@@ -17,7 +17,7 @@ namespace Chessy.Model.System
             }
             if (_aboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse))
             {
-                if (!_e.IsSelectedCity) _s.SetPreviousLesson();
+                if (!_aboutGameC.IsSelectedCity) _s.SetPreviousLesson();
             }
 
 

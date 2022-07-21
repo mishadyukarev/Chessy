@@ -1,4 +1,5 @@
-﻿using Chessy.Model.Entity;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
 using Chessy.Model.Values;
 using Chessy.View.Component;
 using UnityEngine;
@@ -32,7 +33,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
                     _needActive[cellIdxCurrent] = true;
                 }

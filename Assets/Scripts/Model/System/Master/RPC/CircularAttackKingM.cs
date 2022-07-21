@@ -15,9 +15,9 @@ namespace Chessy.Model.System
                 _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
 
-                foreach (byte idx_1 in _e.IdxsCellsAround(cell_0))
+                foreach (byte idx_1 in _idxsAroundCellCs[cell_0].IdxCellsAroundArray)
                 {
-                    if (_e.UnitT(idx_1).HaveUnit())
+                    if (_unitCs[idx_1].HaveUnit)
                     {
                         if (_unitCs[idx_1].PlayerT != _unitCs[cell_0].PlayerT)
                         {

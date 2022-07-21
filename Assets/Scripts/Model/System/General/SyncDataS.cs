@@ -23,7 +23,7 @@ namespace Chessy.Model.System
             //{
             //    //if (_e.IsBorder(curCellIdx_0)) continue;
 
-            //    var curUnitT = _e.UnitT(curCellIdx_0);
+            //    var curUnitT = _unitCs[curCellIdx_0);
             //    if (_eCopy.UnitT(curCellIdx_0) != curUnitT)
             //    {
             //        _eCopy.UnitMainC(curCellIdx_0).UnitType = curUnitT;
@@ -98,24 +98,24 @@ namespace Chessy.Model.System
             //}
             //for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             //{
-            //    if (_eCopy.PlayerInfoC(playerT).IsReadyForStartOnlineGame != _e.PlayerInfoC(playerT).IsReadyForStartOnlineGame)
+            //    if (_eCopy.PlayerInfoC(playerT).IsReadyForStartOnlineGame != PlayerInfoC(playerT).IsReadyForStartOnlineGame)
             //    {
-            //        _eCopy.PlayerInfoC(playerT).IsReadyForStartOnlineGame = _e.PlayerInfoC(playerT).IsReadyForStartOnlineGame;
+            //        _eCopy.PlayerInfoC(playerT).IsReadyForStartOnlineGame = PlayerInfoC(playerT).IsReadyForStartOnlineGame;
             //        needUpdateElse = true;
             //    }
 
 
-            //    //objs.Add(_e.PlayerInfoC(playerT).WoodForBuyHouse);
+            //    //objs.Add(PlayerInfoC(playerT).WoodForBuyHouse);
             //    //objs.Add(_e.BuildingsInTownInfoC(playerT).HaveBuildingsClone);
 
-            //    //objs.Add(_e.PlayerInfoC(playerT).HaveKingInInventor);
+            //    //objs.Add(PlayerInfoC(playerT).HaveKingInInventor);
 
-            //    //objs.Add(_e.PawnPeopleInfoC(playerT).PeopleInCity);
-            //    //objs.Add(_e.PawnPeopleInfoC(playerT).AmountInGame);
+            //    //objs.Add(PawnPeopleInfoC(playerT).PeopleInCity);
+            //    //objs.Add(PawnPeopleInfoC(playerT).AmountInGame);
 
-            //    //objs.Add(_e.GodInfoC(playerT).HaveGodInInventor);
-            //    //objs.Add(_e.GodInfoC(playerT).UnitT);
-            //    //objs.Add(_e.GodInfoC(playerT).Cooldown);
+            //    //objs.Add(GodInfoC(playerT).HaveGodInInventor);
+            //    //objs.Add(GodInfoC(playerT).UnitT);
+            //    //objs.Add(GodInfoC(playerT).Cooldown);
 
             //    //for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
             //    //{
@@ -146,9 +146,9 @@ namespace Chessy.Model.System
             //    //    _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.Others, new object[] { nameof(SyncData), SyncTypes.WaterUnit, cell_0, _e.WaterUnit(cell_0), });
             //    //}
 
-            //    //if (_eCopy.WaterOnCellC(cell_0).Resources != _e.WaterOnCellC(cell_0).Resources)
+            //    //if (_eCopy.WaterOnCellC(cell_0).Resources != _environmentCs[cell_0).Resources)
             //    //{
-            //    //    _eCopy.WaterOnCellC(cell_0).Resources = _e.WaterOnCellC(cell_0).Resources;
+            //    //    _eCopy.WaterOnCellC(cell_0).Resources = _environmentCs[cell_0).Resources;
 
             //    //    SyncM(SyncTypes.WaterOnCell, cell_0);
             //    //}
@@ -163,14 +163,14 @@ namespace Chessy.Model.System
             //    //    _eCopy.YoungForestC(cell_0).Resources = _e.YoungForestC(cell_0).Resources;
             //    //    needUpdateEnv = true;
             //    //}
-            //    //if (_eCopy.AdultForestC(cell_0).Resources != _e.AdultForestC(cell_0).Resources)
+            //    //if (_eCopy.AdultForestC(cell_0).Resources != _environmentCs[cell_0).Resources)
             //    //{
-            //    //    _eCopy.AdultForestC(cell_0).Resources = _e.AdultForestC(cell_0).Resources;
+            //    //    _eCopy.AdultForestC(cell_0).Resources = _environmentCs[cell_0).Resources;
             //    //    needUpdateEnv = true;
             //    //}
-            //    //if (_eCopy.HillC(cell_0).Resources != _e.HillC(cell_0).Resources)
+            //    //if (_eCopy.HillC(cell_0).Resources != _environmentCs[cell_0).Resources)
             //    //{
-            //    //    _eCopy.HillC(cell_0).Resources = _e.HillC(cell_0).Resources;
+            //    //    _eCopy.HillC(cell_0).Resources = _environmentCs[cell_0).Resources;
             //    //    needUpdateEnv = true;
             //    //}
             //    //if (_eCopy.MountainC(cell_0).Resources != _e.MountainC(cell_0).Resources)
@@ -382,7 +382,7 @@ namespace Chessy.Model.System
             //            nameof(SyncData),
             //            SyncTypes.Cell,
             //            cell_0,
-            //            _e.UnitT(cell_0),
+            //            _unitCs[cell_0),
             //            _e.UnitLevelT(cell_0),
             //            _unitCs[cell_0),
             //            _unitCs[cell_0),
@@ -436,8 +436,8 @@ namespace Chessy.Model.System
             //                SyncTypes.Environment,
             //                cellIdx,
             //                _e.YoungForestC(cellIdx).Resources,
-            //                _e.AdultForestC(cellIdx).Resources,
-            //                _e.HillC(cellIdx).Resources,
+            //                _environmentCs[cellIdx).Resources,
+            //                _environmentCs[cellIdx).Resources,
             //                _e.MountainC(cellIdx).Resources,
             //            };
 
@@ -474,7 +474,7 @@ namespace Chessy.Model.System
             //            };
             //            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             //            {
-            //                objs.Add(_e.PlayerInfoC(playerT).IsReadyForStartOnlineGame);
+            //                objs.Add(PlayerInfoC(playerT).IsReadyForStartOnlineGame);
             //            }
 
             //            var objects = new object[objs.Count];
@@ -574,8 +574,8 @@ namespace Chessy.Model.System
     //        //        {
     //        //            idxCell = (byte)objects[idxCurrent++];
     //        //            _e.YoungForestC(idxCell).Resources = (float)objects[idxCurrent++];
-    //        //            _e.AdultForestC(idxCell).Resources = (float)objects[idxCurrent++];
-    //        //            _e.HillC(idxCell).Resources = (float)objects[idxCurrent++];
+    //        //            _environmentCs[idxCell).Resources = (float)objects[idxCurrent++];
+    //        //            _environmentCs[idxCell).Resources = (float)objects[idxCurrent++];
     //        //            _e.MountainC(idxCell).Resources = (float)objects[idxCurrent++];
     //        //        }
     //        //        break;
@@ -593,7 +593,7 @@ namespace Chessy.Model.System
     //        //    case SyncTypes.WaterOnCell:
     //        //        {
     //        //            idxCell = (byte)objects[idxCurrent++];
-    //        //            _e.WaterOnCellC(idxCell).Resources = (float)objects[idxCurrent++];
+    //        //            _environmentCs[idxCell).Resources = (float)objects[idxCurrent++];
     //        //        }
     //        //        break;
 
@@ -614,7 +614,7 @@ namespace Chessy.Model.System
 
     //        //            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
     //        //            {
-    //        //                _e.PlayerInfoC(playerT).IsReadyForStartOnlineGame = (bool)objects[idxCurrent++];
+    //        //                PlayerInfoC(playerT).IsReadyForStartOnlineGame = (bool)objects[idxCurrent++];
     //        //            }
 
     //        //                //for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
@@ -669,10 +669,10 @@ namespace Chessy.Model.System
 
 
     //        //                //_e.YoungForestC(cell_0).Resources = (float)objects[idxCurrent++];
-    //        //                //_e.AdultForestC(cell_0).Resources = (float)objects[idxCurrent++];
+    //        //                //_environmentCs[cell_0).Resources = (float)objects[idxCurrent++];
     //        //                //_e.MountainC(cell_0).Resources = (float)objects[idxCurrent++];
-    //        //                //_e.HillC(cell_0).Resources = (float)objects[idxCurrent++];
-    //        //                //_e.WaterOnCellC(cell_0).Resources = (float)objects[idxCurrent++];
+    //        //                //_environmentCs[cell_0).Resources = (float)objects[idxCurrent++];
+    //        //                //_environmentCs[cell_0).Resources = (float)objects[idxCurrent++];
 
     //        //                //_e.SetRiverT(cell_0, (RiverTypes)objects[idxCurrent++]);
     //        //                //_haveRiverAroundCellCs[cell_0).Sync((bool[])objects[idxCurrent++]);
@@ -696,18 +696,18 @@ namespace Chessy.Model.System
 
     //        //                //for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
     //        //                //{
-    //        //                //    _e.PlayerInfoE(playerT).PlayerInfoC.IsReadyForStartOnlineGame = (bool)objects[idxCurrent++];
-    //        //                //_e.PlayerInfoE(playerT).PlayerInfoC.WoodForBuyHouse = (float)objects[idxCurrent++];
-    //        //                //_e.PlayerInfoE(playerT).BuildingsInTownInfoC.Sync((bool[])objects[idxCurrent++]);
+    //        //                //    PlayerInfoE(playerT).PlayerInfoC.IsReadyForStartOnlineGame = (bool)objects[idxCurrent++];
+    //        //                //PlayerInfoE(playerT).PlayerInfoC.WoodForBuyHouse = (float)objects[idxCurrent++];
+    //        //                //PlayerInfoE(playerT).BuildingsInTownInfoC.Sync((bool[])objects[idxCurrent++]);
 
-    //        //                //_e.PlayerInfoC(playerT).HaveKingInInventor = (bool)objects[idxCurrent++];
+    //        //                //PlayerInfoC(playerT).HaveKingInInventor = (bool)objects[idxCurrent++];
 
-    //        //                //_e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = (int)objects[idxCurrent++];
-    //        //                //_e.PlayerInfoE(playerT).PawnInfoC.AmountInGame = (int)objects[idxCurrent++];
+    //        //                //PlayerInfoE(playerT).PawnInfoC.PeopleInCity = (int)objects[idxCurrent++];
+    //        //                //PlayerInfoE(playerT).PawnInfoC.AmountInGame = (int)objects[idxCurrent++];
 
-    //        //                //_e.PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = (bool)objects[idxCurrent++];
-    //        //                //_e.PlayerInfoE(playerT).GodInfoC.UnitT = (UnitTypes)objects[idxCurrent++];
-    //        //                //_e.PlayerInfoE(playerT).GodInfoC.Cooldown = (float)objects[idxCurrent++];
+    //        //                //PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = (bool)objects[idxCurrent++];
+    //        //                //PlayerInfoE(playerT).GodInfoC.UnitT = (UnitTypes)objects[idxCurrent++];
+    //        //                //PlayerInfoE(playerT).GodInfoC.Cooldown = (float)objects[idxCurrent++];
 
     //        //                //for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
     //        //                //{

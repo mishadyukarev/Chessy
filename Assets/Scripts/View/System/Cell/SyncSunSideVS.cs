@@ -56,7 +56,7 @@ namespace Chessy.View.System
                         {
                             var invertSunDirectT = sunDirectT.Invert();
 
-                            if (_e.CellAroundC(cellIdxCurrent_0, cellIdxAttack).DirectT == invertSunDirectT)
+                            if (_cellAroundCs[cellIdxCurrent_0, cellIdxAttack].DirectT == invertSunDirectT)
                             {
                                 _needActive[cellIdxAttack] = true;
                             }

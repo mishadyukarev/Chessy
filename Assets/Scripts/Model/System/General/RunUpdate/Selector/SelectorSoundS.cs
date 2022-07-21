@@ -13,40 +13,40 @@ namespace Chessy.Model
         {
             var cell_0 = _cellsC.Current;
 
-            if (_e.UnitT(cell_0).HaveUnit()
-                && _unitVisibleCs[cell_0].IsVisible(_aboutGameC.CurrentPlayerIT) && !_e.UnitT(cell_0).Is(UnitTypes.Wolf))
+            if (_unitCs[cell_0].HaveUnit
+                && _unitVisibleCs[cell_0].IsVisible(_aboutGameC.CurrentPlayerIT) && _unitCs[cell_0].UnitT != UnitTypes.Wolf)
             {
-                if (_e.UnitT(cell_0).Is(UnitTypes.Tree))
+                if (_unitCs[cell_0].UnitT == UnitTypes.Tree)
                 {
-                    _e.SoundAction(ClipTypes.Leaf).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.Leaf).Invoke();
                 }
 
-                else if (_e.UnitT(cell_0).IsMelee(_mainTWC[cell_0].ToolWeaponT))
+                else if (_unitCs[cell_0].UnitT.IsMelee(_mainTWC[cell_0].ToolWeaponT))
                 {
-                    _e.SoundAction(ClipTypes.PickMelee).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.PickMelee).Invoke();
                 }
                 else
                 {
-                    _e.SoundAction(ClipTypes.PickArcher).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.PickArcher).Invoke();
                 }
             }
             else
             {
-                if (_e.AdultForestC(cell_0).HaveAnyResources)
+                if (_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
-                    _e.SoundAction(ClipTypes.Leaf).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.Leaf).Invoke();
                 }
-                else if (_e.HillC(cell_0).HaveAnyResources)
+                else if (_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.Hill))
                 {
-                    _e.SoundAction(ClipTypes.Rock).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.Rock).Invoke();
                 }
-                else if (_e.MountainC(cell_0).HaveAnyResources)
+                else if (_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.Mountain))
                 {
-                    _e.SoundAction(ClipTypes.ShortWind).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.ShortWind).Invoke();
                 }
                 else
                 {
-                    _e.SoundAction(ClipTypes.KickGround).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.KickGround).Invoke();
                 }
 
 
@@ -56,15 +56,15 @@ namespace Chessy.Model
 
                 if (_cloudCs[cell_0].IsCenterP)
                 {
-                    _e.SoundAction(ClipTypes.ShortRain).Invoke();
+                    _dataFromViewC.SoundAction(ClipTypes.ShortRain).Invoke();
                 }
                 else
                 {
-                    foreach (var item in _e.IdxsCellsAround(cell_0))
+                    foreach (var item in _idxsAroundCellCs[cell_0].IdxCellsAroundArray)
                     {
                         if (_cloudCs[item].IsCenterP)
                         {
-                            _e.SoundAction(ClipTypes.ShortRain).Invoke();
+                            _dataFromViewC.SoundAction(ClipTypes.ShortRain).Invoke();
                             break;
                         }
                     }

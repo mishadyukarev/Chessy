@@ -26,26 +26,26 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent_0 = 0; cellIdxCurrent_0 < IndexCellsValues.CELLS; cellIdxCurrent_0++)
             {
-                if (_cellCs[cellIdxCurrent_0].IsBorder) continue;
+                //if (_cellCs[cellIdxCurrent_0].IsBorder) continue;
 
-                if (_cloudCs[cellIdxCurrent_0].IsCenterP)
-                {
-                    var whereSkinIdxCell = _cloudWhereViewDataCs[cellIdxCurrent_0].ViewIdxCellP;
+                //if (_cloudCs[cellIdxCurrent_0].IsCenterP)
+                //{
+                //    var whereSkinIdxCell = _cloudWhereViewDataCs[cellIdxCurrent_0].ViewIdxCellP;
 
-                    var curCloudTrans = _cloudTrans[whereSkinIdxCell];
-                    var curPos = curCloudTrans.position;
-                    var nextPos = _e.CloudPossitionC(whereSkinIdxCell).PositionP;
+                //    var curCloudTrans = _cloudTrans[whereSkinIdxCell];
+                //    var curPos = curCloudTrans.position;
+                //    var nextPos = _e.CloudPossitionC(whereSkinIdxCell).PositionP;
 
-                    curCloudTrans.position = Vector3.Lerp(curPos, nextPos, t);
+                //    curCloudTrans.position = Vector3.Lerp(curPos, nextPos, t);
 
 
-                    foreach (var item in _e.IdxsCellsAround(cellIdxCurrent_0))
-                    {
-                        whereSkinIdxCell = _cloudWhereViewDataCs[item].ViewIdxCellP;
+                //    foreach (var item in _idxsAroundCellCs[cellIdxCurrent_0].IdxCellsAroundArray)
+                //    {
+                //        whereSkinIdxCell = _cloudWhereViewDataCs[item].ViewIdxCellP;
 
-                        curCloudTrans.position = Vector3.Lerp(curPos, nextPos, t);
-                    }
-                }
+                //        curCloudTrans.position = Vector3.Lerp(curPos, nextPos, t);
+                //    }
+                //}
             }
         }
     }

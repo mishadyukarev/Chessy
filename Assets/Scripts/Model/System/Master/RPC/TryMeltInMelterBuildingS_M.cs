@@ -24,7 +24,7 @@ namespace Chessy.Model.System
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > _e.ResourcesInInventory(whoDoing, resT))
+                if (needRes[resT] > ResourcesInInventoryC(whoDoing).Resources(resT))
                 {
                     canBuy = false;
                     break;
@@ -35,17 +35,17 @@ namespace Chessy.Model.System
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.ResourcesInInventoryC(whoDoing).Subtract(resT, needRes[resT]);
+                    ResourcesInInventoryC(whoDoing).Subtract(resT, needRes[resT]);
                 }
 
                 if (_aboutGameC.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
                 {
                     SetNextLesson();
-                    _e.IsSelectedCity = true;
+                    _aboutGameC.IsSelectedCity = true;
                 }
 
-                _e.ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Iron, AmountResourcesAfterMelting.IRON_AFTER_MELTING);
-                _e.ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Gold, AmountResourcesAfterMelting.GOLD_AFTER_MELTING);
+                ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Iron, AmountResourcesAfterMelting.IRON_AFTER_MELTING);
+                ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Gold, AmountResourcesAfterMelting.GOLD_AFTER_MELTING);
 
                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Melting);
             }

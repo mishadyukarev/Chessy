@@ -26,7 +26,7 @@ namespace Chessy.Model.System
                     var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
 
-                    if (_e.UnitT(dataIdxCell).HaveUnit())
+                    if (_unitCs[dataIdxCell].HaveUnit)
                     {
                         if (_unitVisibleCs[dataIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType))
                         {

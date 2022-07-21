@@ -6,9 +6,9 @@
         {
             _cellsC.Selected = 0;
 
-            _e.SoundAction(ClipTypes.Click).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
-            if (_e.PlayerInfoE(_aboutGameC.CurrentPlayerIT).PlayerInfoC.HaveKingInInventor)
+            if (PlayerInfoE(_aboutGameC.CurrentPlayerIT).PlayerInfoC.HaveKingInInventor)
             {
                 _selectedUnitC.UnitT = UnitTypes.King;
                 _selectedUnitC.LevelT = LevelTypes.First;

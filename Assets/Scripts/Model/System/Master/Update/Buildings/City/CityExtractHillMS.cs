@@ -19,7 +19,7 @@
 //                    {
 //                        var idx_1 = E.CellEs(cell_0).AroundCellE(dirT).IdxC.Idx;
 
-//                        if (E.HillC(idx_1).HaveAnyResources)
+//                        if (E.HillC(idx_1].HaveEnvironment(EnvironmentTypes.AdultForest))
 //                        {
 //                            var extract = ValuesChessy.CITY_EXTRACT_HILL;
 

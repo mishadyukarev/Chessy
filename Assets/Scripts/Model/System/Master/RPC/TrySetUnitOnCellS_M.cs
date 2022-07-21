@@ -9,7 +9,7 @@ namespace Chessy.Model.System
         {
             var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (_isStartedCellCs[cellIdx].IsStartedCell(whoDoing) && !_e.UnitT(cellIdx).HaveUnit())
+            if (_isStartedCellCs[cellIdx].IsStartedCell(whoDoing) && !_unitCs[cellIdx].HaveUnit)
             {
                 if (unitT == UnitTypes.King)
                 {

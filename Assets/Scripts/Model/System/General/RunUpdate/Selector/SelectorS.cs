@@ -22,13 +22,13 @@ namespace Chessy.Model
 
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                _e.IsActivatedIdxAndXyInfoCells = !_e.IsActivatedIdxAndXyInfoCells;
+                _aboutGameC.IsActivatedIdxAndXyInfoCells = !_aboutGameC.IsActivatedIdxAndXyInfoCells;
                 _updateAllViewC.NeedUpdateView = true;
             }
 
             if (Input.GetKeyDown(KeyCode.F2))
             {
-                _s.ClearAllEnvironment(idx_cur);
+                _environmentCs[idx_cur].Dispose();
                 _updateAllViewC.NeedUpdateView = true;
             }
 
@@ -73,7 +73,7 @@ namespace Chessy.Model
                                     {
                                         _cellsC.Selected = _cellsC.Current;
 
-                                        if (_e.UnitT(idx_cur).Is(UnitTypes.Pawn) && _unitCs[idx_cur].PlayerT == _aboutGameC.CurrentPlayerIT)
+                                        if (_unitCs[idx_cur].UnitT == UnitTypes.Pawn && _unitCs[idx_cur].PlayerT == _aboutGameC.CurrentPlayerIT)
                                         {
                                             _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryGiveTakeToolOrWeaponToUnitOnCellM), _cellsC.Current, _selectedToolWeaponC.ToolWeaponT, _selectedToolWeaponC.LevelT });
                                         }
@@ -131,7 +131,7 @@ namespace Chessy.Model
                                 _cellsC.PreviousSelected = _cellsC.Selected;
                                 _cellsC.Selected = 0;
 
-                                _e.IsSelectedCity = false;
+                                _aboutGameC.IsSelectedCity = false;
 
                                 //eMG.LessonTC.SetPreviousLesson();
                             }

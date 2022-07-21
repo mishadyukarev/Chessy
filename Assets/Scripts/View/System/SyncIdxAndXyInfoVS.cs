@@ -18,7 +18,7 @@ namespace Chessy.View.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _needActive[cellIdxCurrent] = _e.IsActivatedIdxAndXyInfoCells;
+                _needActive[cellIdxCurrent] = _aboutGameC.IsActivatedIdxAndXyInfoCellsP;
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)

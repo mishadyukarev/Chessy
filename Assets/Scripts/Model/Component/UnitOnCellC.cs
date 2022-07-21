@@ -24,6 +24,7 @@
 
         public bool HaveCoolDownForAttackAnyUnit => CooldownForAttackAnyUnitInSeconds > 0;
         public bool HaveUnit => UnitT.HaveUnit();
+        public bool IsAnimal => UnitT.IsAnimal();
 
 
         internal void Clone(in UnitOnCellC newUnitC)

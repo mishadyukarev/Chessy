@@ -7,15 +7,15 @@
             _cellsC.Selected = 0;
             //TryOnHint(VideoClipTypes.CreatingHero);
 
-            _e.SoundAction(ClipTypes.Click).Invoke();
+            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
             var curPlayer = _aboutGameC.CurrentPlayerIT;
 
-            var myHeroT = _e.PlayerInfoE(curPlayer).GodInfoC.UnitType;
+            var myHeroT = PlayerInfoE(curPlayer).GodInfoC.UnitType;
 
-            if (_e.PlayerInfoE(curPlayer).GodInfoC.HaveGodInInventor)
+            if (PlayerInfoE(curPlayer).GodInfoC.HaveGodInInventor)
             {
-                if (!_e.PlayerInfoE(_aboutGameC.CurrentPlayerIT).GodInfoC.HaveCooldown)
+                if (!PlayerInfoE(_aboutGameC.CurrentPlayerIT).GodInfoC.HaveCooldown)
                 {
                     _selectedUnitC.UnitT = myHeroT;
                     _selectedUnitC.LevelT = LevelTypes.First;

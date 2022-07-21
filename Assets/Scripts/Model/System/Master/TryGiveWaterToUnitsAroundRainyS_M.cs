@@ -7,9 +7,9 @@
 //        {
 //            for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
 //            {
-//                if (_e.UnitT(cell_0).HaveUnit())
+//                if (_unitCs[cell_0].HaveUnit)
 //                {
-//                    if (_e.UnitT(cell_0) == UnitTypes.Snowy)
+//                    if (_unitCs[cell_0) == UnitTypes.Snowy)
 //                    {
 //                        if (!_aboutGameC.LessonT.HaveLesson())
 //                        {

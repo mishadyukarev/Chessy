@@ -10,16 +10,16 @@ namespace Chessy.Model.System
         {
             var canChange = false;
 
-            foreach (var item in _e.IdxsCellsAround(idx_to))
+            foreach (var item in _idxsAroundCellCs[idx_to].IdxCellsAroundArray)
             {
                 if (_cloudCs[item].IsCenterP)
                 {
-                    _windC.DirectT = _e.CellAroundC(idx_to, item).DirectT.Invert();
+                    _windC.DirectT = _cellAroundCs[idx_to, item].DirectT.Invert();
                     for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
                     {
                         if (_cloudCs[cellIdx].IsCenterP)
                         {
-                            _shiftCloudCs[cellIdx].WhereNeedShiftIdxCell = _e.GetIdxCellByDirectAround(cellIdx, _windC.DirectT);
+                            _shiftCloudCs[cellIdx].WhereNeedShiftIdxCell = _cellsByDirectAroundC[cellIdx].Get(_windC.DirectT);
                         }
                     }
 

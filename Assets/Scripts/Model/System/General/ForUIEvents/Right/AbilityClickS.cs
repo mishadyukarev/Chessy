@@ -103,10 +103,10 @@ namespace Chessy.Model.System
                     }
                 }
 
-                else _e.SoundAction(ClipTypes.Mistake).Invoke();
+                else _dataFromViewC.SoundAction(ClipTypes.Mistake).Invoke();
             }
 
-            else _e.SoundAction(ClipTypes.Mistake).Invoke();
+            else _dataFromViewC.SoundAction(ClipTypes.Mistake).Invoke();
         }
     }
 }

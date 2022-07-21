@@ -25,13 +25,13 @@ namespace Chessy.Model.System
 
             for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
-                if (_e.UnitT(cellIdxStart) == UnitTypes.Pawn && _unitCs[cellIdxStart].PlayerT == playerBotT)
+                if (_unitCs[cellIdxStart].UnitT == UnitTypes.Pawn && _unitCs[cellIdxStart].PlayerT == playerBotT)
                 {
-                    foreach (var cellIdxDirect in _e.IdxsCellsAround(cellIdxStart))
+                    foreach (var cellIdxDirect in _idxsAroundCellCs[cellIdxStart].IdxCellsAroundArray)
                     {
-                        if (_e.UnitT(cellIdxDirect).HaveUnit())
+                        if (_unitCs[cellIdxDirect].HaveUnit)
                         {
-                            if (!_e.UnitT(cellIdxDirect).IsAnimal())
+                            if (!_unitCs[cellIdxDirect].IsAnimal)
                             {
                                 if (_whereSimpleAttackCs[cellIdxStart].Can(cellIdxDirect)
                                     || _whereUniqueAttackCs[cellIdxStart].Can(cellIdxDirect))

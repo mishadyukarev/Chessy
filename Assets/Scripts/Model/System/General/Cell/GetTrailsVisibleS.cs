@@ -20,13 +20,13 @@ namespace Chessy.Model.System
                 {
                     if (_hpTrailCs[cellIdxCurrent].HaveAnyTrail)
                     {
-                        if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                        if (_unitCs[cellIdxCurrent].HaveUnit)
                             _visibleTrailCs[cellIdxCurrent].Set(_unitCs[cellIdxCurrent].PlayerT, true);
 
 
-                        foreach (var cellIdx1 in _e.IdxsCellsAround(cellIdxCurrent))
+                        foreach (var cellIdx1 in _idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
                         {
-                            if (_e.UnitT(cellIdx1).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
+                            if (_unitCs[cellIdx1].HaveUnit && !_unitCs[cellIdxCurrent].UnitT.IsAnimal())
                             {
                                 _visibleTrailCs[cellIdxCurrent].Set(_unitCs[cellIdx1].PlayerT, true);
                             }

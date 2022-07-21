@@ -15,7 +15,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             var needActiveCity = false;
             var needActiveEnvironment = false;
 
-            if (_e.IsSelectedCity)
+            if (_aboutGameC.IsSelectedCityP)
             {
                 needActiveCity = true;
             }

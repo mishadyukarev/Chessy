@@ -20,32 +20,32 @@ namespace Chessy.Model.System
             _extraTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None, 0);
             _effectsUnitCs[forSettingCellIdx].Set(0, 0, false);
 
-            if (_e.UnitT(forSettingCellIdx).Is(UnitTypes.Pawn))
+            if (_unitCs[forSettingCellIdx].UnitT == UnitTypes.Pawn)
             {
-                _e.PawnPeopleInfoC(playerT).AmountInGame++;
+                PawnPeopleInfoC(playerT).AmountInGame++;
             }
 
 
 
             if (unitT == UnitTypes.Pawn)
             {
-                _e.PawnPeopleInfoC(playerT).PeopleInCity--;
+                PawnPeopleInfoC(playerT).PeopleInCity--;
 
                 _mainTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
             }
 
             else
             {
-                if (unitT.Is(UnitTypes.Tree)) _e.HaveTreeUnit = true;
+                if (unitT.Is(UnitTypes.Tree)) _aboutGameC.HaveTreeUnit = true;
 
 
                 if (unitT.IsGod())
                 {
-                    _e.GodInfoC(playerT).HaveGodInInventor = false;
+                    GodInfoC(playerT).HaveGodInInventor = false;
                 }
                 else if (unitT == UnitTypes.King)
                 {
-                    _e.PlayerInfoC(playerT).HaveKingInInventor = false;
+                    PlayerInfoC(playerT).HaveKingInInventor = false;
                 }
 
                 _mainTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None);

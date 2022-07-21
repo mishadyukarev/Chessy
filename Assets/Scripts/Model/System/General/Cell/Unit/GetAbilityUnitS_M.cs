@@ -24,9 +24,9 @@ namespace Chessy.Model.System
                 _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Fifth, AbilityTypes.None);
 
 
-                if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                if (_unitCs[cellIdxCurrent].HaveUnit)
                 {
-                    switch (_e.UnitT(cellIdxCurrent))
+                    switch (_unitCs[cellIdxCurrent].UnitT)
                     {
                         case UnitTypes.None: throw new Exception();
 

@@ -14,15 +14,15 @@ namespace Chessy.Model.System
 
             else
             {
-                if (!_e.AdultForestC(cell_0).HaveAnyResources)
+                if (!_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
-                    if (!_e.YoungForestC(cell_0).HaveAnyResources)
+                    if (!_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.YoungForest))
                     {
                         RpcSs.SoundToGeneral(sender, abilityT);
 
-                        _e.YoungForestC(cell_0).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
+                        _environmentCs[cell_0].Set(EnvironmentTypes.YoungForest, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
 
-                        _e.AmountPlantedYoungForests++;
+                        _aboutGameC.AmountPlantedYoungForests++;
 
                         if (_aboutGameC.LessonT == LessonTypes.SeedingPawn)
                         {

@@ -33,15 +33,15 @@ namespace Chessy.Model.System
 
                 if (!_effectsUnitCs[cellIdxCurrent_0].IsStunned && curUnitC.UnitT.HaveUnit())
                 {
-                    foreach (var toCellIdx in _e.IdxsCellsAround(cellIdxCurrent_0))
+                    foreach (var toCellIdx in _idxsAroundCellCs[cellIdxCurrent_0].IdxCellsAroundArray)
                     {
-                        var dirT = _e.CellAroundC(cellIdxCurrent_0, toCellIdx).DirectT;
+                        var dirT = _cellAroundCs[cellIdxCurrent_0, toCellIdx].DirectT;
 
                         var needDistance = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL;
 
-                        if (_e.HillC(toCellIdx).HaveAnyResources) needDistance += StepValues.HILL;
+                        if (_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.Hill)) needDistance += StepValues.HILL;
 
-                        if (_e.AdultForestC(toCellIdx).HaveAnyResources)
+                        if (_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
                         {
                             if (!_hpTrailCs[toCellIdx].IsAlive(dirT.Invert()))
                             {
@@ -59,7 +59,7 @@ namespace Chessy.Model.System
                                 {
                                     needDistance -= StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
 
-                                    if (_e.AdultForestC(toCellIdx).HaveAnyResources)
+                                    if (_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
                                     {
                                         if (!_hpTrailCs[toCellIdx].IsAlive(dirT.Invert()))
                                         {
@@ -67,7 +67,7 @@ namespace Chessy.Model.System
                                         }
                                     }
 
-                                    if (_e.HillC(toCellIdx).HaveAnyResources)
+                                    if (_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.Hill))
                                     {
                                         needDistance -= StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
                                     }
@@ -79,7 +79,7 @@ namespace Chessy.Model.System
                                 break;
 
                             case UnitTypes.Elfemale:
-                                if (_e.AdultForestC(toCellIdx).HaveAnyResources)
+                                if (_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
                                 {
                                     if (!_hpTrailCs[toCellIdx].IsAlive(dirT.Invert()))
                                     {
@@ -90,7 +90,7 @@ namespace Chessy.Model.System
                                 break;
 
                             case UnitTypes.Snowy:
-                                if (_e.WaterOnCellC(toCellIdx).HaveAnyResources)
+                                if (_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.Fertilizer))
                                 {
                                     needDistance -= StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
                                 }
@@ -120,11 +120,11 @@ namespace Chessy.Model.System
 
                         if (!_shiftingUnitCs[cellIdxCurrent_0].IsShifting)
                         {
-                            var toUnitT = _e.UnitT(toCellIdx);
+                            var toUnitT = _unitCs[toCellIdx].UnitT;
 
                             if (!toUnitT.HaveUnit() || toUnitT.HaveUnit() && _shiftingUnitCs[toCellIdx].IsShifting)
                             {
-                                if (!_e.MountainC(toCellIdx).HaveAnyResources)
+                                if (!_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.Mountain))
                                 {
                                     _whereUnitCanShiftCs[cellIdxCurrent_0].Set(toCellIdx, true);
                                 }

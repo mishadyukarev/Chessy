@@ -29,7 +29,7 @@ namespace Chessy.View.System
 
                     if (_unitVisibleCs[dataIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType))
                     {
-                        if (_e.UnitT(dataIdxCell).HaveUnit() && !_e.UnitT(dataIdxCell).IsAnimal())
+                        if (_unitCs[dataIdxCell].HaveUnit && !_unitCs[dataIdxCell].UnitType.IsAnimal())
                         {
                             _needActive[cellIdxCurrent] = _unitWaterCs[dataIdxCell].WaterP <= ValuesChessy.MAX_WATER_FOR_ANY_UNIT * 0.4f;
                         }

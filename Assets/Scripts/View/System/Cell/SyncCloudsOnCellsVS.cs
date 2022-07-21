@@ -26,11 +26,11 @@ namespace Chessy.View.System
             {
                 if (_cloudCs[cellIdxCurrent].IsCenterP)
                 {
-                    _needActive[_e.CloudWhereViewDataOnCellC(cellIdxCurrent).ViewIdxCellP] = true;
+                    _needActive[_cloudWhereViewDataCs[cellIdxCurrent].ViewIdxCellP] = true;
 
-                    foreach (var item in _e.IdxsCellsAround(cellIdxCurrent))
+                    foreach (var item in _idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
                     {
-                        _needActive[_e.CloudWhereViewDataOnCellC(item).ViewIdxCellP] = true;
+                        _needActive[_cloudWhereViewDataCs[item].ViewIdxCellP] = true;
                     }
                 }
             }

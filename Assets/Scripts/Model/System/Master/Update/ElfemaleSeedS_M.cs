@@ -10,7 +10,7 @@
 //            {
 //                foreach (var idx_1 in e.CellEs(cell_0).IdxsAround)
 //                {
-//                    if (!e.AdultForestC(idx_1).HaveAnyResources && !e.HillC(idx_1).HaveAnyResources && !e.YoungForestC(idx_1).HaveAnyResources)
+//                    if (!e.AdultForestC(idx_1].HaveEnvironment(EnvironmentTypes.AdultForest) && !e.HillC(idx_1].HaveEnvironment(EnvironmentTypes.AdultForest) && !e.YoungForestC(idx_1].HaveEnvironment(EnvironmentTypes.AdultForest))
 //                    {
 //                        e.YoungForestC(idx_1).Resources = ValuesChessy.MAX_RESOURCES;
 //                        return;

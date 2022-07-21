@@ -15,6 +15,10 @@ namespace Chessy
         internal AbilityTypes AbilityT;
         internal RaycastTypes RaycastT;
         internal CellClickTypes CellClickT;
+        internal bool IsSelectedCity;
+        internal bool HaveTreeUnit;
+        internal bool IsActivatedIdxAndXyInfoCells;
+        internal int AmountPlantedYoungForests;
 
         public readonly TestModeTypes TestModeT;
         public readonly DateTime StartGameTime;
@@ -28,6 +32,8 @@ namespace Chessy
         public AbilityTypes AbilityType => AbilityT;
         public RaycastTypes RaycastType => RaycastT;
         public CellClickTypes CellClickType => CellClickT;
+        public bool IsSelectedCityP => IsSelectedCity;
+        public bool IsActivatedIdxAndXyInfoCellsP => IsActivatedIdxAndXyInfoCells;
 
         internal CommonInfoAboutGameC(in TestModeTypes testModeT, in DateTime startGameTime)
         {
@@ -40,6 +46,9 @@ namespace Chessy
             IsStartedGame = default;
             LessonT = default;
             CellClickT = default;
+            IsSelectedCity = default;
+            HaveTreeUnit = default;
+            AmountPlantedYoungForests = default;
         }
     }
 }

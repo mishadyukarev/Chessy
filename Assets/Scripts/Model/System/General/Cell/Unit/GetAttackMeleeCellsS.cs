@@ -27,15 +27,15 @@ namespace Chessy.Model.System
                     {
                         DirectTypes directT_1 = default;
 
-                        foreach (var idx_1 in _e.IdxsCellsAround(currentCellIdx_0))
+                        foreach (var idx_1 in _idxsAroundCellCs[currentCellIdx_0].IdxCellsAroundArray)
                         {
-                            directT_1 = _e.CellAroundC(currentCellIdx_0, idx_1).DirectT;
+                            directT_1 = _cellAroundCs[currentCellIdx_0, idx_1].DirectT;
 
                             var curUnitMain_1 = _unitCs[idx_1];
                             var curUnitT_1 = curUnitMain_1.UnitT;
                             var curUnitPlayerT_1 = curUnitMain_1.PlayerT;
 
-                            if (!_e.MountainC(idx_1).HaveAnyResources)
+                            if (!_environmentCs[idx_1].HaveEnvironment(EnvironmentTypes.Mountain))
                             {
                                 if (curUnitT_1.HaveUnit() && !_shiftingUnitCs[idx_1].IsShifting)
                                 {

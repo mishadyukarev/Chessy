@@ -21,9 +21,9 @@
 
 //                    foreach (var cell_0_1 in aroundIdxs)
 //                    {
-//                        if (!eMGame.BuildingTC(cell_0_1).Is(BuildingTypes.City) && !eMGame.MountainC(cell_0_1).HaveAnyResources)
+//                        if (!eMGame.BuildingTC(cell_0_1).Is(BuildingTypes.City) && !eMGame.MountainC(cell_0_1].HaveEnvironment(EnvironmentTypes.AdultForest))
 //                        {
-//                            if (!eMGame.HillC(cell_0_1).HaveAnyResources)
+//                            if (!eMGame.HillC(cell_0_1].HaveEnvironment(EnvironmentTypes.AdultForest))
 //                            {
 //                                eMGame.FertilizeC(cell_0_1).Resources = ValuesChessy.ADDING_FROM_ICE_WALL;
 //                            }
