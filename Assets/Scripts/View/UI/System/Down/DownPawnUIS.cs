@@ -15,11 +15,11 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.SettingPawn)
+            if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= LessonTypes.SettingPawn)
             {
                 _pawnE.ParenGOC.TrySetActive(true);
 
-                var curPlayerI = _aboutGameC.CurrentPlayerIType;
+                var curPlayerI = AboutGameC.CurrentPlayerIType;
 
                 _pawnE.AmountTextC.TextUI.text = PawnPeopleInfoC(curPlayerI).AmountInGame.ToString() + "/" + PawnPeopleInfoC(curPlayerI).MaxAvailablePawns(PlayerInfoC(curPlayerI).AmountBuiltHousesP);
                 _pawnE.MaxPawnsTextC.TextUI.text = PawnPeopleInfoC(curPlayerI).PeopleInCity.ToString();

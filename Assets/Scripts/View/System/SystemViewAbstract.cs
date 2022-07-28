@@ -1,6 +1,5 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Entity;
-using Chessy.Model.System;
 
 namespace Chessy.View.System
 {

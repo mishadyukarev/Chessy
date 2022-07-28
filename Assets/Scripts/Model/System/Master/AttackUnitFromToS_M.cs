@@ -7,7 +7,7 @@ namespace Chessy.Model.System
         internal void AttackUnitFromTo(in byte idx_from, in byte idx_to)
         {
             _unitCs[idx_from].ConditionT = ConditionUnitTypes.None;
-            _unitCs[idx_from].CooldownForAttackAnyUnitInSeconds = ValuesChessy.COOLDOWN_AFTER_ATTACK;
+            UnitAttackC(idx_from).CooldownForAttackAnyUnitInSeconds = ValuesChessy.COOLDOWN_AFTER_ATTACK;
 
             _unitCs[idx_from].HowManySecondUnitWasHereInThisCondition = 0;
 
@@ -32,29 +32,29 @@ namespace Chessy.Model.System
             {
                 RpcSs.AnimationCellToGeneral(idx_from, AnimationCellTypes.AttackSword, RpcTarget.All);
             }
-            
+
             RpcSs.AnimationCellToGeneral(idx_to, AnimationCellTypes.AttackSword, RpcTarget.All);
 
             RpcSs.AnimationCellToGeneral(idx_from, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
             RpcSs.AnimationCellToGeneral(idx_to, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
 
 
-            var powerDam_from = _unitCs[idx_from].DamageSimpleAttack;
+            var powerDam_from = UnitAttackC(idx_from).DamageSimpleAttack;
             if (_whereUniqueAttackCs[idx_from].Can(idx_to))
             {
                 powerDam_from *= DamageUnitValues.UNIQUE_ATTACK_PERCENT_DAMAGE;
             }
 
-            var powerDam_to = _unitCs[idx_to].DamageSimpleAttack;
+            var powerDam_to = UnitAttackC(idx_to).DamageSimpleAttack;
 
 
             var dirAttack = _cellAroundCs[idx_from, idx_to].DirectT;
 
-            if (_sunC.IsAcitveSun)
+            if (SunC.IsAcitveSun)
             {
                 var isSunnedUnit = true;
 
-                foreach (var dir in _sunC.RaysSun)
+                foreach (var dir in SunC.RaysSun)
                 {
                     if (dirAttack == dir) isSunnedUnit = false;
                 }

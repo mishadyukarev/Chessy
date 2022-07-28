@@ -32,7 +32,7 @@ namespace Chessy.View.System
             {
                 if (_cellCs[cellIdxCurrent_0].IsBorder) continue;
 
-                if (_cellsC.Selected == cellIdxCurrent_0 && _sunC.IsAcitveSun)
+                if (IndexesCellsC.Selected == cellIdxCurrent_0 && SunC.IsAcitveSun)
                 {
                     _simpleUnqiueCells.Clear();
 
@@ -52,7 +52,7 @@ namespace Chessy.View.System
 
                     foreach (var cellIdxAttack in _simpleUnqiueCells)
                     {
-                        foreach (var sunDirectT in _sunC.RaysSun)
+                        foreach (var sunDirectT in SunC.RaysSun)
                         {
                             var invertSunDirectT = sunDirectT.Invert();
 

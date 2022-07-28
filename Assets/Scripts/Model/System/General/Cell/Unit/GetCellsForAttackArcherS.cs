@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Component;
-using Chessy.Model.Entity;
+﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
 namespace Chessy.Model.System
 {

@@ -10,7 +10,13 @@
         {
             IsCenter = default;
         }
-        internal void Clone(in CloudC newCloudC)
+        internal CloudC Clone()
+        {
+            var cloudC = new CloudC();
+            cloudC.IsCenter = IsCenter;
+            return cloudC;
+        }
+        internal void Copy(in CloudC newCloudC)
         {
             IsCenter = newCloudC.IsCenter;
         }

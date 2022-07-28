@@ -1,8 +1,8 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Entity;
 using Chessy.Model.Values;
+using Chessy.View.Component;
 using Chessy.View.Entity;
-using UnityEngine;
 
 namespace Chessy.View.System
 {
@@ -10,11 +10,11 @@ namespace Chessy.View.System
     {
         readonly bool[,] _needActive = new bool[IndexCellsValues.CELLS, (byte)EnvironmentTypes.End];
         readonly bool[,] _wasActivated = new bool[IndexCellsValues.CELLS, (byte)EnvironmentTypes.End];
-        readonly GameObject[,] _gOs = new GameObject[IndexCellsValues.CELLS, (byte)EnvironmentTypes.End];
+        readonly GameObjectVC[,] _gOCs = new GameObjectVC[IndexCellsValues.CELLS, (byte)EnvironmentTypes.End];
 
         readonly bool[] _needActiveHillOver = new bool[IndexCellsValues.CELLS];
         readonly bool[] _wasActivatedHillOver = new bool[IndexCellsValues.CELLS];
-        readonly GameObject[] _hillOverGOs = new GameObject[IndexCellsValues.CELLS];
+        readonly GameObjectVC[] _hillOverGOs = new GameObjectVC[IndexCellsValues.CELLS];
 
         internal SyncElseEnvironmentVS(in EnvironmentVE[] environmentVEs, in EntitiesModel eM) : base(eM)
         {
@@ -22,10 +22,10 @@ namespace Chessy.View.System
             {
                 for (var environmentT = (EnvironmentTypes)1; environmentT < EnvironmentTypes.End; environmentT++)
                 {
-                    _gOs[cellIdxCurrent, (byte)environmentT] = environmentVEs[cellIdxCurrent].EnvironmentE(environmentT).GO;
+                    _gOCs[cellIdxCurrent, (byte)environmentT] = new GameObjectVC(environmentVEs[cellIdxCurrent].EnvironmentE(environmentT).GO);
                 }
 
-                _hillOverGOs[cellIdxCurrent] = environmentVEs[cellIdxCurrent].HillOverC.GO;
+                _hillOverGOs[cellIdxCurrent] = new GameObjectVC(environmentVEs[cellIdxCurrent].HillOverC.GO);
             }
         }
 
@@ -33,23 +33,19 @@ namespace Chessy.View.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                for (var environmentT = (EnvironmentTypes)1; environmentT < EnvironmentTypes.End; environmentT++)
-                {
-                    _needActive[cellIdxCurrent, (byte)environmentT] = false;
-                }
-
-                _needActiveHillOver[cellIdxCurrent] = false;
-            }
-
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-            {
                 if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
-                    _needActiveHillOver[cellIdxCurrent] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill);
+                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill))
+                    {
+                        _needActiveHillOver[cellIdxCurrent] = true;
+                    }
+
+                    _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Hill] = false;
                 }
                 else
                 {
                     _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Hill] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill);
+                    _needActiveHillOver[cellIdxCurrent] = false;
                 }
 
                 _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Fertilizer] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Fertilizer);
@@ -59,20 +55,12 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                for (var environmentT = (EnvironmentTypes)1; environmentT < EnvironmentTypes.End; environmentT++)
+                for (byte envTByte = 1; envTByte < (byte)EnvironmentTypes.End; envTByte++)
                 {
-                    var envTByte = (byte)environmentT;
-
-                    var needActive = _needActive[cellIdxCurrent, envTByte];
-                    ref var wasActivated = ref _wasActivated[cellIdxCurrent, envTByte];
-
-                    if (wasActivated != needActive) _gOs[cellIdxCurrent, envTByte].SetActive(needActive);
+                    _gOCs[cellIdxCurrent, envTByte].TrySetActive2(_needActive[cellIdxCurrent, envTByte], ref _wasActivated[cellIdxCurrent, envTByte]);
                 }
 
-                var needActiveOver = _needActiveHillOver[cellIdxCurrent];
-                ref var wasActivatedOver = ref _wasActivatedHillOver[cellIdxCurrent];
-
-                if (needActiveOver != wasActivatedOver) _hillOverGOs[cellIdxCurrent].SetActive(needActiveOver);
+                _hillOverGOs[cellIdxCurrent].TrySetActive2(_needActiveHillOver[cellIdxCurrent], ref _wasActivatedHillOver[cellIdxCurrent]);
             }
         }
     }

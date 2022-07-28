@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Component;
-using Chessy.View.Component;
+﻿using Chessy.View.Component;
 using UnityEngine;
 namespace Chessy.View.UI.Center
 {

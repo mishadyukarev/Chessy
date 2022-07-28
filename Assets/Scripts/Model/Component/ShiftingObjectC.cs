@@ -26,7 +26,7 @@
             Distance = distance;
         }
 
-        internal void Clone(in ShiftingObjectC newShiftingObjectC)
+        internal void Copy(in ShiftingObjectC newShiftingObjectC)
         {
             Set(newShiftingObjectC.NeedReturnBack, newShiftingObjectC.WhereNeedShiftIdxCell, newShiftingObjectC.Distance);
         }

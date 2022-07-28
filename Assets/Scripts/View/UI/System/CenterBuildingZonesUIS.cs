@@ -1,7 +1,8 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
+using Chessy.View.UI.Entity;
 using Chessy.View.UI.Values;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+namespace Chessy.Model
 {
     sealed class CenterBuildingZonesUIS : SystemUIAbstract
     {

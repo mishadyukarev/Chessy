@@ -28,7 +28,7 @@ namespace Chessy.Model.System
 
                     if (_unitCs[dataIdxCell].HaveUnit)
                     {
-                        if (_unitVisibleCs[dataIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType))
+                        if (_unitVisibleCs[dataIdxCell].IsVisible(AboutGameC.CurrentPlayerIType))
                         {
                             _needActive[cellIdxCurrent] = _effectsUnitCs[dataIdxCell].IsStunned;
                         }

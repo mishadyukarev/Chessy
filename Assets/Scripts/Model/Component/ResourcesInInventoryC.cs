@@ -2,20 +2,21 @@
 {
     public sealed class ResourcesInInventoryC
     {
-        readonly float[] _resources;
+        public readonly double[] ResourcesArray;
 
-        public ref float Resources(in ResourceTypes resourceT) => ref _resources[(byte)resourceT];
+        internal ref double ResourcesRef(in ResourceTypes resourceT) => ref ResourcesArray[(byte)resourceT];
+        public double Resources(in ResourceTypes resourceT) => ResourcesArray[(byte)resourceT];
 
         internal ResourcesInInventoryC()
         {
-            _resources = new float[(byte)ResourceTypes.End];
+            ResourcesArray = new double[(byte)ResourceTypes.End];
         }
-        internal void Set(in ResourceTypes resourceT, in float resources) => _resources[(byte)resourceT] = resources;
-        internal void Subtract(in ResourceTypes resourceT, in float subtraction) => _resources[(byte)resourceT] -= subtraction;
-        internal void Add(in ResourceTypes resourceT, in float adding) => _resources[(byte)resourceT] += adding;
+        internal void Set(in ResourceTypes resourceT, in double resources) => ResourcesArray[(byte)resourceT] = resources;
+        internal void Subtract(in ResourceTypes resourceT, in double subtraction) => ResourcesArray[(byte)resourceT] -= subtraction;
+        internal void Add(in ResourceTypes resourceT, in double adding) => ResourcesArray[(byte)resourceT] += adding;
         internal void Dispose()
         {
-            for (var i = 0; i < _resources.Length; i++) _resources[i] = 0;
+            for (var i = 0; i < ResourcesArray.Length; i++) ResourcesArray[i] = 0;
         }
     }
 }

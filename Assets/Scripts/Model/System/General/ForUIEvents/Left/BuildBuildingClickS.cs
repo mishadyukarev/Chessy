@@ -13,7 +13,7 @@ namespace Chessy.Model.System
                     _selectedBuildingsInTownC.Set(buildT, false);
                     _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
                 }
-                else if (PlayerInfoE(_aboutGameC.CurrentPlayerIT).BuildingsInTownInfoC.HaveBuilding(buildT))
+                else if (PlayerInfoE(AboutGameC.CurrentPlayerIT).BuildingsInTownInfoC.HaveBuilding(buildT))
                 {
                     _selectedBuildingsInTownC.Set(buildT, true);
                     _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();

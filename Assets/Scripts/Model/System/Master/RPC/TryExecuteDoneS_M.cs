@@ -1,6 +1,4 @@
-﻿using Chessy.Model.Values;
-using Photon.Pun;
-using Photon.Realtime;
+﻿using Photon.Realtime;
 namespace Chessy.Model.System
 {
     public partial class SystemsModel : IUpdate

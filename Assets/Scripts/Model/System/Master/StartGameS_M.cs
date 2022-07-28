@@ -10,11 +10,11 @@ namespace Chessy.Model.System
         {
             _e.Dispose();
 
-            _zonesInfoC.IsActiveFriend = _aboutGameC.GameModeT.Is(GameModeTypes.WithFriendOffline);
-            _aboutGameC.CellClickT = StartGameValues.CELL_CLICK;
+            _zonesInfoC.IsActiveFriend = AboutGameC.GameModeT.Is(GameModeTypes.WithFriendOffline);
+            AboutGameC.CellClickT = StartGameValues.CELL_CLICK;
 
-            _windC.Set(StartGameValues.DIRECT_WIND, StartGameValues.SPEED_WIND);
-            _sunC.SunSideT = StartGameValues.SUN_SIDE;
+            WindC.Set(StartGameValues.DIRECT_WIND, StartGameValues.SPEED_WIND);
+            SunC.SunSideT = StartGameValues.SUN_SIDE;
 
 
             SetClouds(StartGameValues.CLOUD_CELL_INDEX);
@@ -23,7 +23,7 @@ namespace Chessy.Model.System
             _selectedToolWeaponC.ToolWeaponT = StartGameValues.SELECTED_TOOL_WEAPON;
             _selectedToolWeaponC.LevelT = StartGameValues.SELECTED_LEVEL_TOOL_WEAPON;
 
-            _aboutGameC.LessonT = withTraining ? (LessonTypes)1 : 0;
+            AboutGameC.LessonT = withTraining ? (LessonTypes)1 : 0;
 
 
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
@@ -32,7 +32,7 @@ namespace Chessy.Model.System
 
                 if (playerT == PlayerTypes.Second)
                 {
-                    if (_aboutGameC.GameModeT == GameModeTypes.TrainingOffline)
+                    if (AboutGameC.GameModeT == GameModeTypes.TrainingOffline)
                         PlayerInfoC(playerT).AmountBuiltHouses += 5;
                 }
 
@@ -60,13 +60,13 @@ namespace Chessy.Model.System
 
 
 
-            if (_aboutGameC.GameModeT.IsOffline())
+            if (AboutGameC.GameModeT.IsOffline())
             {
-                _aboutGameC.CurrentPlayerIT = PlayerTypes.First;
+                AboutGameC.CurrentPlayerIT = PlayerTypes.First;
             }
             else
             {
-                _aboutGameC.CurrentPlayerIT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
+                AboutGameC.CurrentPlayerIT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
             }
 
             if (PhotonNetwork.IsMasterClient)
@@ -75,8 +75,8 @@ namespace Chessy.Model.System
 
                 for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
-                    var x = _xyCellsCs[cell_0].X;
-                    var y = _xyCellsCs[cell_0].Y;
+                    var x = XyCellC(cell_0).X;
+                    var y = XyCellC(cell_0).Y;
 
                     _fireCs[cell_0].HaveFire = false;
 
@@ -184,15 +184,15 @@ namespace Chessy.Model.System
             }
 
 
-            if (_aboutGameC.GameModeT.Is(GameModeTypes.TrainingOffline))
+            if (AboutGameC.GameModeT.Is(GameModeTypes.TrainingOffline))
             {
                 ResourcesInInventoryC(PlayerTypes.Second).Set(ResourceTypes.Food, 999999);
 
 
                 for (byte cellUdxCurrent = 0; cellUdxCurrent < IndexCellsValues.CELLS; cellUdxCurrent++)
                 {
-                    var x = _xyCellsCs[cellUdxCurrent].X;
-                    var y = _xyCellsCs[cellUdxCurrent].Y;
+                    var x = XyCellC(cellUdxCurrent).X;
+                    var y = XyCellC(cellUdxCurrent).Y;
 
                     if (x == 7 && y == 8)
                     {
@@ -265,30 +265,30 @@ namespace Chessy.Model.System
 
         internal void SetClouds(in byte centerCellIdx)
         {
-            _cloudCs[centerCellIdx].IsCenter = true;
-            SetDataAndSkinCloud(centerCellIdx);
+            CloudC(centerCellIdx).IsCenter = true;
+            SetDataAndViewCloud(centerCellIdx);
 
-            _shiftCloudCs[centerCellIdx].WhereNeedShiftIdxCell = _cellsByDirectAroundC[centerCellIdx].Get(_windC.DirectT);
+            CloudShiftC(centerCellIdx).WhereNeedShiftIdxCell = _cellsByDirectAroundC[centerCellIdx].Get(WindC.DirectT);
 
             foreach (var aroundCell_0 in _idxsAroundCellCs[centerCellIdx].IdxCellsAroundArray)
             {
-                SetDataAndSkinCloud(aroundCell_0);
+                SetDataAndViewCloud(aroundCell_0);
             }
+        }
 
-            void SetDataAndSkinCloud(in byte cellIdx)
+        internal void SetDataAndViewCloud(in byte cellIdx)
+        {
+            for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
             {
-                for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
-                {
-                    if (_cellCs[currentCellIdx].IsBorder) continue;
+                if (CellC(currentCellIdx).IsBorder) continue;
 
-                    if (_cloudWhereViewDataCs[currentCellIdx].HaveDataReference) continue;
+                if (CloudViewDataC(currentCellIdx).HaveDataReference) continue;
 
-                    _cloudWhereViewDataCs[currentCellIdx].DataIdxCell = cellIdx;
-                    _cloudWhereViewDataCs[cellIdx].ViewIdxCell = currentCellIdx;
+                CloudViewDataC(currentCellIdx).DataIdxCell = cellIdx;
+                CloudViewDataC(cellIdx).ViewIdxCell = currentCellIdx;
 
 
-                    break;
-                }
+                break;
             }
         }
     }

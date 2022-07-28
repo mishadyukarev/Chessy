@@ -1,16 +1,16 @@
 ﻿namespace Chessy.Model.Component
 {
-    public sealed class EnvironmentC
+    public struct EnvironmentC
     {
-        internal readonly float[] ResourcesArray;
+        internal readonly double[] ResourcesArray;
 
-        internal ref float ResourcesRef(in EnvironmentTypes environmentT) => ref ResourcesArray[(byte)environmentT];
-        public float Resources(in EnvironmentTypes environmentT) => ResourcesArray[(byte)environmentT];
-        public bool HaveEnvironment(in EnvironmentTypes environmentT) => ResourcesArray[(byte)environmentT] > 0.009;
+        internal ref double ResourcesRef(in EnvironmentTypes environmentT) => ref ResourcesArray[(byte)environmentT];
+        public double Resources(in EnvironmentTypes environmentT) => ResourcesArray[(byte)environmentT];
+        public bool HaveEnvironment(in EnvironmentTypes environmentT) => ResourcesArray[(byte)environmentT] > 0.01;
 
-        internal EnvironmentC(in float[] resources) { ResourcesArray = resources; }
+        internal EnvironmentC(in double[] resources) { ResourcesArray = resources; }
 
-        internal void Set(in EnvironmentTypes environmentT, in float resources) => ResourcesArray[(byte)environmentT] = resources;
+        internal void Set(in EnvironmentTypes environmentT, in double resources) => ResourcesArray[(byte)environmentT] = resources;
         internal void SetRandom(in EnvironmentTypes environmentT, in float low, in float max) => Set(environmentT, UnityEngine.Random.Range(low, max));
 
         internal void Dispose()

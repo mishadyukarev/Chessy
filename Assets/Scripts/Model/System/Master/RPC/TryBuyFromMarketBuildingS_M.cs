@@ -41,7 +41,7 @@ namespace Chessy.Model.System
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > ResourcesInInventoryC(whoDoing).Resources(resT))
+                if (needRes[resT] > ResourcesInInventoryC(whoDoing).ResourcesRef(resT))
                 {
                     canBuy = false;
                     break;
@@ -77,7 +77,7 @@ namespace Chessy.Model.System
             }
             else
             {
-               RpcSs.SimpleMistakeToGeneral(sender, needRes);
+                RpcSs.SimpleMistakeToGeneral(sender, needRes);
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model.Values;
+﻿using Chessy.Model.Values;
 namespace Chessy.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract

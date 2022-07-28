@@ -13,13 +13,13 @@ namespace Chessy.Model.System
                 {
                     if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill))
                     {
-                        var extract = ExtractPawnValues.PAWN_PICK_EXTRACT_HILL;
+                        double extract = ExtractPawnValues.PAWN_PICK_EXTRACT_HILL;
 
 
                         if (_environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Hill) < extract) extract = _environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Hill);
 
 
-                        _extractionResourcesWithUnitCs[cellIdxCurrent].HowManyWarriourCanExtractHill = extract;
+                        _extractionResourcesWithUnitCs[cellIdxCurrent].HowManyWarriourCanExtractHill = (float)extract;
 
                     }
                 }

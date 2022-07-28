@@ -1,11 +1,7 @@
 ﻿using Chessy.Model;
-using Chessy.Model.Component;
 using Chessy.Model.Entity;
 using Chessy.Model.Enum;
 using Chessy.Model.Values;
-using Chessy.View.Component;
-using System;
-using System.Linq;
 using UnityEngine;
 
 namespace Chessy.View.System
@@ -30,7 +26,7 @@ namespace Chessy.View.System
                 _needActive[currentCellIdx_0] = false;
             }
 
-            var lessonT = _aboutGameC.LessonType;
+            var lessonT = AboutGameC.LessonType;
 
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
@@ -40,7 +36,7 @@ namespace Chessy.View.System
                 var curUnitC = _unitCs[currentCellIdx_0];
                 var curUnitT = curUnitC.UnitType;
 
-                
+
 
                 if (lessonT.HaveLesson())
                 {
@@ -81,7 +77,7 @@ namespace Chessy.View.System
                         {
                             if (curUnitT == UnitTypes.Pawn)
                             {
-                                if (_aboutGameC.CurrentPlayerIType == _unitCs[currentCellIdx_0].PlayerType)
+                                if (AboutGameC.CurrentPlayerIType == _unitCs[currentCellIdx_0].PlayerType)
                                 {
                                     _needActive[currentCellIdx_0] = true;
                                 }
@@ -89,7 +85,7 @@ namespace Chessy.View.System
 
                             if (lessonT > LessonTypes.YouNeedDestroyKing)
                             {
-                                if (!_isStartedCellCs[currentCellIdx_0].IsStartedCell(_aboutGameC.CurrentPlayerIType))
+                                if (!_isStartedCellCs[currentCellIdx_0].IsStartedCell(AboutGameC.CurrentPlayerIType))
                                 {
                                     _needActive[currentCellIdx_0] = true;
                                 }
@@ -110,9 +106,9 @@ namespace Chessy.View.System
 
 
 
-                if (_aboutGameC.CellClickType == CellClickTypes.UniqueAbility)
+                if (AboutGameC.CellClickType == CellClickTypes.UniqueAbility)
                 {
-                    switch (_aboutGameC.AbilityType)
+                    switch (AboutGameC.AbilityType)
                     {
                         case AbilityTypes.FireArcher:
                             if (!_environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest)) _needActive[currentCellIdx_0] = true;
@@ -151,9 +147,9 @@ namespace Chessy.View.System
                     }
                 }
 
-                else if (_aboutGameC.CellClickType == CellClickTypes.GiveTakeTW)
+                else if (AboutGameC.CellClickType == CellClickTypes.GiveTakeTW)
                 {
-                    if (curUnitT == UnitTypes.Pawn && _unitCs[currentCellIdx_0].PlayerType == _aboutGameC.CurrentPlayerIType)
+                    if (curUnitT == UnitTypes.Pawn && _unitCs[currentCellIdx_0].PlayerType == AboutGameC.CurrentPlayerIType)
                     {
 
                     }
@@ -163,9 +159,9 @@ namespace Chessy.View.System
                     }
                 }
 
-                else if (_aboutGameC.CellClickType == CellClickTypes.SetUnit)
+                else if (AboutGameC.CellClickType == CellClickTypes.SetUnit)
                 {
-                    if (!_isStartedCellCs[currentCellIdx_0].IsStartedCell(_aboutGameC.CurrentPlayerIType))
+                    if (!_isStartedCellCs[currentCellIdx_0].IsStartedCell(AboutGameC.CurrentPlayerIType))
                     {
                         _needActive[currentCellIdx_0] = true;
                     }
@@ -201,7 +197,7 @@ namespace Chessy.View.System
                 var needActive = _needActive[currentCellIdx_0];
                 ref var wasActivated = ref _wasActivated[currentCellIdx_0];
 
-                if(needActive != wasActivated) _noneVisionSRC[currentCellIdx_0].gameObject.SetActive(needActive);
+                if (needActive != wasActivated) _noneVisionSRC[currentCellIdx_0].gameObject.SetActive(needActive);
 
                 wasActivated = needActive;
             }

@@ -16,7 +16,7 @@ namespace Chessy.Model.Entity
         public readonly EffectsOnCellE EffectE = new();
         public readonly RiverE RiverE = new();
         public readonly TrailE TrailE = new();
-        public readonly CloudOnCellE CloudE = new();
+        internal readonly CloudOnCellE CloudE = new();
 
         public CellAroundE AroundCellE(in byte cellIdx) => _aroundEs[cellIdx];
 
@@ -105,7 +105,7 @@ namespace Chessy.Model.Entity
                     //}
                     //else
                     //{
-                        
+
                     //}
 
 
@@ -130,7 +130,10 @@ namespace Chessy.Model.Entity
             TrailE.Dispose();
             UnitE.Dispose();
             BuildingE.Dispose();
-            CloudE.Dispose();
+
+            CloudE.CloudC.Dispose();
+            CloudE.ShiftingC.Dispose();
+            CloudE.WhereSkinAndWhereDataInfoC.Dispose();
         }
     }
 }

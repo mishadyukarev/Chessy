@@ -13,7 +13,7 @@ namespace Chessy.Model.System
                 {
                     if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Fertilizer))
                     {
-                        var extract = ValuesChessy.FARM_EXTRACT;
+                        double extract = ValuesChessy.FARM_EXTRACT;
 
                         //if (E.BuildingsInfo(E.BuildEs(Idx)).HaveCenterUpgrade)
                         //{

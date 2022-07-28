@@ -12,7 +12,7 @@ namespace Chessy.View.UI.Entity
     {
         readonly Dictionary<AbilityTypes, GameObjectVC> _zones;
 
-        public readonly GameObjectVC ParenC;
+        public readonly GameObjectVC ParenGOC;
         public readonly ButtonUIC ButtonC;
         public readonly TextUIC CooldonwTextC;
         public readonly ImageUIC AbilityImageC;
@@ -25,7 +25,7 @@ namespace Chessy.View.UI.Entity
 
         public UniqueButtonUIE(in ButtonTypes buttonT, in Transform button)
         {
-            ParenC = new GameObjectVC(button.gameObject);
+            ParenGOC = new GameObjectVC(button.gameObject);
             ButtonC = new ButtonUIC(button.Find("Button").GetComponent<Button>());
             CooldonwTextC = new TextUIC(button.Find("Cooldown").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
             AbilityImageC = new ImageUIC(button.Find("Ability_Image").GetComponent<Image>());

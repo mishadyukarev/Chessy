@@ -1,6 +1,8 @@
 ﻿using Chessy.Model.Entity;
+using Chessy.View.UI.Entity;
 using UnityEngine;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+
+namespace Chessy.Model
 {
     sealed class ProtectUIS : SystemUIAbstract
     {
@@ -15,11 +17,11 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             var isEnableButt = false;
 
-            if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
+            if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
             {
-                if (_unitCs[_cellsC.Selected].HaveUnit)
+                if (_unitCs[IndexesCellsC.Selected].HaveUnit)
                 {
-                    if (_unitCs[_cellsC.Selected].PlayerType == _aboutGameC.CurrentPlayerIType)
+                    if (_unitCs[IndexesCellsC.Selected].PlayerType == AboutGameC.CurrentPlayerIType)
                     {
                         isEnableButt = true;
 
@@ -27,9 +29,9 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                         _protectUIE.Button(UnitTypes.Pawn).TrySetActive(false);
                         _protectUIE.Button(UnitTypes.Elfemale).TrySetActive(false);
 
-                        _protectUIE.Button(_unitCs[_cellsC.Selected].UnitType).TrySetActive(true);
+                        _protectUIE.Button(_unitCs[IndexesCellsC.Selected].UnitType).TrySetActive(true);
 
-                        if (_unitCs[_cellsC.Selected].ConditionType == ConditionUnitTypes.Protected)
+                        if (_unitCs[IndexesCellsC.Selected].ConditionType == ConditionUnitTypes.Protected)
                         {
                             _protectUIE.ImageUIC.Image.color = Color.yellow;
                         }

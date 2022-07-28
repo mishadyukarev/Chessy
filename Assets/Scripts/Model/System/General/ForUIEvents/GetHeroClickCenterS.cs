@@ -5,7 +5,7 @@ namespace Chessy.Model.System
     {
         public void GetHeroClickCenter(in UnitTypes unitT)
         {
-            if (unitT == UnitTypes.Elfemale && _aboutGameC.LessonT.HaveLesson()) return;
+            if (unitT == UnitTypes.Elfemale && AboutGameC.LessonT.HaveLesson()) return;
 
 
             _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();

@@ -16,10 +16,20 @@
             ViewIdxCell = default;
             DataIdxCell = default;
         }
-        internal void Clone(in WhereViewIdxCellC whereViewIdxCellC)
+        internal WhereViewIdxCellC Clone()
         {
-            ViewIdxCell = whereViewIdxCellC.ViewIdxCell;
-            DataIdxCell = whereViewIdxCellC.DataIdxCell;
+            var whereViewIdxCellC = new WhereViewIdxCellC
+            {
+                ViewIdxCell = ViewIdxCell,
+                DataIdxCell = DataIdxCell
+            };
+
+            return whereViewIdxCellC;
+        }
+        internal void Copy(in WhereViewIdxCellC newComponent)
+        {
+            ViewIdxCell = newComponent.ViewIdxCell;
+            DataIdxCell = newComponent.DataIdxCell;
         }
     }
 }

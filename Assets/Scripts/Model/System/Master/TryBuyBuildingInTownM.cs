@@ -126,7 +126,7 @@ namespace Chessy.Model.System
                 }
 
                 needRes.Add(resT, need);
-                if (need > ResourcesInInventoryC(whoseMove).Resources(resT)) canBuild = false;
+                if (need > ResourcesInInventoryC(whoseMove).ResourcesRef(resT)) canBuild = false;
             }
 
             if (canBuild)
@@ -143,7 +143,7 @@ namespace Chessy.Model.System
                         //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns + E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns);
                         PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse += PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse;
 
-                        if (_aboutGameC.LessonT == LessonTypes.BuildHouseForWarrior)
+                        if (AboutGameC.LessonT == LessonTypes.BuildHouseForWarrior)
                         {
                             SetNextLesson();
                         }
@@ -169,12 +169,12 @@ namespace Chessy.Model.System
 
             else
             {
-                if (_aboutGameC.LessonT.Is(Enum.LessonTypes.TryBuyingHouse))
+                if (AboutGameC.LessonT.Is(Enum.LessonTypes.TryBuyingHouse))
                 {
-                     SetNextLesson();
+                    SetNextLesson();
                 }
 
-               RpcSs.SimpleMistakeToGeneral(sender, needRes);
+                RpcSs.SimpleMistakeToGeneral(sender, needRes);
             }
 
             //if (_eMG.LessonTC.Is(LessonTypes.ClickBuyMelterInTown))

@@ -1,6 +1,6 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Entity;
-using Chessy.View.UI.Entity; 
+using Chessy.View.UI.Entity;
 
 namespace Chessy.View.UI.System
 {
@@ -15,12 +15,12 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            if (_aboutGameC.WinnerPlayerType == default)
+            if (AboutGameC.WinnerPlayerType == default)
             {
                 eUI.CenterEs.EndGame.SetActiveParent(false);
             }
 
-            else if (_aboutGameC.WinnerPlayerType != _aboutGameC.CurrentPlayerIType)
+            else if (AboutGameC.WinnerPlayerType != AboutGameC.CurrentPlayerIType)
             {
                 eUI.CenterEs.EndGame.TextUI.text = "You are loser";
                 eUI.CenterEs.EndGame.SetActiveParent(true);

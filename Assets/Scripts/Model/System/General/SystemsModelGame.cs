@@ -2,7 +2,6 @@
 using Chessy.Model.Enum;
 using Chessy.Model.Values;
 using Photon.Pun;
-using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +22,7 @@ namespace Chessy.Model.System
         internal readonly TryExecuteShiftingUnitS TryExecuteShiftingUnitS;
         internal readonly OnPhotonSerializeViewS OnPhotonSerializeViewS;
         internal readonly SetNewUnitOnCellS SetNewUnitOnCellS;
+        internal readonly TruceS TruceS;
 
         public readonly ForButtonsSystemsModel ForUISs;
 
@@ -38,7 +38,7 @@ namespace Chessy.Model.System
 
                 new MistakeS(this, eM).Update,
             };
-   
+
             UnitSs = new UnitSystems(this, eM);
             GetDataCellsS = new GetDataCellsAfterAnyDoingS_M(this, eM);
             AIBotS = new ExecuteAIBotLogicAfterUpdateS_M(this, eM);
@@ -47,23 +47,24 @@ namespace Chessy.Model.System
             TryShiftCloudsMS = new TryShiftCloudsMS(this, eM);
             TryExecuteShiftingUnitS = new TryExecuteShiftingUnitS(this, eM);
             SetNewUnitOnCellS = new SetNewUnitOnCellS(this, eM);
+            TruceS = new TruceS(this, eM);
 
             ForPhotonSceneS = new ForPhotonSceneS(this, eM);
             ForUISs = new ForButtonsSystemsModel(this, eM);
 
             OnPhotonSerializeViewS = new OnPhotonSerializeViewS(this, eM);
 
-            
+
 
             Application.runInBackground = true;
             _bookC.OpenedNowPageBookT = PageBookTypes.None;
-            _aboutGameC.SceneT = SceneTypes.Menu;
+            AboutGameC.SceneT = SceneTypes.Menu;
             _dateTimeLastUpdate = DateTime.Now;
         }
-        
+
         public void ToggleScene(in SceneTypes newSceneT)
         {
-            _aboutGameC.SceneT = newSceneT;
+            AboutGameC.SceneT = newSceneT;
 
             switch (newSceneT)
             {
@@ -88,7 +89,7 @@ namespace Chessy.Model.System
         public void ComeIntoTrainingAfterDownloadingGame()
         {
             PhotonNetwork.OfflineMode = true;
-            _aboutGameC.GameModeT = GameModeTypes.TrainingOffline;
+            AboutGameC.GameModeT = GameModeTypes.TrainingOffline;
             PhotonNetwork.CreateRoom(default);
         }
 
@@ -150,15 +151,15 @@ namespace Chessy.Model.System
 
         internal void SetNextLesson()
         {
-            if (_aboutGameC.LessonT == LessonTypes.End - 1)
+            if (AboutGameC.LessonT == LessonTypes.End - 1)
             {
-                _aboutGameC.LessonT = LessonTypes.None;
+                AboutGameC.LessonT = LessonTypes.None;
             }
-            else _aboutGameC.LessonT++;
+            else AboutGameC.LessonT++;
         }
         internal void SetPreviousLesson()
         {
-            _aboutGameC.LessonT--;
+            AboutGameC.LessonT--;
         }
     }
 }

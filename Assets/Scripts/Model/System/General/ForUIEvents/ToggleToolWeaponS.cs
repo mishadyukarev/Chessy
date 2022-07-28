@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Enum;
-using Photon.Pun;
+﻿using Photon.Pun;
 
 namespace Chessy.Model.System
 {
@@ -9,9 +8,9 @@ namespace Chessy.Model.System
         {
             _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
-            _cellsC.Selected = 0;
+            IndexesCellsC.Selected = 0;
 
-            if (_aboutGameC.CurrentPlayerIT.Is(_aboutGameC.CurrentPlayerIT))
+            if (AboutGameC.CurrentPlayerIT.Is(AboutGameC.CurrentPlayerIT))
             {
                 //if (_eMG.LessonTC.Is(LessonTypes.ClickPick))
                 //{
@@ -21,7 +20,7 @@ namespace Chessy.Model.System
                 //    }
                 //}
 
-                if (PlayerInfoE(_aboutGameC.CurrentPlayerIT).PawnInfoC.AmountInGame > 0)
+                if (PlayerInfoE(AboutGameC.CurrentPlayerIT).PawnInfoC.AmountInGame > 0)
                 {
                     //if (tw == ToolWeaponTypes.Pick)
                     //{
@@ -37,7 +36,7 @@ namespace Chessy.Model.System
 
                     if (twT == ToolsWeaponsWarriorTypes.Shield || twT == ToolsWeaponsWarriorTypes.BowCrossbow)
                     {
-                        if (_aboutGameC.CellClickT.Is(CellClickTypes.GiveTakeTW))
+                        if (AboutGameC.CellClickT.Is(CellClickTypes.GiveTakeTW))
                         {
                             if (twT == ToolsWeaponsWarriorTypes.Shield || twT == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
@@ -59,7 +58,7 @@ namespace Chessy.Model.System
                     _selectedToolWeaponC.LevelT = levT;
 
 
-                    _aboutGameC.CellClickT = CellClickTypes.GiveTakeTW;
+                    AboutGameC.CellClickT = CellClickTypes.GiveTakeTW;
                 }
                 else
                 {

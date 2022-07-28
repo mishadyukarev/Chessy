@@ -10,6 +10,13 @@
         public PlayerTypes PlayerType => PlayerT;
         public bool HaveBuilding => BuildingT.HaveBuilding();
 
+
+        internal void Set(in BuildingTypes buildingT, in PlayerTypes playerT, in LevelTypes levelT)
+        {
+            BuildingT = buildingT;
+            PlayerT = playerT;
+            LevelT = levelT;
+        }
         internal void Dispose()
         {
             BuildingT = default;

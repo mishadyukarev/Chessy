@@ -1,5 +1,6 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+using Chessy.View.UI.Entity;
+namespace Chessy.Model
 {
     sealed class CenterFriendUIS : SystemUIAbstract
     {
@@ -16,13 +17,13 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             _needActive = false;
 
-            if (_aboutGameC.GameModeType.Is(GameModeTypes.WithFriendOffline))
+            if (AboutGameC.GameModeType.Is(GameModeTypes.WithFriendOffline))
             {
                 if (_zonesInfoC.IsActiveFriend)
                 {
                     _needActive = true;
 
-                    if (_aboutGameC.CurrentPlayerIType == PlayerTypes.First)
+                    if (AboutGameC.CurrentPlayerIType == PlayerTypes.First)
                     {
                         _eUI.CenterEs.FriendE.TextC.TextUI.text = "1";
                     }

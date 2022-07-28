@@ -16,7 +16,7 @@ namespace Chessy
         internal RaycastTypes RaycastT;
         internal CellClickTypes CellClickT;
         internal bool IsSelectedCity;
-        internal bool HaveTreeUnit;
+        internal bool HaveTreeUnitInGame;
         internal bool IsActivatedIdxAndXyInfoCells;
         internal int AmountPlantedYoungForests;
 
@@ -47,8 +47,9 @@ namespace Chessy
             LessonT = default;
             CellClickT = default;
             IsSelectedCity = default;
-            HaveTreeUnit = default;
+            HaveTreeUnitInGame = default;
             AmountPlantedYoungForests = default;
+            WinnerPlayerT = default;
         }
     }
 }

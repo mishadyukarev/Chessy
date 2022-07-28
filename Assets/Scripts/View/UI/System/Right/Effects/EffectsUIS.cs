@@ -1,5 +1,6 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+using Chessy.View.UI.Entity;
+namespace Chessy.Model
 {
     sealed class EffectsUIS : SystemUIAbstract
     {
@@ -16,13 +17,13 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             var needActiveZone = false;
 
-            if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
+            if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
             {
-                if (_cellsC.IsSelectedCell)
+                if (IndexesCellsC.IsSelectedCell)
                 {
-                    var idx_sel = _cellsC.Selected;
+                    var idx_sel = IndexesCellsC.Selected;
 
-                    if (_unitCs[_cellsC.Selected].HaveUnit)
+                    if (_unitCs[IndexesCellsC.Selected].HaveUnit)
                     {
                         needActiveZone = true;
 

@@ -14,7 +14,7 @@ namespace Chessy.Model.System
                     if (_unitCs[cellIdxCurrent].UnitT == UnitTypes.Pawn && _unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Relaxed
                         && !_mainTWC[cellIdxCurrent].ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
                     {
-                        var extract = ExtractPawnValues.EXTRACT_PAWM_ADULT_FOREST;
+                        double extract = ExtractPawnValues.EXTRACT_PAWM_ADULT_FOREST;
 
                         //if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitT.Is(UnitTypes.Elfemale))
                         //{
@@ -36,7 +36,7 @@ namespace Chessy.Model.System
 
                         if (_environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.AdultForest) < extract) extract = _environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.AdultForest);
 
-                        _extractionResourcesWithUnitCs[cellIdxCurrent].HowManyWarriourCanExtractAdultForest = extract;
+                        _extractionResourcesWithUnitCs[cellIdxCurrent].HowManyWarriourCanExtractAdultForest = (float)extract;
                     }
                 }
             }

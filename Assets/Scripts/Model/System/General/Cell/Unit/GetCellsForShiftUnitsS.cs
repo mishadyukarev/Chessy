@@ -6,14 +6,8 @@ namespace Chessy.Model.System
 {
     sealed class GetCellsForShiftUnitsS : SystemModelAbstract
     {
-        readonly float[][] _howManyDistanceNeed = new float[IndexCellsValues.CELLS][];
-
         internal GetCellsForShiftUnitsS(in SystemsModel s, EntitiesModel e) : base(s, e)
         {
-            for (byte cellIdx_0 = 0; cellIdx_0 < IndexCellsValues.CELLS; cellIdx_0++)
-            {
-                _howManyDistanceNeed[cellIdx_0] = _howManyDistanceNeedForShiftingUnitCs[cellIdx_0].HowManyArray;
-            }
         }
 
         internal void Get()
@@ -24,8 +18,8 @@ namespace Chessy.Model.System
 
                 for (byte idxCell = 0; idxCell < IndexCellsValues.CELLS; idxCell++)
                 {
-                    _whereUnitCanShiftCs[cellIdxCurrent_0].Set(idxCell, default);
-                    _howManyDistanceNeed[cellIdxCurrent_0][idxCell] = default;
+                    _whereUnitCanShiftCs[cellIdxCurrent_0].WhereArray[idxCell] = default;
+                    _howManyDistanceNeedForShiftingUnitCs[cellIdxCurrent_0].HowManyArray[idxCell] = default;
                 }
 
 
@@ -115,7 +109,7 @@ namespace Chessy.Model.System
                             default: throw new Exception();
                         }
 
-                        _howManyDistanceNeed[cellIdxCurrent_0][toCellIdx] = needDistance;
+                        _howManyDistanceNeedForShiftingUnitCs[cellIdxCurrent_0].HowManyArray[toCellIdx] = needDistance;
 
 
                         if (!_shiftingUnitCs[cellIdxCurrent_0].IsShifting)
@@ -126,7 +120,7 @@ namespace Chessy.Model.System
                             {
                                 if (!_environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.Mountain))
                                 {
-                                    _whereUnitCanShiftCs[cellIdxCurrent_0].Set(toCellIdx, true);
+                                    _whereUnitCanShiftCs[cellIdxCurrent_0].WhereArray[toCellIdx] = true;
                                 }
                             }
                         }

@@ -4,14 +4,16 @@
     {
         internal readonly int[] CooldownsInSeconds;
 
-        public int[] CooldonwsCopy => (int[])CooldownsInSeconds.Clone();
-        public ref int Cooldown(in AbilityTypes ability) => ref CooldownsInSeconds[(byte)ability];
-        public bool HaveCooldown(in AbilityTypes ability) => Cooldown(ability) > 0;
+        internal ref int CooldownRef(in AbilityTypes ability) => ref CooldownsInSeconds[(byte)ability];
+
+        public int[] CooldonwsCopy => (int[])CooldownsInSeconds.Clone(); 
+        public bool HaveCooldown(in AbilityTypes ability) => CooldownRef(ability) > 0;
+        public int Cooldown(in AbilityTypes ability) => CooldownsInSeconds[(byte)ability];
 
         internal CooldownAbilitiesInSecondsC(in bool def) => CooldownsInSeconds = new int[(byte)AbilityTypes.End];
 
         internal void Set(in AbilityTypes abilityT, in int cooldown) => CooldownsInSeconds[(byte)abilityT] = cooldown;
-        internal void Set(in CooldownAbilitiesInSecondsC cooldownC)
+        internal void Copy(in CooldownAbilitiesInSecondsC cooldownC)
         {
             for (int i = 0; i < cooldownC.CooldownsInSeconds.Length; i++)
             {

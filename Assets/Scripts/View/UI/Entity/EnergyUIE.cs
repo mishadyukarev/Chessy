@@ -1,5 +1,4 @@
-﻿using Chessy.Model;
-using Chessy.View.Component;
+﻿using Chessy.View.Component;
 using Chessy.View.UI.Component;
 
 namespace Chessy.View.UI.Entity

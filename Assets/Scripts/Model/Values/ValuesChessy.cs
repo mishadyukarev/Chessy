@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Chessy.Model.Values
+﻿namespace Chessy.Model.Values
 {
     public static partial class ValuesChessy
     {

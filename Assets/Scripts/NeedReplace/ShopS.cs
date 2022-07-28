@@ -1,5 +1,4 @@
-﻿using Chessy.Model;
-using Chessy.Model.Entity;
+﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
 using UnityEngine;
 using UnityEngine.Purchasing; //библиотека с покупками, будет доступна когда активируем сервисы

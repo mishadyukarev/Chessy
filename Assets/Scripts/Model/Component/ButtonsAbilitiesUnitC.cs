@@ -2,30 +2,31 @@
 {
     public struct ButtonsAbilitiesUnitC
     {
-        readonly AbilityTypes[] _uniqueButtons;
+        public readonly AbilityTypes[] UniqueButtonsArray;
 
         public byte[] AbilityTypesClone
         {
             get
             {
-                var abilities = new byte[_uniqueButtons.Length];
-                for (var i = 0; i < _uniqueButtons.Length; i++)
+                var abilities = new byte[UniqueButtonsArray.Length];
+                for (var i = 0; i < UniqueButtonsArray.Length; i++)
                 {
-                    abilities[i] = (byte)_uniqueButtons[i];
+                    abilities[i] = (byte)UniqueButtonsArray[i];
                 }
                 return abilities;
             }
         }
-        public ref AbilityTypes Ability(in ButtonTypes button) => ref _uniqueButtons[(byte)button];
+        internal ref AbilityTypes AbilityRef(in ButtonTypes button) => ref UniqueButtonsArray[(byte)button];
+        public AbilityTypes Ability(in ButtonTypes button) => UniqueButtonsArray[(byte)button];
 
-        internal ButtonsAbilitiesUnitC(in AbilityTypes[] uniqueButtons) => _uniqueButtons = uniqueButtons;
+        internal ButtonsAbilitiesUnitC(in AbilityTypes[] uniqueButtons) => UniqueButtonsArray = uniqueButtons;
 
-        internal void SetAbility(in ButtonTypes button, in AbilityTypes ability) => _uniqueButtons[(byte)button] = ability;
+        internal void SetAbility(in ButtonTypes button, in AbilityTypes ability) => UniqueButtonsArray[(byte)button] = ability;
         internal void Sync(in byte[] abilityTs)
         {
             for (var i = 0; i < abilityTs.Length; i++)
             {
-                _uniqueButtons[i] = (AbilityTypes)abilityTs[i];
+                UniqueButtonsArray[i] = (AbilityTypes)abilityTs[i];
             }
         }
     }

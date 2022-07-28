@@ -8,16 +8,16 @@ namespace Chessy.Model.System
             _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
 
-            _aboutGameC.IsSelectedCity = !_aboutGameC.IsSelectedCity;
+            AboutGameC.IsSelectedCity = !AboutGameC.IsSelectedCity;
 
-            if (_aboutGameC.LessonT.Is(LessonTypes.OpeningTown))
+            if (AboutGameC.LessonT.Is(LessonTypes.OpeningTown))
             {
                 _s.SetNextLesson();
 
             }
-            if (_aboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse))
+            if (AboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse))
             {
-                if (!_aboutGameC.IsSelectedCity) _s.SetPreviousLesson();
+                if (!AboutGameC.IsSelectedCity) _s.SetPreviousLesson();
             }
 
 

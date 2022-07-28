@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Values;
-using Photon.Realtime;
+﻿using Photon.Realtime;
 namespace Chessy.Model.System
 {
     sealed partial class UnitAbilitiesSystems : SystemModelAbstract

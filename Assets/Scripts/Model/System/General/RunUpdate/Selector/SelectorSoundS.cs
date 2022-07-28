@@ -1,6 +1,5 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.System;
-using System.Linq;
 namespace Chessy.Model
 {
     sealed class SelectorSoundS : SystemModelAbstract
@@ -11,10 +10,10 @@ namespace Chessy.Model
 
         internal void Sound()
         {
-            var cell_0 = _cellsC.Current;
+            var cell_0 = IndexesCellsC.Current;
 
             if (_unitCs[cell_0].HaveUnit
-                && _unitVisibleCs[cell_0].IsVisible(_aboutGameC.CurrentPlayerIT) && _unitCs[cell_0].UnitT != UnitTypes.Wolf)
+                && _unitVisibleCs[cell_0].IsVisible(AboutGameC.CurrentPlayerIT) && _unitCs[cell_0].UnitT != UnitTypes.Wolf)
             {
                 if (_unitCs[cell_0].UnitT == UnitTypes.Tree)
                 {
@@ -54,7 +53,7 @@ namespace Chessy.Model
 
 
 
-                if (_cloudCs[cell_0].IsCenterP)
+                if (CloudC(cell_0).IsCenterP)
                 {
                     _dataFromViewC.SoundAction(ClipTypes.ShortRain).Invoke();
                 }
@@ -62,7 +61,7 @@ namespace Chessy.Model
                 {
                     foreach (var item in _idxsAroundCellCs[cell_0].IdxCellsAroundArray)
                     {
-                        if (_cloudCs[item].IsCenterP)
+                        if (CloudC(item).IsCenterP)
                         {
                             _dataFromViewC.SoundAction(ClipTypes.ShortRain).Invoke();
                             break;

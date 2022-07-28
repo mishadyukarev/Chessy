@@ -7,9 +7,9 @@ namespace Chessy.Model.System
         public void Click(in ButtonTypes uniqueButton)
         {
 
-            var cellIdxSelected = _cellsC.Selected;
+            var cellIdxSelected = IndexesCellsC.Selected;
 
-            var abil = _buttonsAbilitiesUnitCs[cellIdxSelected].Ability(uniqueButton);
+            var abil = UnitButtonsC(cellIdxSelected).Ability(uniqueButton);
 
             if (!_effectsUnitCs[cellIdxSelected].IsStunned)
             {
@@ -31,8 +31,8 @@ namespace Chessy.Model.System
                             break;
 
                         case AbilityTypes.FireArcher:
-                            _aboutGameC.AbilityT = AbilityTypes.FireArcher;
-                            _aboutGameC.CellClickT = CellClickTypes.UniqueAbility;
+                            AboutGameC.AbilityT = AbilityTypes.FireArcher;
+                            AboutGameC.CellClickT = CellClickTypes.UniqueAbility;
                             break;
 
                         case AbilityTypes.CircularAttack:
@@ -41,8 +41,8 @@ namespace Chessy.Model.System
 
                         case AbilityTypes.StunElfemale:
                             {
-                                _aboutGameC.AbilityT = AbilityTypes.StunElfemale;
-                                _aboutGameC.CellClickT = CellClickTypes.UniqueAbility;
+                                AboutGameC.AbilityT = AbilityTypes.StunElfemale;
+                                AboutGameC.CellClickT = CellClickTypes.UniqueAbility;
                             }
                             break;
 
@@ -72,8 +72,8 @@ namespace Chessy.Model.System
 
                         case AbilityTypes.ChangeDirectionWind:
                             {
-                                _aboutGameC.AbilityT = AbilityTypes.ChangeDirectionWind;
-                                _aboutGameC.CellClickT = CellClickTypes.UniqueAbility;
+                                AboutGameC.AbilityT = AbilityTypes.ChangeDirectionWind;
+                                AboutGameC.CellClickT = CellClickTypes.UniqueAbility;
                             }
                             break;
 

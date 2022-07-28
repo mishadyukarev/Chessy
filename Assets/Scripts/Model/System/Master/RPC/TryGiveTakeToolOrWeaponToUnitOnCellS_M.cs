@@ -47,7 +47,7 @@ namespace Chessy.Model.System
 
                                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                     {
-                                        var difAmountRes = ResourcesInInventoryC(whoseMove).Resources(res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
+                                        var difAmountRes = ResourcesInInventoryC(whoseMove).ResourcesRef(res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
                                         needRes.Add(res, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res));
 
                                         if (canBuy) canBuy = difAmountRes >= 0;
@@ -110,7 +110,7 @@ namespace Chessy.Model.System
 
                                 for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                 {
-                                    var difAmountRes = ResourcesInInventoryC(whoseMove).Resources(res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
+                                    var difAmountRes = ResourcesInInventoryC(whoseMove).ResourcesRef(res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
                                     needRes.Add(res, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res));
 
                                     if (canBuy) canBuy = difAmountRes >= 0;
@@ -125,7 +125,7 @@ namespace Chessy.Model.System
 
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
-                                    if (_aboutGameC.LessonT == LessonTypes.GiveIronAxe)
+                                    if (AboutGameC.LessonT == LessonTypes.GiveIronAxe)
                                     {
                                         SetNextLesson();
                                     }
@@ -194,7 +194,7 @@ namespace Chessy.Model.System
 
                                 for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                 {
-                                    var difAmountRes = ResourcesInInventoryC(whoseMove).Resources(res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
+                                    var difAmountRes = ResourcesInInventoryC(whoseMove).ResourcesRef(res) - CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res);
                                     needRes.Add(res, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, res));
 
                                     if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -219,7 +219,7 @@ namespace Chessy.Model.System
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
 
-                                    if (_aboutGameC.LessonT == LessonTypes.GiveTakePickPawn)
+                                    if (AboutGameC.LessonT == LessonTypes.GiveTakePickPawn)
                                     {
 
                                         SetNextLesson();

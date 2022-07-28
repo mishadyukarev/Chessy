@@ -9,7 +9,7 @@ namespace Chessy.Model.Entity
     public sealed class EntitiesModel
     {
         readonly PlayerInfoE[] _forPlayerEs = new PlayerInfoE[(byte)PlayerTypes.End];
-        readonly CellEs[] _cellEs;
+        readonly CellEs[] _cellEs = new CellEs[IndexCellsValues.CELLS];
 
         public readonly CommonGameE CommonGameE;
         public readonly WeatherE WeatherE = new();
@@ -24,10 +24,6 @@ namespace Chessy.Model.Entity
             {
                 _forPlayerEs[(byte)playerT] = new PlayerInfoE();
             }
-
-
-            _cellEs = new CellEs[IndexCellsValues.CELLS];
-
 
             var idxs = new byte[IndexCellsValues.X_AMOUNT, IndexCellsValues.Y_AMOUNT];
 
@@ -52,36 +48,36 @@ namespace Chessy.Model.Entity
             }
 
 
-            
+
 
             for (byte startCellIdx_0 = 0; startCellIdx_0 < IndexCellsValues.CELLS; startCellIdx_0++)
             {
-                if (CellEs(startCellIdx_0).CellE.CellC.IsBorder) continue;
+                var cellEs_0 = CellEs(startCellIdx_0);
 
-                
+                if (cellEs_0.CellE.CellC.IsBorder) continue;
+
+                var aroudIdxs = new byte[(byte)DirectTypes.End - 1];
+                var aroundByDirectIdxs = new byte[(byte)DirectTypes.End];
 
                 for (byte currentCellIdx_1 = 0; currentCellIdx_1 < IndexCellsValues.CELLS; currentCellIdx_1++)
                 {
                     if (CellEs(currentCellIdx_1).CellE.CellC.IsBorder) continue;
 
-                    var aroudIdxs = new byte[(byte)DirectTypes.End - 1];
-                    var aroundByDirectIdxs = new byte[(byte)DirectTypes.End];
-
                     for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                     {
-                        if (CellEs(startCellIdx_0).AroundCellE(currentCellIdx_1).CellAroundC.DirectT == directT)
+                        if (cellEs_0.AroundCellE(currentCellIdx_1).CellAroundC.DirectT == directT)
                         {
-                            if (CellEs(startCellIdx_0).AroundCellE(currentCellIdx_1).CellAroundC.LevelFromCellT == DistanceFromCellTypes.First)
+                            if (cellEs_0.AroundCellE(currentCellIdx_1).CellAroundC.LevelFromCellT == DistanceFromCellTypes.First)
                             {
                                 aroudIdxs[(byte)directT - 1] = currentCellIdx_1;
                                 aroundByDirectIdxs[(byte)directT] = currentCellIdx_1;
                             }
                         }
                     }
-
-                    CellEs(startCellIdx_0).CellE.IdxsAroundCellC = new IdxsAroundCellC(aroudIdxs);
-                    CellEs(startCellIdx_0).CellE.CellsByDirectAroundC = new CellsByDirectAroundC(aroundByDirectIdxs);
                 }
+
+                cellEs_0.CellE.IdxsAroundCellC = new IdxsAroundCellC(aroudIdxs);
+                cellEs_0.CellE.CellsByDirectAroundC = new CellsByDirectAroundC(aroundByDirectIdxs);
             }
         }
 
@@ -97,7 +93,7 @@ namespace Chessy.Model.Entity
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
-                 _forPlayerEs[(byte)playerT].Dispose();
+                _forPlayerEs[(byte)playerT].Dispose();
             }
         }
     }

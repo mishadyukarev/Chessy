@@ -13,13 +13,13 @@ namespace Chessy.Model
 
         protected readonly CellC[] _cellCs = new CellC[IndexCellsValues.CELLS];
         protected readonly PositionCellC[] _possitionCellCs = new PositionCellC[IndexCellsValues.CELLS];
-        protected readonly XyCellC[] _xyCellsCs = new XyCellC[IndexCellsValues.CELLS];
+        readonly XyCellC[] _xyCellsCs = new XyCellC[IndexCellsValues.CELLS];
         protected readonly IsStartedCellC[] _isStartedCellCs = new IsStartedCellC[IndexCellsValues.CELLS];
         protected readonly CellsByDirectAroundC[] _cellsByDirectAroundC = new CellsByDirectAroundC[IndexCellsValues.CELLS];
         protected readonly IdxsAroundCellC[] _idxsAroundCellCs = new IdxsAroundCellC[IndexCellsValues.CELLS];
 
         protected readonly CellAroundC[,] _cellAroundCs = new CellAroundC[IndexCellsValues.CELLS, IndexCellsValues.CELLS];
-        
+
 
 
         #region Unit
@@ -27,6 +27,7 @@ namespace Chessy.Model
         protected readonly UnitE[] _unitEs = new UnitE[IndexCellsValues.CELLS];
 
         protected readonly UnitOnCellC[] _unitCs = new UnitOnCellC[IndexCellsValues.CELLS];
+        readonly AttackDamageUnitC[] _unitAttackDamageCs = new AttackDamageUnitC[IndexCellsValues.CELLS];
         protected readonly HealthC[] _hpUnitCs = new HealthC[IndexCellsValues.CELLS];
         protected readonly WaterAmountC[] _unitWaterCs = new WaterAmountC[IndexCellsValues.CELLS];
         protected readonly EffectsUnitC[] _effectsUnitCs = new EffectsUnitC[IndexCellsValues.CELLS];
@@ -43,7 +44,7 @@ namespace Chessy.Model
         protected readonly HasUnitKingEffectHereC[] _hasUnitKingEffectHereCs = new HasUnitKingEffectHereC[IndexCellsValues.CELLS];
         protected readonly CooldownAbilitiesInSecondsC[] _cooldownAbilityCs = new CooldownAbilitiesInSecondsC[IndexCellsValues.CELLS];
         protected readonly WhereUnitCanShiftC[] _whereUnitCanShiftCs = new WhereUnitCanShiftC[IndexCellsValues.CELLS];
-        protected readonly ButtonsAbilitiesUnitC[] _buttonsAbilitiesUnitCs = new ButtonsAbilitiesUnitC[IndexCellsValues.CELLS];
+        readonly ButtonsAbilitiesUnitC[] _buttonsAbilitiesUnitCs = new ButtonsAbilitiesUnitC[IndexCellsValues.CELLS];
         protected readonly EffectsUnitsRightBarsC[] _effectsUnitsRightBarsCs = new EffectsUnitsRightBarsC[IndexCellsValues.CELLS];
         protected readonly NeedUpdateViewC[] _updateViewUnitCs = new NeedUpdateViewC[IndexCellsValues.CELLS];
         protected readonly ExtractionResourcesWithUnitC[] _extractionResourcesWithUnitCs = new ExtractionResourcesWithUnitC[IndexCellsValues.CELLS];
@@ -58,10 +59,9 @@ namespace Chessy.Model
 
         protected readonly EnvironmentC[] _environmentCs = new EnvironmentC[IndexCellsValues.CELLS];
 
-        protected readonly CloudOnCellE[] _cloudOnCellEs = new CloudOnCellE[IndexCellsValues.CELLS];
-        protected readonly CloudC[] _cloudCs = new CloudC[IndexCellsValues.CELLS];
-        protected readonly WhereViewIdxCellC[] _cloudWhereViewDataCs = new WhereViewIdxCellC[IndexCellsValues.CELLS];
-        protected readonly ShiftingObjectC[] _shiftCloudCs = new ShiftingObjectC[IndexCellsValues.CELLS];
+        readonly CloudC[] _cloudCs = new CloudC[IndexCellsValues.CELLS];
+        readonly WhereViewIdxCellC[] _cloudWhereViewDataCs = new WhereViewIdxCellC[IndexCellsValues.CELLS];
+        readonly ShiftingObjectC[] _shiftCloudCs = new ShiftingObjectC[IndexCellsValues.CELLS];
 
         protected readonly RiverC[] _riverCs = new RiverC[IndexCellsValues.CELLS];
         protected readonly HaveRiverAroundCellC[] _haveRiverAroundCellCs = new HaveRiverAroundCellC[IndexCellsValues.CELLS];
@@ -76,14 +76,14 @@ namespace Chessy.Model
 
         #region Else
 
-        protected readonly CommonInfoAboutGameC _aboutGameC;
+        protected readonly CommonInfoAboutGameC AboutGameC;
         protected readonly InputC _inputC;
         protected readonly BookC _bookC;
         protected readonly SelectedBuildingsInTownC _selectedBuildingsInTownC;
         protected readonly SelectedToolWeaponC _selectedToolWeaponC;
         protected readonly SettingsC _settingsC;
         protected readonly ShopC _shopC;
-        protected readonly CellsC _cellsC;
+        protected readonly IndexedCellsC IndexesCellsC;
         protected readonly RpcPoolC _rpcC;
         protected readonly DataFromViewC _dataFromViewC;
         protected readonly MistakeC _mistakeC;
@@ -93,8 +93,8 @@ namespace Chessy.Model
         protected readonly FromResourcesC _fromResourcesC;
 
         protected readonly WeatherE _weatherE;
-        protected readonly SunC _sunC;
-        protected readonly WindC _windC;
+        protected readonly SunC SunC;
+        protected readonly WindC WindC;
 
         protected readonly PlayerInfoE[] _playerInfoEs = new PlayerInfoE[(byte)PlayerTypes.End];
         protected readonly PlayerInfoC[] _playerInfoCs = new PlayerInfoC[(byte)PlayerTypes.End];
@@ -103,6 +103,40 @@ namespace Chessy.Model
         protected readonly BuildingsInTownInfoC[] _buildingsInTownInfoCs = new BuildingsInTownInfoC[(byte)PlayerTypes.End];
         protected readonly ResourcesInInventoryC[] _resourcesInInventoryCs = new ResourcesInInventoryC[(byte)PlayerTypes.End];
         protected readonly HowManyToolWeaponsInInventoryC[] _howManyToolWeaponsInInventoryCs = new HowManyToolWeaponsInInventoryC[(byte)PlayerTypes.End];
+
+        #endregion
+
+
+        #region
+
+        public CellC CellC(in byte cellIdx) => _cellCs[cellIdx];
+        public XyCellC XyCellC(in byte cellIdx) => _xyCellsCs[cellIdx];
+
+        public UnitOnCellC UnitC(in byte cellIdx) => _unitCs[cellIdx];
+        public HealthC UnitHpC(in byte cellIdx) => _hpUnitCs[cellIdx];
+        public WhereViewIdxCellC UnitViewDataC(in byte cellIdx) => _unitWhereViewDataCs[cellIdx];
+        public MainToolWeaponUnitC UnitMainTWC(in byte cellIdx) => _mainTWC[cellIdx];
+        public ExtraToolWeaponUnitC UnitExtraTWC(in byte cellIdx) => _extraTWC[cellIdx];
+        public AttackDamageUnitC UnitAttackC(in byte cellIdx) => _unitAttackDamageCs[cellIdx];
+        public ButtonsAbilitiesUnitC UnitButtonsC(in byte cellIdx) => _buttonsAbilitiesUnitCs[cellIdx];
+        public VisibleToOtherPlayerOrNotC UnitVisibleC(in byte cellIdx) => _unitVisibleCs[cellIdx];
+        public ShiftingObjectC UnitShiftC(in byte cellIdx) => _shiftingUnitCs[cellIdx];
+        public WaterAmountC UnitWaterC(in byte cellIdx) => _unitWaterCs[cellIdx];
+        public EffectsUnitC UnitEffectC(in byte cellIdx) => _effectsUnitCs[cellIdx];
+        public CooldownAbilitiesInSecondsC UnitCooldownC(in byte cellIdx) => _cooldownAbilityCs[cellIdx];
+
+        public BuildingOnCellC BuildingC(in byte cellIdx) => _buildingCs[cellIdx];
+
+        public EnvironmentC EnvironmentC(in byte cellIdx) => _environmentCs[cellIdx];
+
+        public CloudC CloudC(in byte cellIdx) => _cloudCs[cellIdx];
+        public WhereViewIdxCellC CloudViewDataC(in byte cellIdx) => _cloudWhereViewDataCs[cellIdx];
+        public ShiftingObjectC CloudShiftC(in byte cellIdx) => _shiftCloudCs[cellIdx];
+
+        public HealthTrailC TrailHealthC(in byte cellIdx) => _hpTrailCs[cellIdx];
+        public VisibleToOtherPlayerOrNotC TrailVisibleC(in byte cellIdx) => _visibleTrailCs[cellIdx];
+
+        public FireC FireC(in byte cellIdx) => _fireCs[cellIdx];
 
         #endregion
 
@@ -116,13 +150,13 @@ namespace Chessy.Model
         public HowManyToolWeaponsInInventoryC ToolWeaponsInInventoryC(in PlayerTypes playerT) => _howManyToolWeaponsInInventoryCs[(byte)playerT];
 
 
-        protected SystemAbstract(in EntitiesModel eM)
+        protected SystemAbstract(EntitiesModel eM)
         {
             _e = eM;
 
             for (byte cellIdx_0 = 0; cellIdx_0 < IndexCellsValues.CELLS; cellIdx_0++)
             {
-                var cellEs = _e.CellEs(cellIdx_0);
+                var cellEs = eM.CellEs(cellIdx_0);
 
                 for (byte cellIdx_1 = 0; cellIdx_1 < IndexCellsValues.CELLS; cellIdx_1++)
                 {
@@ -148,6 +182,7 @@ namespace Chessy.Model
 
                 _unitEs[cellIdx_0] = unitE;
                 _unitCs[cellIdx_0] = unitE.MainC;
+                _unitAttackDamageCs[cellIdx_0] = unitE.AttackDamageC;
                 _hpUnitCs[cellIdx_0] = unitE.HealthC;
                 _unitWaterCs[cellIdx_0] = unitE.WaterC;
                 _effectsUnitCs[cellIdx_0] = unitE.EffectsC;
@@ -176,7 +211,6 @@ namespace Chessy.Model
 
                 _environmentCs[cellIdx_0] = environmentE.EnvironmentC;
 
-                _cloudOnCellEs[cellIdx_0] = cloudE;
                 _cloudCs[cellIdx_0] = cloudE.CloudC;
                 _cloudWhereViewDataCs[cellIdx_0] = cloudE.WhereSkinAndWhereDataInfoC;
                 _shiftCloudCs[cellIdx_0] = cloudE.ShiftingC;
@@ -190,16 +224,16 @@ namespace Chessy.Model
                 _visibleTrailCs[cellIdx_0] = trailE.VisibleC;
             }
 
-            var commonInfoE = _e.CommonGameE;
+            var commonInfoE = eM.CommonGameE;
 
-            _aboutGameC = commonInfoE.CommonInfoAboutGameC;
+            AboutGameC = commonInfoE.CommonInfoAboutGameC;
             _inputC = commonInfoE.InputC;
             _bookC = commonInfoE.BookC;
             _selectedBuildingsInTownC = commonInfoE.SelectedBuildingsC;
             _selectedToolWeaponC = commonInfoE.SelectedToolWeaponC;
             _settingsC = commonInfoE.SettingsC;
             _shopC = commonInfoE.ShopC;
-            _cellsC = commonInfoE.CellsC;
+            IndexesCellsC = commonInfoE.CellsC;
             _rpcC = commonInfoE.RpcC;
             _dataFromViewC = commonInfoE.DataFromViewC;
             _mistakeC = commonInfoE.MistakeC;
@@ -208,9 +242,9 @@ namespace Chessy.Model
             _selectedUnitC = commonInfoE.SelectedUnitC;
             _fromResourcesC = commonInfoE.Resources;
 
-            _weatherE = _e.WeatherE;
-            _sunC = _weatherE.SunC;
-            _windC = _weatherE.WindC;
+            _weatherE = eM.WeatherE;
+            SunC = _weatherE.SunC;
+            WindC = _weatherE.WindC;
 
             for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
             {

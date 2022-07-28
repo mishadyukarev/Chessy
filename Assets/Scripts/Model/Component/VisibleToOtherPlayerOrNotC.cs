@@ -2,24 +2,24 @@
 {
     public struct VisibleToOtherPlayerOrNotC
     {
-        readonly bool[] _isVisible;
+        internal readonly bool[] IsVisibleArray;
 
-        public ref bool IsVisible(in PlayerTypes playerT) => ref _isVisible[(byte)playerT];
+        public bool IsVisible(in PlayerTypes playerT) => IsVisibleArray[(byte)playerT];
 
-        internal VisibleToOtherPlayerOrNotC(in bool def) => _isVisible = new bool[(byte)PlayerTypes.End];
+        internal VisibleToOtherPlayerOrNotC(in bool def) => IsVisibleArray = new bool[(byte)PlayerTypes.End];
 
-        internal void Set(in PlayerTypes playerT, in bool isVisible) => _isVisible[(byte)playerT] = isVisible;
+        internal void Set(in PlayerTypes playerT, in bool isVisible) => IsVisibleArray[(byte)playerT] = isVisible;
 
         internal void Sync(in bool[] isVisible)
         {
             for (var i = 0; i < isVisible.Length; i++)
             {
-                _isVisible[i] = isVisible[i];
+                IsVisibleArray[i] = isVisible[i];
             }
         }
         internal void Dispose()
         {
-            for (var i = 0; i < _isVisible.Length; i++) _isVisible[i] = default;
+            for (var i = 0; i < IsVisibleArray.Length; i++) IsVisibleArray[i] = default;
         }
     }
 }

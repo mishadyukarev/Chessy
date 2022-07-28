@@ -1,6 +1,7 @@
 ﻿using Chessy.Model.Entity;
+using Chessy.View.UI.Entity;
 using System;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+namespace Chessy.Model
 {
     sealed class UpSunsUIS : SystemUIAbstract
     {
@@ -19,11 +20,11 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             _needActiveRight = false;
 
 
-            if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.LookInfoAboutSun)
+            if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= Enum.LessonTypes.LookInfoAboutSun)
             {
-                var isFirstPlayer = _aboutGameC.CurrentPlayerIType == PlayerTypes.First;
+                var isFirstPlayer = AboutGameC.CurrentPlayerIType == PlayerTypes.First;
 
-                switch (_sunC.SunSideType)
+                switch (SunC.SunSideType)
                 {
                     case SunSideTypes.Dawn:
                         _needActiveLeft = isFirstPlayer;

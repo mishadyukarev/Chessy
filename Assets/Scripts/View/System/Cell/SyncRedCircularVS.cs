@@ -1,7 +1,6 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Enum;
 using Chessy.Model.Values;
-using Chessy.View.Component;
 using Chessy.View.System;
 using UnityEngine;
 
@@ -20,7 +19,7 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            var currentLessonT = _aboutGameC.LessonType;
+            var currentLessonT = AboutGameC.LessonType;
 
             for (var currentIdxCell = 0; currentIdxCell < IndexCellsValues.CELLS; currentIdxCell++)
             {
@@ -52,7 +51,7 @@ namespace Chessy.Model
 
                 if (!currentLessonT.HaveLesson())
                 {
-                    if (_aboutGameC.GameModeType == GameModeTypes.TrainingOffline)
+                    if (AboutGameC.GameModeType == GameModeTypes.TrainingOffline)
                     {
                         if (currentUnitT_0 == UnitTypes.King)
                         {

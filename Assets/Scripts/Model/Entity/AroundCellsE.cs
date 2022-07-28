@@ -18,7 +18,7 @@
 
 //        internal AroundCellsE(in byte idxCell, in DataFromViewC dataFromViewC, in EntitiesModel eMGame, params byte[] xyCell)
 //        {
-            
+
 //        }
 //    }
 //}

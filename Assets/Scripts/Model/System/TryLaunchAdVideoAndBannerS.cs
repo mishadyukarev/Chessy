@@ -1,8 +1,4 @@
-﻿using Chessy.Model;
-using Chessy.Model.Entity;
-using Chessy.Model.Values;
-using System;
-using UnityEngine.Advertisements;
+﻿using Chessy.Model.Entity;
 
 namespace Chessy.Model.System
 {
@@ -33,23 +29,23 @@ namespace Chessy.Model.System
 
             //if (!_shopC.HasReceipt(ShopValues.PREMIUM_NAME))
             //{
-                //if(_infoAboutGameC.SceneT == SceneTypes.Menu)
-                //{
-                //    if (difTime.Seconds >=  10/*AdValues.MINUTES_FOR_TURN_ON_TIME_ADD*/)
-                //    {
-                //        if (Advertisement.IsReady(AdValues.NAME_VIDEO))
-                //        {
-                //            Advertisement.Show(AdValues.NAME_VIDEO);
+            //if(_infoAboutGameC.SceneT == SceneTypes.Menu)
+            //{
+            //    if (difTime.Seconds >=  10/*AdValues.MINUTES_FOR_TURN_ON_TIME_ADD*/)
+            //    {
+            //        if (Advertisement.IsReady(AdValues.NAME_VIDEO))
+            //        {
+            //            Advertisement.Show(AdValues.NAME_VIDEO);
 
-                //            _adC.LastTimeAd = DateTime.Now;
-                //            _shopC.IsOpenedShopZone = true;
-                //        }
-                //        else
-                //        {
-                //            Advertisement.Load(AdValues.NAME_VIDEO);
-                //        }
-                //    }
-                //}
+            //            _adC.LastTimeAd = DateTime.Now;
+            //            _shopC.IsOpenedShopZone = true;
+            //        }
+            //        else
+            //        {
+            //            Advertisement.Load(AdValues.NAME_VIDEO);
+            //        }
+            //    }
+            //}
             //}
         }
     }

@@ -2,7 +2,6 @@
 using Chessy.Model.Entity;
 using Chessy.Model.Values;
 using Chessy.View.UI.Entity;
-using UnityEditor;
 using UnityEngine;
 
 namespace Chessy.View.System
@@ -10,9 +9,9 @@ namespace Chessy.View.System
     sealed class SyncMainToolWeaponUnitVS : SystemViewAbstract
     {
         readonly SpriteRenderer[,,] _mainToolWeapon = new SpriteRenderer[IndexCellsValues.CELLS, (byte)ToolsWeaponsWarriorTypes.End, (byte)LevelTypes.End];
-        readonly bool[,] _needActiveMainTW = new bool[(byte)ToolsWeaponsWarriorTypes.End, (byte)LevelTypes.End];
-        readonly bool[,] _wasActiveMainTW = new bool[(byte)ToolsWeaponsWarriorTypes.End, (byte)LevelTypes.End];
-        readonly Color[,] _needColorMainTW = new Color[(byte)ToolsWeaponsWarriorTypes.End, (byte)LevelTypes.End];
+        readonly bool[,,] _needActiveMainTW = new bool[IndexCellsValues.CELLS, (byte)ToolsWeaponsWarriorTypes.End, (byte)LevelTypes.End];
+        readonly bool[,,] _wasActiveMainTW = new bool[IndexCellsValues.CELLS, (byte)ToolsWeaponsWarriorTypes.End, (byte)LevelTypes.End];
+        readonly Color[,,] _needColorMainTW = new Color[IndexCellsValues.CELLS, (byte)ToolsWeaponsWarriorTypes.End, (byte)LevelTypes.End];
 
         internal SyncMainToolWeaponUnitVS(in EntitiesView eV, in EntitiesModel eM) : base(eM)
         {
@@ -36,7 +35,7 @@ namespace Chessy.View.System
             }
         }
 
-        internal void Sync(in byte cellIdxForSync)
+        internal void Sync(in byte cellIdxForSync_0)
         {
             for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
             {
@@ -44,58 +43,41 @@ namespace Chessy.View.System
 
                 foreach (var toolWeaponT in new[] { ToolsWeaponsWarriorTypes.Staff, ToolsWeaponsWarriorTypes.Axe })
                 {
-                    _needActiveMainTW[(byte)toolWeaponT, levelTbyte] = false;
-                    _needColorMainTW[(byte)toolWeaponT, levelTbyte] = ColorsValues.ColorStandart;
+                    _needActiveMainTW[cellIdxForSync_0, (byte)toolWeaponT, levelTbyte] = false;
+                    _needColorMainTW[cellIdxForSync_0, (byte)toolWeaponT, levelTbyte] = ColorsValues.ColorStandart;
                 }
             }
 
-            if (_cellsC.Current == cellIdxForSync)
+            if (IndexesCellsC.Current == cellIdxForSync_0)
             {
-                if (_aboutGameC.CellClickType == CellClickTypes.SetUnit)
+                if (AboutGameC.CellClickType == CellClickTypes.SetUnit)
                 {
                     var selUnitT = _selectedUnitC.UnitT;
 
                     if (selUnitT == UnitTypes.Pawn)
                     {
-                        _needActiveMainTW[(byte)ToolsWeaponsWarriorTypes.Axe, (byte)LevelTypes.First] = true;
+                        _needActiveMainTW[cellIdxForSync_0, (byte)ToolsWeaponsWarriorTypes.Axe, (byte)LevelTypes.First] = true;
                     }
                 }
             }
 
-            if (_unitWhereViewDataCs[cellIdxForSync].HaveDataReference)
+            if (_unitWhereViewDataCs[cellIdxForSync_0].HaveDataReference)
             {
-                var dataUnitIdxCell = _unitWhereViewDataCs[cellIdxForSync].DataIdxCellP;
+                var dataUnitIdxCell_1 = _unitWhereViewDataCs[cellIdxForSync_0].DataIdxCellP;
 
-                if (_unitCs[dataUnitIdxCell].HaveUnit)
+                var unitT = _unitCs[dataUnitIdxCell_1].UnitType;
+
+                if (unitT == UnitTypes.Pawn)
                 {
-                    if (_unitVisibleCs[dataUnitIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType) || _unitCs[_cellsC.Selected].UnitType == UnitTypes.Elfemale && _unitCs[_cellsC.Selected].PlayerType == _aboutGameC.CurrentPlayerIType && _unitCs[dataUnitIdxCell].UnitType == UnitTypes.King)
+                    if (_mainTWC[dataUnitIdxCell_1].ToolWeaponType != ToolsWeaponsWarriorTypes.BowCrossbow)
                     {
-                        var isSelectedCell = dataUnitIdxCell == _cellsC.Selected;
-
-                        var nextPlayer = _unitCs[dataUnitIdxCell].PlayerType.NextPlayer();
-                        var isVisibleForNextPlayer = _unitVisibleCs[dataUnitIdxCell].IsVisible(nextPlayer);
-
-
-
-                        var unitT = _unitCs[dataUnitIdxCell].UnitType;
-
-
-                        if (unitT == UnitTypes.Pawn)
+                        if (_unitVisibleCs[dataUnitIdxCell_1].IsVisible(AboutGameC.CurrentPlayerIType))
                         {
-                            if (_mainTWC[dataUnitIdxCell].ToolWeaponType == ToolsWeaponsWarriorTypes.BowCrossbow)
-                            {
+                            var nextPlayer = _unitCs[dataUnitIdxCell_1].PlayerType.NextPlayer();
+                            var isVisibleForNextPlayer = _unitVisibleCs[dataUnitIdxCell_1].IsVisible(nextPlayer);
 
-                            }
-                            else
-                            {
-                                _needActiveMainTW[(byte)_mainTWC[dataUnitIdxCell].ToolWeaponType, (byte)_mainTWC[dataUnitIdxCell].LevelType] = true;
-                                _needColorMainTW[(byte)_mainTWC[dataUnitIdxCell].ToolWeaponType, (byte)_mainTWC[dataUnitIdxCell].LevelType] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
-                            }
-
-                            if (_extraTWC[dataUnitIdxCell].HaveToolWeapon)
-                            {
-
-                            }
+                            _needActiveMainTW[cellIdxForSync_0, (byte)_mainTWC[dataUnitIdxCell_1].ToolWeaponType, (byte)_mainTWC[dataUnitIdxCell_1].LevelType] = true;
+                            _needColorMainTW[cellIdxForSync_0, (byte)_mainTWC[dataUnitIdxCell_1].ToolWeaponType, (byte)_mainTWC[dataUnitIdxCell_1].LevelType] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
                         }
                     }
                 }
@@ -106,13 +88,13 @@ namespace Chessy.View.System
             {
                 var levelTbyte = (byte)levelT;
 
-                foreach (var toolWeaponT in new byte[] { (byte)ToolsWeaponsWarriorTypes.Staff, (byte)ToolsWeaponsWarriorTypes.Axe })
+                foreach (var toolWeaponTByte in new byte[] { (byte)ToolsWeaponsWarriorTypes.Staff, (byte)ToolsWeaponsWarriorTypes.Axe })
                 {
-                    var needActive = _needActiveMainTW[toolWeaponT, levelTbyte];
-                    ref var wasActivated = ref _wasActiveMainTW[toolWeaponT, levelTbyte];
+                    var needActive = _needActiveMainTW[cellIdxForSync_0, toolWeaponTByte, levelTbyte];
+                    ref var wasActivated = ref _wasActiveMainTW[cellIdxForSync_0, toolWeaponTByte, levelTbyte];
 
-                    if (wasActivated != needActive) _mainToolWeapon[cellIdxForSync, toolWeaponT, levelTbyte].gameObject.SetActive(needActive);
-                    if (needActive) _mainToolWeapon[cellIdxForSync, toolWeaponT, levelTbyte].color = _needColorMainTW[toolWeaponT, levelTbyte];
+                    if (wasActivated != needActive) _mainToolWeapon[cellIdxForSync_0, toolWeaponTByte, levelTbyte].gameObject.SetActive(needActive);
+                    if (needActive) _mainToolWeapon[cellIdxForSync_0, toolWeaponTByte, levelTbyte].color = _needColorMainTW[cellIdxForSync_0, toolWeaponTByte, levelTbyte];
 
                     wasActivated = needActive;
                 }

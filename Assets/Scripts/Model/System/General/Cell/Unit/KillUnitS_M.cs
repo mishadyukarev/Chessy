@@ -13,13 +13,13 @@ namespace Chessy.Model.System
 
             if (_unitCs[cellIdxForKilling].PlayerT == PlayerTypes.Second)
             {
-                if (_aboutGameC.LessonT == LessonTypes.Kill1Enemy) SetNextLesson();
+                if (AboutGameC.LessonT == LessonTypes.Kill1Enemy) SetNextLesson();
             }
 
 
             if (whoKiller != PlayerTypes.None)
             {
-                if (_unitCs[cellIdxForKilling].UnitT == UnitTypes.King) _aboutGameC.WinnerPlayerT = whoKiller;
+                if (_unitCs[cellIdxForKilling].UnitT == UnitTypes.King) AboutGameC.WinnerPlayerT = whoKiller;
             }
 
             if (_unitCs[cellIdxForKilling].UnitT.IsGod())
@@ -51,7 +51,7 @@ namespace Chessy.Model.System
                 PlayerInfoE(_unitCs[cellIdxForKilling].PlayerT).GodInfoC.HaveGodInInventor = true;
             }
 
-            if (_unitCs[cellIdxForKilling].UnitT.Is(UnitTypes.Tree)) _aboutGameC.HaveTreeUnit = false;
+            if (UnitC(cellIdxForKilling).UnitT.Is(UnitTypes.Tree)) AboutGameC.HaveTreeUnitInGame = false;
 
 
             //_e.SetLastDiedUnitOnCell(cellIdxForKilling);

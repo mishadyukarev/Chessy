@@ -80,11 +80,11 @@ namespace Chessy.Model
 
 
 
-            if (_cellsC.Current == cellIdx)
+            if (IndexesCellsC.Current == cellIdx)
             {
-                if (_aboutGameC.CellClickType == CellClickTypes.SetUnit)
+                if (AboutGameC.CellClickType == CellClickTypes.SetUnit)
                 {
-                    var idx_cur = _cellsC.Current;
+                    var idx_cur = IndexesCellsC.Current;
                     var selUnitT = _selectedUnitC.UnitT;
                     var levT = _selectedUnitC.LevelT;
 
@@ -104,7 +104,7 @@ namespace Chessy.Model
 
                 if (_unitCs[dataUnitIdxCell].HaveUnit)
                 {
-                    if (_unitVisibleCs[dataUnitIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType) || _unitCs[_cellsC.Selected].UnitType == UnitTypes.Elfemale && _unitCs[_cellsC.Selected].PlayerType == _aboutGameC.CurrentPlayerIType && _unitCs[dataUnitIdxCell].UnitType == UnitTypes.King)
+                    if (_unitVisibleCs[dataUnitIdxCell].IsVisible(AboutGameC.CurrentPlayerIType) || _unitCs[IndexesCellsC.Selected].UnitType == UnitTypes.Elfemale && _unitCs[IndexesCellsC.Selected].PlayerType == AboutGameC.CurrentPlayerIType && _unitCs[dataUnitIdxCell].UnitType == UnitTypes.King)
                     {
                         var nextPlayer = _unitCs[dataUnitIdxCell].PlayerType.NextPlayer();
                         var isVisibleForNextPlayer = _unitVisibleCs[dataUnitIdxCell].IsVisible(nextPlayer);

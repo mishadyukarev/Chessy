@@ -9,9 +9,9 @@ namespace Chessy.Model.System
         {
             var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (_aboutGameC.LessonT == LessonTypes.PickingGod)
+            if (AboutGameC.LessonT == LessonTypes.PickingGod)
             {
-                 SetNextLesson();
+                SetNextLesson();
             }
 
             PlayerInfoE(whoDoing).GodInfoC.UnitType = unitT;

@@ -1,6 +1,5 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
-using UnityEngine;
 
 namespace Chessy.Model.System
 {
@@ -36,7 +35,7 @@ namespace Chessy.Model.System
 
             else
             {
-                if (unitT.Is(UnitTypes.Tree)) _aboutGameC.HaveTreeUnit = true;
+                if (unitT.Is(UnitTypes.Tree)) AboutGameC.HaveTreeUnitInGame = true;
 
 
                 if (unitT.IsGod())

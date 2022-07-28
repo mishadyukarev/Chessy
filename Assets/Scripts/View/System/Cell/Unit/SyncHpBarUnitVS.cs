@@ -9,13 +9,24 @@ namespace Chessy.View.System
     sealed class SyncHpBarUnitVS : SystemViewAbstract
     {
         readonly bool[] _needActiveBar = new bool[IndexCellsValues.CELLS];
+        readonly bool[] _wasActivated = new bool[IndexCellsValues.CELLS];
         readonly Color[] _needSetColorToBar = new Color[IndexCellsValues.CELLS];
 
-        readonly SpriteRendererVC[] _hpBarSRC;
+        readonly SpriteRenderer[] _hpBarSRs;
+        readonly GameObjectVC[] _goVCs = new GameObjectVC[IndexCellsValues.CELLS];
 
-        internal SyncHpBarUnitVS(in SpriteRendererVC[] hpBarSRCs, in EntitiesModel eMG) : base(eMG)
+        PlayerTypes _currentPlayerT;
+
+        readonly Color _whiteColor = Color.white;
+
+        internal SyncHpBarUnitVS(in SpriteRenderer[] hpBarSRCs, in EntitiesModel eMG) : base(eMG)
         {
-            _hpBarSRC = hpBarSRCs;
+            _hpBarSRs = hpBarSRCs;
+
+            for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
+            {
+                _goVCs[currentCellIdx_0] = new GameObjectVC(hpBarSRCs[currentCellIdx_0].gameObject);
+            }
         }
 
         internal override void Sync()
@@ -23,37 +34,56 @@ namespace Chessy.View.System
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needActiveBar[cellIdxCurrent] = false;
-                _needSetColorToBar[cellIdxCurrent] = Color.white;
+                _needSetColorToBar[cellIdxCurrent] = _whiteColor;
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            _currentPlayerT = AboutGameC.CurrentPlayerIType;
+
+            for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (_unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
+                if (CellC(currentCellIdx_0).IsBorder) continue;
+
+
+                var unitViewData_0 = UnitViewDataC(currentCellIdx_0);
+
+                if (unitViewData_0.HaveDataReference)
                 {
-                    var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
+                    var dataIdxCell_1 = unitViewData_0.DataIdxCellP;
 
-                    if (_unitVisibleCs[dataIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType))
+                    if (UnitVisibleC(dataIdxCell_1).IsVisible(_currentPlayerT))
                     {
-                        if (_unitCs[dataIdxCell].HaveUnit && !_unitCs[dataIdxCell].UnitType.IsAnimal())
+                        var unitC_1 = UnitC(dataIdxCell_1);
+
+                        if (unitC_1.HaveUnit && !unitC_1.IsAnimal)
                         {
-                            _needActiveBar[cellIdxCurrent] = true;
+                            _needActiveBar[currentCellIdx_0] = true;
 
-                            var xCordinate = (float)(_hpUnitCs[dataIdxCell].HealthP / HpUnitValues.MAX);
-                            _hpBarSRC[cellIdxCurrent].Transform.localScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
+                            var xCordinate = (float)(UnitHpC(dataIdxCell_1).HealthP / HpUnitValues.MAX);
+                            _hpBarSRs[currentCellIdx_0].transform.localScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                            _needSetColorToBar[cellIdxCurrent] = _unitCs[dataIdxCell].PlayerType == PlayerTypes.First ? Color.blue : Color.red;
+                            _needSetColorToBar[currentCellIdx_0] = unitC_1.PlayerType == PlayerTypes.First ? Color.blue : Color.red;
                         }
                     }
                 }
-
-
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                _hpBarSRC[cellIdxCurrent].TrySetActiveGO(_needActiveBar[cellIdxCurrent]);
-                _hpBarSRC[cellIdxCurrent].Color = _needSetColorToBar[cellIdxCurrent];
+                var needActive = _needActiveBar[currentCellIdx_0];
+
+                _goVCs[currentCellIdx_0].TrySetActive2(needActive, ref _wasActivated[currentCellIdx_0]);
+                if (needActive) _hpBarSRs[currentCellIdx_0].color = _needSetColorToBar[currentCellIdx_0];
             }
+        }
+    }
+
+    public static class SS
+    {
+        public static void TrySet(this GameObject gO, in bool needActive, ref bool wasActivated)
+        {
+            if (needActive != wasActivated) gO.SetActive(needActive);
+
+            wasActivated = needActive;
         }
     }
 }

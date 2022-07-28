@@ -1,8 +1,7 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.View.Component;
-using UnityEditor;
-using UnityEngine;
 using Chessy.Model.Values;
+using Chessy.View.Component;
+using UnityEngine;
 
 namespace Chessy.View.System
 {

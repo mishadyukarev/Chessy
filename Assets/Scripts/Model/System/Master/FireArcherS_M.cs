@@ -10,18 +10,18 @@ namespace Chessy.Model.System
         {
             if (_whereUnitCanFireAdultForestCs[cell_from].Can(cell_to))
             {
-                if (!_unitCs[cell_from].HaveCoolDownForAttackAnyUnit)
+                if (!UnitAttackC(cell_from).HaveCoolDownForAttackAnyUnit)
                 {
                     _s.RpcSs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
                     _fireCs[cell_to].HaveFire = true;
 
-                    _unitCs[cell_from].CooldownForAttackAnyUnitInSeconds = ValuesChessy.COOLDOWN_AFTER_ATTACK;
+                    UnitAttackC(cell_from).CooldownForAttackAnyUnitInSeconds = ValuesChessy.COOLDOWN_AFTER_ATTACK;
 
                     //if (_aboutGameC.LessonT == Enum.LessonTypes.PawnFireAdultForest)
                     //{
                     //    _s.SetNextLesson();
                     //}
-                    
+
                 }
             }
         }

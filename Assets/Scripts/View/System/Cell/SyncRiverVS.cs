@@ -11,6 +11,9 @@ namespace Chessy.View.System
     {
         readonly RiverVE[] _riverVEs;
 
+        readonly Vector3 _rot0 = new(0, 0, 0);
+        readonly Vector3 _rot1 = new(0, 0, 180);
+
         internal SyncRiverVS(in RiverVE[] riverVEs, in EntitiesModel eM) : base(eM)
         {
             _riverVEs = riverVEs;
@@ -18,17 +21,23 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
+            var currentPlayerT = AboutGameC.CurrentPlayerIType;
+
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                switch (_aboutGameC.CurrentPlayerIType)
+                if (CellC(cellIdxCurrent).IsBorder) continue;
+
+                var parentTrans = _riverVEs[cellIdxCurrent].ParentTransformVC.Transform;
+
+                switch (currentPlayerT)
                 {
                     case PlayerTypes.None: throw new Exception();
                     case PlayerTypes.First:
-                        _riverVEs[cellIdxCurrent].ParentTransformVC.LocalEulerAngles = new Vector3(0, 0, 0);
+                        if (_rot0.z != parentTrans.localEulerAngles.z) parentTrans.localEulerAngles = _rot0;
                         break;
 
                     case PlayerTypes.Second:
-                        _riverVEs[cellIdxCurrent].ParentTransformVC.LocalEulerAngles = new Vector3(0, 0, 180);
+                        if (_rot1.z != parentTrans.localEulerAngles.z) parentTrans.localEulerAngles = _rot1;
                         break;
 
                     default: throw new Exception();
@@ -47,7 +56,7 @@ namespace Chessy.View.System
                 }
             }
 
-            
+
         }
     }
 }

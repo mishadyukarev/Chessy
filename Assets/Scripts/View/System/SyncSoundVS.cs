@@ -25,7 +25,7 @@ namespace Chessy.View.System
             }
             else
             {
-                _eV.SoundASC(ClipTypes.Background2).AS.volume = VolumesSounds.Volume(ClipTypes.Background2, _aboutGameC.TestModeT);
+                _eV.SoundASC(ClipTypes.Background2).AS.volume = VolumesSounds.Volume(ClipTypes.Background2, AboutGameC.TestModeT);
             }
 
 
@@ -35,7 +35,7 @@ namespace Chessy.View.System
             }
             else
             {
-                _eV.SoundASC(ClipTypes.AfterUpdate).AS.volume = VolumesSounds.Volume(ClipTypes.AfterUpdate, _aboutGameC.TestModeT);
+                _eV.SoundASC(ClipTypes.AfterUpdate).AS.volume = VolumesSounds.Volume(ClipTypes.AfterUpdate, AboutGameC.TestModeT);
             }
         }
     }

@@ -1,7 +1,8 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Enum;
+using Chessy.View.UI.Entity;
 using UnityEngine;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+namespace Chessy.Model
 {
     sealed class DownToolWeaponUIS : SystemUIAbstract
     {
@@ -17,7 +18,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             var needActiveZone = false;
 
 
-            if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.GiveTakePickPawn)
+            if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= LessonTypes.GiveTakePickPawn)
             {
                 needActiveZone = true;
 
@@ -37,11 +38,11 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                 var needSword = false;
 
 
-                if (_aboutGameC.LessonType.HaveLesson())
+                if (AboutGameC.LessonType.HaveLesson())
                 {
                     needPick = true;
 
-                    if (_aboutGameC.LessonType >= LessonTypes.GiveIronAxe)
+                    if (AboutGameC.LessonType >= LessonTypes.GiveIronAxe)
                     {
                         needAxe = true;
 
@@ -120,7 +121,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                     _twE.LevelImageC(twT, levTw_sel).SetActive(true);
                 }
 
-                var curPlayerI = _aboutGameC.CurrentPlayerIType;
+                var curPlayerI = AboutGameC.CurrentPlayerIType;
 
                 _twE.TextC(ToolsWeaponsWarriorTypes.Pick).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Pick, LevelTypes.First).ToString();
                 _twE.TextC(ToolsWeaponsWarriorTypes.Sword).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Sword, LevelTypes.Second).ToString();

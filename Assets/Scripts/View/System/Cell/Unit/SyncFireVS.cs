@@ -9,7 +9,7 @@ namespace Chessy.View.System
         bool[] _needActive = new bool[IndexCellsValues.CELLS];
         readonly SpriteRendererVC[] _fireSRCs;
 
-        internal SyncFireVS(SpriteRendererVC[] fireSRCs,  in EntitiesModel eM) : base(eM)
+        internal SyncFireVS(SpriteRendererVC[] fireSRCs, in EntitiesModel eM) : base(eM)
         {
             _fireSRCs = fireSRCs;
         }

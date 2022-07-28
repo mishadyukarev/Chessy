@@ -1,9 +1,10 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
+using Chessy.View.UI.Entity;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+namespace Chessy.Model
 {
     sealed class UpWindUIS : SystemUIAbstract
     {
@@ -36,13 +37,13 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
         internal override void Sync()
         {
-            if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.ClickWindInfo)
+            if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= Enum.LessonTypes.ClickWindInfo)
             {
                 _eUI.UpEs.ParentWindGOC.TrySetActive(true);
 
-                _eUI.UpEs.WindTrC.EulerAngles = _directs[_windC.DirectType];
-                if (_aboutGameC.CurrentPlayerIType == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
-                _eUI.UpEs.WindTextC.TextUI.text = _windC.SpeedP.ToString() + "/" + ValuesChessy.MAX_SPEED_WIND;
+                _eUI.UpEs.WindTrC.EulerAngles = _directs[WindC.DirectType];
+                if (AboutGameC.CurrentPlayerIType == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
+                _eUI.UpEs.WindTextC.TextUI.text = WindC.SpeedP.ToString() + "/" + ValuesChessy.MAX_SPEED_WIND;
 
 
             }

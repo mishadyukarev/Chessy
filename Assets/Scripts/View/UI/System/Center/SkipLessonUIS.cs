@@ -1,6 +1,6 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.View.UI.Entity;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+namespace Chessy.Model
 {
     sealed class SkipLessonUIS : SystemUIAbstract
     {
@@ -13,7 +13,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
         internal override void Sync()
         {
-            _skipLessonUIE.ButtonUIC.SetActiveParent(_aboutGameC.LessonType.HaveLesson());
+            _skipLessonUIE.ButtonUIC.SetActiveParent(AboutGameC.LessonType.HaveLesson());
         }
     }
 }

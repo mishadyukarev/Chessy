@@ -1,6 +1,4 @@
-﻿using UnityEngine.Advertisements;
-
-namespace Chessy.Model.Values
+﻿namespace Chessy.Model.Values
 {
     public static class AdValues
     {

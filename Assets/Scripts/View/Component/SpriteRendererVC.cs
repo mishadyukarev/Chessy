@@ -8,7 +8,6 @@ namespace Chessy.View.Component
 
         public GameObject GO => SR.gameObject;
         public Transform Transform => SR.transform;
-        public Transform ParentTransform => Transform.parent;
 
         internal Sprite Sprite
         {
@@ -28,17 +27,6 @@ namespace Chessy.View.Component
             if (SR.enabled != needActive)
                 SR.enabled = needActive;
         }
-        internal void TryEnable()
-        {
-            if (SR.enabled == false)
-                SR.enabled = true;
-        }
-        internal void TryDisable()
-        {
-            if (SR.enabled == true)
-                SR.enabled = false;
-        }
-
         internal void TrySetActiveGO(in bool needActive)
         {
             if (GO.activeSelf != needActive) GO.SetActive(needActive);

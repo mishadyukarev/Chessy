@@ -2,7 +2,6 @@
 using Chessy.Model.System;
 using Chessy.Model.Values;
 using System.Collections.Generic;
-using UnityEngine;
 namespace Chessy.Model
 {
     sealed class TryShiftUnitAIS_M : SystemModelAbstract

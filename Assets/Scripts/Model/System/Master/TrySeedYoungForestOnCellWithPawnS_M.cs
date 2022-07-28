@@ -22,9 +22,9 @@ namespace Chessy.Model.System
 
                         _environmentCs[cell_0].Set(EnvironmentTypes.YoungForest, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
 
-                        _aboutGameC.AmountPlantedYoungForests++;
+                        AboutGameC.AmountPlantedYoungForests++;
 
-                        if (_aboutGameC.LessonT == LessonTypes.SeedingPawn)
+                        if (AboutGameC.LessonT == LessonTypes.SeedingPawn)
                         {
                             //if (_e.AmountPlantedYoungForests >= ValuesChessy.NEED_PLANTED_YOUNG_FOREST_FOR_SKIP_LESSON)
                             //{

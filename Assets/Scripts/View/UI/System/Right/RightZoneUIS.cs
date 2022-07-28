@@ -23,16 +23,16 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            var idx_sel = _cellsC.Selected;
+            var idx_sel = IndexesCellsC.Selected;
 
             _needAppear = false;
 
 
-            if (_cellsC.Selected > 0)
+            if (IndexesCellsC.Selected > 0)
             {
                 if (_unitCs[idx_sel].UnitType.HaveUnit())
                 {
-                    if (_unitVisibleCs[idx_sel].IsVisible(_aboutGameC.CurrentPlayerIType))
+                    if (_unitVisibleCs[idx_sel].IsVisible(AboutGameC.CurrentPlayerIType))
                     {
                         _needAppear = true;
                     }
@@ -40,7 +40,7 @@ namespace Chessy.Model
             }
 
 
-            if(_wasApeared != _needAppear)
+            if (_wasApeared != _needAppear)
             {
                 _animation.Play(_needAppear ? APPEAR_NAME : DISAPPEAR_NAME);
             }

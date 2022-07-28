@@ -1,5 +1,4 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.Model.Enum;
 using Chessy.Model.Values;
 using Chessy.View.Component;
 
@@ -24,13 +23,13 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_cloudCs[cellIdxCurrent].IsCenterP)
+                if (CloudC(cellIdxCurrent).IsCenterP)
                 {
-                    _needActive[_cloudWhereViewDataCs[cellIdxCurrent].ViewIdxCellP] = true;
+                    _needActive[CloudViewDataC(cellIdxCurrent).ViewIdxCellP] = true;
 
                     foreach (var item in _idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
                     {
-                        _needActive[_cloudWhereViewDataCs[item].ViewIdxCellP] = true;
+                        _needActive[CloudViewDataC(item).ViewIdxCellP] = true;
                     }
                 }
             }

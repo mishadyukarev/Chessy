@@ -29,7 +29,7 @@ namespace Chessy.View.System
                     {
                         if (_unitCs[dataIdxCell].HaveUnit)
                         {
-                            if (_unitVisibleCs[dataIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType))
+                            if (_unitVisibleCs[dataIdxCell].IsVisible(AboutGameC.CurrentPlayerIType))
                             {
                                 _needActive[cellIdxCurrent] = true;
                             }

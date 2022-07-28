@@ -4,16 +4,16 @@
     {
         public void GetClickEffect()
         {
-            _cellsC.Selected = 0;
+            IndexesCellsC.Selected = 0;
 
             _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
-            if (PlayerInfoE(_aboutGameC.CurrentPlayerIT).PlayerInfoC.HaveKingInInventor)
+            if (PlayerInfoE(AboutGameC.CurrentPlayerIT).PlayerInfoC.HaveKingInInventor)
             {
                 _selectedUnitC.UnitT = UnitTypes.King;
                 _selectedUnitC.LevelT = LevelTypes.First;
 
-                _aboutGameC.CellClickT = CellClickTypes.SetUnit;
+                AboutGameC.CellClickT = CellClickTypes.SetUnit;
             }
 
             _updateAllViewC.NeedUpdateView = true;

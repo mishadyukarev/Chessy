@@ -11,7 +11,7 @@ namespace Chessy.Model.System
             var canAttack = _whereUniqueAttackCs[idxCellFrom].Can(idxCellTo)
                 || _whereSimpleAttackCs[idxCellFrom].Can(idxCellTo);
 
-            if (canAttack && _unitCs[idxCellFrom].PlayerT == whoDoing && !_unitCs[idxCellFrom].HaveCoolDownForAttackAnyUnit)
+            if (canAttack && _unitCs[idxCellFrom].PlayerT == whoDoing && !UnitAttackC(idxCellFrom).HaveCoolDownForAttackAnyUnit)
             {
                 AttackUnitFromTo(idxCellFrom, idxCellTo);
             }

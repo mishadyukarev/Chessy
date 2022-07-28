@@ -19,7 +19,7 @@ namespace Chessy.View.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _cellGOs[cellIdxCurrent].Transform.rotation = _aboutGameC.CurrentPlayerIType == PlayerTypes.First
+                _cellGOs[cellIdxCurrent].Transform.rotation = AboutGameC.CurrentPlayerIType == PlayerTypes.First
                     ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
             }
         }

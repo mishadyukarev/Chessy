@@ -13,16 +13,16 @@ namespace Chessy.Model.System
             {
                 if (unitT == UnitTypes.King)
                 {
-                    if (_aboutGameC.LessonT == LessonTypes.SettingKing)
+                    if (AboutGameC.LessonT == LessonTypes.SettingKing)
                     {
-                         SetNextLesson();
+                        SetNextLesson();
                     }
                 }
                 else if (unitT.IsGod())
                 {
-                    if (_aboutGameC.LessonT == LessonTypes.SettingGod)
+                    if (AboutGameC.LessonT == LessonTypes.SettingGod)
                     {
-                         SetNextLesson();
+                        SetNextLesson();
                     }
                 }
 

@@ -7,6 +7,7 @@
         Main,
         UnitShift,
         CloudShift,
+        Cells,
         Else,
 
         End

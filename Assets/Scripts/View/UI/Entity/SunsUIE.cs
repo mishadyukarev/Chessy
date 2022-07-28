@@ -1,7 +1,6 @@
-﻿using UnityEngine;
+﻿using Chessy.View.UI.Component;
+using UnityEngine;
 using UnityEngine.UI;
-using Chessy.View.UI.Entity;
-using Chessy.View.UI.Component;
 
 namespace Chessy.Model
 {

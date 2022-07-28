@@ -17,7 +17,7 @@ namespace Chessy.Model.Entity
             CellC = new CellC(dataFromViewC.IsBorder(idxCell), instanceID);
             XyCellC = new XyCellC(xy);
             IdxCellC = new IdxCellC(idxCell);
-            PositionC = new PositionCellC() { Position = dataFromViewC.PossitionCell(idxCell) };
+            PositionC = new PositionCellC(dataFromViewC.PossitionCell(idxCell));
 
             var x = xy[0];
             var y = xy[1];

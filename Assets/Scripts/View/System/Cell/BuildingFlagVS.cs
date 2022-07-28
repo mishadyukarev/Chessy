@@ -37,7 +37,7 @@ namespace Chessy.View.System
                 _flagSRCs[cellIdxCurrent].TrySetActiveGO(_needActive[cellIdxCurrent]);
             }
 
-                
+
         }
     }
 }

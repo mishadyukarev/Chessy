@@ -6,6 +6,7 @@ namespace Chessy.Model.Entity
     public sealed class UnitE
     {
         public readonly UnitOnCellC MainC = new();
+        public readonly AttackDamageUnitC AttackDamageC = new();
         public readonly HealthC HealthC = new();
         public readonly WaterAmountC WaterC = new();
         public readonly EffectsUnitC EffectsC = new();
@@ -44,12 +45,14 @@ namespace Chessy.Model.Entity
             WaterC.Water = newUnitE.WaterC.Water;
             EffectsC.Clone(newUnitE.EffectsC);
 
+            AttackDamageC.Copy(newUnitE.AttackDamageC);
+
             MainToolWeaponC.Clone(newUnitE.MainToolWeaponC);
             ExtraToolWeaponC.Clone(newUnitE.ExtraToolWeaponC);
             WhoLastDiedHereC.Clone(newUnitE.WhoLastDiedHereC);
             ExtractionResourcesC.Clone(newUnitE.ExtractionResourcesC);
 
-            WhereViewDataUnitC.Clone(newUnitE.WhereViewDataUnitC);
+            WhereViewDataUnitC.Copy(newUnitE.WhereViewDataUnitC);
 
 
             UniqueButtonsC.Sync(newUnitE.UniqueButtonsC.AbilityTypesClone);

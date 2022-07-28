@@ -7,26 +7,26 @@ namespace Chessy.Model.System
         {
             _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
-            if (!_aboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse, LessonTypes.HoldPressWarrior))
+            if (!AboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse, LessonTypes.HoldPressWarrior))
             {
-                if (PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).HaveAnyPeopleInCity)
+                if (PawnPeopleInfoC(AboutGameC.CurrentPlayerIT).HaveAnyPeopleInCity)
                 {
-                    if (PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).AmountInGame < PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).MaxAvailablePawns(PlayerInfoC(_aboutGameC.CurrentPlayerIT).AmountBuiltHouses))
+                    if (PawnPeopleInfoC(AboutGameC.CurrentPlayerIT).AmountInGame < PawnPeopleInfoC(AboutGameC.CurrentPlayerIT).MaxAvailablePawns(PlayerInfoC(AboutGameC.CurrentPlayerIT).AmountBuiltHouses))
                     {
-                        _cellsC.Selected = 0;
+                        IndexesCellsC.Selected = 0;
 
                         _selectedUnitC.UnitT = UnitTypes.Pawn;
                         _selectedUnitC.LevelT = LevelTypes.First;
 
-                        _aboutGameC.CellClickT = CellClickTypes.SetUnit;
+                        AboutGameC.CellClickT = CellClickTypes.SetUnit;
                     }
                     else
                     {
-                        if (_aboutGameC.LessonT.Is(LessonTypes.SettingPawn))
+                        if (AboutGameC.LessonT.Is(LessonTypes.SettingPawn))
                         {
                             _s.SetNextLesson();
                         }
-                        else if (_aboutGameC.LessonT.Is(LessonTypes.OpeningTown, LessonTypes.TryBuyingHouse))
+                        else if (AboutGameC.LessonT.Is(LessonTypes.OpeningTown, LessonTypes.TryBuyingHouse))
                         {
 
                         }
@@ -36,7 +36,7 @@ namespace Chessy.Model.System
 
                             _s.SetMistake(MistakeTypes.NeedBuildingHouses, 0);
                             _dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
-                            _aboutGameC.IsSelectedCity = true;
+                            AboutGameC.IsSelectedCity = true;
                         }
 
                     }

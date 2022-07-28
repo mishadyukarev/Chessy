@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model.Values;
+﻿using Chessy.Model.Values;
 using Photon.Realtime;
 using System;
 namespace Chessy.Model.System
@@ -55,7 +54,7 @@ namespace Chessy.Model.System
                                         {
                                             if (PlayerInfoE(_unitCs[cellIdx].PlayerT).GodInfoC.UnitType.Is(UnitTypes.Elfemale))
                                             {
-                                                _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _unitCs[cellIdx].PlayerT, ValuesChessy.MAX_HP_ANY_BUILDING, cellIdx);
+                                                Build(BuildingTypes.Woodcutter, LevelTypes.First, UnitC(cellIdx).PlayerT, cellIdx);
                                             }
                                         }
                                     }

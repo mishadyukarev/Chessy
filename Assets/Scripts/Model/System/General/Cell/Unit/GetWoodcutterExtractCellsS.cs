@@ -19,7 +19,7 @@ namespace Chessy.Model.System
 
             if (_buildingCs[cellIdx].BuildingT == BuildingTypes.Woodcutter)
             {
-                var extract = ValuesChessy.WOODCUTTER_EXTRACT;
+                double extract = ValuesChessy.WOODCUTTER_EXTRACT;
 
                 //if (E.BuildingsInfo(E.BuildEs(Idx)).HaveCenterUpgrade)
                 //{

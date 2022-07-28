@@ -84,7 +84,7 @@ namespace Chessy.Model.System
                     if (_mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Staff) powerDamage -= DamageUnitValues.STAFF_EFFECT_ON_PAWN_TAKING;
 
 
-                    _unitCs[cellIdxCurrent].DamageSimpleAttack = powerDamage;
+                    UnitAttackC(cellIdxCurrent).DamageSimpleAttack = powerDamage;
 
 
 
@@ -128,7 +128,7 @@ namespace Chessy.Model.System
 
                     powerDamage += powerDamage * protectionPercent;
 
-                    _unitCs[cellIdxCurrent].DamageOnCell = powerDamage;
+                    UnitAttackC(cellIdxCurrent).DamageOnCell = powerDamage;
                 }
             }
         }

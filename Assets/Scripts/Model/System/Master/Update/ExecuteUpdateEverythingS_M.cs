@@ -1,8 +1,4 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.Model.Enum;
-using Chessy.Model.Values;
-using Photon.Pun;
-using System.Linq;
 namespace Chessy.Model.System
 {
     sealed partial class ExecuteUpdateEverythingMS : SystemModelAbstract
@@ -49,7 +45,7 @@ namespace Chessy.Model.System
             //TryExecuteTruce();
         }
 
-        
+
 
         //void TryGivePeople()
         //{

@@ -1,7 +1,8 @@
 ﻿using Chessy.Model.Entity;
+using Chessy.View.UI.Entity;
 using Photon.Pun;
 using UnityEngine;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+namespace Chessy.Model
 {
     sealed class CenterReadyUIS : SystemUIAbstract
     {
@@ -16,9 +17,9 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             var readyBut = eUI.CenterEs.ReadyButtonC;
 
-            readyBut.Image.color = PlayerInfoE(_aboutGameC.CurrentPlayerIType).PlayerInfoC.IsReadyForStartOnlineGameP ? Color.red : Color.white;
+            readyBut.Image.color = PlayerInfoE(AboutGameC.CurrentPlayerIType).PlayerInfoC.IsReadyForStartOnlineGameP ? Color.red : Color.white;
 
-            if (_aboutGameC.IsStartedGameP || PhotonNetwork.OfflineMode)
+            if (AboutGameC.IsStartedGameP || PhotonNetwork.OfflineMode)
             {
                 readyBut.SetActiveParent(false);
             }

@@ -72,25 +72,25 @@ namespace Chessy.View.UI.System
                         eUI.RightEs.StatsEs.EnergyE.AnimationC.Play();
                     }
 
-                    if (_aboutGameC.LessonType == LessonTypes.RelaxExtractPawn)
+                    if (AboutGameC.LessonType == LessonTypes.RelaxExtractPawn)
                     {
                         eUI.RightEs.RelaxE.AnimationC.Play();
                     }
 
-                    else if (_aboutGameC.LessonType == LessonTypes.SettingPawn)
+                    else if (AboutGameC.LessonType == LessonTypes.SettingPawn)
                     {
                         eUI.DownEs.PawnE.AnimationC.Play();
                     }
 
 
-                    eUI.UpEs.SettingsButtonC.SetActiveParent(!_aboutGameC.LessonType.HaveLesson());
-                    eUI.UpEs.DiscordButtonC.SetActive(!_aboutGameC.LessonType.HaveLesson());
-                    eUI.UpEs.LeaveButtonC.SetActiveParent(!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.MenuInfo);
-                    eUI.DownEs.BookLittleE.ButtonC.SetActiveParent(!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType > LessonTypes.HoldPressWarrior);
+                    eUI.UpEs.SettingsButtonC.SetActiveParent(!AboutGameC.LessonType.HaveLesson());
+                    eUI.UpEs.DiscordButtonC.SetActive(!AboutGameC.LessonType.HaveLesson());
+                    eUI.UpEs.LeaveButtonC.SetActiveParent(!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= LessonTypes.MenuInfo);
+                    eUI.DownEs.BookLittleE.ButtonC.SetActiveParent(!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType > LessonTypes.HoldPressWarrior);
 
-                    eUI.GameCanvasGOC.TrySetActive(_aboutGameC.SceneType == SceneTypes.Game);
+                    eUI.GameCanvasGOC.TrySetActive(AboutGameC.SceneType == SceneTypes.Game);
                     eUI.ShopE.ShopZoneGOC.TrySetActive(_shopC.IsOpenedShopZone);
-                    eUI.MenuCanvasGOC.TrySetActive(_aboutGameC.SceneType == SceneTypes.Menu);
+                    eUI.MenuCanvasGOC.TrySetActive(AboutGameC.SceneType == SceneTypes.Menu);
                 },
             };
 
@@ -104,7 +104,7 @@ namespace Chessy.View.UI.System
         public void Update()
         {
             if (_updateAllViewC.NeedUpdateView)
-            {         
+            {
                 _syncUpdates.ForEach((Action action) => action());
             }
         }

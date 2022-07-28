@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Component;
-using Chessy.View.Component;
+﻿using Chessy.View.Component;
 using Chessy.View.UI.Component;
 using UnityEngine;
 using UnityEngine.UI;

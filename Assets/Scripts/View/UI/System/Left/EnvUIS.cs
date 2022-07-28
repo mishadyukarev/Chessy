@@ -1,5 +1,6 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+using Chessy.View.UI.Entity;
+namespace Chessy.Model
 {
     sealed class EnvUIS : SystemUIAbstract
     {
@@ -12,7 +13,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
         internal override void Sync()
         {
-            var idx_sel = _cellsC.Selected;
+            var idx_sel = IndexesCellsC.Selected;
 
             eUI.LeftEnvEs.Envs[ResourceTypes.Food].TextUI.text = ((int)(100 * _environmentCs[idx_sel].Resources(EnvironmentTypes.Fertilizer))).ToString();
             eUI.LeftEnvEs.Envs[ResourceTypes.Wood].TextUI.text = ((int)(100 * _environmentCs[idx_sel].Resources(EnvironmentTypes.AdultForest))).ToString();

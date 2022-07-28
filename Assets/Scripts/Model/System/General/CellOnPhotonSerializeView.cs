@@ -1,5 +1,4 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.Model.Values;
 using Photon.Pun;
 using System;
 using UnityEngine;
@@ -223,7 +222,7 @@ namespace Chessy.Model.System
                 default: throw new Exception();
             }
         }
-    
+
     }
 
     public enum SyncCellTypes

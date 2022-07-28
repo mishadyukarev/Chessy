@@ -31,7 +31,7 @@ namespace Chessy.Model.System
                             needRes.Add(resT, 0);
                         }
 
-                        if (needRes[resT] > ResourcesInInventoryC(whoseMove).Resources(resT)) canBuild = false;
+                        if (needRes[resT] > ResourcesInInventoryC(whoseMove).ResourcesRef(resT)) canBuild = false;
                     }
 
                     if (canBuild)
@@ -42,10 +42,10 @@ namespace Chessy.Model.System
                         }
 
                         RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
-                        _environmentCs[cell_0].Set(EnvironmentTypes.YoungForest, 0);
-                        _e.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, ValuesChessy.MAX_HP_ANY_BUILDING, cell_0);
+                        EnvironmentC(cell_0).Set(EnvironmentTypes.YoungForest, 0);
+                        Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, cell_0);
 
-                        if (_aboutGameC.LessonT == LessonTypes.Build1Farms)
+                        if (AboutGameC.LessonT == LessonTypes.Build1Farms)
                         {
                             SetNextLesson();
                         }

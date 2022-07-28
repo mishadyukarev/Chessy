@@ -1,5 +1,6 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+using Chessy.View.UI.Entity;
+namespace Chessy.Model
 {
     sealed class MistakeUIS : SystemUIAbstract
     {

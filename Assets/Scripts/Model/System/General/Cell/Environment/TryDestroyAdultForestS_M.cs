@@ -9,7 +9,7 @@
                 _environmentCs[cellIdx].Set(EnvironmentTypes.AdultForest, 0);
 
                 TrySeedNewYoungForestOnCell(cellIdx);
-                _e.TryDestroyAllTrailsOnCell(cellIdx);
+                TryDestroyAllTrailsOnCell(cellIdx);
             }
         }
     }

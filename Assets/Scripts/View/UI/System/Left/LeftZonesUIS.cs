@@ -1,5 +1,6 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+using Chessy.View.UI.Entity;
+namespace Chessy.Model
 {
     sealed class LeftZonesUIS : SystemUIAbstract
     {
@@ -15,15 +16,15 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             var needActiveCity = false;
             var needActiveEnvironment = false;
 
-            if (_aboutGameC.IsSelectedCityP)
+            if (AboutGameC.IsSelectedCityP)
             {
                 needActiveCity = true;
             }
             else
             {
-                if (_cellsC.IsSelectedCell)
+                if (IndexesCellsC.IsSelectedCell)
                 {
-                    if (!_aboutGameC.LessonType.HaveLesson())
+                    if (!AboutGameC.LessonType.HaveLesson())
                     {
                         needActiveEnvironment = true;
                     }

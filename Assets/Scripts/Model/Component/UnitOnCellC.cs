@@ -7,11 +7,7 @@
         internal PlayerTypes PlayerT;
         internal ConditionUnitTypes ConditionT;
         internal bool IsArcherDirectedToRight;
-
-        internal double DamageSimpleAttack;
-        internal double DamageOnCell;
         internal int HowManySecondUnitWasHereInThisCondition;
-        internal int CooldownForAttackAnyUnitInSeconds;
 
         public UnitTypes UnitType => UnitT;
         public LevelTypes LevelType => LevelT;
@@ -19,10 +15,6 @@
         public ConditionUnitTypes ConditionType => ConditionT;
         public bool IsArcherDirectedToRightP => IsArcherDirectedToRight;
 
-        public double DamageSimpleAttackP => DamageSimpleAttack;
-        public double DamageOnCellP => DamageOnCell;
-
-        public bool HaveCoolDownForAttackAnyUnit => CooldownForAttackAnyUnitInSeconds > 0;
         public bool HaveUnit => UnitT.HaveUnit();
         public bool IsAnimal => UnitT.IsAnimal();
 
@@ -34,11 +26,7 @@
             PlayerT = newUnitC.PlayerT;
             ConditionT = newUnitC.ConditionT;
             IsArcherDirectedToRight = newUnitC.IsArcherDirectedToRight;
-
-            DamageSimpleAttack = newUnitC.DamageSimpleAttack;
-            DamageOnCell = newUnitC.DamageOnCell;
             HowManySecondUnitWasHereInThisCondition = newUnitC.HowManySecondUnitWasHereInThisCondition;
-            CooldownForAttackAnyUnitInSeconds = newUnitC.CooldownForAttackAnyUnitInSeconds;
         }
 
         internal void Set(in (UnitTypes, LevelTypes, PlayerTypes, ConditionUnitTypes, bool) unitC)
@@ -48,6 +36,16 @@
             PlayerT = unitC.Item3;
             ConditionT = unitC.Item4;
             IsArcherDirectedToRight = unitC.Item5;
+        }
+
+        internal void Dispose()
+        {
+            UnitT = default;
+            LevelT = default;
+            PlayerT = default;
+            ConditionT = default;
+            IsArcherDirectedToRight = default;
+            HowManySecondUnitWasHereInThisCondition = default;
         }
     }
 }

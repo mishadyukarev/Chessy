@@ -21,40 +21,42 @@ namespace Chessy.Model
             //#endif
 
 
-            var two = raycast.transform.gameObject.GetInstanceID();
+            
 
 
-            _aboutGameC.RaycastT = RaycastTypes.None;
+            AboutGameC.RaycastT = RaycastTypes.None;
 
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                _aboutGameC.RaycastT = RaycastTypes.UI;
+                AboutGameC.RaycastT = RaycastTypes.UI;
             }
             else if (raycast)
             {
+                var two = raycast.transform.gameObject.GetInstanceID();
+
                 for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
                     int one = _cellCs[cell_0].InstanceID;
 
                     if (one == two)
                     {
-                        if (_cellsC.Current != _cellsC.PreviousVision)
+                        if (IndexesCellsC.Current != IndexesCellsC.PreviousVision)
                         {
-                            if (_aboutGameC.CellClickT.Is(CellClickTypes.SetUnit))
+                            if (AboutGameC.CellClickT.Is(CellClickTypes.SetUnit))
                             {
-                                _updateViewUnitCs[_cellsC.Current].NeedUpdateView = true;
-                                _updateViewUnitCs[_cellsC.PreviousVision].NeedUpdateView = true;
+                                _updateViewUnitCs[IndexesCellsC.Current].NeedUpdateView = true;
+                                _updateViewUnitCs[IndexesCellsC.PreviousVision].NeedUpdateView = true;
                             }
 
-                            _cellsC.PreviousVision = _cellsC.Current;
+                            IndexesCellsC.PreviousVision = IndexesCellsC.Current;
                         }
 
-                        _cellsC.Current = cell_0;
-                        _aboutGameC.RaycastT = RaycastTypes.Cell;
+                        IndexesCellsC.Current = cell_0;
+                        AboutGameC.RaycastT = RaycastTypes.Cell;
                     }
                 }
 
-                if (_aboutGameC.RaycastT == RaycastTypes.None) _aboutGameC.RaycastT = RaycastTypes.Background;
+                if (AboutGameC.RaycastT == RaycastTypes.None) AboutGameC.RaycastT = RaycastTypes.Background;
             }
 
 
@@ -67,7 +69,7 @@ namespace Chessy.Model
             {
                 if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                 {
-                    _aboutGameC.RaycastT = RaycastTypes.UI;
+                    AboutGameC.RaycastT = RaycastTypes.UI;
                 }
             }
 #endif

@@ -2,7 +2,6 @@
 using Chessy.Model.Entity;
 using Chessy.Model.Values;
 using Chessy.View.UI.Entity;
-using UnityEditor;
 using UnityEngine;
 
 namespace Chessy.View.System
@@ -63,7 +62,7 @@ namespace Chessy.View.System
 
                 if (_unitCs[dataUnitIdxCell].HaveUnit)
                 {
-                    if (_unitVisibleCs[dataUnitIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType) || _unitCs[_cellsC.Selected].UnitType == UnitTypes.Elfemale && _unitCs[_cellsC.Selected].PlayerType == _aboutGameC.CurrentPlayerIType && _unitCs[dataUnitIdxCell].UnitType == UnitTypes.King)
+                    if (_unitVisibleCs[dataUnitIdxCell].IsVisible(AboutGameC.CurrentPlayerIType) || _unitCs[IndexesCellsC.Selected].UnitType == UnitTypes.Elfemale && _unitCs[IndexesCellsC.Selected].PlayerType == AboutGameC.CurrentPlayerIType && _unitCs[dataUnitIdxCell].UnitType == UnitTypes.King)
                     {
                         var nextPlayer = _unitCs[dataUnitIdxCell].PlayerType.NextPlayer();
                         var isVisibleForNextPlayer = _unitVisibleCs[dataUnitIdxCell].IsVisible(nextPlayer);

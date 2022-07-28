@@ -1,81 +1,105 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
+using UnityEngine;
+
 namespace Chessy.Model.System
 {
-    static class TruceS
+    sealed class TruceS : SystemModelAbstract
     {
-        const int PEOPLE_AFTER_TRUCE = 15;
-
-        internal static void ExecuteTruce(this EntitiesModel e, in SystemsModel s)
+        internal TruceS(in SystemsModel sM, EntitiesModel eM) : base(sM, eM)
         {
-            //for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
-            //{
-            //    //e.PlayerInfoE(playerT).KingInfoE.CellKing = 0;
-            //    e.PlayerInfoE(playerT).PlayerInfoC.HaveKingInInventor = true;
+        }
 
-            //    e.PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = true;
+        internal void ExecuteTruce()
+        {
+            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+            {
+                PlayerInfoC(playerT).HaveKingInInventor = true;
 
-            //    e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = PEOPLE_AFTER_TRUCE;
-            //    e.PlayerInfoE(playerT).PawnInfoC.AmountInGame = 0;
-            //}
+                GodInfoC(playerT).HaveGodInInventor = true;
+                GodInfoC(playerT).CooldownInSecondsForNextAppearance = 0;
 
-
-            //for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-            //{
-            //    e.HaveFire(cellIdxCurrent) = false;
-
-            //    e.TryDestroyAllTrailsOnCell(cellIdxCurrent);
+                PawnPeopleInfoC(playerT).PeopleInCity = AfterTruceValues.PEOPLE_AFTER_TRUCE;
+                PawnPeopleInfoC(playerT).AmountInGame = 0;
+            }
 
 
+            for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
+            {
+                FireC(currentCellIdx_0).HaveFire = false;
+
+                _s.TryDestroyAllTrailsOnCell(currentCellIdx_0);
 
 
-            //    if (e.UnitT(cellIdxCurrent].HaveUnit)
-            //    {
-            //        if (e.AboutGameC.GameModeT.Is(GameModeTypes.TrainingOffline))
-            //        {
-            //            if (e.UnitPlayerT(cellIdxCurrent).Is(PlayerTypes.First))
-            //            {
-            //                if (e.ExtraToolWeaponT(cellIdxCurrent).HaveToolWeapon())
-            //                {
-            //                    e.AddToolWeaponsInInventor(e.UnitPlayerT(cellIdxCurrent), e.ExtraTWLevelT(cellIdxCurrent), e.ExtraToolWeaponT(cellIdxCurrent), 1);
-            //                }
+                var unitC_0 = UnitC(currentCellIdx_0);
 
-            //                e.WhereViewDataUnitC(e.WhereViewDataUnitC(cellIdxCurrent).ViewIdxCell).DataIdxCell = 0;
-            //                e.UnitE(cellIdxCurrent).Dispose();
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (e.ExtraToolWeaponT(cellIdxCurrent).HaveToolWeapon())
-            //            {
-            //                e.AddToolWeaponsInInventor(e.UnitPlayerT(cellIdxCurrent), e.ExtraTWLevelT(cellIdxCurrent), e.ExtraToolWeaponT(cellIdxCurrent), 1);
-            //            }
-
-            //            e.WhereViewDataUnitC(e.WhereViewDataUnitC(cellIdxCurrent).ViewIdxCell).DataIdxCell = 0;
-            //            e.UnitE(cellIdxCurrent).Dispose();
-            //        }
-            //    }
+                if (unitC_0.HaveUnit)
+                {
+                    if (AboutGameC.GameModeT == GameModeTypes.TrainingOffline)
+                    {
+                        if (unitC_0.PlayerT == PlayerTypes.First)
+                        {
+                            TakeUnitFromField(currentCellIdx_0);
+                        }
+                    }
+                    else
+                    {
+                        TakeUnitFromField(currentCellIdx_0);
+                    }
+                }
 
 
-            //    if (e.BuildingOnCellT(cellIdxCurrent).HaveBuilding())
-            //    {
-            //        if (e.BuildingOnCellT(cellIdxCurrent).Is(BuildingTypes.Camp))
-            //        {
-            //            //Es.WhereBuildingEs.HaveBuild(BuildEs(cell_0).BuildingE, cell_0).HaveBuilding.Have = false;
-            //            //Es.BuildE(cell_0).BuildingE.Destroy(Es);
-            //        }
-            //    }
+                if (BuildingC(currentCellIdx_0).HaveBuilding)
+                {
+                    BuildingC(currentCellIdx_0).Dispose();
+                }
 
-            //    else
-            //    {
-            //        if (e.YoungForestC(cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
-            //        {
-            //            e.YoungForestC(cellIdxCurrent).Resources = 0;
+                else
+                {
 
-            //            e.AdultForestC(cellIdxCurrent).SetRandom(ValuesChessy.MIN_RESOURCES_FOR_SPAWN, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
-            //        }
-            //    }
-            //}
+                }
+
+                if (EnvironmentC(currentCellIdx_0).HaveEnvironment(EnvironmentTypes.YoungForest))
+                {
+                    EnvironmentC(currentCellIdx_0).Set(EnvironmentTypes.YoungForest, 0);
+                    EnvironmentC(currentCellIdx_0).SetRandom(EnvironmentTypes.AdultForest, ValuesChessy.MIN_RESOURCES_FOR_SPAWN, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
+                }
+                else
+                {
+                    if (!EnvironmentC(currentCellIdx_0).HaveEnvironment(EnvironmentTypes.AdultForest))
+                    {
+                        if (Random.Range(0f, 1f) < 0.1f)
+                        {
+                            EnvironmentC(currentCellIdx_0).Set(EnvironmentTypes.AdultForest, 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        void TakeUnitFromField(in byte cellIdx_0)
+        {
+            var unitC_0 = UnitC(cellIdx_0);
+            var mainTWC_0 = UnitMainTWC(cellIdx_0);
+            var extaTWC_0 = UnitExtraTWC(cellIdx_0);
+
+            if (mainTWC_0.ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff) || mainTWC_0.ToolWeaponT == ToolsWeaponsWarriorTypes.Axe && mainTWC_0.LevelT == LevelTypes.Second)
+            {
+                ToolWeaponsInInventoryC(unitC_0.PlayerT).Add(mainTWC_0.ToolWeaponT, mainTWC_0.LevelT);
+            }
+
+            if (UnitExtraTWC(cellIdx_0).HaveToolWeapon)
+            {
+                ToolWeaponsInInventoryC(unitC_0.PlayerT).Add(extaTWC_0.ToolWeaponT, extaTWC_0.LevelT);
+            }
+
+            if (unitC_0.UnitT == UnitTypes.Tree)
+            {
+                AboutGameC.HaveTreeUnitInGame = false;
+            }
+
+            UnitViewDataC(UnitViewDataC(cellIdx_0).ViewIdxCell).DataIdxCell = 0;
+            unitC_0.Dispose();
         }
     }
 }

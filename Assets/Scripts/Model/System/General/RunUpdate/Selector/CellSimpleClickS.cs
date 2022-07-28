@@ -24,49 +24,49 @@ namespace Chessy.Model.System
             _mistakeC.MistakeT = MistakeTypes.None;
 
 
-            _dataFromViewC.AnimationCell(_cellsC.Current, AnimationCellTypes.AdultForest).Invoke();
-            _dataFromViewC.AnimationCell(_unitWhereViewDataCs[_cellsC.Current].ViewIdxCell, AnimationCellTypes.JumpAppearanceUnit).Invoke();
+            _dataFromViewC.AnimationCell(IndexesCellsC.Current, AnimationCellTypes.AdultForest).Invoke();
+            _dataFromViewC.AnimationCell(_unitWhereViewDataCs[IndexesCellsC.Current].ViewIdxCell, AnimationCellTypes.JumpAppearanceUnit).Invoke();
 
 
 
 
 
-            if (_cellsC.IsSelectedCell)
+            if (IndexesCellsC.IsSelectedCell)
             {
-                _aboutGameC.IsSelectedCity = false;
+                AboutGameC.IsSelectedCity = false;
 
 
 
-                if (_aboutGameC.LessonT.HaveLesson())
+                if (AboutGameC.LessonT.HaveLesson())
                 {
-                    if (_aboutGameC.LessonT >= LessonTypes.ClickAtYourPawn)
+                    if (AboutGameC.LessonT >= LessonTypes.ClickAtYourPawn)
                     {
-                        if (_aboutGameC.LessonT == LessonTypes.ClickAtYourPawn)
+                        if (AboutGameC.LessonT == LessonTypes.ClickAtYourPawn)
                         {
-                            if (_unitCs[_cellsC.Current].UnitT == UnitTypes.Pawn && _unitCs[_cellsC.Current].PlayerT == _aboutGameC.CurrentPlayerIT)
+                            if (_unitCs[IndexesCellsC.Current].UnitT == UnitTypes.Pawn && _unitCs[IndexesCellsC.Current].PlayerT == AboutGameC.CurrentPlayerIT)
                             {
-                                 _s.SetNextLesson();
+                                _s.SetNextLesson();
                             }
                         }
 
-                        else if (_aboutGameC.LessonT == LessonTypes.ShiftPawnHere)
+                        else if (AboutGameC.LessonT == LessonTypes.ShiftPawnHere)
                         {
-                            if (_cellsC.Current == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                            if (IndexesCellsC.Current == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                             {
-                                if (_unitCs[_cellsC.Current].UnitT == UnitTypes.Pawn)
+                                if (_unitCs[IndexesCellsC.Current].UnitT == UnitTypes.Pawn)
                                 {
-                                     _s.SetNextLesson();
+                                    _s.SetNextLesson();
                                 }
                             }
                         }
 
-                        if (_unitCs[_cellsC.Selected].HaveUnit)
+                        if (_unitCs[IndexesCellsC.Selected].HaveUnit)
                         {
-                            if (_unitCs[_cellsC.Current].HaveUnit)
+                            if (_unitCs[IndexesCellsC.Current].HaveUnit)
                             {
-                                if (_whereSimpleAttackCs[_cellsC.Selected].Can(_cellsC.Current) || _whereUniqueAttackCs[_cellsC.Selected].Can(_cellsC.Current))
+                                if (_whereSimpleAttackCs[IndexesCellsC.Selected].Can(IndexesCellsC.Current) || _whereUniqueAttackCs[IndexesCellsC.Selected].Can(IndexesCellsC.Current))
                                 {
-                                    TryAttack(_cellsC.Selected, _cellsC.Current);
+                                    TryAttack(IndexesCellsC.Selected, IndexesCellsC.Current);
                                     //_selectorSoundS.Sound();
                                 }
                                 //else if (_unitCs[_cellsC.Current).Is(UnitTypes.Pawn) && _unitCs[_cellsC.Current).Is(_aboutGameC.CurrentPlayerIT)
@@ -86,21 +86,21 @@ namespace Chessy.Model.System
                                 //}
                                 //else if (!_unitCs[_cellsC.Current).Is(UnitTypes.King))
                                 //{
-                                    
 
-                                    
+
+
                                 //}
 
-                                _aboutGameC.IsSelectedCity = false;
+                                AboutGameC.IsSelectedCity = false;
                                 SetNewSelectedCell();
                                 _selectorSoundS.Sound();
                             }
 
                             else
                             {
-                                if (_unitCs[_cellsC.Selected].PlayerT.Is(_aboutGameC.CurrentPlayerIT) && _whereUnitCanShiftCs[_cellsC.Selected].CanShiftHere(_cellsC.Current))
+                                if (_unitCs[IndexesCellsC.Selected].PlayerT.Is(AboutGameC.CurrentPlayerIT) && _whereUnitCanShiftCs[IndexesCellsC.Selected].CanShiftHere(IndexesCellsC.Current))
                                 {
-                                    TryShift(_cellsC.Selected, _cellsC.Current);
+                                    TryShift(IndexesCellsC.Selected, IndexesCellsC.Current);
                                 }
                                 else
                                 {
@@ -117,9 +117,9 @@ namespace Chessy.Model.System
                             //{
                             //    if (_aboutGameC.LessonT >= LessonTypes.ChangeDirectionWind)
                             //    {
-                                   
 
-                                   
+
+
                             //        _selectorSoundS.Sound();
                             //    }
                             //}
@@ -127,7 +127,7 @@ namespace Chessy.Model.System
                             //{
                             //    _aboutGameC.IsSelectedCity = false;
                             //}
-                            _aboutGameC.IsSelectedCity = false;
+                            AboutGameC.IsSelectedCity = false;
                             SetNewSelectedCell();
                             _selectorSoundS.Sound();
                         }
@@ -136,18 +136,18 @@ namespace Chessy.Model.System
 
                 else
                 {
-                    if (_unitCs[_cellsC.Selected].HaveUnit)
+                    if (_unitCs[IndexesCellsC.Selected].HaveUnit)
                     {
-                        if (_whereSimpleAttackCs[_cellsC.Selected].Can(_cellsC.Current)
-                        || _whereUniqueAttackCs[_cellsC.Selected].Can(_cellsC.Current))
+                        if (_whereSimpleAttackCs[IndexesCellsC.Selected].Can(IndexesCellsC.Current)
+                        || _whereUniqueAttackCs[IndexesCellsC.Selected].Can(IndexesCellsC.Current))
                         {
-                            TryAttack(_cellsC.Selected, _cellsC.Current);
+                            TryAttack(IndexesCellsC.Selected, IndexesCellsC.Current);
                         }
 
-                        else if (_unitCs[_cellsC.Selected].PlayerT.Is(_aboutGameC.CurrentPlayerIT)
-                            && _whereUnitCanShiftCs[_cellsC.Selected].CanShiftHere(_cellsC.Current))
+                        else if (_unitCs[IndexesCellsC.Selected].PlayerT.Is(AboutGameC.CurrentPlayerIT)
+                            && _whereUnitCanShiftCs[IndexesCellsC.Selected].CanShiftHere(IndexesCellsC.Current))
                         {
-                            TryShift(_cellsC.Selected, _cellsC.Current);
+                            TryShift(IndexesCellsC.Selected, IndexesCellsC.Current);
                         }
 
                         else
@@ -169,39 +169,39 @@ namespace Chessy.Model.System
             {
 
 
-                if (_aboutGameC.LessonT.HaveLesson())
+                if (AboutGameC.LessonT.HaveLesson())
                 {
-                    if (_aboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse))
+                    if (AboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse))
                     {
 
                     }
                     else
                     {
-                        _aboutGameC.IsSelectedCity = false;
+                        AboutGameC.IsSelectedCity = false;
                     }
 
-                    if (_aboutGameC.LessonT >= LessonTypes.ClickAtYourPawn)
+                    if (AboutGameC.LessonT >= LessonTypes.ClickAtYourPawn)
                     {
-                        if (_aboutGameC.LessonT == LessonTypes.ClickAtYourPawn)
+                        if (AboutGameC.LessonT == LessonTypes.ClickAtYourPawn)
                         {
-                            if (_unitCs[_cellsC.Current].UnitT == UnitTypes.Pawn && _unitCs[_cellsC.Current].PlayerT == _aboutGameC.CurrentPlayerIT)
+                            if (_unitCs[IndexesCellsC.Current].UnitT == UnitTypes.Pawn && _unitCs[IndexesCellsC.Current].PlayerT == AboutGameC.CurrentPlayerIT)
                             {
-                                 _s.SetNextLesson();
+                                _s.SetNextLesson();
                             }
                         }
 
-                        else if (_aboutGameC.LessonT == LessonTypes.ShiftPawnHere)
+                        else if (AboutGameC.LessonT == LessonTypes.ShiftPawnHere)
                         {
-                            if (_cellsC.Current == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                            if (IndexesCellsC.Current == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                             {
-                                if (_unitCs[_cellsC.Current].UnitT == UnitTypes.Pawn)
+                                if (_unitCs[IndexesCellsC.Current].UnitT == UnitTypes.Pawn)
                                 {
-                                     _s.SetNextLesson();
+                                    _s.SetNextLesson();
                                 }
                             }
                         }
 
-                        if (_unitCs[_cellsC.Current].UnitT == UnitTypes.Pawn || !_unitCs[_cellsC.Current].HaveUnit)
+                        if (_unitCs[IndexesCellsC.Current].UnitT == UnitTypes.Pawn || !_unitCs[IndexesCellsC.Current].HaveUnit)
                         {
                             SetNewSelectedCell();
                             _selectorSoundS.Sound();
@@ -211,7 +211,7 @@ namespace Chessy.Model.System
 
                 else
                 {
-                    _aboutGameC.IsSelectedCity = false;
+                    AboutGameC.IsSelectedCity = false;
 
                     SetNewSelectedCell();
                     _selectorSoundS.Sound();
@@ -221,8 +221,8 @@ namespace Chessy.Model.System
 
         void SetNewSelectedCell()
         {
-            _cellsC.PreviousSelected = _cellsC.Selected;
-            _cellsC.Selected = _cellsC.Current;
+            IndexesCellsC.PreviousSelected = IndexesCellsC.Selected;
+            IndexesCellsC.Selected = IndexesCellsC.Current;
         }
 
         void TryShift(in byte idxCellFrom, in byte idxCellTo)

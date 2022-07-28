@@ -1,5 +1,5 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+namespace Chessy.Model
 {
     internal abstract class SystemUIAbstract : SystemAbstract
     {

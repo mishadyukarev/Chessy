@@ -1,9 +1,4 @@
 ﻿using Chessy.Model.Entity;
-using Photon.Pun;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using static Chessy.Model.System.OnPhotonSerializeViewS;
 
 namespace Chessy.Model.System
 {
@@ -489,246 +484,246 @@ namespace Chessy.Model.System
         }
 
 
-    //    internal void SyncData(in object[] objects)
-    //    {
-    //        if (PhotonNetwork.IsMasterClient) return;
+        //    internal void SyncData(in object[] objects)
+        //    {
+        //        if (PhotonNetwork.IsMasterClient) return;
 
 
-    //        var idxCurrent = 1;
+        //        var idxCurrent = 1;
 
-    //        var syncT = (SyncTypes)objects[idxCurrent++];
+        //        var syncT = (SyncTypes)objects[idxCurrent++];
 
-    //        switch (syncT)
-    //        {
-    //            case SyncTypes.Cell:
-    //                {
-    //                    var curCellIdx_0 = (byte)objects[idxCurrent++];
-    //                    var cellSyncT = (CellSyncTypes)objects[idxCurrent++];
+        //        switch (syncT)
+        //        {
+        //            case SyncTypes.Cell:
+        //                {
+        //                    var curCellIdx_0 = (byte)objects[idxCurrent++];
+        //                    var cellSyncT = (CellSyncTypes)objects[idxCurrent++];
 
-    //                    switch (cellSyncT)
-    //                    {
-    //                        case CellSyncTypes.UnitType:
-    //                            _unitCs[curCellIdx_0).UnitType = (UnitTypes)objects[idxCurrent++];
-    //                            break;
+        //                    switch (cellSyncT)
+        //                    {
+        //                        case CellSyncTypes.UnitType:
+        //                            _unitCs[curCellIdx_0).UnitType = (UnitTypes)objects[idxCurrent++];
+        //                            break;
 
-    //                        case CellSyncTypes.UnitIdxView:
-    //                            _unitWhereViewDataCs[curCellIdx_0).ViewIdxCell = (byte)objects[idxCurrent++];
-    //                            break;
+        //                        case CellSyncTypes.UnitIdxView:
+        //                            _unitWhereViewDataCs[curCellIdx_0).ViewIdxCell = (byte)objects[idxCurrent++];
+        //                            break;
 
-    //                        case CellSyncTypes.UnitIdxData:
-    //                            _unitWhereViewDataCs[curCellIdx_0).DataIdxCell = (byte)objects[idxCurrent++];
-    //                            break;
+        //                        case CellSyncTypes.UnitIdxData:
+        //                            _unitWhereViewDataCs[curCellIdx_0).DataIdxCell = (byte)objects[idxCurrent++];
+        //                            break;
 
-    //                        case CellSyncTypes.UnitPossition:
-    //                            _e.UnitPossitionOnCellC(curCellIdx_0).Position = (Vector3)objects[idxCurrent++];
-    //                            break;
+        //                        case CellSyncTypes.UnitPossition:
+        //                            _e.UnitPossitionOnCellC(curCellIdx_0).Position = (Vector3)objects[idxCurrent++];
+        //                            break;
 
-    //                        default: throw new Exception();
-    //                    }
-    //                }
-    //                break;
+        //                        default: throw new Exception();
+        //                    }
+        //                }
+        //                break;
 
-    //            default: throw new Exception();
-    //        }
-
-
-    //        _updateAllViewC.NeedUpdateView = true;
-
-    //        //switch (syncT)
-    //        //{
-    //        //    case SyncTypes.Cell:
-    //        //        var idxCell = (byte)objects[idxCurrent++];
-    //        //        _unitCs[idxCell).UnitT = (UnitTypes)objects[idxCurrent++];
-    //        //        _unitCs[idxCell).LevelT = (LevelTypes)objects[idxCurrent++];
-    //        //        _unitCs[idxCell).PlayerT = (PlayerTypes)objects[idxCurrent++];
-    //        //        _unitCs[idxCell).ConditionT = (ConditionUnitTypes)objects[idxCurrent++];
-    //        //        _unitCs[idxCell).IsArcherDirectedToRight = (bool)objects[idxCurrent++];
-    //        //        _e.ShiftingInfoForUnitC(idxCell).WhereIdxCell = (byte)objects[idxCurrent++];
-    //        //        _hpUnitCs[idxCell).Health = (double)objects[idxCurrent++];
-    //        //        _unitWaterCs[idxCell).Water = (double)objects[idxCurrent++];
-    //        //        _unitCs[idxCell).DamageSimpleAttack = (double)objects[idxCurrent++];
-    //        //        _unitCs[idxCell).DamageOnCell = (double)objects[idxCurrent++];
-
-    //        //        //_e.UnitExtraTWC(idxCell).ToolWeaponT = (ToolsWeaponsWarriorTypes)objects[idxCurrent++];
-    //        //        //_e.UnitExtraTWC(idxCell).LevelT = (LevelTypes)objects[idxCurrent++];
-    //        //        //_e.UnitExtraTWC(idxCell).ProtectionShield = (float)objects[idxCurrent++];
-
-    //        //        //_e.ExtactionResourcesWithWarriorC(idxCell).HowManyWarriourCanExtractAdultForest = (float)objects[idxCurrent++];
-    //        //        //_e.ExtactionResourcesWithWarriorC(idxCell).HowManyWarriourCanExtractHill = (float)objects[idxCurrent++];
-
-    //        //        //_effectsUnitCs[idxCell).StunHowManyUpdatesNeedStay = (float)objects[idxCurrent++];
-    //        //        //_effectsUnitCs[idxCell).ProtectionRainyMagicShield = (float)objects[idxCurrent++];
-    //        //        //_effectsUnitCs[idxCell).HaveFrozenArrawArcher = (bool)objects[idxCurrent++];
+        //            default: throw new Exception();
+        //        }
 
 
+        //        _updateAllViewC.NeedUpdateView = true;
 
-    //        //        //_e.EffectE(idxCell).HaveFire = (bool)objects[idxCurrent++];
+        //        //switch (syncT)
+        //        //{
+        //        //    case SyncTypes.Cell:
+        //        //        var idxCell = (byte)objects[idxCurrent++];
+        //        //        _unitCs[idxCell).UnitT = (UnitTypes)objects[idxCurrent++];
+        //        //        _unitCs[idxCell).LevelT = (LevelTypes)objects[idxCurrent++];
+        //        //        _unitCs[idxCell).PlayerT = (PlayerTypes)objects[idxCurrent++];
+        //        //        _unitCs[idxCell).ConditionT = (ConditionUnitTypes)objects[idxCurrent++];
+        //        //        _unitCs[idxCell).IsArcherDirectedToRight = (bool)objects[idxCurrent++];
+        //        //        _e.ShiftingInfoForUnitC(idxCell).WhereIdxCell = (byte)objects[idxCurrent++];
+        //        //        _hpUnitCs[idxCell).Health = (double)objects[idxCurrent++];
+        //        //        _unitWaterCs[idxCell).Water = (double)objects[idxCurrent++];
+        //        //        _unitCs[idxCell).DamageSimpleAttack = (double)objects[idxCurrent++];
+        //        //        _unitCs[idxCell).DamageOnCell = (double)objects[idxCurrent++];
 
-    //        //        for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
-    //        //        {
-    //        //            _unitVisibleCs[idxCell).Set(playerT, (bool)objects[idxCurrent++]);
-    //        //        }
-    //        //        break;
+        //        //        //_e.UnitExtraTWC(idxCell).ToolWeaponT = (ToolsWeaponsWarriorTypes)objects[idxCurrent++];
+        //        //        //_e.UnitExtraTWC(idxCell).LevelT = (LevelTypes)objects[idxCurrent++];
+        //        //        //_e.UnitExtraTWC(idxCell).ProtectionShield = (float)objects[idxCurrent++];
 
-    //        //    case SyncTypes.Environment:
-    //        //        {
-    //        //            idxCell = (byte)objects[idxCurrent++];
-    //        //            _e.YoungForestC(idxCell).Resources = (float)objects[idxCurrent++];
-    //        //            _environmentCs[idxCell).Resources = (float)objects[idxCurrent++];
-    //        //            _environmentCs[idxCell).Resources = (float)objects[idxCurrent++];
-    //        //            _e.MountainC(idxCell).Resources = (float)objects[idxCurrent++];
-    //        //        }
-    //        //        break;
+        //        //        //_e.ExtactionResourcesWithWarriorC(idxCell).HowManyWarriourCanExtractAdultForest = (float)objects[idxCurrent++];
+        //        //        //_e.ExtactionResourcesWithWarriorC(idxCell).HowManyWarriourCanExtractHill = (float)objects[idxCurrent++];
 
-
-    //        //    case SyncTypes.MainToolWeapon:
-    //        //        {
-    //        //            idxCell = (byte)objects[idxCurrent++];
-    //        //            _e.MainToolWeaponC(idxCell).ToolWeaponT = (ToolsWeaponsWarriorTypes)objects[idxCurrent++];
-    //        //            _e.MainToolWeaponC(idxCell).LevelT = (LevelTypes)objects[idxCurrent++];
-    //        //        }
-    //        //        break;
-
-
-    //        //    case SyncTypes.WaterOnCell:
-    //        //        {
-    //        //            idxCell = (byte)objects[idxCurrent++];
-    //        //            _environmentCs[idxCell).Resources = (float)objects[idxCurrent++];
-    //        //        }
-    //        //        break;
-
-    //        //    case SyncTypes.WaterUnit:
-    //        //        {
-    //        //            idxCell = (byte)objects[idxCurrent++];
-    //        //            _unitWaterCs[idxCell).Water = (double)objects[idxCurrent++];
-    //        //        }
-    //        //        break;
-
-    //        //    case SyncTypes.Else:
-    //        //        {
-    //        //            _e.IsStartedGame = (bool)objects[idxCurrent++];
-    //        //            _e.WinnerPlayerT = (PlayerTypes)objects[idxCurrent++];
-    //        //            _e.DirectWindT = (DirectTypes)objects[idxCurrent++];
-    //        //            _e.SpeedWind = (byte)objects[idxCurrent++];
-    //        //            _e.SunSideT = (SunSideTypes)objects[idxCurrent++];
-
-    //        //            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
-    //        //            {
-    //        //                PlayerInfoC(playerT).IsReadyForStartOnlineGame = (bool)objects[idxCurrent++];
-    //        //            }
-
-    //        //                //for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
-    //        //                //{
-    //        //                //_e.SetUnitOnCellT(cell_0, (UnitTypes)objects[idxCurrent++]);
-    //        //                //_e.SetUnitLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
-    //        //                //_e.SetUnitPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
-    //        //                //_e.SetUnitConditionT(cell_0, (ConditionUnitTypes)objects[idxCurrent++]);
-    //        //                //_unitCs[cell_0).IsArcherDirectedToRight = (bool)objects[idxCurrent++];
-    //        //                //for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
-    //        //                //    _unitVisibleCs[cell_0).Set(playerT, (bool)objects[idxCurrent++]);
+        //        //        //_effectsUnitCs[idxCell).StunHowManyUpdatesNeedStay = (float)objects[idxCurrent++];
+        //        //        //_effectsUnitCs[idxCell).ProtectionRainyMagicShield = (float)objects[idxCurrent++];
+        //        //        //_effectsUnitCs[idxCell).HaveFrozenArrawArcher = (bool)objects[idxCurrent++];
 
 
-    //        //                //_hpUnitCs[cell_0).Health = (double)objects[idxCurrent++];
-    //        //                //_e.EnergyUnitC(cell_0).Energy = (double)objects[idxCurrent++];
-    //        //                //_unitWaterCs[cell_0).Water = (double)objects[idxCurrent++];
 
-    //        //                //_unitCs[cell_0).DamageSimpleAttack = (double)objects[idxCurrent++];
-    //        //                //_unitCs[cell_0).DamageOnCell = (double)objects[idxCurrent++];
+        //        //        //_e.EffectE(idxCell).HaveFire = (bool)objects[idxCurrent++];
 
-    //        //                //_e.SetMainToolWeaponT(cell_0, (ToolsWeaponsWarriorTypes)objects[idxCurrent++]);
-    //        //                //_e.SetMainTWLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
+        //        //        for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
+        //        //        {
+        //        //            _unitVisibleCs[idxCell).Set(playerT, (bool)objects[idxCurrent++]);
+        //        //        }
+        //        //        break;
 
-    //        //                //_e.SetExtraToolWeaponT(cell_0, (ToolsWeaponsWarriorTypes)objects[idxCurrent++]);
-    //        //                //_e.SetExtraTWLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
-    //        //                //_e.UnitExtraTWE(cell_0).ProtectionShield = (float)objects[idxCurrent++];
-
-    //        //                //_e.ExtactionResourcesWithWarriorC(cell_0).HowManyWarriourCanExtractAdultForest = (float)objects[idxCurrent++];
-    //        //                //_e.ExtactionResourcesWithWarriorC(cell_0).HowManyWarriourCanExtractHill = (float)objects[idxCurrent++];
-
-    //        //                //_e.SetLastDiedUnitT(cell_0, (UnitTypes)objects[idxCurrent++]);
-    //        //                //_e.SetLastDiedLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
-    //        //                //_e.SetLastDiedPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
-
-    //        //                //_e.UnitButtonAbilitiesC(cell_0).Sync((byte[])objects[idxCurrent++]);
-    //        //                //_cooldownAbilityCs[cell_0).Sync((float[])objects[idxCurrent++]);
-
-    //        //                //_effectsUnitCs[cell_0).StunHowManyUpdatesNeedStay = (float)objects[idxCurrent++];
-    //        //                //_effectsUnitCs[cell_0).ProtectionRainyMagicShield = (float)objects[idxCurrent++];
-    //        //                //_effectsUnitCs[cell_0).HaveFrozenArrawArcher = (bool)objects[idxCurrent++];
+        //        //    case SyncTypes.Environment:
+        //        //        {
+        //        //            idxCell = (byte)objects[idxCurrent++];
+        //        //            _e.YoungForestC(idxCell).Resources = (float)objects[idxCurrent++];
+        //        //            _environmentCs[idxCell).Resources = (float)objects[idxCurrent++];
+        //        //            _environmentCs[idxCell).Resources = (float)objects[idxCurrent++];
+        //        //            _e.MountainC(idxCell).Resources = (float)objects[idxCurrent++];
+        //        //        }
+        //        //        break;
 
 
-    //        //                //#region Building
-
-    //        //                //_e.SetBuildingOnCellT(cell_0, (BuildingTypes)objects[idxCurrent++]);
-    //        //                //_e.SetBuildingLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
-    //        //                //_e.SetBuildingPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
-    //        //                //_e.BuildingHpC(cell_0).Health = (double)objects[idxCurrent++];
-    //        //                //_visibleBuildingCs[cell_0).Sync((bool[])objects[idxCurrent++]);
-
-    //        //                //#endregion
+        //        //    case SyncTypes.MainToolWeapon:
+        //        //        {
+        //        //            idxCell = (byte)objects[idxCurrent++];
+        //        //            _e.MainToolWeaponC(idxCell).ToolWeaponT = (ToolsWeaponsWarriorTypes)objects[idxCurrent++];
+        //        //            _e.MainToolWeaponC(idxCell).LevelT = (LevelTypes)objects[idxCurrent++];
+        //        //        }
+        //        //        break;
 
 
-    //        //                //_e.YoungForestC(cell_0).Resources = (float)objects[idxCurrent++];
-    //        //                //_environmentCs[cell_0).Resources = (float)objects[idxCurrent++];
-    //        //                //_e.MountainC(cell_0).Resources = (float)objects[idxCurrent++];
-    //        //                //_environmentCs[cell_0).Resources = (float)objects[idxCurrent++];
-    //        //                //_environmentCs[cell_0).Resources = (float)objects[idxCurrent++];
+        //        //    case SyncTypes.WaterOnCell:
+        //        //        {
+        //        //            idxCell = (byte)objects[idxCurrent++];
+        //        //            _environmentCs[idxCell).Resources = (float)objects[idxCurrent++];
+        //        //        }
+        //        //        break;
 
-    //        //                //_e.SetRiverT(cell_0, (RiverTypes)objects[idxCurrent++]);
-    //        //                //_haveRiverAroundCellCs[cell_0).Sync((bool[])objects[idxCurrent++]);
+        //        //    case SyncTypes.WaterUnit:
+        //        //        {
+        //        //            idxCell = (byte)objects[idxCurrent++];
+        //        //            _unitWaterCs[idxCell).Water = (double)objects[idxCurrent++];
+        //        //        }
+        //        //        break;
 
-    //        //                //_fireCs[cell_0) = (bool)objects[idxCurrent++];
+        //        //    case SyncTypes.Else:
+        //        //        {
+        //        //            _e.IsStartedGame = (bool)objects[idxCurrent++];
+        //        //            _e.WinnerPlayerT = (PlayerTypes)objects[idxCurrent++];
+        //        //            _e.DirectWindT = (DirectTypes)objects[idxCurrent++];
+        //        //            _e.SpeedWind = (byte)objects[idxCurrent++];
+        //        //            _e.SunSideT = (SunSideTypes)objects[idxCurrent++];
 
-    //        //                //_e.TrailVisibleC(cell_0).Sync((bool[])objects[idxCurrent++]);
-    //        //                //_hpTrailCs[cell_0).Sync((float[])objects[idxCurrent++]);
-    //        //                //}
+        //        //            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+        //        //            {
+        //        //                PlayerInfoC(playerT).IsReadyForStartOnlineGame = (bool)objects[idxCurrent++];
+        //        //            }
 
-    //        //                //_e.IsStartedGame = (bool)objects[idxCurrent++];
-    //        //                //_e.Motions = (int)objects[idxCurrent++];
-    //        //                //_e.WhereTeleportC.StartIdxCell = (byte)objects[idxCurrent++];
-    //        //                //_e.WhereTeleportC.EndIdxCell = (byte)objects[idxCurrent++];
-    //        //                //_e.WinnerPlayerT = (PlayerTypes)objects[idxCurrent++];
+        //        //                //for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
+        //        //                //{
+        //        //                //_e.SetUnitOnCellT(cell_0, (UnitTypes)objects[idxCurrent++]);
+        //        //                //_e.SetUnitLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
+        //        //                //_e.SetUnitPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
+        //        //                //_e.SetUnitConditionT(cell_0, (ConditionUnitTypes)objects[idxCurrent++]);
+        //        //                //_unitCs[cell_0).IsArcherDirectedToRight = (bool)objects[idxCurrent++];
+        //        //                //for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
+        //        //                //    _unitVisibleCs[cell_0).Set(playerT, (bool)objects[idxCurrent++]);
 
-    //        //                //_e.DirectWindT = (DirectTypes)objects[idxCurrent++];
-    //        //                //_e.SpeedWind = (byte)objects[idxCurrent++];
-    //        //                //_e.CenterCloudCellIdx = (byte)objects[idxCurrent++];
-    //        //                //_e.SunSideT = (SunSideTypes)objects[idxCurrent++];
 
-    //        //                //for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
-    //        //                //{
-    //        //                //    PlayerInfoE(playerT).PlayerInfoC.IsReadyForStartOnlineGame = (bool)objects[idxCurrent++];
-    //        //                //PlayerInfoE(playerT).PlayerInfoC.WoodForBuyHouse = (float)objects[idxCurrent++];
-    //        //                //PlayerInfoE(playerT).BuildingsInTownInfoC.Sync((bool[])objects[idxCurrent++]);
+        //        //                //_hpUnitCs[cell_0).Health = (double)objects[idxCurrent++];
+        //        //                //_e.EnergyUnitC(cell_0).Energy = (double)objects[idxCurrent++];
+        //        //                //_unitWaterCs[cell_0).Water = (double)objects[idxCurrent++];
 
-    //        //                //PlayerInfoC(playerT).HaveKingInInventor = (bool)objects[idxCurrent++];
+        //        //                //_unitCs[cell_0).DamageSimpleAttack = (double)objects[idxCurrent++];
+        //        //                //_unitCs[cell_0).DamageOnCell = (double)objects[idxCurrent++];
 
-    //        //                //PlayerInfoE(playerT).PawnInfoC.PeopleInCity = (int)objects[idxCurrent++];
-    //        //                //PlayerInfoE(playerT).PawnInfoC.AmountInGame = (int)objects[idxCurrent++];
+        //        //                //_e.SetMainToolWeaponT(cell_0, (ToolsWeaponsWarriorTypes)objects[idxCurrent++]);
+        //        //                //_e.SetMainTWLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
 
-    //        //                //PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = (bool)objects[idxCurrent++];
-    //        //                //PlayerInfoE(playerT).GodInfoC.UnitT = (UnitTypes)objects[idxCurrent++];
-    //        //                //PlayerInfoE(playerT).GodInfoC.Cooldown = (float)objects[idxCurrent++];
+        //        //                //_e.SetExtraToolWeaponT(cell_0, (ToolsWeaponsWarriorTypes)objects[idxCurrent++]);
+        //        //                //_e.SetExtraTWLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
+        //        //                //_e.UnitExtraTWE(cell_0).ProtectionShield = (float)objects[idxCurrent++];
 
-    //        //                //for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
-    //        //                //{
-    //        //                //    for (var twT = (ToolsWeaponsWarriorTypes)1; twT < ToolsWeaponsWarriorTypes.End; twT++)
-    //        //                //    {
-    //        //                //        _e.SetToolWeaponsInInventor(playerT, levelT, twT, (int)objects[idxCurrent++]);
-    //        //                //    }
-    //        //                //}
+        //        //                //_e.ExtactionResourcesWithWarriorC(cell_0).HowManyWarriourCanExtractAdultForest = (float)objects[idxCurrent++];
+        //        //                //_e.ExtactionResourcesWithWarriorC(cell_0).HowManyWarriourCanExtractHill = (float)objects[idxCurrent++];
 
-    //        //                //for (var resT = (ResourceTypes)1; resT < ResourceTypes.End; resT++)
-    //        //                //{
-    //        //                //    _e.SetResourcesInInventory(playerT, resT, (float)objects[idxCurrent++]);
-    //        //                //}
-    //        //                //}
-    //        //            }
-    //        //        break;
+        //        //                //_e.SetLastDiedUnitT(cell_0, (UnitTypes)objects[idxCurrent++]);
+        //        //                //_e.SetLastDiedLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
+        //        //                //_e.SetLastDiedPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
 
-    //        //    default: throw new Exception();
-    //        //}
+        //        //                //_e.UnitButtonAbilitiesC(cell_0).Sync((byte[])objects[idxCurrent++]);
+        //        //                //_cooldownAbilityCs[cell_0).Sync((float[])objects[idxCurrent++]);
 
-    //        ////_updateAllViewC.NeedUpdateView = true;
-    //    }
+        //        //                //_effectsUnitCs[cell_0).StunHowManyUpdatesNeedStay = (float)objects[idxCurrent++];
+        //        //                //_effectsUnitCs[cell_0).ProtectionRainyMagicShield = (float)objects[idxCurrent++];
+        //        //                //_effectsUnitCs[cell_0).HaveFrozenArrawArcher = (bool)objects[idxCurrent++];
+
+
+        //        //                //#region Building
+
+        //        //                //_e.SetBuildingOnCellT(cell_0, (BuildingTypes)objects[idxCurrent++]);
+        //        //                //_e.SetBuildingLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
+        //        //                //_e.SetBuildingPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
+        //        //                //_e.BuildingHpC(cell_0).Health = (double)objects[idxCurrent++];
+        //        //                //_visibleBuildingCs[cell_0).Sync((bool[])objects[idxCurrent++]);
+
+        //        //                //#endregion
+
+
+        //        //                //_e.YoungForestC(cell_0).Resources = (float)objects[idxCurrent++];
+        //        //                //_environmentCs[cell_0).Resources = (float)objects[idxCurrent++];
+        //        //                //_e.MountainC(cell_0).Resources = (float)objects[idxCurrent++];
+        //        //                //_environmentCs[cell_0).Resources = (float)objects[idxCurrent++];
+        //        //                //_environmentCs[cell_0).Resources = (float)objects[idxCurrent++];
+
+        //        //                //_e.SetRiverT(cell_0, (RiverTypes)objects[idxCurrent++]);
+        //        //                //_haveRiverAroundCellCs[cell_0).Sync((bool[])objects[idxCurrent++]);
+
+        //        //                //_fireCs[cell_0) = (bool)objects[idxCurrent++];
+
+        //        //                //_e.TrailVisibleC(cell_0).Sync((bool[])objects[idxCurrent++]);
+        //        //                //_hpTrailCs[cell_0).Sync((float[])objects[idxCurrent++]);
+        //        //                //}
+
+        //        //                //_e.IsStartedGame = (bool)objects[idxCurrent++];
+        //        //                //_e.Motions = (int)objects[idxCurrent++];
+        //        //                //_e.WhereTeleportC.StartIdxCell = (byte)objects[idxCurrent++];
+        //        //                //_e.WhereTeleportC.EndIdxCell = (byte)objects[idxCurrent++];
+        //        //                //_e.WinnerPlayerT = (PlayerTypes)objects[idxCurrent++];
+
+        //        //                //_e.DirectWindT = (DirectTypes)objects[idxCurrent++];
+        //        //                //_e.SpeedWind = (byte)objects[idxCurrent++];
+        //        //                //_e.CenterCloudCellIdx = (byte)objects[idxCurrent++];
+        //        //                //_e.SunSideT = (SunSideTypes)objects[idxCurrent++];
+
+        //        //                //for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+        //        //                //{
+        //        //                //    PlayerInfoE(playerT).PlayerInfoC.IsReadyForStartOnlineGame = (bool)objects[idxCurrent++];
+        //        //                //PlayerInfoE(playerT).PlayerInfoC.WoodForBuyHouse = (float)objects[idxCurrent++];
+        //        //                //PlayerInfoE(playerT).BuildingsInTownInfoC.Sync((bool[])objects[idxCurrent++]);
+
+        //        //                //PlayerInfoC(playerT).HaveKingInInventor = (bool)objects[idxCurrent++];
+
+        //        //                //PlayerInfoE(playerT).PawnInfoC.PeopleInCity = (int)objects[idxCurrent++];
+        //        //                //PlayerInfoE(playerT).PawnInfoC.AmountInGame = (int)objects[idxCurrent++];
+
+        //        //                //PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = (bool)objects[idxCurrent++];
+        //        //                //PlayerInfoE(playerT).GodInfoC.UnitT = (UnitTypes)objects[idxCurrent++];
+        //        //                //PlayerInfoE(playerT).GodInfoC.Cooldown = (float)objects[idxCurrent++];
+
+        //        //                //for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
+        //        //                //{
+        //        //                //    for (var twT = (ToolsWeaponsWarriorTypes)1; twT < ToolsWeaponsWarriorTypes.End; twT++)
+        //        //                //    {
+        //        //                //        _e.SetToolWeaponsInInventor(playerT, levelT, twT, (int)objects[idxCurrent++]);
+        //        //                //    }
+        //        //                //}
+
+        //        //                //for (var resT = (ResourceTypes)1; resT < ResourceTypes.End; resT++)
+        //        //                //{
+        //        //                //    _e.SetResourcesInInventory(playerT, resT, (float)objects[idxCurrent++]);
+        //        //                //}
+        //        //                //}
+        //        //            }
+        //        //        break;
+
+        //        //    default: throw new Exception();
+        //        //}
+
+        //        ////_updateAllViewC.NeedUpdateView = true;
+        //    }
     }
 }

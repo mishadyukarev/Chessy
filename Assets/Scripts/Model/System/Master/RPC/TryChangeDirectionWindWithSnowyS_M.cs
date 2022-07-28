@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model.Values;
+﻿using Chessy.Model.Values;
 using Photon.Pun;
 using Photon.Realtime;
 namespace Chessy.Model.System
@@ -12,14 +11,14 @@ namespace Chessy.Model.System
 
             foreach (var item in _idxsAroundCellCs[idx_to].IdxCellsAroundArray)
             {
-                if (_cloudCs[item].IsCenterP)
+                if (CloudC(item).IsCenterP)
                 {
-                    _windC.DirectT = _cellAroundCs[idx_to, item].DirectT.Invert();
+                    WindC.DirectT = _cellAroundCs[idx_to, item].DirectT.Invert();
                     for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
                     {
-                        if (_cloudCs[cellIdx].IsCenterP)
+                        if (CloudC(cellIdx).IsCenterP)
                         {
-                            _shiftCloudCs[cellIdx].WhereNeedShiftIdxCell = _cellsByDirectAroundC[cellIdx].Get(_windC.DirectT);
+                            CloudShiftC(cellIdx).WhereNeedShiftIdxCell = _cellsByDirectAroundC[cellIdx].Get(WindC.DirectT);
                         }
                     }
 

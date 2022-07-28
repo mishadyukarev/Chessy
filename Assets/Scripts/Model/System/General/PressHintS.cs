@@ -41,7 +41,7 @@ namespace Chessy.Model
 
                     if (_buttonT != ButtonTypes.None)
                     {
-                        switch (_buttonsAbilitiesUnitCs[_cellsC.Selected].Ability(_buttonT))
+                        switch (UnitButtonsC(IndexesCellsC.Selected).Ability(_buttonT))
                         {
                             case AbilityTypes.CircularAttack:
                                 _bookC.OpenedNowPageBookT = PageBookTypes.CircularAttackKing;
@@ -113,7 +113,7 @@ namespace Chessy.Model
 
                     else if (_effectButtonT != 0)
                     {
-                        switch (_effectsUnitsRightBarsCs[_cellsC.Selected].Effect((ButtonTypes)_effectButtonT))
+                        switch (_effectsUnitsRightBarsCs[IndexesCellsC.Selected].Effect((ButtonTypes)_effectButtonT))
                         {
                             case EffectTypes.Shield:
                                 _bookC.OpenedNowPageBookT = PageBookTypes.FrozenShield;
@@ -140,9 +140,10 @@ namespace Chessy.Model
 
                     else
                     {
-                        if (_aboutGameC.LessonT == Enum.LessonTypes.HoldPressWarrior)
+                        if (AboutGameC.LessonT == Enum.LessonTypes.HoldPressWarrior)
                         {
-                            /*if (_neededPageBookT == PageBookTypes.Town)  */_s.SetNextLesson();
+                            /*if (_neededPageBookT == PageBookTypes.Town)  */
+                            _s.SetNextLesson();
                         }
 
                         _bookC.OpenedNowPageBookT = _neededPageBookT;

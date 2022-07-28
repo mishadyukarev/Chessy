@@ -1,7 +1,5 @@
 ﻿using Chessy.Model;
-using Chessy.Model.Component;
 using Chessy.View.Component;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -11,8 +9,8 @@ namespace Chessy.View.Entity
     {
         internal readonly GameObject CellGO;
 
-        readonly Dictionary<CellBarTypes, SpriteRendererVC> _bars;
-        readonly Dictionary<DirectTypes, SpriteRendererVC> _trails;
+        readonly SpriteRendererVC[] _bars;
+        readonly SpriteRendererVC[] _trails;
 
         internal readonly GameObjectVC CellParentGOC;
         internal readonly GameObjectVC StandartCellGO;
@@ -38,8 +36,8 @@ namespace Chessy.View.Entity
         internal readonly SupportCellVE SupportCellEs;
         internal readonly RiverVE RiverE;
 
-        public SpriteRendererVC Bar(in CellBarTypes bar) => _bars[bar];
-        public SpriteRendererVC TrailCellVC(in DirectTypes dir) => _trails[dir];
+        public SpriteRendererVC Bar(in CellBarTypes bar) => _bars[(byte)bar];
+        public SpriteRendererVC TrailCellVC(in DirectTypes dir) => _trails[(byte)dir];
 
 
         public CellVEs(in GameObject cellGO)
@@ -78,7 +76,7 @@ namespace Chessy.View.Entity
             SunSideSRC = new SpriteRendererVC(weatherT.Find("SunSide_SR+").GetComponent<SpriteRenderer>());
 
 
-            _bars = new Dictionary<CellBarTypes, SpriteRendererVC>();
+            _bars = new SpriteRendererVC[(byte)CellBarTypes.End];
 
             for (var bar = CellBarTypes.Food; bar < CellBarTypes.End; bar++)
             {
@@ -86,7 +84,7 @@ namespace Chessy.View.Entity
                 var name = bar.ToString();
                 var sr = bars.Find(name).GetComponent<SpriteRenderer>();
 
-                _bars.Add(bar, new SpriteRendererVC(sr));
+                _bars[(byte)bar] = new SpriteRendererVC(sr);
             }
 
             var extractT = cellT.Find("ExtractResourcesAnimations+");
@@ -97,13 +95,13 @@ namespace Chessy.View.Entity
 
 
 
-            _trails = new Dictionary<DirectTypes, SpriteRendererVC>();
+            _trails = new SpriteRendererVC[(byte)DirectTypes.End];
 
             var parent = cellGO.transform.Find("TrailZone");
 
             for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
             {
-                _trails.Add(dirT, new SpriteRendererVC(parent.Find(dirT.ToString()).GetComponent<SpriteRenderer>()));
+                _trails[(byte)dirT] = new SpriteRendererVC(parent.Find(dirT.ToString()).GetComponent<SpriteRenderer>());
             }
 
             RiverE = new RiverVE(cellGO.transform);

@@ -29,11 +29,11 @@ namespace Chessy.View.System
                 {
                     var dataCellIdx = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
-                    if (_unitVisibleCs[dataCellIdx].IsVisible(_aboutGameC.CurrentPlayerIType))
+                    if (_unitVisibleCs[dataCellIdx].IsVisible(AboutGameC.CurrentPlayerIType))
                     {
                         if (_unitCs[dataCellIdx].HaveUnit && !_unitCs[dataCellIdx].UnitType.IsAnimal())
                         {
-                            _needActive[cellIdxCurrent] = !_unitCs[dataCellIdx].HaveCoolDownForAttackAnyUnit;
+                            _needActive[cellIdxCurrent] = !UnitAttackC(dataCellIdx).HaveCoolDownForAttackAnyUnit;
 
                             if (_unitCs[dataCellIdx].PlayerType == PlayerTypes.First)
                             {

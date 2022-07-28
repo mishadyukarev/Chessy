@@ -44,7 +44,7 @@ namespace Chessy.View.System
                 var needActive = _needActive[cellIdxCurrent];
                 ref var wasActivated = ref _wasActivated[cellIdxCurrent];
 
-                if(needActive != wasActivated) _gos[cellIdxCurrent].SetActive(needActive);
+                if (needActive != wasActivated) _gos[cellIdxCurrent].SetActive(needActive);
 
                 wasActivated = needActive;
             }

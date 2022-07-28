@@ -21,16 +21,16 @@ namespace Chessy.Model.System
 
 
             _unitWhereViewDataCs[fromCellIdx].DataIdxCell = dataFromIdxCell;
-            _unitWhereViewDataCs[toCellIdx].DataIdxCell = dataToIdxCell;  
+            _unitWhereViewDataCs[toCellIdx].DataIdxCell = dataToIdxCell;
 
             //_e.UnitPossitionOnCellC(fromCellIdx).Position = possitionFrom;
             //_e.UnitPossitionOnCellC(toCellIdx).Position = possitionTo;
 
 
 
-            
 
-            if(!_unitWhereViewDataCs[toCellIdx].HaveDataReference)
+
+            if (!_unitWhereViewDataCs[toCellIdx].HaveDataReference)
             {
                 //_e.UnitPossitionOnCellC(_unitWhereViewDataCs[toCellIdx).ViewIdxCell).Position = _e.CellE(toCellIdx).PositionC.Position;
             }
@@ -41,7 +41,7 @@ namespace Chessy.Model.System
 
             _unitCs[toCellIdx].HowManySecondUnitWasHereInThisCondition = 0;
 
-           
+
 
             var directT = _cellAroundCs[fromCellIdx, toCellIdx].DirectT;
 
@@ -51,21 +51,21 @@ namespace Chessy.Model.System
                 {
                     if (toCellIdx == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                     {
-                        if (_aboutGameC.LessonT.Is(LessonTypes.ShiftPawnHere))
+                        if (AboutGameC.LessonT.Is(LessonTypes.ShiftPawnHere))
                         {
-                             SetNextLesson();
+                            SetNextLesson();
                         }
                     }
 
                     if (toCellIdx == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter)
                     {
-                        if (_aboutGameC.LessonT == LessonTypes.StepAwayFromWoodcutter)
+                        if (AboutGameC.LessonT == LessonTypes.StepAwayFromWoodcutter)
                         {
-                             SetNextLesson();
+                            SetNextLesson();
                         }
                     }
 
-                    if (_aboutGameC.LessonT == LessonTypes.ComeToYourKing)
+                    if (AboutGameC.LessonT == LessonTypes.ComeToYourKing)
                     {
                         foreach (var cellIdx in _idxsAroundCellCs[toCellIdx].IdxCellsAroundArray)
                         {
@@ -109,7 +109,7 @@ namespace Chessy.Model.System
 
                     _unitWaterCs[toCellIdx].Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
 
-                    if (_aboutGameC.LessonT == LessonTypes.Install1WarriorsNextToTheRiver) SetNextLesson();
+                    if (AboutGameC.LessonT == LessonTypes.Install1WarriorsNextToTheRiver) SetNextLesson();
                 }
             }
 

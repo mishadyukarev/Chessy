@@ -20,32 +20,46 @@ namespace Chessy.View.System
 
         internal override void Sync()
         {
-            var t = Time.deltaTime * 7f;
-            if (!PhotonNetwork.IsMasterClient) t /= 1.5f;
-            if (t > 1) t = 1;
-
             for (byte cellIdxCurrent_0 = 0; cellIdxCurrent_0 < IndexCellsValues.CELLS; cellIdxCurrent_0++)
             {
-                //if (_cellCs[cellIdxCurrent_0].IsBorder) continue;
-
-                //if (_cloudCs[cellIdxCurrent_0].IsCenterP)
-                //{
-                //    var whereSkinIdxCell = _cloudWhereViewDataCs[cellIdxCurrent_0].ViewIdxCellP;
-
-                //    var curCloudTrans = _cloudTrans[whereSkinIdxCell];
-                //    var curPos = curCloudTrans.position;
-                //    var nextPos = _e.CloudPossitionC(whereSkinIdxCell).PositionP;
-
-                //    curCloudTrans.position = Vector3.Lerp(curPos, nextPos, t);
+                if (_cellCs[cellIdxCurrent_0].IsBorder) continue;
 
 
-                //    foreach (var item in _idxsAroundCellCs[cellIdxCurrent_0].IdxCellsAroundArray)
-                //    {
-                //        whereSkinIdxCell = _cloudWhereViewDataCs[item].ViewIdxCellP;
+                var whereDataViewC_0 = CloudViewDataC(cellIdxCurrent_0);
 
-                //        curCloudTrans.position = Vector3.Lerp(curPos, nextPos, t);
-                //    }
-                //}
+                if (!whereDataViewC_0.HaveDataReference) continue;
+
+
+                var whereDataIdx_1 = CloudViewDataC(cellIdxCurrent_0).DataIdxCellP;
+                if (!CloudC(whereDataIdx_1).IsCenterP) continue;
+                var whereShiftC_1 = CloudShiftC(whereDataIdx_1);
+
+                var whereShiftIdx_2 = whereShiftC_1.WhereNeedShiftIdxCellP;
+
+                var pos_1 = _possitionCellCs[whereDataIdx_1].PositionP;
+                var pos_2 = _possitionCellCs[whereShiftIdx_2].PositionP;
+
+                var t = whereShiftC_1.DistanceP;
+
+                SmoothShiftCloud(_cloudTrans[cellIdxCurrent_0], Vector3.Lerp(pos_1, pos_2, t));
+
+                foreach (var aroundCell_1_0 in _idxsAroundCellCs[whereDataIdx_1].IdxCellsAroundArray)
+                {
+                    var pos_1_0 = _possitionCellCs[aroundCell_1_0].PositionP;
+                    var pos_1_1 = _possitionCellCs[_cellsByDirectAroundC[aroundCell_1_0].Get(WindC.DirectType)].PositionP;
+
+                    SmoothShiftCloud(_cloudTrans[CloudViewDataC(aroundCell_1_0).ViewIdxCellP], Vector3.Lerp(pos_1_0, pos_1_1, t));
+                }
+            }
+
+
+            void SmoothShiftCloud(in Transform cloundT, in Vector3 newPossition)
+            {
+                var t = Time.deltaTime * 7f;
+                if (!PhotonNetwork.IsMasterClient) t /= 1.5f;
+                if (t > 1) t = 1;
+
+                cloundT.position = Vector3.Lerp(cloundT.position, newPossition, t);
             }
         }
     }

@@ -18,5 +18,12 @@ namespace Chessy.View.Component
         {
             if (needActive != GO.activeSelf) GO.SetActive(needActive);
         }
+
+        public void TrySetActive2(in bool needActive, ref bool wasActivated)
+        {
+            if (needActive != wasActivated) GO.SetActive(needActive);
+
+            wasActivated = needActive;
+        }
     }
 }

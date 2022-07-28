@@ -1,5 +1,4 @@
-﻿using Chessy.Model;
-using Chessy.View.Component;
+﻿using Chessy.View.Component;
 using Chessy.View.UI.Component;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,10 +45,11 @@ namespace Chessy.View.UI.Entity
 
             canvas.name = "Canvas";
 
+            var elseZoneT = canvas.transform.Find("Else+");
 
-            SettingsE = new SettingsUIE(canvas.transform.Find("Settings+"));
-            BookE = new BookUIE(canvas.transform);
-            ShopE = new ShopUIE(canvas.transform.Find("ShopZone"));
+            SettingsE = new SettingsUIE(elseZoneT.Find("Settings+"));
+            BookE = new BookUIE(elseZoneT);
+            ShopE = new ShopUIE(elseZoneT.Find("ShopZone"));
 
 
 

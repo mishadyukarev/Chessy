@@ -1,9 +1,9 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Entity;
 using Chessy.Model.Enum;
-using Chessy.View.System;
-using Chessy.View.Component;
 using Chessy.Model.Values;
+using Chessy.View.Component;
+using Chessy.View.System;
 
 namespace Chessy.View.UI.System
 {
@@ -30,13 +30,13 @@ namespace Chessy.View.UI.System
                 {
                     var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
-                    if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.Build1Farms)
+                    if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= LessonTypes.Build1Farms)
                     {
                         if (_unitCs[dataIdxCell].UnitType == UnitTypes.Pawn)
                         {
-                            if (_unitCs[dataIdxCell].PlayerType == _aboutGameC.CurrentPlayerIType)
+                            if (_unitCs[dataIdxCell].PlayerType == AboutGameC.CurrentPlayerIType)
                             {
-                                _needActive[cellIdxCurrent] = ResourcesInInventoryC(_aboutGameC.CurrentPlayerIType).Resources(ResourceTypes.Food) < 1;
+                                _needActive[cellIdxCurrent] = ResourcesInInventoryC(AboutGameC.CurrentPlayerIType).Resources(ResourceTypes.Food) < 1;
                             }
                         }
                     }

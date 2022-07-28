@@ -1,12 +1,10 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Entity;
 using Chessy.Model.System;
-using Chessy.Model.Values;
 using Chessy.View.System;
 using Chessy.View.UI;
 using Chessy.View.UI.Entity;
 using Chessy.View.UI.System;
-using ExitGames.Client.Photon;
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,7 +34,7 @@ namespace Chessy
 
             new ShopS(eM);
             var adLaunchS = new TryLaunchAdVideoAndBannerS(eM);
-            
+
 
 
             #region Photon

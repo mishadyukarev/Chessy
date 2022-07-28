@@ -1,6 +1,4 @@
-﻿using Chessy.Model;
-using Chessy.Model.Component;
-using Chessy.Model.Enum;
+﻿using Chessy.Model.Enum;
 using Chessy.View.Component;
 using Chessy.View.UI.Component;
 using TMPro;

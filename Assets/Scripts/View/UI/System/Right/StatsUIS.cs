@@ -1,7 +1,8 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
+using Chessy.View.UI.Entity;
 using System;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+namespace Chessy.Model
 {
     sealed class StatsUIS : SystemUIAbstract
     {
@@ -14,13 +15,13 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
         internal override void Sync()
         {
-            var idx_sel = _cellsC.Selected;
+            var idx_sel = IndexesCellsC.Selected;
 
 
             if (_unitCs[idx_sel].HaveUnit && !_unitCs[idx_sel].UnitType.IsAnimal())
             {
-                var damageOnCell = _unitCs[idx_sel].DamageOnCellP;
-                var damageAttack = _unitCs[idx_sel].DamageSimpleAttackP;
+                var damageOnCell = UnitAttackC(idx_sel).DamageOnCellP;
+                var damageAttack = UnitAttackC(idx_sel).DamageSimpleAttackP;
 
 
 
@@ -29,21 +30,21 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                 var needActiveDamage = false;
 
 
-                if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.Install1WarriorsNextToTheRiver)
+                if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= Enum.LessonTypes.Install1WarriorsNextToTheRiver)
                 {
                     needActiveHp = true;
                 }
 
-                if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
+                if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
                 {
                     needActiveDamage = true;
                 }
 
-                if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= Enum.LessonTypes.Install1WarriorsNextToTheRiver)
+                if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= Enum.LessonTypes.Install1WarriorsNextToTheRiver)
                 {
                     //if (!_unitCs[idx_sel).Is(UnitTypes.Elfemale))
                     //{
-                        needActiveWater = true;
+                    needActiveWater = true;
                     //}
                 }
 

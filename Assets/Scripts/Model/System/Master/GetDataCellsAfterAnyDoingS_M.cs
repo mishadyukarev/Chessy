@@ -6,7 +6,7 @@ namespace Chessy.Model.System
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         readonly GetCellsForShiftUnitsS _getCellsForShiftUnitsS;
-        readonly GetAbilityUnitS_M _getAbilityUnitS;
+        readonly GetButtonAbilitiesUnitsS_M _getAbilityUnitS;
         readonly GetCellsForAttackArcherS _getCellsForAttackArcherS;
         readonly GetAttackMeleeCellsS _getAttackMeleeCellsS;
 
@@ -15,7 +15,7 @@ namespace Chessy.Model.System
         internal GetDataCellsAfterAnyDoingS_M(in SystemsModel s, EntitiesModel e) : base(s, e)
         {
             _getCellsForShiftUnitsS = new GetCellsForShiftUnitsS(s, e);
-            _getAbilityUnitS = new GetAbilityUnitS_M(s, e);
+            _getAbilityUnitS = new GetButtonAbilitiesUnitsS_M(s, e);
             _getCellsForAttackArcherS = new GetCellsForAttackArcherS(s, e);
             _getAttackMeleeCellsS = new GetAttackMeleeCellsS(s, e);
         }

@@ -1,6 +1,5 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
-using UnityEditor;
 using UnityEngine;
 
 namespace Chessy.Model.System
@@ -22,7 +21,8 @@ namespace Chessy.Model.System
                 var neededDistanceForShiftingUnitC_0 = _howManyDistanceNeedForShiftingUnitCs[currentCellIdx_0];
 
                 var whereNeedShiftIdxCell_1 = shiftUnit_0.WhereNeedShiftIdxCell;
-                var unitC_1 = _unitCs[whereNeedShiftIdxCell_1];
+                var unitC_1 = UnitC(whereNeedShiftIdxCell_1);
+                var unitShiftC_1 = UnitShiftC(whereNeedShiftIdxCell_1);
 
 
                 if (whereNeedShiftIdxCell_1 != 0)
@@ -52,22 +52,29 @@ namespace Chessy.Model.System
 
                     else
                     {
-                        shiftUnit_0.Distance += Time.deltaTime;
-
-                        if (shiftUnit_0.Distance >= neededDistanceForShiftingUnitC_0.HowMany(whereNeedShiftIdxCell_1))
+                        if (unitC_1.HaveUnit && !unitShiftC_1.IsShifting)
                         {
-                            if (!unitC_1.HaveUnit)
+                            shiftUnit_0.NeedReturnBack = true;
+                        }
+                        else
+                        {
+                            shiftUnit_0.Distance += Time.deltaTime;
+
+                            if (shiftUnit_0.Distance >= neededDistanceForShiftingUnitC_0.HowMany(whereNeedShiftIdxCell_1))
                             {
-                                _s.ShiftUnitOnOtherCellM(currentCellIdx_0, whereNeedShiftIdxCell_1);
+                                if (!unitC_1.HaveUnit)
+                                {
+                                    _s.ShiftUnitOnOtherCellM(currentCellIdx_0, whereNeedShiftIdxCell_1);
 
-                                shiftUnit_0.Dispose();
+                                    shiftUnit_0.Dispose();
 
-                                _s.GetDataCellsS.GetDataCells();
-                            }
+                                    _s.GetDataCellsS.GetDataCells();
+                                }
 
-                            else
-                            {
-                                shiftUnit_0.NeedReturnBack = true;
+                                else
+                                {
+                                    shiftUnit_0.NeedReturnBack = true;
+                                }
                             }
                         }
                     }

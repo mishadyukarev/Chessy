@@ -1,24 +1,15 @@
-﻿using Chessy.Model.Entity;
-namespace Chessy.Model
+﻿namespace Chessy.Model.System
 {
-    static partial class BuildingSystems
+    public partial class SystemsModel
     {
-        internal static void Build(this EntitiesModel e, in BuildingTypes buildingT, in LevelTypes levelT, in PlayerTypes playerT, in float hp, in byte cell_0)
+        internal void Build(in BuildingTypes buildingT, in LevelTypes levelT, in PlayerTypes playerT, in byte cell_0)
         {
+            BuildingC(cell_0).Set(buildingT, playerT, levelT);
 
-
-            //e.SetBuildingOnCellT(cell_0, buildingT);
-
-
-
-            //e.SetBuildingLevelT(cell_0, levelT);
-            //e.SetBuildingPlayerT(cell_0, playerT);
-            //e.BuildingHpC(cell_0).Health = hp;
-
-            //if (buildingT == BuildingTypes.Farm)
-            //{
-            //    e.PlayerInfoE(playerT).PlayerInfoC.AmountFarmsInGame++;
-            //}
+            if (buildingT == BuildingTypes.Farm)
+            {
+                PlayerInfoC(playerT).AmountFarmsInGame++;
+            }
         }
     }
 }

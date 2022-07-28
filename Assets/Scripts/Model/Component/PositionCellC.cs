@@ -4,28 +4,16 @@ namespace Chessy.Model.Component
 {
     public sealed class PositionCellC
     {
-        internal Vector3 Position;
+        internal readonly Vector3 Position;
 
         public Vector3 PositionP => Position;
 
-        public float X
-        {
-            get => Position.x;
-            internal set => Position.x = value;
-        }
-        public float Y
-        {
-            get => Position.y;
-            internal set => Position.y = value;
-        }
+        public float X => Position.x;
+        public float Y => Position.y;
 
-        internal void Dispose()
+        internal PositionCellC(in Vector3 position)
         {
-            Position = default;
-        }
-        internal void Clone(in PositionCellC positionC)
-        {
-            Position = positionC.Position;
+            Position = position;
         }
     }
 }

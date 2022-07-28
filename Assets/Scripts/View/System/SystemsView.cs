@@ -1,14 +1,11 @@
 ﻿using Chessy.Model;
-using Chessy.Model.Component;
 using Chessy.Model.Entity;
-using Chessy.Model.Enum;
 using Chessy.Model.System;
 using Chessy.Model.Values;
 using Chessy.View.Component;
 using Chessy.View.Entity;
 using Chessy.View.UI.Entity;
 using Chessy.View.UI.System;
-using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,7 +44,7 @@ namespace Chessy.View.System
             var maxStepsUnitOnCellSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var cloudSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var idxXyInfoCellSRCs = new TMPC[IndexCellsValues.CELLS];
-            var hpBarUnitSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var hpBarUnitSRCs = new SpriteRenderer[IndexCellsValues.CELLS];
             var stunUnitSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var shieldSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var frozenArrawRightSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
@@ -77,7 +74,7 @@ namespace Chessy.View.System
                 maxStepsUnitOnCellSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.Block(CellBlockTypes.MaxSteps);
                 cloudSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).CloudSRC;
                 idxXyInfoCellSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).IdxAndXyInfoTMPC;
-                hpBarUnitSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.UnitHpBarSRC;
+                hpBarUnitSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.UnitHpBarSRC.SR;
                 stunUnitSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.EffectE.StunSRC;
                 shieldSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.EffectE.ShieldSRC;
                 frozenArrawRightSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.EffectE.FrozenArraw(true);

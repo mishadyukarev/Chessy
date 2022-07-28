@@ -19,7 +19,7 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            var idx_0 = _cellsC.Selected;
+            var idx_0 = IndexesCellsC.Selected;
 
             var activeButt = false;
 
@@ -32,9 +32,9 @@ namespace Chessy.View.UI.System
 
             if (_unitCs[idx_0].HaveUnit)
             {
-                if (_unitCs[idx_0].PlayerType == _aboutGameC.CurrentPlayerIType)
+                if (_unitCs[idx_0].PlayerType == AboutGameC.CurrentPlayerIType)
                 {
-                    if (!_aboutGameC.LessonType.HaveLesson() || _aboutGameC.LessonType >= LessonTypes.RelaxExtractPawn)
+                    if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= LessonTypes.RelaxExtractPawn)
                     {
                         activeButt = true;
 

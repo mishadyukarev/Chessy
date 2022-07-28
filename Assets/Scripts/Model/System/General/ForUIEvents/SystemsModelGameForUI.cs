@@ -24,10 +24,10 @@ namespace Chessy.Model.System
         }
         public void ClickWindButtonUp()
         {
-            if (_aboutGameC.LessonT == LessonTypes.ClickWindInfo)
+            if (AboutGameC.LessonT == LessonTypes.ClickWindInfo)
             {
-                _sunC.SunSideT = SunSideTypes.Dawn;
-                 _s.SetNextLesson();
+                SunC.SunSideT = SunSideTypes.Dawn;
+                _s.SetNextLesson();
             }
             else
             {
@@ -219,7 +219,7 @@ namespace Chessy.Model.System
         {
             RoomOptions roomOptions = new RoomOptions();
 
-            _aboutGameC.GameModeT = GameModeTypes.PublicOnline;
+            AboutGameC.GameModeT = GameModeTypes.PublicOnline;
 
             //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
             //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
@@ -234,7 +234,7 @@ namespace Chessy.Model.System
         }
         public void ClickCreateFriendRoomInMenu(in string roomNameFromViewBar)
         {
-            _aboutGameC.GameModeT = GameModeTypes.WithFriendOnline;
+            AboutGameC.GameModeT = GameModeTypes.WithFriendOnline;
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;
@@ -245,19 +245,19 @@ namespace Chessy.Model.System
         }
         public void ClickJoinRandomPublicRoomInMenu()
         {
-            _aboutGameC.GameModeT = GameModeTypes.PublicOnline;
+            AboutGameC.GameModeT = GameModeTypes.PublicOnline;
             //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
             PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
         }
         public void ClickJoinFriendRoomInMenu(in string nameRoomFromViewBar)
         {
-            _aboutGameC.GameModeT = GameModeTypes.WithFriendOnline;
+            AboutGameC.GameModeT = GameModeTypes.WithFriendOnline;
             PhotonNetwork.JoinRoom(nameRoomFromViewBar);
         }
 
         public void ClickCreateOffGameInMenu(in GameModeTypes offGameMode)
         {
-            _aboutGameC.GameModeT = offGameMode;
+            AboutGameC.GameModeT = offGameMode;
             PhotonNetwork.CreateRoom(default);
         }
 

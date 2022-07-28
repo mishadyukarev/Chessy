@@ -7,22 +7,21 @@ namespace Chessy.Model
 {
     sealed class CheatsS : SystemModelAbstract, IUpdate
     {
-        public CheatsS(in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG)
+        public CheatsS(in SystemsModel s, in EntitiesModel e) : base(s, e)
         {
         }
 
         public void Update()
         {
-
-            if (_aboutGameC.TestModeT.Is(TestModeTypes.Standart))
+            if (AboutGameC.TestModeT == TestModeTypes.Standart)
             {
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
                 {
-                    if (Input.GetKey(KeyCode.Alpha1)) ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Food, 0.5f);
-                    if (Input.GetKey(KeyCode.Alpha2)) ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Wood, 0.5f);
-                    if (Input.GetKey(KeyCode.Alpha3)) ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Ore, 0.5f);
-                    if (Input.GetKey(KeyCode.Alpha4)) ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Iron, 1);
-                    if (Input.GetKey(KeyCode.Alpha5)) ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Gold, 1);
+                    if (Input.GetKey(KeyCode.Alpha1)) ResourcesInInventoryC(AboutGameC.CurrentPlayerIT).Add(ResourceTypes.Food, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha2)) ResourcesInInventoryC(AboutGameC.CurrentPlayerIT).Add(ResourceTypes.Wood, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha3)) ResourcesInInventoryC(AboutGameC.CurrentPlayerIT).Add(ResourceTypes.Ore, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha4)) ResourcesInInventoryC(AboutGameC.CurrentPlayerIT).Add(ResourceTypes.Iron, 1);
+                    if (Input.GetKey(KeyCode.Alpha5)) ResourcesInInventoryC(AboutGameC.CurrentPlayerIT).Add(ResourceTypes.Gold, 1);
                 }
 
 
@@ -38,7 +37,7 @@ namespace Chessy.Model
 
                 if (Input.GetKeyDown(KeyCode.Mouse2))
                 {
-                    _aboutGameC.LessonT = LessonTypes.None;
+                    AboutGameC.LessonT = LessonTypes.None;
                 }
 
                 if (Input.GetKeyDown(KeyCode.R))
@@ -55,7 +54,7 @@ namespace Chessy.Model
 
                 if (Input.GetKeyDown(KeyCode.T))
                 {
-                    _unitCs[_cellsC.Current].UnitT =  UnitTypes.None;
+                    _unitCs[IndexesCellsC.Current].UnitT = UnitTypes.None;
                 }
             }
         }

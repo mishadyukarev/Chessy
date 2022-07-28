@@ -9,49 +9,69 @@ namespace Chessy.View.System
     sealed class SyncConditionOnCellVS : SystemViewAbstract
     {
         readonly bool[] _needActive = new bool[IndexCellsValues.CELLS];
+        readonly bool[] _wasActivated = new bool[IndexCellsValues.CELLS];
+
         readonly SpriteRendererVC[] _conditionSRCs;
+        readonly GameObjectVC[] _conditionGOCs = new GameObjectVC[IndexCellsValues.CELLS];
         readonly Color[] _needColor = new Color[IndexCellsValues.CELLS];
+
+        readonly Color _whiteColor = Color.white;
 
         internal SyncConditionOnCellVS(in SpriteRendererVC[] conditionSRCs, in EntitiesModel eM) : base(eM)
         {
             _conditionSRCs = conditionSRCs;
+
+            for (var currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
+            {
+                _conditionGOCs[currentCellIdx_0] = new GameObjectVC(_conditionSRCs[currentCellIdx_0].GO);
+            }
         }
 
         internal override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            var currentPlayerT = AboutGameC.CurrentPlayerIType;
+
+            for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                _needActive[cellIdxCurrent] = false;
-                _needColor[cellIdxCurrent] = Color.white;
+                if (CellC(currentCellIdx_0).IsBorder) continue;
 
-                if (_unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
+                _needActive[currentCellIdx_0] = false;
+                _needColor[currentCellIdx_0] = _whiteColor;
+
+                if (UnitViewDataC(currentCellIdx_0).HaveDataReference)
                 {
-                    var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
+                    var dataIdxCell_1 = UnitViewDataC(currentCellIdx_0).DataIdxCellP;
 
-                    if (_unitVisibleCs[dataIdxCell].IsVisible(_aboutGameC.CurrentPlayerIType))
+                    if (UnitVisibleC(dataIdxCell_1).IsVisible(currentPlayerT))
                     {
-                        if (_unitCs[dataIdxCell].HaveUnit && !_unitCs[dataIdxCell].UnitType.IsAnimal())
+                        var unitC_1 = UnitC(dataIdxCell_1);
+
+                        if (unitC_1.HaveUnit && !unitC_1.IsAnimal)
                         {
-                            if (_unitCs[dataIdxCell].ConditionType == ConditionUnitTypes.Protected)
+                            if (unitC_1.ConditionType == ConditionUnitTypes.Protected)
                             {
-                                _needActive[cellIdxCurrent] = true;
-                                _needColor[cellIdxCurrent] = Color.yellow;
+                                _needActive[currentCellIdx_0] = true;
+                                _needColor[currentCellIdx_0] = Color.yellow;
                             }
 
-                            else if (_unitCs[dataIdxCell].ConditionType == ConditionUnitTypes.Relaxed)
+                            else if (unitC_1.ConditionType == ConditionUnitTypes.Relaxed)
                             {
-                                _needActive[cellIdxCurrent] = true;
-                                _needColor[cellIdxCurrent] = Color.green;
+                                _needActive[currentCellIdx_0] = true;
+                                _needColor[currentCellIdx_0] = Color.green;
                             }
                         }
                     }
                 }
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                _conditionSRCs[cellIdxCurrent].TrySetActiveGO(_needActive[cellIdxCurrent]);
-                _conditionSRCs[cellIdxCurrent].Color = _needColor[cellIdxCurrent];
+                if (CellC(currentCellIdx_0).IsBorder) continue;
+
+                var needActive = _needActive[currentCellIdx_0];
+
+                _conditionGOCs[currentCellIdx_0].TrySetActive2(needActive, ref _wasActivated[currentCellIdx_0]);
+                if (needActive) _conditionSRCs[currentCellIdx_0].Color = _needColor[currentCellIdx_0];
             }
         }
     }

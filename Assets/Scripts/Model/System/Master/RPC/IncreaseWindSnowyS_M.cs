@@ -10,11 +10,11 @@ namespace Chessy.Model.System
             {
                 if (needIncrese)
                 {
-                    if (!_e.WeatherE.WindC.IsMaxSpeed())
+                    if (!WindC.IsMaxSpeed())
                     {
                         _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
-                        _windC.Speed++;
+                        WindC.Speed++;
 
                         _s.RpcSs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
                     }
@@ -26,11 +26,11 @@ namespace Chessy.Model.System
 
                 else
                 {
-                    if (!_e.WeatherE.WindC.IsMinSpeed())
+                    if (!WindC.IsMinSpeed())
                     {
                         _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
-                        _windC.Speed--;
+                        WindC.Speed--;
 
                         _s.RpcSs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
                     }

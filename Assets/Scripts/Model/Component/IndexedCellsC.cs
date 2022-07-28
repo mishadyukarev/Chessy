@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public sealed class CellsC
+    public sealed class IndexedCellsC
     {
         public byte Current { get; internal set; }
         public byte Selected { get; internal set; }

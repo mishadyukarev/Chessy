@@ -21,12 +21,12 @@ namespace Chessy.View.System
             {
                 _needActive[cellIdx] = new bool[(byte)BuildingTypes.End];
                 _wasActivated[cellIdx] = new bool[(byte)BuildingTypes.End];
-                _buildingGOs[cellIdx] = new GameObject[(byte)BuildingTypes.End]; 
+                _buildingGOs[cellIdx] = new GameObject[(byte)BuildingTypes.End];
 
                 for (var buildingTByte = (byte)1; buildingTByte < (byte)BuildingTypes.End; buildingTByte++)
                 {
                     _buildingGOs[cellIdx][buildingTByte] = _buildingSRs[cellIdx][buildingTByte].gameObject;
-                }   
+                }
             }
         }
 
@@ -42,8 +42,8 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                var isVisForMe = _visibleBuildingCs[cellIdxCurrent].IsVisible(_aboutGameC.CurrentPlayerIType);
-                var isVisForNext = _visibleBuildingCs[cellIdxCurrent].IsVisible(_aboutGameC.CurrentPlayerIType.NextPlayer());
+                var isVisForMe = _visibleBuildingCs[cellIdxCurrent].IsVisible(AboutGameC.CurrentPlayerIType);
+                var isVisForNext = _visibleBuildingCs[cellIdxCurrent].IsVisible(AboutGameC.CurrentPlayerIType.NextPlayer());
 
                 if (_buildingCs[cellIdxCurrent].HaveBuilding)
                 {

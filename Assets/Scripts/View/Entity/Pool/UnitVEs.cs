@@ -1,6 +1,5 @@
 ﻿using Chessy.Model;
 using Chessy.View.Component;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy.View.Entity

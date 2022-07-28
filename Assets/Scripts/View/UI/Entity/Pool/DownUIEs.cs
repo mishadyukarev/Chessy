@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Entity.View.UI.Down;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Chessy.View.UI.Entity

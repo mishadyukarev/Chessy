@@ -19,7 +19,7 @@ namespace Chessy.Model.Entity
         public readonly MistakeC MistakeC = new(new float[(byte)ResourceTypes.End]);
         public readonly ZonesInfoC ZoneInfoC = new();
         public readonly WhereTeleportC WhereTeleportC = new();
-        public readonly CellsC CellsC = new();
+        public readonly IndexedCellsC CellsC = new();
         public readonly SelectedUnitC SelectedUnitC = new();
         public readonly InputC InputC = new();
         public readonly SelectedBuildingsInTownC SelectedBuildingsC = new();
