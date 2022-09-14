@@ -11,10 +11,18 @@ namespace Chessy.Model
         {
             _inputC.IsClicked = Input.GetMouseButtonDown(0);
 
-            if (_inputC.IsClicked)
-            {
-                Screen.fullScreen = true;
-            }
+
+            
+
+            ///Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+
+            //Screen.fullScreen = true;
+            //Screen.fullScreenMode = FullScreenMode.Windowed;
+
+            //if (_inputC.IsClicked)
+            //{
+            //    //Screen.fullScreen = true;
+            //}
         }
     }
 }
