@@ -49,7 +49,10 @@ namespace Chessy.Model
                 else if (AboutGameC.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun,
                      LessonTypes.MenuInfo))
                 {
-                    _s.SetNextLesson();
+                    if (!_settingsC.IsOpenedBarWithSettings)
+                    {
+                        _s.SetNextLesson();
+                    }   
                 }
 
                 switch (AboutGameC.RaycastT)

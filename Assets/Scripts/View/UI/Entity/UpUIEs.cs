@@ -13,6 +13,7 @@ namespace Chessy.View.UI.Entity
         public readonly SunsUIE SunsE;
 
         public readonly ButtonUIC LeaveButtonC;
+        public readonly TextUIC LeaveTextC;
         public readonly ButtonUIC SettingsButtonC;
 
         public readonly GameObjectVC ParentWindGOC;
@@ -24,13 +25,14 @@ namespace Chessy.View.UI.Entity
 
         internal readonly ButtonUIC DiscordButtonC;
 
-        public UpUIEs(in Button leaveButton, in Transform upZone)
+        public UpUIEs(in Transform exitT, in Transform upZone)
         {
             EconomyE = new UpEconomyUIE(upZone);
             SunsE = new SunsUIE(upZone);
 
 
-            LeaveButtonC = new ButtonUIC(leaveButton);
+            LeaveButtonC = new ButtonUIC(exitT.Find("Button+").GetComponent<Button>());
+            LeaveTextC = new TextUIC(exitT.Find("Text+").GetComponent<TextMeshProUGUI>());
             SettingsButtonC = new ButtonUIC(upZone.Find("Settings+").Find("Button+").GetComponent<Button>());
 
             var windZone = upZone.Find("Wind+");

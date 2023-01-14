@@ -59,7 +59,7 @@ namespace Chessy.View.UI.Entity
             RightEs = new RightUIEs(gameZone.Find("Right+"));
             CenterEs = new CenterGameUIEs(gameZone.Find("Center+"));
             DownEs = new DownUIEs(gameZone.Find("Down+"));
-            UpEs = new UpUIEs(gameZone.Find("Exit+").Find("Button+").GetComponent<Button>(), gameZone.Find("Up+"));
+            UpEs = new UpUIEs(gameZone.Find("Exit+"), gameZone.Find("Up+"));
 
 
 

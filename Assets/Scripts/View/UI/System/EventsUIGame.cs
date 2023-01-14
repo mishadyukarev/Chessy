@@ -69,6 +69,9 @@ namespace Chessy.View.UI
             eUI.ShopE.BuyButtonC.AddListener(sM.ForUISs.ClickBuyPremiumProduct);
             eUI.ShopE.ExitButtonC.AddListener(sM.ForUISs.ClickExitShopInShopZone);
 
+            eUI.SettingsE.Dropdown.onValueChanged.AddListener((idx) => sM.ForUISs.OnValueChangedLanguage(idx));
+
+
             #endregion
 
 

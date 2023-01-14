@@ -60,6 +60,7 @@ namespace Chessy.Model.System
             _bookC.OpenedNowPageBookT = PageBookTypes.None;
             AboutGameC.SceneT = SceneTypes.Menu;
             _dateTimeLastUpdate = DateTime.Now;
+            _settingsC.IsOpenedBarWithSettings = true;
         }
 
         public void ToggleScene(in SceneTypes newSceneT)

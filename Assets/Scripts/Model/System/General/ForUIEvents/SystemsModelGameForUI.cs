@@ -175,6 +175,11 @@ namespace Chessy.Model.System
             _updateAllViewC.NeedUpdateView = true;
         }
 
+        public void OnValueChangedLanguage(in int idx)
+        {
+            Debug.Log(idx);
+        }
+
         #endregion
 
 
