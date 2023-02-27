@@ -11,11 +11,11 @@ using UnityEngine;
 
 namespace Chessy
 {
-    sealed partial class Main : MonoBehaviour
+    sealed class Main : MonoBehaviour
     {
         [SerializeField] TestModeTypes TestModeT = default;
 
-        List<IUpdate> _runs;
+        IUpdate[] _runs;
 
         void Start()
         {
@@ -70,8 +70,7 @@ namespace Chessy
 
             #endregion
 
-
-            _runs = new List<IUpdate>()
+            _runs = new IUpdate[]
             {
                 adLaunchS,
                 sM,
@@ -81,12 +80,13 @@ namespace Chessy
                 sV,
             };
 
+
             sM.ComeIntoTrainingAfterDownloadingGame();
         }
 
         void Update()
         {
-            _runs.ForEach((IUpdate iRun) => iRun.Update());
+            for (var i = 0; i < _runs.Length; i++) _runs[i].Update();
         }
     }
 }

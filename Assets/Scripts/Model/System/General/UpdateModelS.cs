@@ -123,15 +123,15 @@ namespace Chessy.Model.System
                     TryShiftWolf();
                     TryPoorWaterToCellsWithClounds();
                     TryGiveWaterAroundRiverToCells();
-                    DryWaterOnCells();
-                    TryExtractFoodWithFarm();
+                    DryWaterOnCells();//
+                    TryExtractFoodWithFarm();//
                     TryExtractHillsWithPawns();
                     GiveFoodAfterUpdate();
                     TryExecuteHungry();
                     TryChangeDirectionOfWindRandomly();
                     TryGiveHealthToBots();
                     ToggleConditionUnitsIfTheresFire();
-                    TryGiveHealthToUnitsWithRelaxCondition();
+                    TryGiveHealthToUnitsWithRelaxCondition();//
                     TryGiveWaterToUnitsAroundRainy();
                     TryActiveGodsUniqueAbilityEveryUpdate();
                     TrySetDefendWithoutConditionUnits();
