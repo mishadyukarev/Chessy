@@ -9,12 +9,12 @@ namespace Chessy.View.UI.System
 {
     public sealed class SystemsViewUI : SystemAbstract, IUpdate
     {
-        readonly List<Action> _syncUpdates;
+        readonly Action[] _syncUpdates;
 
 
         public SystemsViewUI(EntitiesViewUI eUI, EntitiesModel eM) : base(eM)
         {
-            _syncUpdates = new List<Action>()
+            var syncUpdates = new List<Action>()
             {
                 //Up
                 new EconomyUpUIS(eUI.UpEs.EconomyE, eM).Sync,
@@ -97,15 +97,21 @@ namespace Chessy.View.UI.System
 
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
-                _syncUpdates.Add(new UniqueButtonUIS(buttonT, eUI.RightEs.Unique(buttonT), eM).Sync);
+                syncUpdates.Add(new UniqueButtonUIS(buttonT, eUI.RightEs.Unique(buttonT), eM).Sync);
             }
+
+
+            _syncUpdates = syncUpdates.ToArray();
         }
 
         public void Update()
         {
             if (_updateAllViewC.NeedUpdateView)
             {
-                _syncUpdates.ForEach((Action action) => action());
+                for (int i = 0; i < _syncUpdates.Length; i++)
+                {
+                    _syncUpdates[i].Invoke();
+                }
             }
         }
     }

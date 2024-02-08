@@ -10,14 +10,27 @@ namespace Chessy.Model.System
 {
     public sealed class UpdateModelS : SystemModelAbstract
     {
-        readonly List<Action> _runs;
+        readonly Action[] _runs;
         DateTime _dateTimeLastUpdate;
 
+        readonly BotAIS _botAIS;
 
-        internal UpdateModelS(List<Action> runs, in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG)
+
+        internal UpdateModelS(in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG)
         {
-            _runs = runs;
+            _runs = new Action[]
+{
+                new InputS(sMG, eMG).Update,
+                new CheatsS(sMG, eMG).Update,
+                new RayS(sMG, eMG).Update,
+                new SelectorS(sMG, eMG).Update,
+
+                new MistakeS(sMG, eMG).Update,
+            };
             _dateTimeLastUpdate = DateTime.Now;
+
+
+            _botAIS = new BotAIS(sMG, eMG);
         }
 
 
@@ -25,7 +38,16 @@ namespace Chessy.Model.System
         {
             var timeDeltaTime = Time.deltaTime;
 
-            _runs.ForEach((Action action) => action());
+            for (int i = 0; i < _runs.Length; i++)
+            {
+                _runs[i].Invoke();//.ForEach((Action action) => action());
+            }
+
+
+            _botAIS.Update();
+
+
+
 
             if (PhotonNetwork.IsMasterClient)
             {

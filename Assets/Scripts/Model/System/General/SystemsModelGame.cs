@@ -3,8 +3,6 @@ using Chessy.Model.Enum;
 using Chessy.Model.Values;
 using Photon.Pun;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Chessy.Model.System
@@ -30,15 +28,7 @@ namespace Chessy.Model.System
 
         public SystemsModel(in EntitiesModel eM) : base(eM)
         {
-            var runs = new List<Action>()
-            {
-                new InputS(this, eM).Update,
-                new CheatsS(this, eM).Update,
-                new RayS(this, eM).Update,
-                new SelectorS(this, eM).Update,
 
-                new MistakeS(this, eM).Update,
-            };
 
 
             UnitSs = new UnitSystems(this, eM);
@@ -63,7 +53,7 @@ namespace Chessy.Model.System
             AboutGameC.SceneT = SceneTypes.Menu;
 
 
-            _updateS = new UpdateModelS(runs, this, eM);
+            _updateS = new UpdateModelS(this, eM);
 
         }
         public void Update() => _updateS.Update();
