@@ -4,13 +4,14 @@ using Chessy.Model.Values;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Chessy.Model.System
 {
     public partial class SystemsModel : SystemAbstract, IUpdate
     {
-        readonly List<Action> _runs;
+        readonly UpdateModelS _updateS;
 
         internal readonly UnitSystems UnitSs;
         internal readonly GetDataCellsAfterAnyDoingS_M GetDataCellsS;
@@ -29,7 +30,7 @@ namespace Chessy.Model.System
 
         public SystemsModel(in EntitiesModel eM) : base(eM)
         {
-            _runs = new List<Action>()
+            var runs = new List<Action>()
             {
                 new InputS(this, eM).Update,
                 new CheatsS(this, eM).Update,
@@ -38,6 +39,7 @@ namespace Chessy.Model.System
 
                 new MistakeS(this, eM).Update,
             };
+
 
             UnitSs = new UnitSystems(this, eM);
             GetDataCellsS = new GetDataCellsAfterAnyDoingS_M(this, eM);
@@ -59,9 +61,12 @@ namespace Chessy.Model.System
             Application.runInBackground = true;
             _bookC.OpenedNowPageBookT = PageBookTypes.None;
             AboutGameC.SceneT = SceneTypes.Menu;
-            _dateTimeLastUpdate = DateTime.Now;
-        }
 
+
+            _updateS = new UpdateModelS(runs, this, eM);
+
+        }
+        public void Update() => _updateS.Update();
         public void ToggleScene(in SceneTypes newSceneT)
         {
             AboutGameC.SceneT = newSceneT;
@@ -89,7 +94,7 @@ namespace Chessy.Model.System
         public void ComeIntoTrainingAfterDownloadingGame()
         {
             PhotonNetwork.OfflineMode = true;
-            AboutGameC.GameModeT = GameModeTypes.TrainingOffline;
+            AboutGameC.GameModeT = GameModeTypes.PlayerMeAgainstBot;
             PhotonNetwork.CreateRoom(default);
         }
 

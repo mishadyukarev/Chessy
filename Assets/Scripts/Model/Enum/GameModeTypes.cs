@@ -5,6 +5,7 @@
         None,
 
         TrainingOffline,
+        PlayerMeAgainstBot,
         WithFriendOffline,
         PublicOnline,
         WithFriendOnline,
