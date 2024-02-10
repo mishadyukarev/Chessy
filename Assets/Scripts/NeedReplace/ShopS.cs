@@ -5,18 +5,18 @@ using UnityEngine.Purchasing; //библиотека с покупками, бу
 
 namespace Chessy.Model
 {
-    public sealed class ShopS : SystemAbstract, IStoreListener //для получения сообщений из Unity Purchasing
+    public sealed class ShopS : SystemAbstract//, IStoreListener //для получения сообщений из Unity Purchasing
     {
         public ShopS(in EntitiesModel eM) : base(eM)
         {
-            if (!_shopC.IsInitialized)
-            {
-                var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+            //if (!_shopC.IsInitialized)
+            //{
+            //    var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-                builder.AddProduct(ShopValues.PREMIUM_NAME, ProductType.NonConsumable);
+            //    builder.AddProduct(ShopValues.PREMIUM_NAME, ProductType.NonConsumable);
 
-                UnityPurchasing.Initialize(this, builder);
-            }
+            //    UnityPurchasing.Initialize(this, builder);
+            //}
         }
 
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) //контроль покупок

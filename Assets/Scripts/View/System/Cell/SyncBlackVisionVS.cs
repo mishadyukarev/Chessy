@@ -85,7 +85,7 @@ namespace Chessy.View.System
 
                             if (lessonT > LessonTypes.YouNeedDestroyKing)
                             {
-                                if (!_isStartedCellCs[currentCellIdx_0].IsStartedCell(AboutGameC.CurrentPlayerIType))
+                                if (!_isStartedCellCs[currentCellIdx_0].IsStartedCellForPlayer(AboutGameC.CurrentPlayerIType))
                                 {
                                     _needActive[currentCellIdx_0] = true;
                                 }
@@ -161,7 +161,7 @@ namespace Chessy.View.System
 
                 else if (AboutGameC.CellClickType == CellClickTypes.SetUnit)
                 {
-                    if (!_isStartedCellCs[currentCellIdx_0].IsStartedCell(AboutGameC.CurrentPlayerIType))
+                    if (!_isStartedCellCs[currentCellIdx_0].IsStartedCellForPlayer(AboutGameC.CurrentPlayerIType))
                     {
                         _needActive[currentCellIdx_0] = true;
                     }

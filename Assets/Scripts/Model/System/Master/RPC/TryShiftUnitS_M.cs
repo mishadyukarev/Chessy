@@ -6,7 +6,18 @@ namespace Chessy.Model.System
     {
         internal void TryShiftUnitOntoOtherCellM(in byte cellIdxFrom, in byte cellIdxTo, in Player sender)
         {
-            var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
+            //PlayerTypes whoDoing;
+
+            //if (PhotonNetwork.OfflineMode)
+            //{
+            //    whoDoing = _unitCs[cellIdxFrom].PlayerT;
+            //}
+            //else
+            //{
+            //    whoDoing = sender.GetPlayer();
+            //}
+
+            var whoDoing = PhotonNetwork.OfflineMode ? _unitCs[cellIdxFrom].PlayerT : sender.GetPlayer();
 
             if (_whereUnitCanShiftCs[cellIdxFrom].CanShiftHere(cellIdxTo) && _unitCs[cellIdxFrom].PlayerT == whoDoing)
             {
@@ -21,7 +32,19 @@ namespace Chessy.Model.System
                     _shiftingUnitCs[cellIdxFrom].WhereNeedShiftIdxCell = cellIdxTo;
                 }
 
-                RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.SoundRunningUnit);
+                if (PhotonNetwork.OfflineMode)
+                {
+                    if (whoDoing == PlayerTypes.First)
+                    {
+                        RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.SoundRunningUnit);
+                    }
+                }
+                else
+                {
+                    RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.SoundRunningUnit);
+                }
+
+                
             }
         }
     }

@@ -139,7 +139,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (CellC(curCellIdx_0).IsBorder) continue;
+                                if (_cellCs[curCellIdx_0].IsBorder) continue;
 
                                 stream.SendNext(UnitShiftC(curCellIdx_0).Distance);
                             }
@@ -148,7 +148,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (CellC(curCellIdx_0).IsBorder) continue;
+                                if (_cellCs[curCellIdx_0].IsBorder) continue;
 
                                 UnitShiftC(curCellIdx_0).Distance = (float)stream.ReceiveNext();
                             }
@@ -162,7 +162,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (CellC(curCellIdx_0).IsBorder) continue;
+                                if (_cellCs[curCellIdx_0].IsBorder) continue;
 
                                 stream.SendNext(CloudShiftC(curCellIdx_0).Distance);
 
@@ -172,7 +172,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (CellC(curCellIdx_0).IsBorder) continue;
+                                if (_cellCs[curCellIdx_0].IsBorder) continue;
                                 
                                 CloudShiftC(curCellIdx_0).Distance = (float)stream.ReceiveNext();
                             }
@@ -184,7 +184,7 @@ namespace Chessy.Model.System
                     {
                         for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
                         {
-                            if (CellC(currentCellIdx_0).IsBorder) continue;
+                            if (_cellCs[currentCellIdx_0].IsBorder) continue;
 
                             var unitC = UnitC(currentCellIdx_0);
                             var mainTWC = UnitMainTWC(currentCellIdx_0);
@@ -293,7 +293,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (CellC(curCellIdx_0).IsBorder) continue;
+                                if (_cellCs[curCellIdx_0].IsBorder) continue;
 
                                 for (var environmentT = (EnvironmentTypes)1; environmentT < EnvironmentTypes.End; environmentT++)
                                 {
@@ -319,7 +319,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (CellC(curCellIdx_0).IsBorder) continue;
+                                if (_cellCs[curCellIdx_0].IsBorder) continue;
 
                                 for (var environmentT = (EnvironmentTypes)1; environmentT < EnvironmentTypes.End; environmentT++)
                                 {

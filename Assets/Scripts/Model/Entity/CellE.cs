@@ -9,6 +9,7 @@ namespace Chessy.Model.Entity
         public readonly IdxCellC IdxCellC;
         public readonly IsStartedCellC IsStartedCellC;
         public readonly PositionCellC PositionC;
+
         public IdxsAroundCellC IdxsAroundCellC;
         public CellsByDirectAroundC CellsByDirectAroundC;
 

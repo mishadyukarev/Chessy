@@ -17,12 +17,12 @@ namespace Chessy.Model.System
         {
             for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
             {
-                if (CellC(cell_0).IsBorder) continue;
+                if (_cellCs[cell_0].IsBorder) continue;
                 if (!CloudC(cell_0).IsCenter) continue;
 
 
                 var cell_1 = CloudShiftC(cell_0).WhereNeedShiftIdxCell;
-                var directXy_1 = XyCellC(cell_1).Xy;
+                var directXy_1 = _xyCellsCs[cell_1].Xy;
 
 
                 var isInSquareNextCell = directXy_1[0] >= 4 && directXy_1[0] <= 11 && directXy_1[1] >= 3 && directXy_1[1] <= 7;

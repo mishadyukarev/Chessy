@@ -11,9 +11,10 @@ namespace Chessy.Model
 
         #region Cells
 
+        //protected readonly CellE[] cellEs = new CellE[IndexCellsValues.CELLS];
         protected readonly CellC[] _cellCs = new CellC[IndexCellsValues.CELLS];
         protected readonly PositionCellC[] _possitionCellCs = new PositionCellC[IndexCellsValues.CELLS];
-        readonly XyCellC[] _xyCellsCs = new XyCellC[IndexCellsValues.CELLS];
+        protected readonly XyCellC[] _xyCellsCs = new XyCellC[IndexCellsValues.CELLS];
         protected readonly IsStartedCellC[] _isStartedCellCs = new IsStartedCellC[IndexCellsValues.CELLS];
         protected readonly CellsByDirectAroundC[] _cellsByDirectAroundC = new CellsByDirectAroundC[IndexCellsValues.CELLS];
         protected readonly IdxsAroundCellC[] _idxsAroundCellCs = new IdxsAroundCellC[IndexCellsValues.CELLS];
@@ -27,14 +28,14 @@ namespace Chessy.Model
         protected readonly UnitE[] _unitEs = new UnitE[IndexCellsValues.CELLS];
 
         protected readonly UnitOnCellC[] _unitCs = new UnitOnCellC[IndexCellsValues.CELLS];
-        readonly AttackDamageUnitC[] _unitAttackDamageCs = new AttackDamageUnitC[IndexCellsValues.CELLS];
+        protected readonly AttackDamageUnitC[] _unitAttackDamageCs = new AttackDamageUnitC[IndexCellsValues.CELLS];
         protected readonly HealthC[] _hpUnitCs = new HealthC[IndexCellsValues.CELLS];
         protected readonly WaterAmountC[] _unitWaterCs = new WaterAmountC[IndexCellsValues.CELLS];
         protected readonly EffectsUnitC[] _effectsUnitCs = new EffectsUnitC[IndexCellsValues.CELLS];
-        protected readonly ShiftingObjectC[] _shiftingUnitCs = new ShiftingObjectC[IndexCellsValues.CELLS];
-        protected readonly MainToolWeaponUnitC[] _mainTWC = new MainToolWeaponUnitC[IndexCellsValues.CELLS];
-        protected readonly ExtraToolWeaponUnitC[] _extraTWC = new ExtraToolWeaponUnitC[IndexCellsValues.CELLS];
-        protected readonly HowManyDistanceNeedForShiftingUnitC[] _howManyDistanceNeedForShiftingUnitCs = new HowManyDistanceNeedForShiftingUnitC[IndexCellsValues.CELLS];
+        internal protected readonly ShiftingObjectC[] _shiftingUnitCs = new ShiftingObjectC[IndexCellsValues.CELLS];
+        internal protected readonly MainToolWeaponUnitC[] _mainTWC = new MainToolWeaponUnitC[IndexCellsValues.CELLS];
+        internal protected readonly ExtraToolWeaponUnitC[] _extraTWC = new ExtraToolWeaponUnitC[IndexCellsValues.CELLS];
+        internal protected readonly HowManyDistanceNeedForShiftingUnitC[] _howManyDistanceNeedForShiftingUnitCs = new HowManyDistanceNeedForShiftingUnitC[IndexCellsValues.CELLS];
         protected readonly WhereUnitCanAttackToEnemyC[] _whereSimpleAttackCs = new WhereUnitCanAttackToEnemyC[IndexCellsValues.CELLS];
         protected readonly WhereUnitCanAttackToEnemyC[] _whereUniqueAttackCs = new WhereUnitCanAttackToEnemyC[IndexCellsValues.CELLS];
         protected readonly bool[][] _whereSimple = new bool[IndexCellsValues.CELLS][];
@@ -44,7 +45,7 @@ namespace Chessy.Model
         protected readonly HasUnitKingEffectHereC[] _hasUnitKingEffectHereCs = new HasUnitKingEffectHereC[IndexCellsValues.CELLS];
         protected readonly CooldownAbilitiesInSecondsC[] _cooldownAbilityCs = new CooldownAbilitiesInSecondsC[IndexCellsValues.CELLS];
         protected readonly WhereUnitCanShiftC[] _whereUnitCanShiftCs = new WhereUnitCanShiftC[IndexCellsValues.CELLS];
-        readonly ButtonsAbilitiesUnitC[] _buttonsAbilitiesUnitCs = new ButtonsAbilitiesUnitC[IndexCellsValues.CELLS];
+        protected readonly ButtonsAbilitiesUnitC[] _buttonsAbilitiesUnitCs = new ButtonsAbilitiesUnitC[IndexCellsValues.CELLS];
         protected readonly EffectsUnitsRightBarsC[] _effectsUnitsRightBarsCs = new EffectsUnitsRightBarsC[IndexCellsValues.CELLS];
         protected readonly NeedUpdateViewC[] _updateViewUnitCs = new NeedUpdateViewC[IndexCellsValues.CELLS];
         protected readonly ExtractionResourcesWithUnitC[] _extractionResourcesWithUnitCs = new ExtractionResourcesWithUnitC[IndexCellsValues.CELLS];
@@ -59,9 +60,9 @@ namespace Chessy.Model
 
         protected readonly EnvironmentC[] _environmentCs = new EnvironmentC[IndexCellsValues.CELLS];
 
-        readonly CloudC[] _cloudCs = new CloudC[IndexCellsValues.CELLS];
-        readonly WhereViewIdxCellC[] _cloudWhereViewDataCs = new WhereViewIdxCellC[IndexCellsValues.CELLS];
-        readonly ShiftingObjectC[] _shiftCloudCs = new ShiftingObjectC[IndexCellsValues.CELLS];
+        protected readonly CloudC[] _cloudCs = new CloudC[IndexCellsValues.CELLS];
+        protected readonly WhereViewIdxCellC[] _cloudWhereViewDataCs = new WhereViewIdxCellC[IndexCellsValues.CELLS];
+        protected readonly ShiftingObjectC[] _shiftCloudCs = new ShiftingObjectC[IndexCellsValues.CELLS];
 
         protected readonly RiverC[] _riverCs = new RiverC[IndexCellsValues.CELLS];
         protected readonly HaveRiverAroundCellC[] _haveRiverAroundCellCs = new HaveRiverAroundCellC[IndexCellsValues.CELLS];
@@ -109,8 +110,10 @@ namespace Chessy.Model
 
         #region
 
-        public CellC CellC(in byte cellIdx) => _cellCs[cellIdx];
-        public XyCellC XyCellC(in byte cellIdx) => _xyCellsCs[cellIdx];
+        //public CellC CellC(in byte cellIdx) => _cellCs[cellIdx];
+        //public XyCellC XyCellC(in byte cellIdx) => _xyCellsCs[cellIdx];
+        //public IsStartedCellC IsStartedCellC(in byte cellIdx) => _isStartedCellCs[cellIdx];
+        //public IdxsAroundCellC IdxsAroundCellC(in byte cellIdx) => _idxsAroundCellCs[cellIdx];
 
         public UnitOnCellC UnitC(in byte cellIdx) => _unitCs[cellIdx];
         public HealthC UnitHpC(in byte cellIdx) => _hpUnitCs[cellIdx];

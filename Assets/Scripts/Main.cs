@@ -82,6 +82,27 @@ namespace Chessy
 
 
             sM.ComeIntoTrainingAfterDownloadingGame();
+
+
+
+
+            ////Load sample data
+            //var sampleData = new MLModel1.ModelInput()
+            //{
+            //    Has_tree_up = 0F,
+            //    Has_tree_up_right = 0F,
+            //    Has_tree_right = 0F,
+            //    Has_tree_right_down = 0F,
+            //    Has_tree_down = 1F,
+            //    Has_tree_down_left = 1F,
+            //    Has_tree_left = 0F,
+            //    Has_tree_left_up = 0F,
+            //};
+
+            ////Load model and predict output
+            //var result = MLModel1.Predict(sampleData);
+
+
         }
 
         void Update()

@@ -33,7 +33,7 @@ namespace Chessy.Model
                 _pointsCellsForSettingKing[cellIdxStart] = 0;
                 _pointsCellsForSettingPawn[cellIdxStart] = 0;
 
-                if (!_isStartedCellCs[cellIdxStart].IsStartedCell(playerBotT) || _unitCs[cellIdxStart].HaveUnit) continue;
+                if (!_isStartedCellCs[cellIdxStart].IsStartedCellForPlayer(playerBotT) || _unitCs[cellIdxStart].HaveUnit) continue;
 
                 _pointsCellsForSettingKing[cellIdxStart]++;
                 _pointsCellsForSettingPawn[cellIdxStart]++;
@@ -50,12 +50,12 @@ namespace Chessy.Model
                     _pointsCellsForSettingPawn[cellIdxStart]++;
                 }
 
-                if (XyCellC(cellIdxStart).Y == 8)
+                if (_xyCellsCs[cellIdxStart].Y == 8)
                 {
                     _pointsCellsForSettingKing[cellIdxStart] += 3;
                     _pointsCellsForSettingPawn[cellIdxStart] += 3;
 
-                    if (XyCellC(cellIdxStart).X >= 4 && XyCellC(cellIdxStart).X <= 7)
+                    if (_xyCellsCs[cellIdxStart].X >= 4 && _xyCellsCs[cellIdxStart].X <= 7)
                     {
                         _pointsCellsForSettingKing[cellIdxStart]++;
                         _pointsCellsForSettingPawn[cellIdxStart]++;

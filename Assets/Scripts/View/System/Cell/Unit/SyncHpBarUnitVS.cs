@@ -41,7 +41,7 @@ namespace Chessy.View.System
 
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (CellC(currentCellIdx_0).IsBorder) continue;
+                if (_cellCs[currentCellIdx_0].IsBorder) continue;
 
 
                 var unitViewData_0 = UnitViewDataC(currentCellIdx_0);

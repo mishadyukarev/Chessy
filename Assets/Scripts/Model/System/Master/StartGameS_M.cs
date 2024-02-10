@@ -75,8 +75,8 @@ namespace Chessy.Model.System
 
                 for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
-                    var x = XyCellC(cell_0).X;
-                    var y = XyCellC(cell_0).Y;
+                    var x = _xyCellsCs[cell_0].X;
+                    var y = _xyCellsCs[cell_0].Y;
 
                     _fireCs[cell_0].HaveFire = false;
 
@@ -191,8 +191,8 @@ namespace Chessy.Model.System
 
                 for (byte cellUdxCurrent = 0; cellUdxCurrent < IndexCellsValues.CELLS; cellUdxCurrent++)
                 {
-                    var x = XyCellC(cellUdxCurrent).X;
-                    var y = XyCellC(cellUdxCurrent).Y;
+                    var x = _xyCellsCs[cellUdxCurrent].X;
+                    var y = _xyCellsCs[cellUdxCurrent].Y;
 
                     if (x == 7 && y == 8)
                     {
@@ -280,7 +280,7 @@ namespace Chessy.Model.System
         {
             for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
             {
-                if (CellC(currentCellIdx).IsBorder) continue;
+                if (_cellCs[currentCellIdx].IsBorder) continue;
 
                 if (CloudViewDataC(currentCellIdx).HaveDataReference) continue;
 

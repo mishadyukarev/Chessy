@@ -33,7 +33,7 @@ namespace Chessy.View.System
 
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (CellC(currentCellIdx_0).IsBorder) continue;
+                if (_cellCs[currentCellIdx_0].IsBorder) continue;
 
                 _needActive[currentCellIdx_0] = false;
                 _needColor[currentCellIdx_0] = _whiteColor;
@@ -66,7 +66,7 @@ namespace Chessy.View.System
 
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (CellC(currentCellIdx_0).IsBorder) continue;
+                if (_cellCs[currentCellIdx_0].IsBorder) continue;
 
                 var needActive = _needActive[currentCellIdx_0];
 

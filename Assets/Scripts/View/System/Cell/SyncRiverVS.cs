@@ -25,7 +25,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (CellC(cellIdxCurrent).IsBorder) continue;
+                if (_cellCs[cellIdxCurrent].IsBorder) continue;
 
                 var parentTrans = _riverVEs[cellIdxCurrent].ParentTransformVC.Transform;
 
