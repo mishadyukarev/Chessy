@@ -8,6 +8,7 @@ using Chessy.View.UI.System;
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Chessy
 {
@@ -80,17 +81,20 @@ namespace Chessy
                 sV,
             };
 
+            //new AAA();
+
 
             sM.ComeIntoTrainingAfterDownloadingGame();
 
 
 
+            
 
             ////Load sample data
             //var sampleData = new MLModel1.ModelInput()
             //{
+            //    Has_tree_on_cell = 0F,
             //    Has_tree_up = 0F,
-            //    Has_tree_up_right = 0F,
             //    Has_tree_right = 0F,
             //    Has_tree_right_down = 0F,
             //    Has_tree_down = 1F,
@@ -101,6 +105,8 @@ namespace Chessy
 
             ////Load model and predict output
             //var result = MLModel1.Predict(sampleData);
+
+            //AAA
 
 
         }
