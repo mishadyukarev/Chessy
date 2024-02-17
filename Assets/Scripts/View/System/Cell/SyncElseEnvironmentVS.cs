@@ -33,9 +33,9 @@ namespace Chessy.View.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
+                if (environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
-                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill))
+                    if (environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill))
                     {
                         _needActiveHillOver[cellIdxCurrent] = true;
                     }
@@ -44,13 +44,13 @@ namespace Chessy.View.System
                 }
                 else
                 {
-                    _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Hill] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill);
+                    _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Hill] = environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill);
                     _needActiveHillOver[cellIdxCurrent] = false;
                 }
 
-                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Fertilizer] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Fertilizer);
-                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.YoungForest] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.YoungForest);
-                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Mountain] = _environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Mountain);
+                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Fertilizer] = environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Fertilizer);
+                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.YoungForest] = environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.YoungForest);
+                _needActive[cellIdxCurrent, (byte)EnvironmentTypes.Mountain] = environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Mountain);
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)

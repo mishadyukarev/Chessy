@@ -24,11 +24,11 @@ namespace Chessy.Model
             
 
 
-            AboutGameC.RaycastT = RaycastTypes.None;
+            aboutGameC.RaycastT = RaycastTypes.None;
 
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                AboutGameC.RaycastT = RaycastTypes.UI;
+                aboutGameC.RaycastT = RaycastTypes.UI;
             }
             else if (raycast)
             {
@@ -36,27 +36,27 @@ namespace Chessy.Model
 
                 for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
-                    int one = _cellCs[cell_0].InstanceID;
+                    int one = CellC(cell_0).InstanceID;
 
                     if (one == two)
                     {
-                        if (IndexesCellsC.Current != IndexesCellsC.PreviousVision)
+                        if (indexesCellsC.Current != indexesCellsC.PreviousVision)
                         {
-                            if (AboutGameC.CellClickT.Is(CellClickTypes.SetUnit))
+                            if (aboutGameC.CellClickT.Is(CellClickTypes.SetUnit))
                             {
-                                _updateViewUnitCs[IndexesCellsC.Current].NeedUpdateView = true;
-                                _updateViewUnitCs[IndexesCellsC.PreviousVision].NeedUpdateView = true;
+                                _updateViewUnitCs[indexesCellsC.Current].NeedUpdateView = true;
+                                _updateViewUnitCs[indexesCellsC.PreviousVision].NeedUpdateView = true;
                             }
 
-                            IndexesCellsC.PreviousVision = IndexesCellsC.Current;
+                            indexesCellsC.PreviousVision = indexesCellsC.Current;
                         }
 
-                        IndexesCellsC.Current = cell_0;
-                        AboutGameC.RaycastT = RaycastTypes.Cell;
+                        indexesCellsC.Current = cell_0;
+                        aboutGameC.RaycastT = RaycastTypes.Cell;
                     }
                 }
 
-                if (AboutGameC.RaycastT == RaycastTypes.None) AboutGameC.RaycastT = RaycastTypes.Background;
+                if (aboutGameC.RaycastT == RaycastTypes.None) aboutGameC.RaycastT = RaycastTypes.Background;
             }
 
 

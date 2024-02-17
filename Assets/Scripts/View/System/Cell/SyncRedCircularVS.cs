@@ -19,7 +19,7 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            var currentLessonT = AboutGameC.LessonType;
+            var currentLessonT = aboutGameC.LessonType;
 
             for (var currentIdxCell = 0; currentIdxCell < IndexCellsValues.CELLS; currentIdxCell++)
             {
@@ -28,9 +28,9 @@ namespace Chessy.Model
 
             for (byte currentIdxCell = 0; currentIdxCell < IndexCellsValues.CELLS; currentIdxCell++)
             {
-                if (_cellCs[currentIdxCell].IsBorder) continue;
+                if (CellC(currentIdxCell).IsBorder) continue;
 
-                var currentUnitT_0 = _unitCs[currentIdxCell].UnitType;
+                var currentUnitT_0 = unitCs[currentIdxCell].UnitType;
                 ref var needActiveRef = ref _needActive[currentIdxCell];
 
                 if (currentLessonT == LessonTypes.StepAwayFromWoodcutter)
@@ -51,11 +51,11 @@ namespace Chessy.Model
 
                 if (!currentLessonT.HaveLesson())
                 {
-                    if (AboutGameC.GameModeType == GameModeTypes.TrainingOffline)
+                    if (aboutGameC.GameModeType == GameModeTypes.TrainingOffline)
                     {
                         if (currentUnitT_0 == UnitTypes.King)
                         {
-                            if (_unitCs[currentIdxCell].PlayerType == PlayerTypes.Second)
+                            if (unitCs[currentIdxCell].PlayerType == PlayerTypes.Second)
                             {
                                 needActiveRef = true;
                             }

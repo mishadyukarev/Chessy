@@ -6,7 +6,7 @@ namespace Chessy.Model.System
         internal void TrySeedNewYoungForestOnCell(in byte cellIdx)
         {
             if (UnityEngine.Random.Range(0f, 1f) < ValuesChessy.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
-                _environmentCs[cellIdx].Set(EnvironmentTypes.YoungForest, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
+                environmentCs[cellIdx].Set(EnvironmentTypes.YoungForest, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
         }
     }
 }

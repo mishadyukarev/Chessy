@@ -17,13 +17,13 @@ namespace Chessy.Model
         {
             var needActiveZone = false;
 
-            if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
+            if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
             {
-                if (IndexesCellsC.IsSelectedCell)
+                if (indexesCellsC.IsSelectedCell)
                 {
-                    var idx_sel = IndexesCellsC.Selected;
+                    var idx_sel = indexesCellsC.Selected;
 
-                    if (_unitCs[IndexesCellsC.Selected].HaveUnit)
+                    if (unitCs[indexesCellsC.Selected].HaveUnit)
                     {
                         needActiveZone = true;
 
@@ -33,7 +33,7 @@ namespace Chessy.Model
 
                             if (_needActiveButton[(byte)buttonT])
                             {
-                                _eUI.RightEs.Effect(buttonT).ImageC.Image.sprite = _fromResourcesC.Sprite(_effectsUnitsRightBarsCs[idx_sel].Effect(buttonT));
+                                _eUI.RightEs.Effect(buttonT).ImageC.Image.sprite = fromResourcesC.Sprite(_effectsUnitsRightBarsCs[idx_sel].Effect(buttonT));
                             }
 
                             _eUI.RightEs.Effect(buttonT).GO.TrySetActive(_needActiveButton[(byte)buttonT]);

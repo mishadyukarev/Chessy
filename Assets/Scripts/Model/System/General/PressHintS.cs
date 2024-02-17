@@ -31,71 +31,71 @@ namespace Chessy.Model
 
         public void Update()
         {
-            if (_isPressed && !_bookC.IsOpenedBook())
+            if (_isPressed && !bookC.IsOpenedBook())
             {
                 _timer += Time.deltaTime;
 
                 if (_timer >= TIMER)
                 {
-                    _dataFromViewC.SoundAction(ClipTypes.OpenBook).Invoke();
+                    dataFromViewC.SoundAction(ClipTypes.OpenBook).Invoke();
 
                     if (_buttonT != ButtonTypes.None)
                     {
-                        switch (UnitButtonsC(IndexesCellsC.Selected).Ability(_buttonT))
+                        switch (UnitButtonsC(indexesCellsC.Selected).Ability(_buttonT))
                         {
                             case AbilityTypes.CircularAttack:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.CircularAttackKing;
+                                bookC.OpenedNowPageBookT = PageBookTypes.CircularAttackKing;
                                 break;
 
                             case AbilityTypes.KingPassiveNearBonus:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.PassiveKing;
+                                bookC.OpenedNowPageBookT = PageBookTypes.PassiveKing;
                                 break;
 
                             case AbilityTypes.FirePawn:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.Fire;
+                                bookC.OpenedNowPageBookT = PageBookTypes.Fire;
                                 break;
 
                             case AbilityTypes.PutOutFirePawn:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.Fire;
+                                bookC.OpenedNowPageBookT = PageBookTypes.Fire;
                                 break;
 
                             case AbilityTypes.Seed:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.SeedForest;
+                                bookC.OpenedNowPageBookT = PageBookTypes.SeedForest;
                                 break;
 
                             case AbilityTypes.SetFarm:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.BuildFarm;
+                                bookC.OpenedNowPageBookT = PageBookTypes.BuildFarm;
                                 break;
 
                             case AbilityTypes.DestroyBuilding:
                                 break;
 
                             case AbilityTypes.FireArcher:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.Fire;
+                                bookC.OpenedNowPageBookT = PageBookTypes.Fire;
                                 break;
 
                             case AbilityTypes.ChangeCornerArcher:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.ToggleUniqueAttackArcher;
+                                bookC.OpenedNowPageBookT = PageBookTypes.ToggleUniqueAttackArcher;
                                 break;
 
                             case AbilityTypes.GrowAdultForest:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.GrowAdultForest;
+                                bookC.OpenedNowPageBookT = PageBookTypes.GrowAdultForest;
                                 break;
 
                             case AbilityTypes.StunElfemale:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.StunElfemale;
+                                bookC.OpenedNowPageBookT = PageBookTypes.StunElfemale;
                                 break;
 
                             case AbilityTypes.IncreaseWindSnowy:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.Wind;
+                                bookC.OpenedNowPageBookT = PageBookTypes.Wind;
                                 break;
 
                             case AbilityTypes.DecreaseWindSnowy:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.Wind;
+                                bookC.OpenedNowPageBookT = PageBookTypes.Wind;
                                 break;
 
                             case AbilityTypes.ChangeDirectionWind:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.Wind;
+                                bookC.OpenedNowPageBookT = PageBookTypes.Wind;
                                 break;
 
                             case AbilityTypes.Resurrect:
@@ -113,22 +113,22 @@ namespace Chessy.Model
 
                     else if (_effectButtonT != 0)
                     {
-                        switch (_effectsUnitsRightBarsCs[IndexesCellsC.Selected].Effect((ButtonTypes)_effectButtonT))
+                        switch (_effectsUnitsRightBarsCs[indexesCellsC.Selected].Effect((ButtonTypes)_effectButtonT))
                         {
                             case EffectTypes.Shield:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.FrozenShield;
+                                bookC.OpenedNowPageBookT = PageBookTypes.FrozenShield;
                                 break;
 
                             case EffectTypes.Stun:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.Stun;
+                                bookC.OpenedNowPageBookT = PageBookTypes.Stun;
                                 break;
 
                             case EffectTypes.Arraw:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.FrozenArraw;
+                                bookC.OpenedNowPageBookT = PageBookTypes.FrozenArraw;
                                 break;
 
                             case EffectTypes.DamageAdd:
-                                _bookC.OpenedNowPageBookT = PageBookTypes.PassiveKing;
+                                bookC.OpenedNowPageBookT = PageBookTypes.PassiveKing;
                                 break;
 
                             default:
@@ -140,18 +140,18 @@ namespace Chessy.Model
 
                     else
                     {
-                        if (AboutGameC.LessonT == Enum.LessonTypes.HoldPressWarrior)
+                        if (aboutGameC.LessonT == Enum.LessonTypes.HoldPressWarrior)
                         {
                             /*if (_neededPageBookT == PageBookTypes.Town)  */
-                            _s.SetNextLesson();
+                            s.SetNextLesson();
                         }
 
-                        _bookC.OpenedNowPageBookT = _neededPageBookT;
+                        bookC.OpenedNowPageBookT = _neededPageBookT;
                     }
 
 
 
-                    _updateAllViewC.NeedUpdateView = true;
+                    updateAllViewC.NeedUpdateView = true;
                 }
             }
             else _timer = 0;

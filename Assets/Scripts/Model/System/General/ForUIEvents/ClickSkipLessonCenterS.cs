@@ -4,7 +4,7 @@
     {
         public void ClickSkipLesson()
         {
-            _s.StartGame(false);
+            s.StartGame(false);
         }
     }
 }

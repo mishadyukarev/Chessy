@@ -15,7 +15,7 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            var curPlayerI = AboutGameC.CurrentPlayerIType;
+            var curPlayerI = aboutGameC.CurrentPlayerIType;
 
             var myHeroT = PlayerInfoE(curPlayerI).GodInfoC.UnitT;
 

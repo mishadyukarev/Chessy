@@ -27,13 +27,13 @@ namespace Chessy.Model
             var needActiveFuture = false;
             var needActivePremum = false;
 
-            if (AboutGameC.LessonType.HaveLesson())
+            if (aboutGameC.LessonType.HaveLesson())
             {
-                if (AboutGameC.LessonType >= LessonTypes.NeedBuildSmelterAndMeltOre)
+                if (aboutGameC.LessonType >= LessonTypes.NeedBuildSmelterAndMeltOre)
                 {
                     isActiveSmelter = true;
                 }
-                if (AboutGameC.LessonType >= LessonTypes.ClickBuyMarketInTown)
+                if (aboutGameC.LessonType >= LessonTypes.ClickBuyMarketInTown)
                 {
                     needActiveMarket = true;
                 }

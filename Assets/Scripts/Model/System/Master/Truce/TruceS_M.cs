@@ -8,19 +8,20 @@ namespace Chessy.Model.System
     {
         internal TruceS(in SystemsModel sM, EntitiesModel eM) : base(sM, eM)
         {
+
         }
 
         internal void ExecuteTruce()
         {
-            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+            for (byte playerT_byte = 1; playerT_byte < (byte)PlayerTypes.End; playerT_byte++)
             {
-                PlayerInfoC(playerT).HaveKingInInventor = true;
+                playerInfoCs[playerT_byte].HaveKingInInventor = true;
 
-                GodInfoC(playerT).HaveGodInInventor = true;
-                GodInfoC(playerT).CooldownInSecondsForNextAppearance = 0;
+                godInfoCs[playerT_byte].HaveGodInInventor = true;
+                godInfoCs[playerT_byte].CooldownInSecondsForNextAppearance = 0;
 
-                PawnPeopleInfoC(playerT).PeopleInCity = AfterTruceValues.PEOPLE_AFTER_TRUCE;
-                PawnPeopleInfoC(playerT).AmountInGame = 0;
+                pawnPeopleInfoCs[playerT_byte].PeopleInCity = AfterTruceValues.PEOPLE_AFTER_TRUCE;
+                pawnPeopleInfoCs[playerT_byte].AmountInGame = 0;
             }
 
 
@@ -28,14 +29,14 @@ namespace Chessy.Model.System
             {
                 FireC(currentCellIdx_0).HaveFire = false;
 
-                _s.TryDestroyAllTrailsOnCell(currentCellIdx_0);
+                s.TryDestroyAllTrailsOnCell(currentCellIdx_0);
 
 
                 var unitC_0 = UnitC(currentCellIdx_0);
 
                 if (unitC_0.HaveUnit)
                 {
-                    if (AboutGameC.GameModeT == GameModeTypes.TrainingOffline)
+                    if (aboutGameC.GameModeT == GameModeTypes.TrainingOffline)
                     {
                         if (unitC_0.PlayerT == PlayerTypes.First)
                         {
@@ -95,7 +96,7 @@ namespace Chessy.Model.System
 
             if (unitC_0.UnitT == UnitTypes.Tree)
             {
-                AboutGameC.HaveTreeUnitInGame = false;
+                aboutGameC.HaveTreeUnitInGame = false;
             }
 
             UnitViewDataC(UnitViewDataC(cellIdx_0).ViewIdxCell).DataIdxCell = 0;

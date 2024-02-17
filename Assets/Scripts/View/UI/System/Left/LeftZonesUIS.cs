@@ -16,15 +16,15 @@ namespace Chessy.Model
             var needActiveCity = false;
             var needActiveEnvironment = false;
 
-            if (AboutGameC.IsSelectedCityP)
+            if (aboutGameC.IsSelectedCityP)
             {
                 needActiveCity = true;
             }
             else
             {
-                if (IndexesCellsC.IsSelectedCell)
+                if (indexesCellsC.IsSelectedCell)
                 {
-                    if (!AboutGameC.LessonType.HaveLesson())
+                    if (!aboutGameC.LessonType.HaveLesson())
                     {
                         needActiveEnvironment = true;
                     }

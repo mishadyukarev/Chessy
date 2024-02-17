@@ -17,13 +17,13 @@ namespace Chessy.Model
         {
             _needActive = false;
 
-            if (AboutGameC.GameModeType.Is(GameModeTypes.WithFriendOffline))
+            if (aboutGameC.GameModeType.Is(GameModeTypes.WithFriendOffline))
             {
-                if (_zonesInfoC.IsActiveFriend)
+                if (zonesInfoC.IsActiveFriend)
                 {
                     _needActive = true;
 
-                    if (AboutGameC.CurrentPlayerIType == PlayerTypes.First)
+                    if (aboutGameC.CurrentPlayerIType == PlayerTypes.First)
                     {
                         _eUI.CenterEs.FriendE.TextC.TextUI.text = "1";
                     }

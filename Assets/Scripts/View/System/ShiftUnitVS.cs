@@ -26,7 +26,7 @@ namespace Chessy.View.System
 
             for (byte cellCurrent_0 = 0; cellCurrent_0 < IndexCellsValues.CELLS; cellCurrent_0++)
             {
-                if (_cellCs[cellCurrent_0].IsBorder) continue;
+                if (CellC(cellCurrent_0).IsBorder) continue;
 
                 var unitWhereViewDataC_0 = _unitWhereViewDataCs[cellCurrent_0];
                 if (!unitWhereViewDataC_0.HaveDataReference) continue;
@@ -35,17 +35,17 @@ namespace Chessy.View.System
                 var unitTransView_0 = _unitTrans[cellCurrent_0];
 
                 var cellIdx_1 = unitWhereViewDataC_0.DataIdxCellP;
-                var shiftUnitC_1 = _shiftingUnitCs[cellIdx_1];
+                var shiftUnitC_1 = shiftingUnitCs[cellIdx_1];
                 var isShifting_1 = shiftUnitC_1.IsShifting;
 
 
                 if (isShifting_1)
                 {
-                    var possitionStart_0 = _possitionCellCs[cellIdx_1].PositionP;
+                    var possitionStart_0 = positionCellCs[cellIdx_1].PositionP;
 
                     var whereNeedShiftIdxCell_2 = shiftUnitC_1.WhereNeedShiftIdxCellP;
 
-                    var possitionEnd_2 = _possitionCellCs[whereNeedShiftIdxCell_2].PositionP;
+                    var possitionEnd_2 = positionCellCs[whereNeedShiftIdxCell_2].PositionP;
 
                     var t = shiftUnitC_1.DistanceP / _howManyDistanceNeedForShiftingUnitCs[cellIdx_1].HowMany(whereNeedShiftIdxCell_2);
 
@@ -54,7 +54,7 @@ namespace Chessy.View.System
                 }
                 else
                 {
-                    _unitPossition = _possitionCellCs[cellIdx_1].PositionP;
+                    _unitPossition = positionCellCs[cellIdx_1].PositionP;
                 }
 
 

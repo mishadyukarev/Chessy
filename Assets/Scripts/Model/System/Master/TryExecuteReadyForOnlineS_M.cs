@@ -12,12 +12,12 @@ namespace Chessy.Model.System
             if (PlayerInfoE(PlayerTypes.First).PlayerInfoC.IsReadyForStartOnlineGame
                 && PlayerInfoE(PlayerTypes.Second).PlayerInfoC.IsReadyForStartOnlineGame)
             {
-                AboutGameC.IsStartedGame = true;
+                aboutGameC.IsStartedGame = true;
             }
 
             else
             {
-                AboutGameC.IsStartedGame = false;
+                aboutGameC.IsStartedGame = false;
             }
         }
     }

@@ -8,19 +8,19 @@ namespace Chessy.Model.System
         {
             if (buildT == BuildingTypes.Market || buildT == BuildingTypes.Smelter)
             {
-                if (_selectedBuildingsInTownC.Is(buildT))
+                if (selectedBuildingsInTownC.Is(buildT))
                 {
-                    _selectedBuildingsInTownC.Set(buildT, false);
-                    _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
+                    selectedBuildingsInTownC.Set(buildT, false);
+                    dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
                 }
-                else if (PlayerInfoE(AboutGameC.CurrentPlayerIT).BuildingsInTownInfoC.HaveBuilding(buildT))
+                else if (PlayerInfoE(aboutGameC.CurrentPlayerIT).BuildingsInTownInfoC.HaveBuilding(buildT))
                 {
-                    _selectedBuildingsInTownC.Set(buildT, true);
-                    _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
+                    selectedBuildingsInTownC.Set(buildT, true);
+                    dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
                 }
                 else
                 {
-                    _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuyBuildingInTownM), buildT });
+                    rpcC.Action0(rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(s.TryBuyBuildingInTownM), buildT });
                 }
             }
 
@@ -29,7 +29,7 @@ namespace Chessy.Model.System
             switch (buildT)
             {
                 case BuildingTypes.House:
-                    _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuyBuildingInTownM), buildT });
+                    rpcC.Action0(rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(s.TryBuyBuildingInTownM), buildT });
                     break;
 
                 case BuildingTypes.Market:
@@ -47,7 +47,7 @@ namespace Chessy.Model.System
                 default: throw new Exception();
             }
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Chessy.View.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _needActive[cellIdxCurrent] = AboutGameC.IsActivatedIdxAndXyInfoCellsP;
+                _needActive[cellIdxCurrent] = aboutGameC.IsActivatedIdxAndXyInfoCellsP;
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
@@ -27,7 +27,7 @@ namespace Chessy.View.System
 
                 if (_needActive[cellIdxCurrent])
                 {
-                    _tMPCs[cellIdxCurrent].TextMeshPro.text = cellIdxCurrent + "\n " + _xyCellsCs[cellIdxCurrent].X + "|" + _xyCellsCs[cellIdxCurrent].Y + "  ";
+                    _tMPCs[cellIdxCurrent].TextMeshPro.text = cellIdxCurrent + "\n " + XyCellC(cellIdxCurrent).X + "|" + XyCellC(cellIdxCurrent).Y + "  ";
                 }
             }
         }

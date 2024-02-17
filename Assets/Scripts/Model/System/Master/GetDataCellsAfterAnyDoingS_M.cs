@@ -47,7 +47,7 @@ namespace Chessy.Model.System
             GetCellForArsonArcher();
             FillEffectsForVision();
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
 
         void FillEffectsForVision()
@@ -57,7 +57,7 @@ namespace Chessy.Model.System
                 for (byte effectIdx = 0; effectIdx < _isFilled.Length; effectIdx++) _isFilled[effectIdx] = false;
 
 
-                if (_unitCs[cellIdxCurrent].UnitT.HaveUnit())
+                if (unitCs[cellIdxCurrent].UnitT.HaveUnit())
                 {
                     for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
                     {
@@ -78,7 +78,7 @@ namespace Chessy.Model.System
                             _effectsUnitsRightBarsCs[cellIdxCurrent].Set(buttonT, EffectTypes.Stun);
                             _isFilled[(byte)EffectTypes.Stun] = true;
                         }
-                        else if (!_isFilled[(byte)EffectTypes.DamageAdd] && _hasUnitKingEffectHereCs[cellIdxCurrent].Has(_unitCs[cellIdxCurrent].PlayerT))
+                        else if (!_isFilled[(byte)EffectTypes.DamageAdd] && _hasUnitKingEffectHereCs[cellIdxCurrent].Has(unitCs[cellIdxCurrent].PlayerT))
                         {
                             _effectsUnitsRightBarsCs[cellIdxCurrent].Set(buttonT, EffectTypes.DamageAdd);
                             _isFilled[(byte)EffectTypes.DamageAdd] = true;

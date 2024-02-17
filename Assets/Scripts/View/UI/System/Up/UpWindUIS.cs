@@ -37,13 +37,13 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= Enum.LessonTypes.ClickWindInfo)
+            if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= Enum.LessonTypes.ClickWindInfo)
             {
                 _eUI.UpEs.ParentWindGOC.TrySetActive(true);
 
-                _eUI.UpEs.WindTrC.EulerAngles = _directs[WindC.DirectType];
-                if (AboutGameC.CurrentPlayerIType == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
-                _eUI.UpEs.WindTextC.TextUI.text = WindC.SpeedP.ToString() + "/" + ValuesChessy.MAX_SPEED_WIND;
+                _eUI.UpEs.WindTrC.EulerAngles = _directs[windC.DirectType];
+                if (aboutGameC.CurrentPlayerIType == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
+                _eUI.UpEs.WindTextC.TextUI.text = windC.SpeedP.ToString() + "/" + ValuesChessy.MAX_SPEED_WIND;
 
 
             }

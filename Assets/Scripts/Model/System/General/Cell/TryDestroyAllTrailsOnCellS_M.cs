@@ -6,9 +6,9 @@
         {
             for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
             {
-                if (TrailHealthC(cellIdx).IsAlive(dirT))
+                if (hpTrailCs[cellIdx].IsAlive(dirT))
                 {
-                    TrailHealthC(cellIdx).Health(dirT) = 0;
+                    hpTrailCs[cellIdx].Health(dirT) = 0;
                 }
             }
         }

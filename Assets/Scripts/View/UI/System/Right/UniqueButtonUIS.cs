@@ -22,43 +22,43 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            var ability_cur = UnitButtonsC(IndexesCellsC.Selected).Ability(_buttonT);
+            var ability_cur = UnitButtonsC(indexesCellsC.Selected).Ability(_buttonT);
 
             _needActive = false;
 
-            if (_unitCs[IndexesCellsC.Selected].PlayerType == AboutGameC.CurrentPlayerIType && ability_cur != AbilityTypes.None)
+            if (unitCs[indexesCellsC.Selected].PlayerType == aboutGameC.CurrentPlayerIType && ability_cur != AbilityTypes.None)
             {
                 if (_buttonT == ButtonTypes.First)
                 {
-                    if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= LessonTypes.SeedingPawn)
+                    if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= LessonTypes.SeedingPawn)
                     {
                         _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Second)
                 {
-                    if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= LessonTypes.Build1Farms)
+                    if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= LessonTypes.Build1Farms)
                     {
                         _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Third)
                 {
-                    if (!AboutGameC.LessonType.HaveLesson())
+                    if (!aboutGameC.LessonType.HaveLesson())
                     {
                         _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Fourth)
                 {
-                    if (!AboutGameC.LessonType.HaveLesson())
+                    if (!aboutGameC.LessonType.HaveLesson())
                     {
                         _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Fifth)
                 {
-                    if (!AboutGameC.LessonType.HaveLesson())
+                    if (!aboutGameC.LessonType.HaveLesson())
                     {
                         _needActive = true;
                     }
@@ -72,10 +72,10 @@ namespace Chessy.View.UI.System
 
             if (_needActive)
             {
-                _buttonE.CooldonwTextC.SetActiveParent(_cooldownAbilityCs[IndexesCellsC.Selected].HaveCooldown(ability_cur));
-                _buttonE.CooldonwTextC.TextUI.text = _cooldownAbilityCs[IndexesCellsC.Selected].Cooldown(ability_cur).ToString();
+                _buttonE.CooldonwTextC.SetActiveParent(_cooldownAbilityCs[indexesCellsC.Selected].HaveCooldown(ability_cur));
+                _buttonE.CooldonwTextC.TextUI.text = _cooldownAbilityCs[indexesCellsC.Selected].Cooldown(ability_cur).ToString();
 
-                _buttonE.AbilityImageC.Image.sprite = _fromResourcesC.Sprite(ability_cur);
+                _buttonE.AbilityImageC.Image.sprite = fromResourcesC.Sprite(ability_cur);
 
                 for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                 {
@@ -85,28 +85,28 @@ namespace Chessy.View.UI.System
 
 
                 _buttonE.WaterTextC.ParentG.SetActive(false);
-                switch (ability_cur)
-                {
-                    //case AbilityTypes.IceWall:
-                    //    //_buttonE.WaterTextC.ParentG.SetActive(true);
-                    //    //_buttonE.WaterTextC.TextUI.text = WaterValues..ToString();
-                    //    break;
+                //switch (ability_cur)
+                //{
+                //    //case AbilityTypes.IceWall:
+                //    //    //_buttonE.WaterTextC.ParentG.SetActive(true);
+                //    //    //_buttonE.WaterTextC.TextUI.text = WaterValues..ToString();
+                //    //    break;
 
-                    //case AbilityTypes.ActiveAroundBonusSnowy:
-                    //    _buttonE.WaterTextC.ParentG.SetActive(true);
-                    //    _buttonE.WaterTextC.TextUI.text = WaterValues.BONUS_AROUND_SNOWY.ToString();
-                    //    break;
+                //    //case AbilityTypes.ActiveAroundBonusSnowy:
+                //    //    _buttonE.WaterTextC.ParentG.SetActive(true);
+                //    //    _buttonE.WaterTextC.TextUI.text = WaterValues.BONUS_AROUND_SNOWY.ToString();
+                //    //    break;
 
-                    //case AbilityTypes.DirectWave:
-                    //    _buttonE.WaterTextC.ParentG.SetActive(true);
-                    //    _buttonE.WaterTextC.TextUI.text = WaterValues.DIRECT_WAVE.ToString();
-                    //    break;
+                //    //case AbilityTypes.DirectWave:
+                //    //    _buttonE.WaterTextC.ParentG.SetActive(true);
+                //    //    _buttonE.WaterTextC.TextUI.text = WaterValues.DIRECT_WAVE.ToString();
+                //    //    break;
 
-                    //case AbilityTypes.ChangeDirectionWind:
-                    //    _buttonE.WaterTextC.ParentG.SetActive(true);
-                    //    _buttonE.WaterTextC.TextUI.text = WaterValues.Need(ability_cur).ToString();
-                    //    break;
-                }
+                //    //case AbilityTypes.ChangeDirectionWind:
+                //    //    _buttonE.WaterTextC.ParentG.SetActive(true);
+                //    //    _buttonE.WaterTextC.TextUI.text = WaterValues.Need(ability_cur).ToString();
+                //    //    break;
+                //}
 
                 _buttonE.WoodTextC.ParentG.SetActive(false);
                 switch (ability_cur)

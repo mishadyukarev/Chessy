@@ -4,9 +4,9 @@
     {
         internal void Mistake(in MistakeTypes mistakeT)
         {
-            _mistakeC.MistakeT = mistakeT;
-            _mistakeC.Timer = 0;
-            _dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
+            mistakeC.MistakeT = mistakeT;
+            mistakeC.Timer = 0;
+            dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
         }
     }
 }

@@ -6,11 +6,11 @@ namespace Chessy.Model.System
     {
         public void ToggleToolWeapon(in ToolsWeaponsWarriorTypes twT)
         {
-            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
+            dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
-            IndexesCellsC.Selected = 0;
+            indexesCellsC.Selected = 0;
 
-            if (AboutGameC.CurrentPlayerIT.Is(AboutGameC.CurrentPlayerIT))
+            if (aboutGameC.CurrentPlayerIT.Is(aboutGameC.CurrentPlayerIT))
             {
                 //if (_eMG.LessonTC.Is(LessonTypes.ClickPick))
                 //{
@@ -20,7 +20,7 @@ namespace Chessy.Model.System
                 //    }
                 //}
 
-                if (PlayerInfoE(AboutGameC.CurrentPlayerIT).PawnInfoC.AmountInGame > 0)
+                if (PlayerInfoE(aboutGameC.CurrentPlayerIT).PawnInfoC.AmountInGame > 0)
                 {
                     //if (tw == ToolWeaponTypes.Pick)
                     //{
@@ -36,17 +36,17 @@ namespace Chessy.Model.System
 
                     if (twT == ToolsWeaponsWarriorTypes.Shield || twT == ToolsWeaponsWarriorTypes.BowCrossbow)
                     {
-                        if (AboutGameC.CellClickT.Is(CellClickTypes.GiveTakeTW))
+                        if (aboutGameC.CellClickT.Is(CellClickTypes.GiveTakeTW))
                         {
                             if (twT == ToolsWeaponsWarriorTypes.Shield || twT == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
-                                if (_selectedToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
+                                if (selectedToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
                             }
                             else if (twT != ToolsWeaponsWarriorTypes.BowCrossbow) levT = LevelTypes.Second;
                         }
                         else
                         {
-                            levT = _selectedToolWeaponC.LevelT;
+                            levT = selectedToolWeaponC.LevelT;
                         }
                     }
                     else if (twT == ToolsWeaponsWarriorTypes.Axe || twT == ToolsWeaponsWarriorTypes.Sword)
@@ -54,33 +54,33 @@ namespace Chessy.Model.System
                         levT = LevelTypes.Second;
                     }
 
-                    _selectedToolWeaponC.ToolWeaponT = twT;
-                    _selectedToolWeaponC.LevelT = levT;
+                    selectedToolWeaponC.ToolWeaponT = twT;
+                    selectedToolWeaponC.LevelT = levT;
 
 
-                    AboutGameC.CellClickT = CellClickTypes.GiveTakeTW;
+                    aboutGameC.CellClickT = CellClickTypes.GiveTakeTW;
                 }
                 else
                 {
-                    _mistakeC.MistakeT = MistakeTypes.NeedPawnsInGame;
-                    _mistakeC.Timer = 0;
-                    _dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
+                    mistakeC.MistakeT = MistakeTypes.NeedPawnsInGame;
+                    mistakeC.Timer = 0;
+                    dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
                 }
             }
             else
             {
-                _mistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
-                _mistakeC.Timer = 0;
-                _dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
+                mistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
+                mistakeC.Timer = 0;
+                dataFromViewC.SoundAction(ClipTypes.WritePensil).Invoke();
             }
 
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
 
         public void Melt()
         {
-            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryMeltInMelterBuildingM) });
+            rpcC.Action0(rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(s.TryMeltInMelterBuildingM) });
         }
     }
 }

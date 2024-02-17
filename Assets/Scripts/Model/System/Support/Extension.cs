@@ -292,5 +292,40 @@ namespace Chessy
 
         #endregion
 
+
+
+        //public static DirectTypes InvertToDirectType(this UnitMoveTypes unitMoveT)
+        //{
+        //    switch (unitMoveT)
+        //    {
+        //        case UnitMoveTypes.None: return DirectTypes.None;
+
+        //        case UnitMoveTypes.MoveRight0: return DirectTypes.Right
+        //        case UnitMoveTypes.MoveRightUp45:
+        //            break;
+        //        case UnitMoveTypes.MoveUp90:
+        //            break;
+        //        case UnitMoveTypes.MoveUpLeft135:
+        //            break;
+        //        case UnitMoveTypes.MoveLeft180:
+        //            break;
+        //        case UnitMoveTypes.MoveLeftDown225:
+        //            break;
+        //        case UnitMoveTypes.MoveDown270:
+        //            break;
+        //        case UnitMoveTypes.MoveDownRight315:
+        //            break;
+        //        case UnitMoveTypes.Protect:
+        //            break;
+        //        case UnitMoveTypes.Relax:
+        //            break;
+        //        case UnitMoveTypes.ResetCondition:
+        //            break;
+        //        case UnitMoveTypes.End:
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
     }
 }

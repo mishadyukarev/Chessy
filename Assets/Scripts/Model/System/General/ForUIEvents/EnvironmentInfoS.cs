@@ -4,10 +4,10 @@
     {
         public void EnvironmentClick()
         {
-            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
-            _zonesInfoC.IsActiveEnvironment = !_zonesInfoC.IsActiveEnvironment;
+            dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
+            zonesInfoC.IsActiveEnvironment = !zonesInfoC.IsActiveEnvironment;
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
     }
 }

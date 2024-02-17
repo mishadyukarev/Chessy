@@ -33,29 +33,29 @@ namespace Chessy.Model
                 _pointsCellsForSettingKing[cellIdxStart] = 0;
                 _pointsCellsForSettingPawn[cellIdxStart] = 0;
 
-                if (!_isStartedCellCs[cellIdxStart].IsStartedCellForPlayer(playerBotT) || _unitCs[cellIdxStart].HaveUnit) continue;
+                if (!isStartedCellCs[cellIdxStart].IsStartedCellForPlayer(playerBotT) || unitCs[cellIdxStart].HaveUnit) continue;
 
                 _pointsCellsForSettingKing[cellIdxStart]++;
                 _pointsCellsForSettingPawn[cellIdxStart]++;
 
 
-                if (_environmentCs[cellIdxStart].HaveEnvironment(EnvironmentTypes.AdultForest))
+                if (environmentCs[cellIdxStart].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
                     _pointsCellsForSettingKing[cellIdxStart]++;
                     _pointsCellsForSettingPawn[cellIdxStart]++;
                 }
-                if (_environmentCs[cellIdxStart].HaveEnvironment(EnvironmentTypes.Hill))
+                if (environmentCs[cellIdxStart].HaveEnvironment(EnvironmentTypes.Hill))
                 {
                     _pointsCellsForSettingKing[cellIdxStart]++;
                     _pointsCellsForSettingPawn[cellIdxStart]++;
                 }
 
-                if (_xyCellsCs[cellIdxStart].Y == 8)
+                if (XyCellC(cellIdxStart).Y == 8)
                 {
                     _pointsCellsForSettingKing[cellIdxStart] += 3;
                     _pointsCellsForSettingPawn[cellIdxStart] += 3;
 
-                    if (_xyCellsCs[cellIdxStart].X >= 4 && _xyCellsCs[cellIdxStart].X <= 7)
+                    if (XyCellC(cellIdxStart).X >= 4 && XyCellC(cellIdxStart).X <= 7)
                     {
                         _pointsCellsForSettingKing[cellIdxStart]++;
                         _pointsCellsForSettingPawn[cellIdxStart]++;
@@ -77,8 +77,8 @@ namespace Chessy.Model
             {
                 byte cellIdx = 85;
 
-                _environmentCs[cellIdx].Dispose();
-                _s.SetNewUnitOnCellS.Set(UnitTypes.King, playerBotT, cellIdx);
+                environmentCs[cellIdx].Dispose();
+                s.SetNewUnitOnCellS.Set(UnitTypes.King, playerBotT, cellIdx);
 
                 //TrySetUnit(ref _theMostBigPointForSettingKing, _pointsCellsForSettingKing, UnitTypes.King, playerBotT);
             }
@@ -104,15 +104,15 @@ namespace Chessy.Model
 
                     if (theMostBigPoint == currentPoint)
                     {
-                        if (!_unitCs[idxCell].HaveUnit)
+                        if (!unitCs[idxCell].HaveUnit)
                         {
                             if (Random.Range(0, 1f) < 0.75f)
                             {
-                                _s.SetNewUnitOnCellS.Set(unitT, playerBotT, idxCell);
+                                s.SetNewUnitOnCellS.Set(unitT, playerBotT, idxCell);
 
                                 if (unitT == UnitTypes.King)
                                 {
-                                    _environmentCs[idxCell].Dispose();
+                                    environmentCs[idxCell].Dispose();
                                 }
 
                                 break;

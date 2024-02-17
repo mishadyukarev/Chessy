@@ -27,9 +27,9 @@ namespace Chessy.View.System
                 {
                     var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
-                    if (_unitVisibleCs[dataIdxCell].IsVisible(AboutGameC.CurrentPlayerIType))
+                    if (_unitVisibleCs[dataIdxCell].IsVisible(aboutGameC.CurrentPlayerIType))
                     {
-                        if (_unitCs[dataIdxCell].HaveUnit && !_unitCs[dataIdxCell].UnitType.IsAnimal())
+                        if (unitCs[dataIdxCell].HaveUnit && !unitCs[dataIdxCell].UnitType.IsAnimal())
                         {
                             _needActive[cellIdxCurrent] = _unitWaterCs[dataIdxCell].WaterP <= ValuesChessy.MAX_WATER_FOR_ANY_UNIT * 0.4f;
                         }

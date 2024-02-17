@@ -48,11 +48,11 @@ namespace Chessy.View.System
                 }
             }
 
-            if (IndexesCellsC.Current == cellIdxForSync_0)
+            if (indexesCellsC.Current == cellIdxForSync_0)
             {
-                if (AboutGameC.CellClickType == CellClickTypes.SetUnit)
+                if (aboutGameC.CellClickType == CellClickTypes.SetUnit)
                 {
-                    var selUnitT = _selectedUnitC.UnitT;
+                    var selUnitT = selectedUnitC.UnitT;
 
                     if (selUnitT == UnitTypes.Pawn)
                     {
@@ -65,15 +65,15 @@ namespace Chessy.View.System
             {
                 var dataUnitIdxCell_1 = _unitWhereViewDataCs[cellIdxForSync_0].DataIdxCellP;
 
-                var unitT = _unitCs[dataUnitIdxCell_1].UnitType;
+                var unitT = unitCs[dataUnitIdxCell_1].UnitType;
 
                 if (unitT == UnitTypes.Pawn)
                 {
                     if (_mainTWC[dataUnitIdxCell_1].ToolWeaponType != ToolsWeaponsWarriorTypes.BowCrossbow)
                     {
-                        if (_unitVisibleCs[dataUnitIdxCell_1].IsVisible(AboutGameC.CurrentPlayerIType))
+                        if (_unitVisibleCs[dataUnitIdxCell_1].IsVisible(aboutGameC.CurrentPlayerIType))
                         {
-                            var nextPlayer = _unitCs[dataUnitIdxCell_1].PlayerType.NextPlayer();
+                            var nextPlayer = unitCs[dataUnitIdxCell_1].PlayerType.NextPlayer();
                             var isVisibleForNextPlayer = _unitVisibleCs[dataUnitIdxCell_1].IsVisible(nextPlayer);
 
                             _needActiveMainTW[cellIdxForSync_0, (byte)_mainTWC[dataUnitIdxCell_1].ToolWeaponType, (byte)_mainTWC[dataUnitIdxCell_1].LevelType] = true;

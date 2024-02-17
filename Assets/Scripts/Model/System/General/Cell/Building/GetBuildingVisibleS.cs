@@ -8,34 +8,34 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_buildingCs[cellIdxCurrent].HaveBuilding)
+                if (buildingCs[cellIdxCurrent].HaveBuilding)
                 {
-                    _visibleBuildingCs[cellIdxCurrent].Set(_buildingCs[cellIdxCurrent].PlayerT, true);
+                    visibleBuildingCs[cellIdxCurrent].Set(buildingCs[cellIdxCurrent].PlayerT, true);
 
-                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
+                    if (environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
                     {
                         var isVisibledNextPlayer = false;
 
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            var idx_1 = _cellsByDirectAroundC[cellIdxCurrent].Get(dirT);
+                            var idx_1 = CellsByDirectAroundC(cellIdxCurrent).Get(dirT);
 
-                            if (_unitCs[idx_1].HaveUnit)
+                            if (unitCs[idx_1].HaveUnit)
                             {
-                                if (_unitCs[idx_1].PlayerT != _buildingCs[cellIdxCurrent].PlayerT)
+                                if (unitCs[idx_1].PlayerT != buildingCs[cellIdxCurrent].PlayerT)
                                 {
                                     isVisibledNextPlayer = true;
                                     break;
                                 }
                             }
                         }
-                        _visibleBuildingCs[cellIdxCurrent].Set(_buildingCs[cellIdxCurrent].PlayerT.NextPlayer(), isVisibledNextPlayer);
+                        visibleBuildingCs[cellIdxCurrent].Set(buildingCs[cellIdxCurrent].PlayerT.NextPlayer(), isVisibledNextPlayer);
                     }
-                    else _visibleBuildingCs[cellIdxCurrent].Set(_buildingCs[cellIdxCurrent].PlayerT.NextPlayer(), true);
+                    else visibleBuildingCs[cellIdxCurrent].Set(buildingCs[cellIdxCurrent].PlayerT.NextPlayer(), true);
 
 
-                    _visibleBuildingCs[cellIdxCurrent].Set(PlayerTypes.First, true);
-                    _visibleBuildingCs[cellIdxCurrent].Set(PlayerTypes.Second, true);
+                    visibleBuildingCs[cellIdxCurrent].Set(PlayerTypes.First, true);
+                    visibleBuildingCs[cellIdxCurrent].Set(PlayerTypes.Second, true);
                 }
             }
         }

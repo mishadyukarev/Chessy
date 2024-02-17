@@ -30,13 +30,13 @@ namespace Chessy.View.UI.System
                 {
                     var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
-                    if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= LessonTypes.Build1Farms)
+                    if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= LessonTypes.Build1Farms)
                     {
-                        if (_unitCs[dataIdxCell].UnitType == UnitTypes.Pawn)
+                        if (unitCs[dataIdxCell].UnitType == UnitTypes.Pawn)
                         {
-                            if (_unitCs[dataIdxCell].PlayerType == AboutGameC.CurrentPlayerIType)
+                            if (unitCs[dataIdxCell].PlayerType == aboutGameC.CurrentPlayerIType)
                             {
-                                _needActive[cellIdxCurrent] = ResourcesInInventoryC(AboutGameC.CurrentPlayerIType).Resources(ResourceTypes.Food) < 1;
+                                _needActive[cellIdxCurrent] = ResourcesInInventoryC(aboutGameC.CurrentPlayerIType).Resources(ResourceTypes.Food) < 1;
                             }
                         }
                     }

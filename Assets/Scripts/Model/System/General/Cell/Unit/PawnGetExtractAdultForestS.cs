@@ -9,9 +9,9 @@ namespace Chessy.Model.System
             {
                 _extractionResourcesWithUnitCs[cellIdxCurrent].HowManyWarriourCanExtractAdultForest = 0;
 
-                if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
+                if (environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
-                    if (_unitCs[cellIdxCurrent].UnitT == UnitTypes.Pawn && _unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Relaxed
+                    if (unitCs[cellIdxCurrent].UnitT == UnitTypes.Pawn && unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Relaxed
                         && !_mainTWC[cellIdxCurrent].ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
                     {
                         double extract = ExtractPawnValues.EXTRACT_PAWM_ADULT_FOREST;
@@ -34,7 +34,7 @@ namespace Chessy.Model.System
                             }
                         }
 
-                        if (_environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.AdultForest) < extract) extract = _environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.AdultForest);
+                        if (environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.AdultForest) < extract) extract = environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.AdultForest);
 
                         _extractionResourcesWithUnitCs[cellIdxCurrent].HowManyWarriourCanExtractAdultForest = (float)extract;
                     }

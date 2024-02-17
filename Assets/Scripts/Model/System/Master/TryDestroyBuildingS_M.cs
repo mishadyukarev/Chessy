@@ -1,15 +1,10 @@
-﻿using Photon.Pun;
-using Photon.Realtime;
+﻿//using Photon.Pun;
+//using Photon.Realtime;
 
-namespace Chessy.Model.System
-{
-    sealed partial class UnitSystems : SystemModelAbstract
-    {
-        internal void TryDestroyBuildingWithSimplePawnM(in byte cellIdx_0, in Player sender)
-        {
-            _s.RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.Destroy);
+//namespace Chessy.Model.System
+//{
+//    sealed partial class UnitSystems : SystemModelAbstract
+//    {
 
-            BuildingC(cellIdx_0).Dispose();
-        }
-    }
-}
+//    }
+//}

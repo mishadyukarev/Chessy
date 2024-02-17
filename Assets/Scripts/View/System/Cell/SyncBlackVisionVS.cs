@@ -21,19 +21,19 @@ namespace Chessy.View.System
         {
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (_cellCs[currentCellIdx_0].IsBorder) continue;
+                if (CellC(currentCellIdx_0).IsBorder) continue;
 
                 _needActive[currentCellIdx_0] = false;
             }
 
-            var lessonT = AboutGameC.LessonType;
+            var lessonT = aboutGameC.LessonType;
 
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (_cellCs[currentCellIdx_0].IsBorder) continue;
+                if (CellC(currentCellIdx_0).IsBorder) continue;
 
 
-                var curUnitC = _unitCs[currentCellIdx_0];
+                var curUnitC = unitCs[currentCellIdx_0];
                 var curUnitT = curUnitC.UnitType;
 
 
@@ -77,7 +77,7 @@ namespace Chessy.View.System
                         {
                             if (curUnitT == UnitTypes.Pawn)
                             {
-                                if (AboutGameC.CurrentPlayerIType == _unitCs[currentCellIdx_0].PlayerType)
+                                if (aboutGameC.CurrentPlayerIType == unitCs[currentCellIdx_0].PlayerType)
                                 {
                                     _needActive[currentCellIdx_0] = true;
                                 }
@@ -85,7 +85,7 @@ namespace Chessy.View.System
 
                             if (lessonT > LessonTypes.YouNeedDestroyKing)
                             {
-                                if (!_isStartedCellCs[currentCellIdx_0].IsStartedCellForPlayer(AboutGameC.CurrentPlayerIType))
+                                if (!isStartedCellCs[currentCellIdx_0].IsStartedCellForPlayer(aboutGameC.CurrentPlayerIType))
                                 {
                                     _needActive[currentCellIdx_0] = true;
                                 }
@@ -106,16 +106,16 @@ namespace Chessy.View.System
 
 
 
-                if (AboutGameC.CellClickType == CellClickTypes.UniqueAbility)
+                if (aboutGameC.CellClickType == CellClickTypes.UniqueAbility)
                 {
-                    switch (AboutGameC.AbilityType)
+                    switch (aboutGameC.AbilityType)
                     {
                         case AbilityTypes.FireArcher:
-                            if (!_environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest)) _needActive[currentCellIdx_0] = true;
+                            if (!environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest)) _needActive[currentCellIdx_0] = true;
                             break;
 
                         case AbilityTypes.StunElfemale:
-                            if (!_environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest)) _needActive[currentCellIdx_0] = true;
+                            if (!environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest)) _needActive[currentCellIdx_0] = true;
                             break;
 
                         case AbilityTypes.ChangeDirectionWind:
@@ -147,9 +147,9 @@ namespace Chessy.View.System
                     }
                 }
 
-                else if (AboutGameC.CellClickType == CellClickTypes.GiveTakeTW)
+                else if (aboutGameC.CellClickType == CellClickTypes.GiveTakeTW)
                 {
-                    if (curUnitT == UnitTypes.Pawn && _unitCs[currentCellIdx_0].PlayerType == AboutGameC.CurrentPlayerIType)
+                    if (curUnitT == UnitTypes.Pawn && unitCs[currentCellIdx_0].PlayerType == aboutGameC.CurrentPlayerIType)
                     {
 
                     }
@@ -159,36 +159,36 @@ namespace Chessy.View.System
                     }
                 }
 
-                else if (AboutGameC.CellClickType == CellClickTypes.SetUnit)
+                else if (aboutGameC.CellClickType == CellClickTypes.SetUnit)
                 {
-                    if (!_isStartedCellCs[currentCellIdx_0].IsStartedCellForPlayer(AboutGameC.CurrentPlayerIType))
+                    if (!isStartedCellCs[currentCellIdx_0].IsStartedCellForPlayer(aboutGameC.CurrentPlayerIType))
                     {
                         _needActive[currentCellIdx_0] = true;
                     }
                 }
 
-                if (_mistakeC.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
+                if (mistakeC.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
                 {
-                    if (_environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest) || _environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Mountain) || _environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Hill)
-                        || _buildingCs[currentCellIdx_0].HaveBuilding)
+                    if (environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest) || environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Mountain) || environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Hill)
+                        || buildingCs[currentCellIdx_0].HaveBuilding)
                     {
                         _needActive[currentCellIdx_0] = true;
                     }
                 }
 
-                else if (_mistakeC.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
+                else if (mistakeC.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
                 {
-                    if (_environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest) || _environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Mountain) || _environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Hill)
-                        || _environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.YoungForest) || _buildingCs[currentCellIdx_0].HaveBuilding)
+                    if (environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest) || environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Mountain) || environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.Hill)
+                        || environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.YoungForest) || buildingCs[currentCellIdx_0].HaveBuilding)
                     {
                         _needActive[currentCellIdx_0] = true;
                     }
                 }
 
 
-                else if (_mistakeC.MistakeT == MistakeTypes.NeedOtherPlaceGrowAdultForest)
+                else if (mistakeC.MistakeT == MistakeTypes.NeedOtherPlaceGrowAdultForest)
                 {
-                    if (!_environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.YoungForest))
+                    if (!environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.YoungForest))
                     {
                         _needActive[currentCellIdx_0] = true;
                     }

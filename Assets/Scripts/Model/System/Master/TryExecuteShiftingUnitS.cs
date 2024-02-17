@@ -14,10 +14,10 @@ namespace Chessy.Model.System
         {
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (_cellCs[currentCellIdx_0].IsBorder) continue;
+                if (CellC(currentCellIdx_0).IsBorder) continue;
 
 
-                var shiftUnit_0 = _shiftingUnitCs[currentCellIdx_0];
+                var shiftUnit_0 = shiftingUnitCs[currentCellIdx_0];
                 var neededDistanceForShiftingUnitC_0 = _howManyDistanceNeedForShiftingUnitCs[currentCellIdx_0];
 
                 var whereNeedShiftIdxCell_1 = shiftUnit_0.WhereNeedShiftIdxCell;
@@ -35,7 +35,7 @@ namespace Chessy.Model.System
                         {
                             shiftUnit_0.Dispose();
 
-                            _s.GetDataCellsS.GetDataCells();
+                            s.GetDataCellsS.GetDataCells();
                         }
 
                         else
@@ -64,11 +64,11 @@ namespace Chessy.Model.System
                             {
                                 if (!unitC_1.HaveUnit)
                                 {
-                                    _s.ShiftUnitOnOtherCellM(currentCellIdx_0, whereNeedShiftIdxCell_1);
+                                    s.ShiftUnitOnOtherCellM(currentCellIdx_0, whereNeedShiftIdxCell_1);
 
                                     shiftUnit_0.Dispose();
 
-                                    _s.GetDataCellsS.GetDataCells();
+                                    s.GetDataCellsS.GetDataCells();
                                 }
 
                                 else

@@ -18,9 +18,9 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
-            if (AboutGameC.CurrentPlayerIType == PlayerTypes.None) throw new Exception();
+            if (aboutGameC.CurrentPlayerIType == PlayerTypes.None) throw new Exception();
 
-            if (AboutGameC.CurrentPlayerIType == PlayerTypes.First)
+            if (aboutGameC.CurrentPlayerIType == PlayerTypes.First)
             {
                 _eV.CameraVC.Transform.position = _eV.MainGOC.Transform.position + _gamePosCamera;
                 _eV.CameraVC.Transform.eulerAngles = new Vector3(0, 0, 0);

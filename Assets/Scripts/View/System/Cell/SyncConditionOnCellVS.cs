@@ -29,11 +29,11 @@ namespace Chessy.View.System
 
         internal override void Sync()
         {
-            var currentPlayerT = AboutGameC.CurrentPlayerIType;
+            var currentPlayerT = aboutGameC.CurrentPlayerIType;
 
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (_cellCs[currentCellIdx_0].IsBorder) continue;
+                if (CellC(currentCellIdx_0).IsBorder) continue;
 
                 _needActive[currentCellIdx_0] = false;
                 _needColor[currentCellIdx_0] = _whiteColor;
@@ -42,7 +42,7 @@ namespace Chessy.View.System
                 {
                     var dataIdxCell_1 = UnitViewDataC(currentCellIdx_0).DataIdxCellP;
 
-                    if (UnitVisibleC(dataIdxCell_1).IsVisible(currentPlayerT))
+                    if (_unitVisibleCs[dataIdxCell_1].IsVisible(currentPlayerT))
                     {
                         var unitC_1 = UnitC(dataIdxCell_1);
 
@@ -66,7 +66,7 @@ namespace Chessy.View.System
 
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (_cellCs[currentCellIdx_0].IsBorder) continue;
+                if (CellC(currentCellIdx_0).IsBorder) continue;
 
                 var needActive = _needActive[currentCellIdx_0];
 

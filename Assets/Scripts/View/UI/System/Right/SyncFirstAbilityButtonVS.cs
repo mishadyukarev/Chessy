@@ -22,15 +22,15 @@ namespace Chessy.View.UI.System
             _needActive = false;
 
 
-            if (IndexesCellsC.IsSelectedCell)
+            if (indexesCellsC.IsSelectedCell)
             {
-                var selectedIdxCell = IndexesCellsC.Selected;
+                var selectedIdxCell = indexesCellsC.Selected;
 
                 var currentAbility = UnitButtonsC(selectedIdxCell).Ability(ButtonTypes.First);
 
-                if (UnitC(selectedIdxCell).PlayerType == AboutGameC.CurrentPlayerIType && currentAbility != AbilityTypes.None)
+                if (UnitC(selectedIdxCell).PlayerType == aboutGameC.CurrentPlayerIType && currentAbility != AbilityTypes.None)
                 {
-                    if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= LessonTypes.SeedingPawn)
+                    if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= LessonTypes.SeedingPawn)
                     {
                         _needActive = true;
                     }

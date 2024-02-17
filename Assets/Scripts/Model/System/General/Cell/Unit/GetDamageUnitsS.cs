@@ -11,11 +11,11 @@ namespace Chessy.Model.System
             {
                 var powerDamage = 0f;
 
-                var curUnitT_0 = _unitCs[cellIdxCurrent].UnitT;
+                var curUnitT_0 = unitCs[cellIdxCurrent].UnitT;
 
                 if (curUnitT_0.HaveUnit())
                 {
-                    switch (_unitCs[cellIdxCurrent].LevelT)
+                    switch (unitCs[cellIdxCurrent].LevelT)
                     {
                         case LevelTypes.First:
                             switch (curUnitT_0)
@@ -63,7 +63,7 @@ namespace Chessy.Model.System
 
 
 
-                    if (_hasUnitKingEffectHereCs[cellIdxCurrent].Has(_unitCs[cellIdxCurrent].PlayerT))//Separate player effect
+                    if (_hasUnitKingEffectHereCs[cellIdxCurrent].Has(unitCs[cellIdxCurrent].PlayerT))//Separate player effect
                     {
                         powerDamage *= DamageUnitValues.KING_EFFECT_ON_NEAR_UNITS;
                     }
@@ -89,20 +89,20 @@ namespace Chessy.Model.System
 
 
 
-                    if (_unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Protected)
+                    if (unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Protected)
                     {
                         powerDamage += powerDamage * DamageUnitValues.PROTECTED;
                     }
-                    else if (_unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Relaxed)
+                    else if (unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Relaxed)
                     {
                         powerDamage += powerDamage * DamageUnitValues.RELAXED;
                     }
 
-                    if (_buildingCs[cellIdxCurrent].HaveBuilding)
+                    if (buildingCs[cellIdxCurrent].HaveBuilding)
                     {
                         var p = 0f;
 
-                        switch (_buildingCs[cellIdxCurrent].BuildingT)
+                        switch (buildingCs[cellIdxCurrent].BuildingT)
                         {
                             case BuildingTypes.Farm:
                                 p = DamageUnitValues.FARM;
@@ -123,8 +123,8 @@ namespace Chessy.Model.System
                     float protectionPercent = 0;
 
                     //if (e.FertilizeC(cell_0].HaveEnvironment(EnvironmentTypes.AdultForest)) protectionPercent += DamageValues.FERTILIZER;
-                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest)) protectionPercent += DamageUnitValues.ADULT_FOREST;
-                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill)) protectionPercent += DamageUnitValues.HILL;
+                    if (environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest)) protectionPercent += DamageUnitValues.ADULT_FOREST;
+                    if (environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill)) protectionPercent += DamageUnitValues.HILL;
 
                     powerDamage += powerDamage * protectionPercent;
 

@@ -44,7 +44,7 @@ namespace Chessy.View.System
                 }
             }
 
-            var currentPlayerT = AboutGameC.CurrentPlayerIType;
+            var currentPlayerT = aboutGameC.CurrentPlayerIType;
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
@@ -53,9 +53,9 @@ namespace Chessy.View.System
                     var directTbyte = (byte)directT;
 
 
-                    if (TrailVisibleC(cellIdxCurrent).IsVisible(currentPlayerT))
+                    if (visibleTrailCs[cellIdxCurrent].IsVisible(currentPlayerT))
                     {
-                        _needActive[cellIdxCurrent, directTbyte] = TrailHealthC(cellIdxCurrent).IsAlive(directT);
+                        _needActive[cellIdxCurrent, directTbyte] = hpTrailCs[cellIdxCurrent].IsAlive(directT);
                     }
 
                     if (directT == DirectTypes.Up)

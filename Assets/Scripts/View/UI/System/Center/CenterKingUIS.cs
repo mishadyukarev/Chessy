@@ -17,9 +17,9 @@ namespace Chessy.Model
         {
             _needActive = false;
 
-            if (PlayerInfoE(AboutGameC.CurrentPlayerIType).PlayerInfoC.HaveKingInInventorP && AboutGameC.CellClickType != CellClickTypes.SetUnit)
+            if (PlayerInfoE(aboutGameC.CurrentPlayerIType).PlayerInfoC.HaveKingInInventorP && aboutGameC.CellClickType != CellClickTypes.SetUnit)
             {
-                if (!AboutGameC.LessonType.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn))
+                if (!aboutGameC.LessonType.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn))
                 {
                     _needActive = true;
                 }

@@ -13,14 +13,14 @@ namespace Chessy.Model
 
         internal void Update()
         {
-            if (_mistakeC.MistakeT != MistakeTypes.None)
+            if (mistakeC.MistakeT != MistakeTypes.None)
             {
-                _mistakeC.Timer += Time.deltaTime;
+                mistakeC.Timer += Time.deltaTime;
 
-                if (_mistakeC.Timer >= NEED_TIME_FOR_FADING)
+                if (mistakeC.Timer >= NEED_TIME_FOR_FADING)
                 {
-                    _mistakeC.MistakeT = MistakeTypes.None;
-                    _updateAllViewC.NeedUpdateView = true;
+                    mistakeC.MistakeT = MistakeTypes.None;
+                    updateAllViewC.NeedUpdateView = true;
                 }
             }
 

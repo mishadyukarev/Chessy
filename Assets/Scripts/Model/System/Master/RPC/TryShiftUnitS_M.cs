@@ -17,19 +17,19 @@ namespace Chessy.Model.System
             //    whoDoing = sender.GetPlayer();
             //}
 
-            var whoDoing = PhotonNetwork.OfflineMode ? _unitCs[cellIdxFrom].PlayerT : sender.GetPlayer();
+            var whoDoing = PhotonNetwork.OfflineMode ? unitCs[cellIdxFrom].PlayerT : sender.GetPlayer();
 
-            if (_whereUnitCanShiftCs[cellIdxFrom].CanShiftHere(cellIdxTo) && _unitCs[cellIdxFrom].PlayerT == whoDoing)
+            if (WhereUnitCanShiftC(cellIdxFrom).CanShiftHere(cellIdxTo) && unitCs[cellIdxFrom].PlayerT == whoDoing)
             {
-                _unitCs[cellIdxFrom].ConditionT = ConditionUnitTypes.None;
+                unitCs[cellIdxFrom].ConditionT = ConditionUnitTypes.None;
 
-                if (_shiftingUnitCs[cellIdxFrom].WhereNeedShiftIdxCell != 0)
+                if (shiftingUnitCs[cellIdxFrom].WhereNeedShiftIdxCell != 0)
                 {
-                    _shiftingUnitCs[cellIdxFrom].NeedReturnBack = true;
+                    shiftingUnitCs[cellIdxFrom].NeedReturnBack = true;
                 }
                 else
                 {
-                    _shiftingUnitCs[cellIdxFrom].WhereNeedShiftIdxCell = cellIdxTo;
+                    shiftingUnitCs[cellIdxFrom].WhereNeedShiftIdxCell = cellIdxTo;
                 }
 
                 if (PhotonNetwork.OfflineMode)

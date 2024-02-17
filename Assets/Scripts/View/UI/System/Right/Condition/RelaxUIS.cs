@@ -19,7 +19,7 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            var idx_0 = IndexesCellsC.Selected;
+            var idx_0 = indexesCellsC.Selected;
 
             var activeButt = false;
 
@@ -30,26 +30,26 @@ namespace Chessy.View.UI.System
             }
 
 
-            if (_unitCs[idx_0].HaveUnit)
+            if (unitCs[idx_0].HaveUnit)
             {
-                if (_unitCs[idx_0].PlayerType == AboutGameC.CurrentPlayerIType)
+                if (unitCs[idx_0].PlayerType == aboutGameC.CurrentPlayerIType)
                 {
-                    if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= LessonTypes.RelaxExtractPawn)
+                    if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= LessonTypes.RelaxExtractPawn)
                     {
                         activeButt = true;
 
-                        _relaxUIE.ImageC.Image.color = _unitCs[idx_0].ConditionType == ConditionUnitTypes.Relaxed ? Color.green : Color.white;
+                        _relaxUIE.ImageC.Image.color = unitCs[idx_0].ConditionType == ConditionUnitTypes.Relaxed ? Color.green : Color.white;
 
-                        if (_unitCs[idx_0].UnitType == UnitTypes.Pawn)
+                        if (unitCs[idx_0].UnitType == UnitTypes.Pawn)
                         {
                             if (_mainTWC[idx_0].ToolWeaponType == ToolsWeaponsWarriorTypes.Axe)
                             {
-                                _needActiveZone[(byte)_unitCs[idx_0].UnitType] = true;
+                                _needActiveZone[(byte)unitCs[idx_0].UnitType] = true;
                             }
                         }
                         else
                         {
-                            _needActiveZone[(byte)_unitCs[idx_0].UnitType] = true;
+                            _needActiveZone[(byte)unitCs[idx_0].UnitType] = true;
                         }
                     }
                 }

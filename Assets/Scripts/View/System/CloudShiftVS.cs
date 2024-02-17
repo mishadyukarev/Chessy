@@ -22,7 +22,7 @@ namespace Chessy.View.System
         {
             for (byte cellIdxCurrent_0 = 0; cellIdxCurrent_0 < IndexCellsValues.CELLS; cellIdxCurrent_0++)
             {
-                if (_cellCs[cellIdxCurrent_0].IsBorder) continue;
+                if (CellC(cellIdxCurrent_0).IsBorder) continue;
 
 
                 var whereDataViewC_0 = CloudViewDataC(cellIdxCurrent_0);
@@ -36,17 +36,17 @@ namespace Chessy.View.System
 
                 var whereShiftIdx_2 = whereShiftC_1.WhereNeedShiftIdxCellP;
 
-                var pos_1 = _possitionCellCs[whereDataIdx_1].PositionP;
-                var pos_2 = _possitionCellCs[whereShiftIdx_2].PositionP;
+                var pos_1 = positionCellCs[whereDataIdx_1].PositionP;
+                var pos_2 = positionCellCs[whereShiftIdx_2].PositionP;
 
                 var t = whereShiftC_1.DistanceP;
 
                 SmoothShiftCloud(_cloudTrans[cellIdxCurrent_0], Vector3.Lerp(pos_1, pos_2, t));
 
-                foreach (var aroundCell_1_0 in _idxsAroundCellCs[whereDataIdx_1].IdxCellsAroundArray)
+                foreach (var aroundCell_1_0 in IdxsAroundCellC(whereDataIdx_1).IdxCellsAroundArray)
                 {
-                    var pos_1_0 = _possitionCellCs[aroundCell_1_0].PositionP;
-                    var pos_1_1 = _possitionCellCs[_cellsByDirectAroundC[aroundCell_1_0].Get(WindC.DirectType)].PositionP;
+                    var pos_1_0 = positionCellCs[aroundCell_1_0].PositionP;
+                    var pos_1_1 = positionCellCs[CellsByDirectAroundC(aroundCell_1_0).Get(windC.DirectType)].PositionP;
 
                     SmoothShiftCloud(_cloudTrans[CloudViewDataC(aroundCell_1_0).ViewIdxCellP], Vector3.Lerp(pos_1_0, pos_1_1, t));
                 }

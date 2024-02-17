@@ -80,13 +80,13 @@ namespace Chessy.Model
 
 
 
-            if (IndexesCellsC.Current == cellIdx)
+            if (indexesCellsC.Current == cellIdx)
             {
-                if (AboutGameC.CellClickType == CellClickTypes.SetUnit)
+                if (aboutGameC.CellClickType == CellClickTypes.SetUnit)
                 {
-                    var idx_cur = IndexesCellsC.Current;
-                    var selUnitT = _selectedUnitC.UnitT;
-                    var levT = _selectedUnitC.LevelT;
+                    var idx_cur = indexesCellsC.Current;
+                    var selUnitT = selectedUnitC.UnitT;
+                    var levT = selectedUnitC.LevelT;
 
                     if (selUnitT == UnitTypes.Pawn)
                     {
@@ -102,16 +102,16 @@ namespace Chessy.Model
             {
                 var dataUnitIdxCell = _unitWhereViewDataCs[cellIdx].DataIdxCellP;
 
-                if (_unitCs[dataUnitIdxCell].HaveUnit)
+                if (unitCs[dataUnitIdxCell].HaveUnit)
                 {
-                    if (_unitVisibleCs[dataUnitIdxCell].IsVisible(AboutGameC.CurrentPlayerIType) || _unitCs[IndexesCellsC.Selected].UnitType == UnitTypes.Elfemale && _unitCs[IndexesCellsC.Selected].PlayerType == AboutGameC.CurrentPlayerIType && _unitCs[dataUnitIdxCell].UnitType == UnitTypes.King)
+                    if (_unitVisibleCs[dataUnitIdxCell].IsVisible(aboutGameC.CurrentPlayerIType) || unitCs[indexesCellsC.Selected].UnitType == UnitTypes.Elfemale && unitCs[indexesCellsC.Selected].PlayerType == aboutGameC.CurrentPlayerIType && unitCs[dataUnitIdxCell].UnitType == UnitTypes.King)
                     {
-                        var nextPlayer = _unitCs[dataUnitIdxCell].PlayerType.NextPlayer();
+                        var nextPlayer = unitCs[dataUnitIdxCell].PlayerType.NextPlayer();
                         var isVisibleForNextPlayer = _unitVisibleCs[dataUnitIdxCell].IsVisible(nextPlayer);
 
 
 
-                        var unitT = _unitCs[dataUnitIdxCell].UnitType;
+                        var unitT = unitCs[dataUnitIdxCell].UnitType;
 
                         _needColorUnit[(byte)unitT] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
 
@@ -121,8 +121,8 @@ namespace Chessy.Model
                         {
                             if (_mainTWC[dataUnitIdxCell].ToolWeaponType == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
-                                _needActiveBowCrossbow[cellIdx, (byte)_mainTWC[dataUnitIdxCell].LevelType, _unitCs[dataUnitIdxCell].IsArcherDirectedToRightP ? 1 : 0] = true;
-                                _needColorBowCrossbow[cellIdx, (byte)_mainTWC[dataUnitIdxCell].LevelType, _unitCs[dataUnitIdxCell].IsArcherDirectedToRightP ? 1 : 0] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+                                _needActiveBowCrossbow[cellIdx, (byte)_mainTWC[dataUnitIdxCell].LevelType, unitCs[dataUnitIdxCell].IsArcherDirectedToRightP ? 1 : 0] = true;
+                                _needColorBowCrossbow[cellIdx, (byte)_mainTWC[dataUnitIdxCell].LevelType, unitCs[dataUnitIdxCell].IsArcherDirectedToRightP ? 1 : 0] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
                             }
                         }
                         else

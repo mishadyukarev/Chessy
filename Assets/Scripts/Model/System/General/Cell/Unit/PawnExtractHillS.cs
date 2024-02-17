@@ -9,14 +9,14 @@ namespace Chessy.Model.System
             {
                 _extractionResourcesWithUnitCs[cellIdxCurrent].HowManyWarriourCanExtractHill = 0;
 
-                if (_unitCs[cellIdxCurrent].UnitT == UnitTypes.Pawn && _extraTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Pick && _unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Relaxed)
+                if (unitCs[cellIdxCurrent].UnitT == UnitTypes.Pawn && _extraTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Pick && unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Relaxed)
                 {
-                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill))
+                    if (environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Hill))
                     {
                         double extract = ExtractPawnValues.PAWN_PICK_EXTRACT_HILL;
 
 
-                        if (_environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Hill) < extract) extract = _environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Hill);
+                        if (environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Hill) < extract) extract = environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Hill);
 
 
                         _extractionResourcesWithUnitCs[cellIdxCurrent].HowManyWarriourCanExtractHill = (float)extract;

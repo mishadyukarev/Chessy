@@ -49,14 +49,14 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
-            if (_zonesInfoC.IsActiveEnvironment)
+            if (zonesInfoC.IsActiveEnvironment)
             {
                 for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
                 {
-                    if (_cellCs[currentCellIdx_0].IsBorder) continue;
+                    if (CellC(currentCellIdx_0).IsBorder) continue;
 
 
-                    var curEnvirC_0 = _environmentCs[currentCellIdx_0];
+                    var curEnvirC_0 = environmentCs[currentCellIdx_0];
 
                     if (curEnvirC_0.HaveEnvironment(EnvironmentTypes.Fertilizer))
                     {
@@ -103,7 +103,7 @@ namespace Chessy.View.System
             {
                 for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                 {
-                    if (_cellCs[cellIdxCurrent].IsBorder) continue;
+                    if (CellC(cellIdxCurrent).IsBorder) continue;
 
                     _needActiveFood[cellIdxCurrent] = false;
                     _needActiveWood[cellIdxCurrent] = false;
@@ -114,7 +114,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_cellCs[cellIdxCurrent].IsBorder) continue;
+                if (CellC(cellIdxCurrent).IsBorder) continue;
 
                 _foorGOs[cellIdxCurrent].TrySetActive2(_needActiveFood[cellIdxCurrent], ref _wasActivatedFood[cellIdxCurrent]);
                 _woodGOs[cellIdxCurrent].TrySetActive2(_needActiveWood[cellIdxCurrent], ref _wasActivatedWood[cellIdxCurrent]);

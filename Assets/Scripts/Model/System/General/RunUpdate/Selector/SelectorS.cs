@@ -17,46 +17,46 @@ namespace Chessy.Model
 
         public void Update()
         {
-            var idx_cur = IndexesCellsC.Current;
+            var idx_cur = indexesCellsC.Current;
 
 
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                AboutGameC.IsActivatedIdxAndXyInfoCells = !AboutGameC.IsActivatedIdxAndXyInfoCells;
-                _updateAllViewC.NeedUpdateView = true;
+                aboutGameC.IsActivatedIdxAndXyInfoCells = !aboutGameC.IsActivatedIdxAndXyInfoCells;
+                updateAllViewC.NeedUpdateView = true;
             }
 
             if (Input.GetKeyDown(KeyCode.F2))
             {
-                _environmentCs[idx_cur].Dispose();
-                _updateAllViewC.NeedUpdateView = true;
+                environmentCs[idx_cur].Dispose();
+                updateAllViewC.NeedUpdateView = true;
             }
 
 
-            if (_inputC.IsClicked)
+            if (inputC.IsClicked)
             {
-                _updateAllViewC.NeedUpdateView = true;
-                _mistakeC.MistakeT = MistakeTypes.None;
+                updateAllViewC.NeedUpdateView = true;
+                mistakeC.MistakeT = MistakeTypes.None;
 
 
 
 
-                if (AboutGameC.LessonT == LessonTypes.UniqueAttackInfo)
+                if (aboutGameC.LessonT == LessonTypes.UniqueAttackInfo)
                 {
-                    SunC.SunSideT = SunSideTypes.Dawn;
-                    _s.SetNextLesson();
+                    sunC.SunSideT = SunSideTypes.Dawn;
+                    s.SetNextLesson();
                 }
-                else if (AboutGameC.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun,
+                else if (aboutGameC.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun,
                      LessonTypes.MenuInfo))
                 {
-                    _s.SetNextLesson();
+                    s.SetNextLesson();
                 }
 
-                switch (AboutGameC.RaycastT)
+                switch (aboutGameC.RaycastT)
                 {
                     case RaycastTypes.Cell:
                         {
-                            switch (AboutGameC.CellClickT)
+                            switch (aboutGameC.CellClickT)
                             {
                                 case CellClickTypes.SimpleClick:
                                     _cellSimpleClickS.Execute();
@@ -64,45 +64,45 @@ namespace Chessy.Model
 
                                 case CellClickTypes.SetUnit:
                                     {
-                                        _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySetUnitOnCellM), IndexesCellsC.Current, _selectedUnitC.UnitT });
-                                        AboutGameC.CellClickT = CellClickTypes.SimpleClick;
+                                        rpcC.Action0(rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(s.TrySetUnitOnCellM), indexesCellsC.Current, selectedUnitC.UnitT });
+                                        aboutGameC.CellClickT = CellClickTypes.SimpleClick;
                                     }
                                     break;
 
                                 case CellClickTypes.GiveTakeTW:
                                     {
-                                        IndexesCellsC.Selected = IndexesCellsC.Current;
+                                        indexesCellsC.Selected = indexesCellsC.Current;
 
-                                        if (_unitCs[idx_cur].UnitT == UnitTypes.Pawn && _unitCs[idx_cur].PlayerT == AboutGameC.CurrentPlayerIT)
+                                        if (unitCs[idx_cur].UnitT == UnitTypes.Pawn && unitCs[idx_cur].PlayerT == aboutGameC.CurrentPlayerIT)
                                         {
-                                            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryGiveTakeToolOrWeaponToUnitOnCellM), IndexesCellsC.Current, _selectedToolWeaponC.ToolWeaponT, _selectedToolWeaponC.LevelT });
+                                            rpcC.Action0(rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(s.TryGiveTakeToolOrWeaponToUnitOnCellM), indexesCellsC.Current, selectedToolWeaponC.ToolWeaponT, selectedToolWeaponC.LevelT });
                                         }
                                         else
                                         {
-                                            AboutGameC.CellClickT = CellClickTypes.SimpleClick;
-                                            IndexesCellsC.PreviousSelected = IndexesCellsC.Selected;
-                                            IndexesCellsC.Selected = IndexesCellsC.Current;
+                                            aboutGameC.CellClickT = CellClickTypes.SimpleClick;
+                                            indexesCellsC.PreviousSelected = indexesCellsC.Selected;
+                                            indexesCellsC.Selected = indexesCellsC.Current;
                                         }
                                     }
                                     break;
 
                                 case CellClickTypes.UniqueAbility:
                                     {
-                                        switch (AboutGameC.AbilityT)
+                                        switch (aboutGameC.AbilityT)
                                         {
                                             case AbilityTypes.FireArcher:
-                                                _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithArcherM), IndexesCellsC.Selected, IndexesCellsC.Current });
+                                                rpcC.Action0(rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(s.unitSs.unitAbilitiesSs.TryFireForestWithArcherM), indexesCellsC.Selected, indexesCellsC.Current });
                                                 break;
 
                                             case AbilityTypes.StunElfemale:
-                                                _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryStunEnemyWithElfemaleM), IndexesCellsC.Selected, IndexesCellsC.Current });
+                                                rpcC.Action0(rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(s.unitSs.unitAbilitiesSs.stunElfemaleS_M.TryStunEnemyWithElfemaleM), indexesCellsC.Selected, indexesCellsC.Current });
                                                 break;
 
                                             case AbilityTypes.ChangeDirectionWind:
                                                 {
-                                                    if (!CloudC(IndexesCellsC.Current).IsCenter)
+                                                    if (!CloudC(indexesCellsC.Current).IsCenter)
                                                     {
-                                                        _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeDirectWindWithSnowyM), IndexesCellsC.Selected, IndexesCellsC.Current });
+                                                        rpcC.Action0(rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(s.unitSs.unitAbilitiesSs.TryChangeDirectWindWithSnowyM), indexesCellsC.Selected, indexesCellsC.Current });
                                                     }
                                                 }
                                                 break;
@@ -110,7 +110,7 @@ namespace Chessy.Model
                                             default: throw new Exception();
                                         }
 
-                                        AboutGameC.CellClickT = CellClickTypes.SimpleClick;
+                                        aboutGameC.CellClickT = CellClickTypes.SimpleClick;
                                     }
                                     break;
 
@@ -124,14 +124,14 @@ namespace Chessy.Model
 
                     case RaycastTypes.Background:
                         {
-                            if (!AboutGameC.LessonT.HaveLesson()/* Is(LessonTypes.RelaxExtractPawn, LessonTypes.SeedingPawn)*/)
+                            if (!aboutGameC.LessonT.HaveLesson()/* Is(LessonTypes.RelaxExtractPawn, LessonTypes.SeedingPawn)*/)
                             {
-                                AboutGameC.CellClickT = CellClickTypes.SimpleClick;
+                                aboutGameC.CellClickT = CellClickTypes.SimpleClick;
 
-                                IndexesCellsC.PreviousSelected = IndexesCellsC.Selected;
-                                IndexesCellsC.Selected = 0;
+                                indexesCellsC.PreviousSelected = indexesCellsC.Selected;
+                                indexesCellsC.Selected = 0;
 
-                                AboutGameC.IsSelectedCity = false;
+                                aboutGameC.IsSelectedCity = false;
 
                                 //eMG.LessonTC.SetPreviousLesson();
                             }
@@ -144,7 +144,7 @@ namespace Chessy.Model
 
             else
             {
-                if (AboutGameC.RaycastT == RaycastTypes.Cell)
+                if (aboutGameC.RaycastT == RaycastTypes.Cell)
                 {
 
                 }

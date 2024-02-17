@@ -38,10 +38,10 @@ namespace Chessy.Model.System
                     ResourcesInInventoryC(whoDoing).Subtract(resT, needRes[resT]);
                 }
 
-                if (AboutGameC.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
+                if (aboutGameC.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
                 {
                     SetNextLesson();
-                    AboutGameC.IsSelectedCity = true;
+                    aboutGameC.IsSelectedCity = true;
                 }
 
                 ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Iron, AmountResourcesAfterMelting.IRON_AFTER_MELTING);

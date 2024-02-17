@@ -8,29 +8,29 @@ namespace Chessy.Model.System
         {
             if (!_cooldownAbilityCs[cell_0].HaveCooldown(abilityT))
             {
-                if (_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.YoungForest))
+                if (environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.YoungForest))
                 {
-                    _environmentCs[cell_0].Set(EnvironmentTypes.YoungForest, 0);
-                    _environmentCs[cell_0].Set(EnvironmentTypes.AdultForest, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
+                    environmentCs[cell_0].Set(EnvironmentTypes.YoungForest, 0);
+                    environmentCs[cell_0].Set(EnvironmentTypes.AdultForest, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
 
                     _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
-                    foreach (var idx_1 in _idxsAroundCellCs[cell_0].IdxCellsAroundArray)
+                    foreach (var idx_1 in IdxsAroundCellC(cell_0).IdxCellsAroundArray)
                     {
-                        if (_environmentCs[idx_1].HaveEnvironment(EnvironmentTypes.YoungForest))
+                        if (environmentCs[idx_1].HaveEnvironment(EnvironmentTypes.YoungForest))
                         {
-                            _environmentCs[idx_1].Set(EnvironmentTypes.AdultForest, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
+                            environmentCs[idx_1].Set(EnvironmentTypes.AdultForest, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                         }
                     }
-                    _s.RpcSs.SoundToGeneral(sender, abilityT);
+                    s.RpcSs.SoundToGeneral(sender, abilityT);
                 }
 
-                else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
+                else s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
             }
 
             else
             {
-                _s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
+                s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

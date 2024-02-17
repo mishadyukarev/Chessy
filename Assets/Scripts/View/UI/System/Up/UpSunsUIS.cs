@@ -20,11 +20,11 @@ namespace Chessy.Model
             _needActiveRight = false;
 
 
-            if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= Enum.LessonTypes.LookInfoAboutSun)
+            if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= Enum.LessonTypes.LookInfoAboutSun)
             {
-                var isFirstPlayer = AboutGameC.CurrentPlayerIType == PlayerTypes.First;
+                var isFirstPlayer = aboutGameC.CurrentPlayerIType == PlayerTypes.First;
 
-                switch (SunC.SunSideType)
+                switch (sunC.SunSideType)
                 {
                     case SunSideTypes.Dawn:
                         _needActiveLeft = isFirstPlayer;

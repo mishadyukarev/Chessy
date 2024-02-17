@@ -4,28 +4,28 @@
     {
         public void OpenHeroClick()
         {
-            IndexesCellsC.Selected = 0;
+            indexesCellsC.Selected = 0;
             //TryOnHint(VideoClipTypes.CreatingHero);
 
-            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
+            dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
-            var curPlayer = AboutGameC.CurrentPlayerIT;
+            var curPlayer = aboutGameC.CurrentPlayerIT;
 
             var myHeroT = PlayerInfoE(curPlayer).GodInfoC.UnitType;
 
             if (PlayerInfoE(curPlayer).GodInfoC.HaveGodInInventor)
             {
-                if (!PlayerInfoE(AboutGameC.CurrentPlayerIT).GodInfoC.HaveCooldown)
+                if (!PlayerInfoE(aboutGameC.CurrentPlayerIT).GodInfoC.HaveCooldown)
                 {
-                    _selectedUnitC.UnitT = myHeroT;
-                    _selectedUnitC.LevelT = LevelTypes.First;
+                    selectedUnitC.UnitT = myHeroT;
+                    selectedUnitC.LevelT = LevelTypes.First;
 
 
-                    AboutGameC.CellClickT = CellClickTypes.SetUnit;
+                    aboutGameC.CellClickT = CellClickTypes.SetUnit;
                 }
             }
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
     }
 }

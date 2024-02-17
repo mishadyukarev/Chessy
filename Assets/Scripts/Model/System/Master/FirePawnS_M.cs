@@ -6,15 +6,15 @@ namespace Chessy.Model.System
     {
         internal void TryFireForestWithSimplePawnM(in byte cellIdxForFire, in Player sender)
         {
-            if (_environmentCs[cellIdxForFire].HaveEnvironment(EnvironmentTypes.AdultForest))
+            if (environmentCs[cellIdxForFire].HaveEnvironment(EnvironmentTypes.AdultForest))
             {
-                _s.RpcSs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
+                s.RpcSs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
-                _fireCs[cellIdxForFire].HaveFire = true;
+                FireC(cellIdxForFire).HaveFire = true;
             }
             else
             {
-                _s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
+                s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

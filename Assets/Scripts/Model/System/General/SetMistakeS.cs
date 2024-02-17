@@ -4,8 +4,8 @@
     {
         public void SetMistake(in MistakeTypes mistakeT, in float timer)
         {
-            _mistakeC.MistakeT = mistakeT;
-            _mistakeC.Timer = timer;
+            mistakeC.MistakeT = mistakeT;
+            mistakeC.Timer = timer;
         }
     }
 }

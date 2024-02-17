@@ -2,13 +2,14 @@
 {
     public sealed class CellsByDirectAroundC
     {
-        public readonly byte[] CellsByDirect;
+        readonly byte[] _cellsByDirect;
+        public byte[] CellsByDirect => (byte[])_cellsByDirect.Clone();
 
-        public byte Get(in DirectTypes directT) => CellsByDirect[(byte)directT];
+        public byte Get(in DirectTypes directT) => _cellsByDirect[(byte)directT];
 
         internal CellsByDirectAroundC(in byte[] cellsByDirec)
         {
-            CellsByDirect = cellsByDirec;
+            _cellsByDirect = cellsByDirec;
         }
     }
 }

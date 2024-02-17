@@ -27,9 +27,9 @@ namespace Chessy.View.System
 
                     if (_effectsUnitCs[dataIdxCell].HaveAnyProtectionRainyMagicShield)
                     {
-                        if (_unitCs[dataIdxCell].HaveUnit)
+                        if (unitCs[dataIdxCell].HaveUnit)
                         {
-                            if (_unitVisibleCs[dataIdxCell].IsVisible(AboutGameC.CurrentPlayerIType))
+                            if (_unitVisibleCs[dataIdxCell].IsVisible(aboutGameC.CurrentPlayerIType))
                             {
                                 _needActive[cellIdxCurrent] = true;
                             }

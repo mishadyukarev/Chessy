@@ -10,33 +10,33 @@ namespace Chessy.Model.System
             {
                 if (needIncrese)
                 {
-                    if (!WindC.IsMaxSpeed())
+                    if (!windC.IsMaxSpeed())
                     {
                         _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
-                        WindC.Speed++;
+                        windC.Speed++;
 
-                        _s.RpcSs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
+                        s.RpcSs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
                     }
                     else
                     {
-                        _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.MaxSpeedWind, sender);
+                        s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.MaxSpeedWind, sender);
                     }
                 }
 
                 else
                 {
-                    if (!WindC.IsMinSpeed())
+                    if (!windC.IsMinSpeed())
                     {
                         _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
-                        WindC.Speed--;
+                        windC.Speed--;
 
-                        _s.RpcSs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
+                        s.RpcSs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
                     }
                     else
                     {
-                        _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.MinSpeedWind, sender);
+                        s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.MinSpeedWind, sender);
                     }
                 }
             }

@@ -37,7 +37,7 @@ namespace Chessy.View.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_cellCs[cellIdxCurrent].IsBorder) continue;
+                if (CellC(cellIdxCurrent).IsBorder) continue;
 
                 Sync(cellIdxCurrent);
             }
@@ -60,14 +60,14 @@ namespace Chessy.View.System
             {
                 var dataUnitIdxCell = _unitWhereViewDataCs[cellIdxForSync].DataIdxCellP;
 
-                if (_unitCs[dataUnitIdxCell].HaveUnit)
+                if (unitCs[dataUnitIdxCell].HaveUnit)
                 {
-                    if (_unitVisibleCs[dataUnitIdxCell].IsVisible(AboutGameC.CurrentPlayerIType) || _unitCs[IndexesCellsC.Selected].UnitType == UnitTypes.Elfemale && _unitCs[IndexesCellsC.Selected].PlayerType == AboutGameC.CurrentPlayerIType && _unitCs[dataUnitIdxCell].UnitType == UnitTypes.King)
+                    if (_unitVisibleCs[dataUnitIdxCell].IsVisible(aboutGameC.CurrentPlayerIType) || unitCs[indexesCellsC.Selected].UnitType == UnitTypes.Elfemale && unitCs[indexesCellsC.Selected].PlayerType == aboutGameC.CurrentPlayerIType && unitCs[dataUnitIdxCell].UnitType == UnitTypes.King)
                     {
-                        var nextPlayer = _unitCs[dataUnitIdxCell].PlayerType.NextPlayer();
+                        var nextPlayer = unitCs[dataUnitIdxCell].PlayerType.NextPlayer();
                         var isVisibleForNextPlayer = _unitVisibleCs[dataUnitIdxCell].IsVisible(nextPlayer);
 
-                        var unitT = _unitCs[dataUnitIdxCell].UnitType;
+                        var unitT = unitCs[dataUnitIdxCell].UnitType;
 
                         if (unitT == UnitTypes.Pawn)
                         {

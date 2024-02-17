@@ -17,13 +17,13 @@ namespace Chessy.Model.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (!_cellCs[cellIdxCurrent].IsBorder)
+                if (!CellC(cellIdxCurrent).IsBorder)
                 {
-                    if (_unitCs[cellIdxCurrent].UnitT == UnitTypes.King)
+                    if (unitCs[cellIdxCurrent].UnitT == UnitTypes.King)
                     {
-                        foreach (var cellIdxNext in _idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
+                        foreach (var cellIdxNext in IdxsAroundCellC(cellIdxCurrent).IdxCellsAroundArray)
                         {
-                            _hasUnitKingEffectHereCs[cellIdxNext].Set(_unitCs[cellIdxCurrent].PlayerT, true);
+                            _hasUnitKingEffectHereCs[cellIdxNext].Set(unitCs[cellIdxCurrent].PlayerT, true);
                         }
                     }
                 }

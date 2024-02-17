@@ -76,6 +76,8 @@ namespace Chessy.Model.Entity
                     }
                 }
 
+                aroundByDirectIdxs[(byte)DirectTypes.None] = startCellIdx_0;
+
                 cellEs_0.CellE.IdxsAroundCellC = new IdxsAroundCellC(aroudIdxs);
                 cellEs_0.CellE.CellsByDirectAroundC = new CellsByDirectAroundC(aroundByDirectIdxs);
             }

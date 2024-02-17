@@ -42,14 +42,14 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                var isVisForMe = _visibleBuildingCs[cellIdxCurrent].IsVisible(AboutGameC.CurrentPlayerIType);
-                var isVisForNext = _visibleBuildingCs[cellIdxCurrent].IsVisible(AboutGameC.CurrentPlayerIType.NextPlayer());
+                var isVisForMe = visibleBuildingCs[cellIdxCurrent].IsVisible(aboutGameC.CurrentPlayerIType);
+                var isVisForNext = visibleBuildingCs[cellIdxCurrent].IsVisible(aboutGameC.CurrentPlayerIType.NextPlayer());
 
-                if (_buildingCs[cellIdxCurrent].HaveBuilding)
+                if (buildingCs[cellIdxCurrent].HaveBuilding)
                 {
                     if (isVisForMe)
                     {
-                        _needActive[cellIdxCurrent][(byte)_buildingCs[cellIdxCurrent].BuildingType] = true;
+                        _needActive[cellIdxCurrent][(byte)buildingCs[cellIdxCurrent].BuildingType] = true;
                     }
                 }
             }

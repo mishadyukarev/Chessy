@@ -17,11 +17,11 @@ namespace Chessy.Model
         {
             var isEnableButt = false;
 
-            if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
+            if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= Enum.LessonTypes.UniqueAttackInfo)
             {
-                if (_unitCs[IndexesCellsC.Selected].HaveUnit)
+                if (unitCs[indexesCellsC.Selected].HaveUnit)
                 {
-                    if (_unitCs[IndexesCellsC.Selected].PlayerType == AboutGameC.CurrentPlayerIType)
+                    if (unitCs[indexesCellsC.Selected].PlayerType == aboutGameC.CurrentPlayerIType)
                     {
                         isEnableButt = true;
 
@@ -29,9 +29,9 @@ namespace Chessy.Model
                         _protectUIE.Button(UnitTypes.Pawn).TrySetActive(false);
                         _protectUIE.Button(UnitTypes.Elfemale).TrySetActive(false);
 
-                        _protectUIE.Button(_unitCs[IndexesCellsC.Selected].UnitType).TrySetActive(true);
+                        _protectUIE.Button(unitCs[indexesCellsC.Selected].UnitType).TrySetActive(true);
 
-                        if (_unitCs[IndexesCellsC.Selected].ConditionType == ConditionUnitTypes.Protected)
+                        if (unitCs[indexesCellsC.Selected].ConditionType == ConditionUnitTypes.Protected)
                         {
                             _protectUIE.ImageUIC.Image.color = Color.yellow;
                         }

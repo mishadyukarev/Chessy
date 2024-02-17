@@ -24,18 +24,18 @@ namespace Chessy.Model.System
 
             for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
-                if (_unitCs[cellIdxStart].UnitT == UnitTypes.Pawn && _unitCs[cellIdxStart].PlayerT == playerBotT)
+                if (unitCs[cellIdxStart].UnitT == UnitTypes.Pawn && unitCs[cellIdxStart].PlayerT == playerBotT)
                 {
-                    foreach (var cellIdxDirect in _idxsAroundCellCs[cellIdxStart].IdxCellsAroundArray)
+                    foreach (var cellIdxDirect in IdxsAroundCellC(cellIdxStart).IdxCellsAroundArray)
                     {
-                        if (_unitCs[cellIdxDirect].HaveUnit)
+                        if (unitCs[cellIdxDirect].HaveUnit)
                         {
-                            if (!_unitCs[cellIdxDirect].IsAnimal)
+                            if (!unitCs[cellIdxDirect].IsAnimal)
                             {
                                 if (_whereSimpleAttackCs[cellIdxStart].Can(cellIdxDirect)
                                     || _whereUniqueAttackCs[cellIdxStart].Can(cellIdxDirect))
                                 {
-                                    _s.AttackUnitFromTo(cellIdxStart, cellIdxDirect);
+                                    s.AttackUnitFromTo(cellIdxStart, cellIdxDirect);
                                 }
                             }
                         }

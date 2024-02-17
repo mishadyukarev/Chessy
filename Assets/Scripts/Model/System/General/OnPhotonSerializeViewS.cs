@@ -16,7 +16,7 @@ namespace Chessy.Model.System
 
         internal OnPhotonSerializeViewS(in SystemsModel sM, in EntitiesModel eM) : base(sM, eM)
         {
-            _eCopy = new EntitiesModel(_dataFromViewC, eM.CommonGameE.RpcC.PunRPCName, new List<object>() { eM.CommonGameE.RpcC.Action0, eM.CommonGameE.RpcC.Action1 }, AboutGameC.TestModeT);
+            _eCopy = new EntitiesModel(dataFromViewC, eM.CommonGameE.RpcC.PunRPCName, new List<object>() { eM.CommonGameE.RpcC.Action0, eM.CommonGameE.RpcC.Action1 }, aboutGameC.TestModeT);
         }
 
         internal void OnPhotonSerializeView0(in SyncTypes syncType, PhotonStream stream, PhotonMessageInfo info)
@@ -27,11 +27,11 @@ namespace Chessy.Model.System
                     {
                         if (stream.IsWriting)
                         {
-                            stream.SendNext(AboutGameC.IsStartedGame);
-                            stream.SendNext(AboutGameC.WinnerPlayerT);
-                            stream.SendNext(WindC.DirectT);
-                            stream.SendNext(WindC.Speed);
-                            stream.SendNext(SunC.SunSideT);
+                            stream.SendNext(aboutGameC.IsStartedGame);
+                            stream.SendNext(aboutGameC.WinnerPlayerT);
+                            stream.SendNext(windC.DirectT);
+                            stream.SendNext(windC.Speed);
+                            stream.SendNext(sunC.SunSideT);
 
 
                             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
@@ -84,15 +84,16 @@ namespace Chessy.Model.System
                         else
                         {
 
-                            AboutGameC.IsStartedGame = (bool)stream.ReceiveNext();
-                            AboutGameC.WinnerPlayerT = (PlayerTypes)stream.ReceiveNext();
-                            WindC.DirectT = (DirectTypes)stream.ReceiveNext();
-                            WindC.Speed = (byte)stream.ReceiveNext();
-                            SunC.SunSideT = (SunSideTypes)stream.ReceiveNext();
+                            aboutGameC.IsStartedGame = (bool)stream.ReceiveNext();
+                            aboutGameC.WinnerPlayerT = (PlayerTypes)stream.ReceiveNext();
+                            windC.DirectT = (DirectTypes)stream.ReceiveNext();
+                            windC.Speed = (byte)stream.ReceiveNext();
+                            sunC.SunSideT = (SunSideTypes)stream.ReceiveNext();
 
 
                             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
                             {
+                                var player_byte = (byte)playerT;
 
                                 PlayerInfoC(playerT).IsReadyForStartOnlineGame = (bool)stream.ReceiveNext();
                                 PlayerInfoC(playerT).WoodForBuyHouse = (float)stream.ReceiveNext();
@@ -102,13 +103,13 @@ namespace Chessy.Model.System
                                 PawnPeopleInfoC(playerT).PeopleInCity = (int)stream.ReceiveNext();
                                 PawnPeopleInfoC(playerT).AmountInGame = (int)stream.ReceiveNext();
 
-                                GodInfoC(playerT).HaveGodInInventor = (bool)stream.ReceiveNext();
-                                GodInfoC(playerT).UnitType = (UnitTypes)stream.ReceiveNext();
-                                GodInfoC(playerT).CooldownInSecondsForNextAppearance = (int)stream.ReceiveNext();
+                                godInfoCs[player_byte].HaveGodInInventor = (bool)stream.ReceiveNext();
+                                godInfoCs[player_byte].UnitType = (UnitTypes)stream.ReceiveNext();
+                                godInfoCs[player_byte].CooldownInSecondsForNextAppearance = (int)stream.ReceiveNext();
 
                                 for (var buildingT = (BuildingTypes)0; buildingT < BuildingTypes.End; buildingT++)
                                 {
-                                    BuildingsInTownInfoC(playerT).HaveBuilding(buildingT) = (bool)stream.ReceiveNext();
+                                    buildingsInTownInfoCs[(byte)playerT].HaveBuilding(buildingT) = (bool)stream.ReceiveNext();
                                 }
 
                                 for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
@@ -139,7 +140,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (_cellCs[curCellIdx_0].IsBorder) continue;
+                                if (CellC(curCellIdx_0).IsBorder) continue;
 
                                 stream.SendNext(UnitShiftC(curCellIdx_0).Distance);
                             }
@@ -148,7 +149,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (_cellCs[curCellIdx_0].IsBorder) continue;
+                                if (CellC(curCellIdx_0).IsBorder) continue;
 
                                 UnitShiftC(curCellIdx_0).Distance = (float)stream.ReceiveNext();
                             }
@@ -162,7 +163,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (_cellCs[curCellIdx_0].IsBorder) continue;
+                                if (CellC(curCellIdx_0).IsBorder) continue;
 
                                 stream.SendNext(CloudShiftC(curCellIdx_0).Distance);
 
@@ -172,7 +173,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (_cellCs[curCellIdx_0].IsBorder) continue;
+                                if (CellC(curCellIdx_0).IsBorder) continue;
                                 
                                 CloudShiftC(curCellIdx_0).Distance = (float)stream.ReceiveNext();
                             }
@@ -184,14 +185,14 @@ namespace Chessy.Model.System
                     {
                         for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
                         {
-                            if (_cellCs[currentCellIdx_0].IsBorder) continue;
+                            if (CellC(currentCellIdx_0).IsBorder) continue;
 
                             var unitC = UnitC(currentCellIdx_0);
                             var mainTWC = UnitMainTWC(currentCellIdx_0);
                             var extraTWC = UnitExtraTWC(currentCellIdx_0);
                             var unitViewDataC = UnitViewDataC(currentCellIdx_0);
-                            var unitEffectsC = UnitEffectC(currentCellIdx_0);
-                            var unitCooldownC = UnitCooldownC(currentCellIdx_0);
+                            var unitEffectsC = _effectsUnitCs[currentCellIdx_0];
+                            var unitCooldownC = _cooldownAbilityCs[currentCellIdx_0];
                             var unitAttackC = UnitAttackC(currentCellIdx_0);
 
                             var cloudViewDataC = CloudViewDataC(currentCellIdx_0);
@@ -228,7 +229,7 @@ namespace Chessy.Model.System
                                     stream.SendNext(unitCooldownC.Cooldown(abilityT));
                                 }
 
-                                stream.SendNext(UnitHpC(currentCellIdx_0).Health);
+                                stream.SendNext(unitHpCs[currentCellIdx_0].Health);
                                 stream.SendNext(UnitWaterC(currentCellIdx_0).Water);
                                 stream.SendNext(UnitShiftC(currentCellIdx_0).WhereNeedShiftIdxCell);
 
@@ -271,7 +272,7 @@ namespace Chessy.Model.System
                                     unitCooldownC.Set(abilityT, (int)stream.ReceiveNext());
                                 }
 
-                                UnitHpC(currentCellIdx_0).Health = (double)stream.ReceiveNext();
+                                unitHpCs[currentCellIdx_0].Health = (double)stream.ReceiveNext();
                                 UnitWaterC(currentCellIdx_0).Water = (double)stream.ReceiveNext();
                                 UnitShiftC(currentCellIdx_0).WhereNeedShiftIdxCell = (byte)stream.ReceiveNext();
 
@@ -293,7 +294,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (_cellCs[curCellIdx_0].IsBorder) continue;
+                                if (CellC(curCellIdx_0).IsBorder) continue;
 
                                 for (var environmentT = (EnvironmentTypes)1; environmentT < EnvironmentTypes.End; environmentT++)
                                 {
@@ -307,7 +308,7 @@ namespace Chessy.Model.System
                                 stream.SendNext(buildingC.LevelT);
                                 stream.SendNext(buildingC.PlayerT);
 
-                                var trailHealthC = TrailHealthC(curCellIdx_0);
+                                var trailHealthC = hpTrailCs[curCellIdx_0];
                                 for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                                 {
                                     stream.SendNext(trailHealthC.Health(directT));
@@ -319,7 +320,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (_cellCs[curCellIdx_0].IsBorder) continue;
+                                if (CellC(curCellIdx_0).IsBorder) continue;
 
                                 for (var environmentT = (EnvironmentTypes)1; environmentT < EnvironmentTypes.End; environmentT++)
                                 {
@@ -334,7 +335,7 @@ namespace Chessy.Model.System
 
                                 for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                                 {
-                                    TrailHealthC(curCellIdx_0).Set(directT, (float)stream.ReceiveNext());
+                                    hpTrailCs[curCellIdx_0].Set(directT, (float)stream.ReceiveNext());
                                 }
                             }
                         }
@@ -438,8 +439,8 @@ namespace Chessy.Model.System
 
         void Update()
         {
-            _s.GetDataCellsS.GetDataCells();
-            _updateAllViewC.NeedUpdateView = true;
+            s.GetDataCellsS.GetDataCells();
+            updateAllViewC.NeedUpdateView = true;
         }
     }
 }

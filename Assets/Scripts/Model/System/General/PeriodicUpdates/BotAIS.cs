@@ -1,187 +1,185 @@
-using Chessy.Model;
 using Chessy.Model.Entity;
-using Chessy.Model.System;
+using Chessy.Model.Enum;
 using Chessy.Model.Values;
 using Newtonsoft.Json;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using UnityEngine;
-using static log4net.Appender.RollingFileAppender;
 
 
-[System.Serializable]
-public class ExtractedBotData
+namespace Chessy.Model.System
 {
-    public DateTime date_time;
-    public int id;
-
-    public int has_tree_on_cell;
-
-    public int has_tree_up;
-    public int has_tree_up_right;
-    public int has_tree_right;
-    public int has_tree_right_down;
-    public int has_tree_down;
-    public int has_tree_down_left;
-    public int has_tree_left;
-    public int has_tree_left_up;
-
-    public Dictionary<int, object[]> data = new Dictionary<int, object[]>();
-
-    public ExtractedBotData(params object[] args)
+    public class InputDataToRequest
     {
-        var i = 0;
-        date_time = (DateTime)args[i++];
-        id = (int)args[i++];
-        has_tree_on_cell = (int)args[i++];
-
-        var hasTreeArr = (int[])args[i++];
-
-        var i_tree = 0;
-
-        has_tree_up = hasTreeArr[i_tree++];
-        has_tree_up_right = hasTreeArr[i_tree++];
-        has_tree_right = hasTreeArr[i_tree++];
-        has_tree_right_down = hasTreeArr[i_tree++];
-        has_tree_down = hasTreeArr[i_tree++];
-        has_tree_down_left = hasTreeArr[i_tree++];
-        has_tree_left = hasTreeArr[i_tree++];
-        has_tree_left_up = hasTreeArr[i_tree++];
-    }
-}
-
-public sealed class BotAIS : SystemModelAbstract
-{
-    readonly PlayerTypes _botPlayerT;
-    DateTime _dateTimeLastUpdate;
-
-    int _idxMove = 0;
-    ExtractedBotData[] _df = new ExtractedBotData[10000];
-
-
-
-    internal BotAIS(in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG)
-    {
-        _botPlayerT = PlayerTypes.Second;
+        public string time;
+        public string unit_move_type;
+        public Dictionary<DirectTypes, Dictionary<EnvironmentTypes, bool>> cells;
     }
 
-    internal void Update()
+
+    public sealed class BotAIS : SystemModelAbstract
     {
-        if ((DateTime.Now - _dateTimeLastUpdate).Seconds >= 1)
+        readonly PlayerTypes _botPlayerT;
+        readonly byte _botPlayer_byte;
+        DateTime _dateTimeLastUpdate;
+
+
+        internal BotAIS(in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG)
         {
-
-            TryToSpawnKing();
-            TryToSpawnPawn();
-            TryToMovePawn();
-
-
-
-            string json = JsonConvert.SerializeObject(_df.Where(x => x != null).ToArray());
-
-            File.WriteAllText(@"C:\Users\misha\OneDrive\Desktop\DS\competitions\playground-series-s4e2\data\myFile.json", json);
-
- 
-            Debug.Log(json);
-
-
-            _dateTimeLastUpdate = DateTime.Now;
+            _botPlayerT = PlayerTypes.Second;
+            _botPlayer_byte = (byte)_botPlayerT;
         }
-    }
 
-    void TryToMovePawn()
-    {
-        for (byte iCell_0 = 0; iCell_0 < IndexCellsValues.CELLS; iCell_0++)
+        internal async void Update()
         {
-            if (_cellCs[iCell_0].IsBorder) continue;
-            if (_unitCs[iCell_0].UnitT != UnitTypes.Pawn) continue;
-            if (_shiftingUnitCs[iCell_0].IsShifting) continue;
-
-
-            if (_unitCs[iCell_0].PlayerT == _botPlayerT)
+            if ((DateTime.Now - _dateTimeLastUpdate).Seconds >= 1)
             {
-                foreach (var iCell_around_1 in _idxsAroundCellCs[iCell_0].IdxCellsAroundArray)
-                {
-                    if (_cellCs[iCell_around_1].IsBorder) continue;
-                    if (_unitCs[iCell_around_1].HaveUnit) continue;
-                    if (UnityEngine.Random.value >= 0.3) continue;
 
-                    var hasTreeOnCellInt = _environmentCs[iCell_0].HaveEnvironment(EnvironmentTypes.AdultForest) ? 1 : 0;
+                TryToSpawnKing();
+                TryToSpawnPawn();
+                await TryToMovePawnRandomlyAsync();
 
-                    var hasTreeArr = new int[(int)DirectTypes.End];
-
-                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                    {
-                        hasTreeArr[(int)dirT] = _environmentCs[_cellsByDirectAroundC[iCell_0].Get(dirT)].HaveEnvironment(EnvironmentTypes.AdultForest) ? 1 : 0;
-                    }
-
-                    _df[_idxMove] = new ExtractedBotData(new object[] { DateTime.Now, 0, hasTreeOnCellInt, hasTreeArr });
-                    _idxMove++;
-
-
-                    _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryShiftUnitOntoOtherCellM), iCell_0, iCell_around_1 });
-
-                    break;
-                }
-
-                break;
+                _dateTimeLastUpdate = DateTime.Now;
             }
         }
-    }
 
-
-    void TryToSpawnKing()
-    {
-        if (_playerInfoCs[(int)_botPlayerT].HaveKingInInventor)
+        async Task TryToMovePawnRandomlyAsync()
         {
             for (byte iCell_0 = 0; iCell_0 < IndexCellsValues.CELLS; iCell_0++)
             {
-                if (_cellCs[iCell_0].IsBorder) continue;
+                if (cellCs[iCell_0].IsBorder) continue;
+                if (unitCs[iCell_0].UnitT != UnitTypes.Pawn) continue;
+                if (shiftingUnitCs[iCell_0].IsShifting) continue;
 
-                if (_isStartedCellCs[iCell_0].IsStartedCellForPlayer(_botPlayerT) && !_unitCs[iCell_0].HaveUnit)
+
+                if (unitCs[iCell_0].PlayerT == _botPlayerT)
                 {
-                    _s.SetNewUnitOnCellS.Set(UnitTypes.King, _botPlayerT, iCell_0);
+                    var movesCanDo_ar = new bool[(int)UnitMoveTypes.End];
+
+
+                    foreach (var iCell_around_1 in idxsAroundCellCs[iCell_0].IdxCellsAroundArray)
+                    {
+                        if (cellCs[iCell_around_1].IsBorder) continue;
+                        if (unitCs[iCell_around_1].HaveUnit) continue;
+
+
+                        var randUnitMoveT = (UnitMoveTypes)UnityEngine.Random.Range((int)UnitMoveTypes.None + 1, 9);
+
+
+
+
+                        Debug.Log(randUnitMoveT);
+
+                        var cellInfo_dict = new Dictionary<DirectTypes, Dictionary<EnvironmentTypes, bool>>();
+
+
+                        for (var dirT = DirectTypes.None; dirT < DirectTypes.End; dirT++)
+                        {
+                            cellInfo_dict.Add(dirT, new Dictionary<EnvironmentTypes, bool>());
+
+                            for (var envT = (EnvironmentTypes)1; envT < EnvironmentTypes.End; envT++)
+                            {
+                                cellInfo_dict[dirT].Add(envT, environmentCs[cellsByDirectAroundC[iCell_0].Get(dirT)].HaveEnvironment(envT));
+                            }
+                        }
+
+                        var inputDataToRequest = new InputDataToRequest()
+                        {
+                            time = DateTime.Now.ToString("yyyyMMddHHmmssffffff"),
+                            unit_move_type = randUnitMoveT.ToString(),
+                            cells = cellInfo_dict
+                        };
+
+
+                        var httpClient = new HttpClient();
+                        string url = "https://sirpoopy.pythonanywhere.com/put_data";
+
+                        var json = JsonConvert.SerializeObject(inputDataToRequest);
+                        json = json.Replace("\"", "'");
+
+                        var result_url = $"{url}?input=\"{json}\"";
+
+                        var response = await httpClient.GetAsync(result_url);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var result = await response.Content.ReadAsStringAsync();
+                            //var data = JsonConvert.DeserializeObject<PostResponse>(result);
+
+                            //Debug.Log(data.Input);
+                            //Debug.Log(data.Timestamp);
+                            //Debug.Log(data.Character_count);
+
+                            Debug.Log(result);
+
+                        }
+
+
+                        rpcC.Action0(rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(s.TryShiftUnitOntoOtherCellM), iCell_0, iCell_around_1 });
+
+                        break;
+                    }
 
                     break;
                 }
             }
         }
-    }
 
-    void TryToSpawnPawn()
-    {
-        for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+
+        void TryToSpawnKing()
         {
-            if (_isStartedCellCs[cellIdxCurrent].IsStartedCellForPlayer(_botPlayerT) && !UnitC(cellIdxCurrent).HaveUnit && PawnPeopleInfoC(_botPlayerT).CanGetPawn(PlayerInfoC(_botPlayerT).AmountBuiltHouses))
+            if (playerInfoCs[_botPlayer_byte].HaveKingInInventor)
             {
-                _s.SetNewUnitOnCellS.Set(UnitTypes.Pawn, _botPlayerT, cellIdxCurrent);
+                for (byte iCell_0 = 0; iCell_0 < IndexCellsValues.CELLS; iCell_0++)
+                {
+                    if (cellCs[iCell_0].IsBorder) continue;
 
-                break;
+                    if (isStartedCellCs[iCell_0].IsStartedCellForPlayer(_botPlayerT) && !unitCs[iCell_0].HaveUnit)
+                    {
+                        s.SetNewUnitOnCellS.Set(UnitTypes.King, _botPlayerT, iCell_0);
+
+                        break;
+                    }
+                }
             }
         }
-    }
 
-    // v
-    void GetAllStateValuesForUnits()
-    {
-        for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+        void TryToSpawnPawn()
         {
-            if (_cellCs[cellIdxCurrent].IsBorder) continue;
-
-
-            foreach (var value in Enum.GetValues(typeof(DirectTypes)))
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                // Your code here
-            }
-
-            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-            {
-                foreach (var idxCellAround in _idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
+                if (isStartedCellCs[cellIdxCurrent].IsStartedCellForPlayer(_botPlayerT) && !unitCs[cellIdxCurrent].HaveUnit && pawnPeopleInfoCs[_botPlayer_byte].CanGetPawn(playerInfoCs[_botPlayer_byte].AmountBuiltHouses))
                 {
-                    if (EnvironmentC(idxCellAround).HaveEnvironment(EnvironmentTypes.AdultForest))
+                    s.SetNewUnitOnCellS.Set(UnitTypes.Pawn, _botPlayerT, cellIdxCurrent);
+
+                    break;
+                }
+            }
+        }
+
+        // v
+        void GetAllStateValuesForUnits()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (cellCs[cellIdxCurrent].IsBorder) continue;
+
+
+                //foreach (var value in System. Enum.GetValues(typeof(DirectTypes)))
+                //{
+                //    // Your code here
+                //}
+
+                for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                {
+                    foreach (var idxCellAround in idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
                     {
+                        if (environmentCs[idxCellAround].HaveEnvironment(EnvironmentTypes.AdultForest))
+                        {
+                        }
                     }
                 }
             }

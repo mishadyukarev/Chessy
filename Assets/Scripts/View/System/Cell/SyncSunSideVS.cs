@@ -30,9 +30,9 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent_0 = 0; cellIdxCurrent_0 < IndexCellsValues.CELLS; cellIdxCurrent_0++)
             {
-                if (_cellCs[cellIdxCurrent_0].IsBorder) continue;
+                if (CellC(cellIdxCurrent_0).IsBorder) continue;
 
-                if (IndexesCellsC.Selected == cellIdxCurrent_0 && SunC.IsAcitveSun)
+                if (indexesCellsC.Selected == cellIdxCurrent_0 && sunC.IsAcitveSun)
                 {
                     _simpleUnqiueCells.Clear();
 
@@ -52,11 +52,11 @@ namespace Chessy.View.System
 
                     foreach (var cellIdxAttack in _simpleUnqiueCells)
                     {
-                        foreach (var sunDirectT in SunC.RaysSun)
+                        foreach (var sunDirectT in sunC.RaysSun)
                         {
                             var invertSunDirectT = sunDirectT.Invert();
 
-                            if (_cellAroundCs[cellIdxCurrent_0, cellIdxAttack].DirectT == invertSunDirectT)
+                            if (cellAroundCs[cellIdxCurrent_0, cellIdxAttack].DirectT == invertSunDirectT)
                             {
                                 _needActive[cellIdxAttack] = true;
                             }

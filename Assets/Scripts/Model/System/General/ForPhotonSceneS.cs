@@ -12,8 +12,8 @@ namespace Chessy.Model.System
 
         internal void OnLeftRoom()
         {
-            AboutGameC.SceneT = SceneTypes.Menu;
-            _updateAllViewC.NeedUpdateView = true;
+            aboutGameC.SceneT = SceneTypes.Menu;
+            updateAllViewC.NeedUpdateView = true;
         }
         internal void OnPlayerLeftRoom(in Player otherPlayer)
         {
@@ -40,16 +40,16 @@ namespace Chessy.Model.System
         }
         internal void OnConnected()
         {
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
         internal void OnConnectedToMaster()
         {
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
         internal void OnJoinedRoom()
         {
-            _s.ToggleScene(SceneTypes.Game);
-            _s.StartGame(AboutGameC.GameModeT == GameModeTypes.TrainingOffline);
+            s.ToggleScene(SceneTypes.Game);
+            s.StartGame(aboutGameC.GameModeT == GameModeTypes.TrainingOffline);
 
             //if (PhotonNetwork.IsMasterClient)
             //{

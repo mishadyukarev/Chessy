@@ -13,7 +13,7 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            _skipLessonUIE.ButtonUIC.SetActiveParent(AboutGameC.LessonType.HaveLesson());
+            _skipLessonUIE.ButtonUIC.SetActiveParent(aboutGameC.LessonType.HaveLesson());
         }
     }
 }

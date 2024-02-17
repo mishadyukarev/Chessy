@@ -7,11 +7,11 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _extractionBuildingCs[cellIdxCurrent].HowManyFarmCanExtractFood = 0;
+                extractionBuildingCs[cellIdxCurrent].HowManyFarmCanExtractFood = 0;
 
-                if (_buildingCs[cellIdxCurrent].BuildingT == BuildingTypes.Farm)
+                if (buildingCs[cellIdxCurrent].BuildingT == BuildingTypes.Farm)
                 {
-                    if (_environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Fertilizer))
+                    if (environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.Fertilizer))
                     {
                         double extract = ValuesChessy.FARM_EXTRACT;
 
@@ -20,9 +20,9 @@ namespace Chessy.Model.System
                         //    extract += Environment_Values.FARM_CENTER_UPGRADE;
                         //}
 
-                        if (_environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Fertilizer) < extract) extract = _environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Fertilizer);
+                        if (environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Fertilizer) < extract) extract = environmentCs[cellIdxCurrent].Resources(EnvironmentTypes.Fertilizer);
 
-                        _extractionBuildingCs[cellIdxCurrent].HowManyFarmCanExtractFood = extract;
+                        extractionBuildingCs[cellIdxCurrent].HowManyFarmCanExtractFood = extract;
                     }
                 }
             }

@@ -15,40 +15,40 @@ namespace Chessy.Model.System
 
         public void TryBuyFromMarketBuilding(in MarketBuyTypes marketBuyT)
         {
-            _rpcC.Action0(_rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuyFromMarketBuildingM), marketBuyT });
+            rpcC.Action0(rpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(s.TryBuyFromMarketBuildingM), marketBuyT });
         }
         public void ClickFriendReadyButtonInGame()
         {
-            _zonesInfoC.IsActiveFriend = false;
-            _updateAllViewC.NeedUpdateView = true;
+            zonesInfoC.IsActiveFriend = false;
+            updateAllViewC.NeedUpdateView = true;
         }
         public void ClickWindButtonUp()
         {
-            if (AboutGameC.LessonT == LessonTypes.ClickWindInfo)
+            if (aboutGameC.LessonT == LessonTypes.ClickWindInfo)
             {
-                SunC.SunSideT = SunSideTypes.Dawn;
-                _s.SetNextLesson();
+                sunC.SunSideT = SunSideTypes.Dawn;
+                s.SetNextLesson();
             }
             else
             {
-                if (_bookC.IsOpenedBook())
+                if (bookC.IsOpenedBook())
                 {
-                    _bookC.OpenedNowPageBookT = PageBookTypes.None;
-                    _dataFromViewC.SoundAction(ClipTypes.CloseBook).Invoke();
+                    bookC.OpenedNowPageBookT = PageBookTypes.None;
+                    dataFromViewC.SoundAction(ClipTypes.CloseBook).Invoke();
                 }
                 else
                 {
-                    _bookC.OpenedNowPageBookT = PageBookTypes.Wind;
-                    _dataFromViewC.SoundAction(ClipTypes.OpenBook).Invoke();
+                    bookC.OpenedNowPageBookT = PageBookTypes.Wind;
+                    dataFromViewC.SoundAction(ClipTypes.OpenBook).Invoke();
                 }
             }
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
         public void ClickSettingUpGame()
         {
-            _settingsC.IsOpenedBarWithSettings = !_settingsC.IsOpenedBarWithSettings;
-            _dataFromViewC.SoundAction(ClipTypes.Click);
+            settingsC.IsOpenedBarWithSettings = !settingsC.IsOpenedBarWithSettings;
+            dataFromViewC.SoundAction(ClipTypes.Click);
         }
         public void ClickDiscordUpButton()
         {
@@ -56,21 +56,21 @@ namespace Chessy.Model.System
         }
         public void ClickSettingsCenterMenu()
         {
-            _settingsC.IsOpenedBarWithSettings = !_settingsC.IsOpenedBarWithSettings;
-            _updateAllViewC.NeedUpdateView = true;
+            settingsC.IsOpenedBarWithSettings = !settingsC.IsOpenedBarWithSettings;
+            updateAllViewC.NeedUpdateView = true;
         }
         public void ClickBuyPremiumProduct()
         {
-            if (_shopC.IsInitialized) //если покупка инициализирована 
+            if (shopC.IsInitialized) //если покупка инициализирована 
             {
-                var product = _shopC.StoreController.products.WithID(ShopValues.PREMIUM_NAME); //находим продукт покупки 
+                var product = shopC.StoreController.products.WithID(ShopValues.PREMIUM_NAME); //находим продукт покупки 
 
                 if (product == default) throw new Exception();
 
                 if (product.availableToPurchase) //если продукт найдет и готов для продажи
                 {
                     Debug.Log(string.Format("Purchasing product asychronously: '{0}'", product.definition.id));
-                    _shopC.StoreController.InitiatePurchase(product); //покупаем
+                    shopC.StoreController.InitiatePurchase(product); //покупаем
                 }
                 else
                 {
@@ -84,45 +84,45 @@ namespace Chessy.Model.System
         }
         public void ClickLittleBookDownInGame()
         {
-            if (_bookC.IsOpenedBook)
+            if (bookC.IsOpenedBook)
             {
-                _bookC.CloseBook();
+                bookC.CloseBook();
             }
             else
             {
-                _bookC.OpenBook();
+                bookC.OpenBook();
             }
 
-            _dataFromViewC.SoundAction(_bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
-            _updateAllViewC.NeedUpdateView = true;
+            dataFromViewC.SoundAction(bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
+            updateAllViewC.NeedUpdateView = true;
         }
         public void ClickPremiumButtonInHeroZoneInGame()
         {
-            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
-            _shopC.IsOpenedShopZone = true;
-            _updateAllViewC.NeedUpdateView = true;
+            dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
+            shopC.IsOpenedShopZone = true;
+            updateAllViewC.NeedUpdateView = true;
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
         public void ClickExitSmelterBarInGame()
         {
-            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
-            _selectedBuildingsInTownC.Set(BuildingTypes.Smelter, false);
+            dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
+            selectedBuildingsInTownC.Set(BuildingTypes.Smelter, false);
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
         public void ClickExitMarketBarInGame()
         {
-            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
-            _selectedBuildingsInTownC.Set(BuildingTypes.Market, false);
+            dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
+            selectedBuildingsInTownC.Set(BuildingTypes.Market, false);
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
         public void ClickPremiumButtonLeftInGame()
         {
-            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
-            _shopC.IsOpenedShopZone = true;
-            _updateAllViewC.NeedUpdateView = true;
+            dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
+            shopC.IsOpenedShopZone = true;
+            updateAllViewC.NeedUpdateView = true;
         }
         public void ClickLeaveButtonInGame()
         {
@@ -134,32 +134,32 @@ namespace Chessy.Model.System
 
         public void ClickNextButtonInBookZone()
         {
-            if (_bookC.OpenedNowPageBookT < PageBookTypes.End - 1)
+            if (bookC.OpenedNowPageBookT < PageBookTypes.End - 1)
             {
-                _bookC.OpenedNowPageBookT++;
-                _dataFromViewC.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
+                bookC.OpenedNowPageBookT++;
+                dataFromViewC.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
 
-                _updateAllViewC.NeedUpdateView = true;
+                updateAllViewC.NeedUpdateView = true;
             }
         }
         public void ClickBackButtonInBookZone()
         {
-            if (_bookC.OpenedNowPageBookT > 0)
+            if (bookC.OpenedNowPageBookT > 0)
             {
-                _bookC.OpenedNowPageBookT--;
-                _dataFromViewC.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
+                bookC.OpenedNowPageBookT--;
+                dataFromViewC.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
 
-                _updateAllViewC.NeedUpdateView = true;
+                updateAllViewC.NeedUpdateView = true;
             }
         }
         public void ClickExitBookInBookZone()
         {
-            _bookC.WasOpenedBookT = _bookC.OpenedNowPageBookT;
-            _bookC.OpenedNowPageBookT = PageBookTypes.None;
+            bookC.WasOpenedBookT = bookC.OpenedNowPageBookT;
+            bookC.OpenedNowPageBookT = PageBookTypes.None;
 
-            _dataFromViewC.SoundAction(ClipTypes.CloseBook).Invoke();
+            dataFromViewC.SoundAction(ClipTypes.CloseBook).Invoke();
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
 
         #endregion
@@ -169,10 +169,10 @@ namespace Chessy.Model.System
 
         public void ClickExitInOpenedSettingBarZone()
         {
-            _settingsC.IsOpenedBarWithSettings = false;
+            settingsC.IsOpenedBarWithSettings = false;
             //eVCommon.Sound(ClipTypes.Click).Play();
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
 
         #endregion
@@ -182,7 +182,7 @@ namespace Chessy.Model.System
 
         public void ClickExitShopInShopZone()
         {
-            _shopC.IsOpenedShopZone = false;
+            shopC.IsOpenedShopZone = false;
         }
 
         #endregion
@@ -193,11 +193,11 @@ namespace Chessy.Model.System
 
         public void ClickOpenBookCenterInMenu()
         {
-            _bookC.TryOpenBook();
+            bookC.TryOpenBook();
 
-            _dataFromViewC.SoundAction(_bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
+            dataFromViewC.SoundAction(bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
 
         public void ClickConnectOnlineMenu()
@@ -219,7 +219,7 @@ namespace Chessy.Model.System
         {
             RoomOptions roomOptions = new RoomOptions();
 
-            AboutGameC.GameModeT = GameModeTypes.PublicOnline;
+            aboutGameC.GameModeT = GameModeTypes.PublicOnline;
 
             //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
             //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
@@ -234,7 +234,7 @@ namespace Chessy.Model.System
         }
         public void ClickCreateFriendRoomInMenu(in string roomNameFromViewBar)
         {
-            AboutGameC.GameModeT = GameModeTypes.WithFriendOnline;
+            aboutGameC.GameModeT = GameModeTypes.WithFriendOnline;
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;
@@ -245,19 +245,19 @@ namespace Chessy.Model.System
         }
         public void ClickJoinRandomPublicRoomInMenu()
         {
-            AboutGameC.GameModeT = GameModeTypes.PublicOnline;
+            aboutGameC.GameModeT = GameModeTypes.PublicOnline;
             //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
             PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
         }
         public void ClickJoinFriendRoomInMenu(in string nameRoomFromViewBar)
         {
-            AboutGameC.GameModeT = GameModeTypes.WithFriendOnline;
+            aboutGameC.GameModeT = GameModeTypes.WithFriendOnline;
             PhotonNetwork.JoinRoom(nameRoomFromViewBar);
         }
 
         public void ClickCreateOffGameInMenu(in GameModeTypes offGameMode)
         {
-            AboutGameC.GameModeT = offGameMode;
+            aboutGameC.GameModeT = offGameMode;
             PhotonNetwork.CreateRoom(default);
         }
 

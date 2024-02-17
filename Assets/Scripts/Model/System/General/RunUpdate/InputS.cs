@@ -9,7 +9,7 @@ namespace Chessy.Model
 
         internal void Update()
         {
-            _inputC.IsClicked = Input.GetMouseButtonDown(0);
+            inputC.IsClicked = Input.GetMouseButtonDown(0);
 
 
             

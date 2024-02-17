@@ -13,9 +13,9 @@ namespace Chessy.Model.System
         {
             var whoseMove = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (!_buildingCs[cell_0].HaveBuilding || _buildingCs[cell_0].BuildingT == BuildingTypes.Camp)
+            if (!buildingCs[cell_0].HaveBuilding || buildingCs[cell_0].BuildingT == BuildingTypes.Camp)
             {
-                if (!_environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.AdultForest))
+                if (!environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
                     var needRes = new Dictionary<ResourceTypes, float>();
                     var canBuild = true;
@@ -45,7 +45,7 @@ namespace Chessy.Model.System
                         EnvironmentC(cell_0).Set(EnvironmentTypes.YoungForest, 0);
                         Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, cell_0);
 
-                        if (AboutGameC.LessonT == LessonTypes.Build1Farms)
+                        if (aboutGameC.LessonT == LessonTypes.Build1Farms)
                         {
                             SetNextLesson();
                         }

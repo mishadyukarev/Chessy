@@ -5,24 +5,24 @@ namespace Chessy.Model.System
     {
         public void OpenCityClick()
         {
-            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
+            dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
 
-            AboutGameC.IsSelectedCity = !AboutGameC.IsSelectedCity;
+            aboutGameC.IsSelectedCity = !aboutGameC.IsSelectedCity;
 
-            if (AboutGameC.LessonT.Is(LessonTypes.OpeningTown))
+            if (aboutGameC.LessonT.Is(LessonTypes.OpeningTown))
             {
-                _s.SetNextLesson();
+                s.SetNextLesson();
 
             }
-            if (AboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse))
+            if (aboutGameC.LessonT.Is(LessonTypes.TryBuyingHouse))
             {
-                if (!AboutGameC.IsSelectedCity) _s.SetPreviousLesson();
+                if (!aboutGameC.IsSelectedCity) s.SetPreviousLesson();
             }
 
 
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
     }
 }

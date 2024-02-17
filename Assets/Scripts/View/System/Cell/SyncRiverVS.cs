@@ -21,11 +21,11 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
-            var currentPlayerT = AboutGameC.CurrentPlayerIType;
+            var currentPlayerT = aboutGameC.CurrentPlayerIType;
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_cellCs[cellIdxCurrent].IsBorder) continue;
+                if (CellC(cellIdxCurrent).IsBorder) continue;
 
                 var parentTrans = _riverVEs[cellIdxCurrent].ParentTransformVC.Transform;
 
@@ -44,13 +44,13 @@ namespace Chessy.View.System
                 }
 
 
-                if (_riverCs[cellIdxCurrent].RiverT == RiverTypes.Start)
+                if (RiverC(cellIdxCurrent).RiverT == RiverTypes.Start)
                 {
                     for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                     {
                         if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
                         {
-                            _riverVEs[cellIdxCurrent].River(dir_1).TrySetEnabled(_haveRiverAroundCellCs[cellIdxCurrent].HaveRive(dir_1));
+                            _riverVEs[cellIdxCurrent].River(dir_1).TrySetEnabled(haveRiverAroundCellCs[cellIdxCurrent].HaveRive(dir_1));
                         }
                     }
                 }

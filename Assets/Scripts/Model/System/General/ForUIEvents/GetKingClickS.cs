@@ -4,19 +4,19 @@
     {
         public void GetClickEffect()
         {
-            IndexesCellsC.Selected = 0;
+            indexesCellsC.Selected = 0;
 
-            _dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
+            dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
-            if (PlayerInfoE(AboutGameC.CurrentPlayerIT).PlayerInfoC.HaveKingInInventor)
+            if (PlayerInfoE(aboutGameC.CurrentPlayerIT).PlayerInfoC.HaveKingInInventor)
             {
-                _selectedUnitC.UnitT = UnitTypes.King;
-                _selectedUnitC.LevelT = LevelTypes.First;
+                selectedUnitC.UnitT = UnitTypes.King;
+                selectedUnitC.LevelT = LevelTypes.First;
 
-                AboutGameC.CellClickT = CellClickTypes.SetUnit;
+                aboutGameC.CellClickT = CellClickTypes.SetUnit;
             }
 
-            _updateAllViewC.NeedUpdateView = true;
+            updateAllViewC.NeedUpdateView = true;
         }
     }
 }

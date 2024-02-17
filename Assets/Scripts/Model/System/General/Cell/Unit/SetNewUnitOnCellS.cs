@@ -11,15 +11,15 @@ namespace Chessy.Model.System
 
         internal void Set(in UnitTypes unitT, in PlayerTypes playerT, in byte forSettingCellIdx)
         {
-            _unitCs[forSettingCellIdx].Set((unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false));
+            unitCs[forSettingCellIdx].Set((unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false));
 
-            _hpUnitCs[forSettingCellIdx].Health = HpUnitValues.MAX;
+            unitHpCs[forSettingCellIdx].Health = HpUnitValues.MAX;
             _unitWaterCs[forSettingCellIdx].Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
 
             _extraTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None, 0);
             _effectsUnitCs[forSettingCellIdx].Set(0, 0, false);
 
-            if (_unitCs[forSettingCellIdx].UnitT == UnitTypes.Pawn)
+            if (unitCs[forSettingCellIdx].UnitT == UnitTypes.Pawn)
             {
                 PawnPeopleInfoC(playerT).AmountInGame++;
             }
@@ -35,12 +35,12 @@ namespace Chessy.Model.System
 
             else
             {
-                if (unitT.Is(UnitTypes.Tree)) AboutGameC.HaveTreeUnitInGame = true;
+                if (unitT.Is(UnitTypes.Tree)) aboutGameC.HaveTreeUnitInGame = true;
 
 
                 if (unitT.IsGod())
                 {
-                    GodInfoC(playerT).HaveGodInInventor = false;
+                    godInfoCs[(byte)playerT].HaveGodInInventor = false;
                 }
                 else if (unitT == UnitTypes.King)
                 {
@@ -52,7 +52,7 @@ namespace Chessy.Model.System
 
             for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
             {
-                if (_cellCs[currentCellIdx].IsBorder) continue;
+                if (CellC(currentCellIdx).IsBorder) continue;
 
                 if (!_unitWhereViewDataCs[currentCellIdx].HaveDataReference)
                 {

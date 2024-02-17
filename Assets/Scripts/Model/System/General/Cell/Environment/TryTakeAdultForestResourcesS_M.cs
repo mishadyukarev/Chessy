@@ -4,13 +4,13 @@
     {
         internal void TryTakeAdultForestResourcesM(in float taking, in byte cellIdx)
         {
-            if (_environmentCs[cellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
+            if (environmentCs[cellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
             {
-                _environmentCs[cellIdx].ResourcesRef(EnvironmentTypes.AdultForest) -= taking;
+                environmentCs[cellIdx].ResourcesRef(EnvironmentTypes.AdultForest) -= taking;
 
-                if (!_environmentCs[cellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
+                if (!environmentCs[cellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
-                    _environmentCs[cellIdx].Set(EnvironmentTypes.AdultForest, 0);
+                    environmentCs[cellIdx].Set(EnvironmentTypes.AdultForest, 0);
                     TrySeedNewYoungForestOnCell(cellIdx);
                     TryDestroyAllTrailsOnCell(cellIdx);
                 }

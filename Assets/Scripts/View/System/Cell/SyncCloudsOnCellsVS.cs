@@ -27,7 +27,7 @@ namespace Chessy.View.System
                 {
                     _needActive[CloudViewDataC(cellIdxCurrent).ViewIdxCellP] = true;
 
-                    foreach (var item in _idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
+                    foreach (var item in IdxsAroundCellC(cellIdxCurrent).IdxCellsAroundArray)
                     {
                         _needActive[CloudViewDataC(item).ViewIdxCellP] = true;
                     }

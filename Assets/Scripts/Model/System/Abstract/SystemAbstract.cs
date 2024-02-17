@@ -11,15 +11,14 @@ namespace Chessy.Model
 
         #region Cells
 
-        //protected readonly CellE[] cellEs = new CellE[IndexCellsValues.CELLS];
-        protected readonly CellC[] _cellCs = new CellC[IndexCellsValues.CELLS];
-        protected readonly PositionCellC[] _possitionCellCs = new PositionCellC[IndexCellsValues.CELLS];
-        protected readonly XyCellC[] _xyCellsCs = new XyCellC[IndexCellsValues.CELLS];
-        protected readonly IsStartedCellC[] _isStartedCellCs = new IsStartedCellC[IndexCellsValues.CELLS];
-        protected readonly CellsByDirectAroundC[] _cellsByDirectAroundC = new CellsByDirectAroundC[IndexCellsValues.CELLS];
-        protected readonly IdxsAroundCellC[] _idxsAroundCellCs = new IdxsAroundCellC[IndexCellsValues.CELLS];
+        protected readonly CellC[] cellCs = new CellC[IndexCellsValues.CELLS];
+        protected readonly PositionCellC[] positionCellCs = new PositionCellC[IndexCellsValues.CELLS];
+        protected readonly XyCellC[] xyCellsCs = new XyCellC[IndexCellsValues.CELLS];
+        protected readonly IsStartedCellC[] isStartedCellCs = new IsStartedCellC[IndexCellsValues.CELLS];
+        protected readonly CellsByDirectAroundC[] cellsByDirectAroundC = new CellsByDirectAroundC[IndexCellsValues.CELLS];
+        protected readonly IdxsAroundCellC[] idxsAroundCellCs = new IdxsAroundCellC[IndexCellsValues.CELLS];
 
-        protected readonly CellAroundC[,] _cellAroundCs = new CellAroundC[IndexCellsValues.CELLS, IndexCellsValues.CELLS];
+        protected readonly CellAroundC[,] cellAroundCs = new CellAroundC[IndexCellsValues.CELLS, IndexCellsValues.CELLS];
 
 
 
@@ -27,15 +26,15 @@ namespace Chessy.Model
 
         protected readonly UnitE[] _unitEs = new UnitE[IndexCellsValues.CELLS];
 
-        protected readonly UnitOnCellC[] _unitCs = new UnitOnCellC[IndexCellsValues.CELLS];
+        protected readonly UnitOnCellC[] unitCs = new UnitOnCellC[IndexCellsValues.CELLS];
         protected readonly AttackDamageUnitC[] _unitAttackDamageCs = new AttackDamageUnitC[IndexCellsValues.CELLS];
-        protected readonly HealthC[] _hpUnitCs = new HealthC[IndexCellsValues.CELLS];
+        protected readonly HealthC[] unitHpCs = new HealthC[IndexCellsValues.CELLS];
         protected readonly WaterAmountC[] _unitWaterCs = new WaterAmountC[IndexCellsValues.CELLS];
         protected readonly EffectsUnitC[] _effectsUnitCs = new EffectsUnitC[IndexCellsValues.CELLS];
-        internal protected readonly ShiftingObjectC[] _shiftingUnitCs = new ShiftingObjectC[IndexCellsValues.CELLS];
-        internal protected readonly MainToolWeaponUnitC[] _mainTWC = new MainToolWeaponUnitC[IndexCellsValues.CELLS];
-        internal protected readonly ExtraToolWeaponUnitC[] _extraTWC = new ExtraToolWeaponUnitC[IndexCellsValues.CELLS];
-        internal protected readonly HowManyDistanceNeedForShiftingUnitC[] _howManyDistanceNeedForShiftingUnitCs = new HowManyDistanceNeedForShiftingUnitC[IndexCellsValues.CELLS];
+        protected readonly ShiftingObjectC[] shiftingUnitCs = new ShiftingObjectC[IndexCellsValues.CELLS];
+        protected readonly MainToolWeaponUnitC[] _mainTWC = new MainToolWeaponUnitC[IndexCellsValues.CELLS];
+        protected readonly ExtraToolWeaponUnitC[] _extraTWC = new ExtraToolWeaponUnitC[IndexCellsValues.CELLS];
+        protected readonly HowManyDistanceNeedForShiftingUnitC[] _howManyDistanceNeedForShiftingUnitCs = new HowManyDistanceNeedForShiftingUnitC[IndexCellsValues.CELLS];
         protected readonly WhereUnitCanAttackToEnemyC[] _whereSimpleAttackCs = new WhereUnitCanAttackToEnemyC[IndexCellsValues.CELLS];
         protected readonly WhereUnitCanAttackToEnemyC[] _whereUniqueAttackCs = new WhereUnitCanAttackToEnemyC[IndexCellsValues.CELLS];
         protected readonly bool[][] _whereSimple = new bool[IndexCellsValues.CELLS][];
@@ -54,103 +53,107 @@ namespace Chessy.Model
         #endregion
 
 
-        protected readonly BuildingOnCellC[] _buildingCs = new BuildingOnCellC[IndexCellsValues.CELLS];
-        protected readonly BuildingExtractionOnCellC[] _extractionBuildingCs = new BuildingExtractionOnCellC[IndexCellsValues.CELLS];
-        protected readonly VisibleToOtherPlayerOrNotC[] _visibleBuildingCs = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
+        protected readonly BuildingOnCellC[] buildingCs = new BuildingOnCellC[IndexCellsValues.CELLS];
+        protected readonly BuildingExtractionOnCellC[] extractionBuildingCs = new BuildingExtractionOnCellC[IndexCellsValues.CELLS];
+        protected readonly VisibleToOtherPlayerOrNotC[] visibleBuildingCs = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
 
-        protected readonly EnvironmentC[] _environmentCs = new EnvironmentC[IndexCellsValues.CELLS];
+        protected readonly EnvironmentC[] environmentCs = new EnvironmentC[IndexCellsValues.CELLS];
 
-        protected readonly CloudC[] _cloudCs = new CloudC[IndexCellsValues.CELLS];
-        protected readonly WhereViewIdxCellC[] _cloudWhereViewDataCs = new WhereViewIdxCellC[IndexCellsValues.CELLS];
-        protected readonly ShiftingObjectC[] _shiftCloudCs = new ShiftingObjectC[IndexCellsValues.CELLS];
+        protected readonly CloudC[] cloudCs = new CloudC[IndexCellsValues.CELLS];
+        protected readonly WhereViewIdxCellC[] cloudWhereViewDataCs = new WhereViewIdxCellC[IndexCellsValues.CELLS];
+        protected readonly ShiftingObjectC[] shiftCloudCs = new ShiftingObjectC[IndexCellsValues.CELLS];
 
-        protected readonly RiverC[] _riverCs = new RiverC[IndexCellsValues.CELLS];
-        protected readonly HaveRiverAroundCellC[] _haveRiverAroundCellCs = new HaveRiverAroundCellC[IndexCellsValues.CELLS];
+        protected readonly RiverC[] riverCs = new RiverC[IndexCellsValues.CELLS];
+        protected readonly HaveRiverAroundCellC[] haveRiverAroundCellCs = new HaveRiverAroundCellC[IndexCellsValues.CELLS];
 
-        protected readonly FireC[] _fireCs = new FireC[IndexCellsValues.CELLS];
+        protected readonly FireC[] fireCs = new FireC[IndexCellsValues.CELLS];
 
-        protected readonly HealthTrailC[] _hpTrailCs = new HealthTrailC[IndexCellsValues.CELLS];
-        protected readonly VisibleToOtherPlayerOrNotC[] _visibleTrailCs = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
+        protected readonly TrailsHealthOnCellC[] hpTrailCs = new TrailsHealthOnCellC[IndexCellsValues.CELLS];
+        protected readonly VisibleToOtherPlayerOrNotC[] visibleTrailCs = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
 
         #endregion
 
 
         #region Else
 
-        protected readonly CommonInfoAboutGameC AboutGameC;
-        protected readonly InputC _inputC;
-        protected readonly BookC _bookC;
-        protected readonly SelectedBuildingsInTownC _selectedBuildingsInTownC;
-        protected readonly SelectedToolWeaponC _selectedToolWeaponC;
-        protected readonly SettingsC _settingsC;
-        protected readonly ShopC _shopC;
-        protected readonly IndexedCellsC IndexesCellsC;
-        protected readonly RpcPoolC _rpcC;
-        protected readonly DataFromViewC _dataFromViewC;
-        protected readonly MistakeC _mistakeC;
-        protected readonly UpdateAllViewC _updateAllViewC;
-        protected readonly ZonesInfoC _zonesInfoC;
-        protected readonly SelectedUnitC _selectedUnitC;
-        protected readonly FromResourcesC _fromResourcesC;
+        // Info if player
+        protected readonly PlayerInfoE[] playerInfoEs = new PlayerInfoE[(byte)PlayerTypes.End];
+        protected readonly PlayerInfoC[] playerInfoCs = new PlayerInfoC[(byte)PlayerTypes.End];
+        protected readonly GodInfoC[] godInfoCs = new GodInfoC[(byte)PlayerTypes.End];
+        protected readonly PawnPeopleInfoC[] pawnPeopleInfoCs = new PawnPeopleInfoC[(byte)PlayerTypes.End];
+        protected readonly BuildingsInTownInfoC[] buildingsInTownInfoCs = new BuildingsInTownInfoC[(byte)PlayerTypes.End];
+        protected readonly ResourcesInInventoryC[] resourcesInInventoryCs = new ResourcesInInventoryC[(byte)PlayerTypes.End];
+        protected readonly HowManyToolWeaponsInInventoryC[] howManyToolWeaponsInInventoryCs = new HowManyToolWeaponsInInventoryC[(byte)PlayerTypes.End];
 
-        protected readonly WeatherE _weatherE;
-        protected readonly SunC SunC;
-        protected readonly WindC WindC;
+        // Game info
+        protected readonly CommonInfoAboutGameC aboutGameC;
+        protected readonly InputC inputC;
+        protected readonly BookC bookC;
+        protected readonly SelectedBuildingsInTownC selectedBuildingsInTownC;
+        protected readonly SelectedToolWeaponC selectedToolWeaponC;
+        protected readonly SettingsC settingsC;
+        protected readonly ShopC shopC;
+        protected readonly IndexedCellsC indexesCellsC;
+        protected readonly RpcPoolC rpcC;
+        protected readonly DataFromViewC dataFromViewC;
+        protected readonly MistakeC mistakeC;
+        protected readonly UpdateAllViewC updateAllViewC;
+        protected readonly ZonesInfoC zonesInfoC;
+        protected readonly SelectedUnitC selectedUnitC;
+        protected readonly FromResourcesC fromResourcesC;
 
-        protected readonly PlayerInfoE[] _playerInfoEs = new PlayerInfoE[(byte)PlayerTypes.End];
-        protected readonly PlayerInfoC[] _playerInfoCs = new PlayerInfoC[(byte)PlayerTypes.End];
-        protected readonly GodInfoC[] _godInfoCs = new GodInfoC[(byte)PlayerTypes.End];
-        protected readonly PawnPeopleInfoC[] _pawnPeopleInfoCs = new PawnPeopleInfoC[(byte)PlayerTypes.End];
-        protected readonly BuildingsInTownInfoC[] _buildingsInTownInfoCs = new BuildingsInTownInfoC[(byte)PlayerTypes.End];
-        protected readonly ResourcesInInventoryC[] _resourcesInInventoryCs = new ResourcesInInventoryC[(byte)PlayerTypes.End];
-        protected readonly HowManyToolWeaponsInInventoryC[] _howManyToolWeaponsInInventoryCs = new HowManyToolWeaponsInInventoryC[(byte)PlayerTypes.End];
+        // Weather
+        protected readonly SunC sunC;
+        protected readonly WindC windC;
 
         #endregion
 
 
         #region
 
-        //public CellC CellC(in byte cellIdx) => _cellCs[cellIdx];
-        //public XyCellC XyCellC(in byte cellIdx) => _xyCellsCs[cellIdx];
-        //public IsStartedCellC IsStartedCellC(in byte cellIdx) => _isStartedCellCs[cellIdx];
-        //public IdxsAroundCellC IdxsAroundCellC(in byte cellIdx) => _idxsAroundCellCs[cellIdx];
+        protected CellC CellC(in byte cellIdx) => cellCs[cellIdx];
+        //protected PositionCellC PositionCellC(in byte cellIdx) => _positionCellCs[cellIdx];
+        protected XyCellC XyCellC(in byte cellIdx) => xyCellsCs[cellIdx];
+        //protected IsStartedCellC IsStartedCellC(in byte cellIdx) => isStartedCellCs[cellIdx];
+        protected IdxsAroundCellC IdxsAroundCellC(in byte cellIdx) => idxsAroundCellCs[cellIdx];
+        protected CellsByDirectAroundC CellsByDirectAroundC(in byte cellIdx) => cellsByDirectAroundC[cellIdx];
+        //public CellAroundC CellAroundC(in byte cellIdx) => _cellAroundCs[cellIdx];
 
-        public UnitOnCellC UnitC(in byte cellIdx) => _unitCs[cellIdx];
-        public HealthC UnitHpC(in byte cellIdx) => _hpUnitCs[cellIdx];
-        public WhereViewIdxCellC UnitViewDataC(in byte cellIdx) => _unitWhereViewDataCs[cellIdx];
-        public MainToolWeaponUnitC UnitMainTWC(in byte cellIdx) => _mainTWC[cellIdx];
-        public ExtraToolWeaponUnitC UnitExtraTWC(in byte cellIdx) => _extraTWC[cellIdx];
-        public AttackDamageUnitC UnitAttackC(in byte cellIdx) => _unitAttackDamageCs[cellIdx];
-        public ButtonsAbilitiesUnitC UnitButtonsC(in byte cellIdx) => _buttonsAbilitiesUnitCs[cellIdx];
-        public VisibleToOtherPlayerOrNotC UnitVisibleC(in byte cellIdx) => _unitVisibleCs[cellIdx];
-        public ShiftingObjectC UnitShiftC(in byte cellIdx) => _shiftingUnitCs[cellIdx];
-        public WaterAmountC UnitWaterC(in byte cellIdx) => _unitWaterCs[cellIdx];
-        public EffectsUnitC UnitEffectC(in byte cellIdx) => _effectsUnitCs[cellIdx];
-        public CooldownAbilitiesInSecondsC UnitCooldownC(in byte cellIdx) => _cooldownAbilityCs[cellIdx];
+        protected UnitOnCellC UnitC(in byte cellIdx) => unitCs[cellIdx];
+        protected WhereViewIdxCellC UnitViewDataC(in byte cellIdx) => _unitWhereViewDataCs[cellIdx];
+        protected MainToolWeaponUnitC UnitMainTWC(in byte cellIdx) => _mainTWC[cellIdx];
+        protected ExtraToolWeaponUnitC UnitExtraTWC(in byte cellIdx) => _extraTWC[cellIdx];
+        protected AttackDamageUnitC UnitAttackC(in byte cellIdx) => _unitAttackDamageCs[cellIdx];
+        protected ButtonsAbilitiesUnitC UnitButtonsC(in byte cellIdx) => _buttonsAbilitiesUnitCs[cellIdx];
+        protected ShiftingObjectC UnitShiftC(in byte cellIdx) => shiftingUnitCs[cellIdx];
+        protected WaterAmountC UnitWaterC(in byte cellIdx) => _unitWaterCs[cellIdx];
+        //protected EffectsUnitC UnitEffectC(in byte cellIdx) => _effectsUnitCs[cellIdx];
+        //protected CooldownAbilitiesInSecondsC UnitCooldownC(in byte cellIdx) => _cooldownAbilityCs[cellIdx];
+        protected WhereUnitCanShiftC WhereUnitCanShiftC(in byte cellIdx) => _whereUnitCanShiftCs[cellIdx];
 
-        public BuildingOnCellC BuildingC(in byte cellIdx) => _buildingCs[cellIdx];
 
-        public EnvironmentC EnvironmentC(in byte cellIdx) => _environmentCs[cellIdx];
+        protected BuildingOnCellC BuildingC(in byte cellIdx) => buildingCs[cellIdx];
 
-        public CloudC CloudC(in byte cellIdx) => _cloudCs[cellIdx];
-        public WhereViewIdxCellC CloudViewDataC(in byte cellIdx) => _cloudWhereViewDataCs[cellIdx];
-        public ShiftingObjectC CloudShiftC(in byte cellIdx) => _shiftCloudCs[cellIdx];
+        protected EnvironmentC EnvironmentC(in byte cellIdx) => environmentCs[cellIdx];
 
-        public HealthTrailC TrailHealthC(in byte cellIdx) => _hpTrailCs[cellIdx];
-        public VisibleToOtherPlayerOrNotC TrailVisibleC(in byte cellIdx) => _visibleTrailCs[cellIdx];
+        protected CloudC CloudC(in byte cellIdx) => cloudCs[cellIdx];
+        protected WhereViewIdxCellC CloudViewDataC(in byte cellIdx) => cloudWhereViewDataCs[cellIdx];
+        protected ShiftingObjectC CloudShiftC(in byte cellIdx) => shiftCloudCs[cellIdx];
 
-        public FireC FireC(in byte cellIdx) => _fireCs[cellIdx];
+
+        protected FireC FireC(in byte cellIdx) => fireCs[cellIdx];
+        protected RiverC RiverC(in byte cellIdx) => riverCs[cellIdx];
 
         #endregion
 
 
-        public PlayerInfoE PlayerInfoE(in PlayerTypes player) => _playerInfoEs[(byte)player];
-        public PlayerInfoC PlayerInfoC(in PlayerTypes playerT) => _playerInfoCs[(byte)playerT];
-        public GodInfoC GodInfoC(in PlayerTypes playerT) => _godInfoCs[(byte)playerT];
-        public PawnPeopleInfoC PawnPeopleInfoC(in PlayerTypes playerT) => _pawnPeopleInfoCs[(byte)playerT];
-        public BuildingsInTownInfoC BuildingsInTownInfoC(in PlayerTypes playerT) => _buildingsInTownInfoCs[(byte)playerT];
-        public ResourcesInInventoryC ResourcesInInventoryC(in PlayerTypes playerT) => _resourcesInInventoryCs[(byte)playerT];
-        public HowManyToolWeaponsInInventoryC ToolWeaponsInInventoryC(in PlayerTypes playerT) => _howManyToolWeaponsInInventoryCs[(byte)playerT];
+        protected PlayerInfoE PlayerInfoE(in PlayerTypes player) => playerInfoEs[(byte)player];
+        protected PlayerInfoC PlayerInfoC(in PlayerTypes playerT) => playerInfoCs[(byte)playerT];
+        //protected GodInfoC GodInfoC(in PlayerTypes playerT) => godInfoCs[(byte)playerT];
+        protected PawnPeopleInfoC PawnPeopleInfoC(in PlayerTypes playerT) => pawnPeopleInfoCs[(byte)playerT];
+        //protected BuildingsInTownInfoC BuildingsInTownInfoC(in PlayerTypes playerT) => _buildingsInTownInfoCs[(byte)playerT];
+        protected ResourcesInInventoryC ResourcesInInventoryC(in PlayerTypes playerT) => resourcesInInventoryCs[(byte)playerT];
+        protected HowManyToolWeaponsInInventoryC ToolWeaponsInInventoryC(in PlayerTypes playerT) => howManyToolWeaponsInInventoryCs[(byte)playerT];
 
 
         protected SystemAbstract(EntitiesModel eM)
@@ -163,7 +166,7 @@ namespace Chessy.Model
 
                 for (byte cellIdx_1 = 0; cellIdx_1 < IndexCellsValues.CELLS; cellIdx_1++)
                 {
-                    _cellAroundCs[cellIdx_0, cellIdx_1] = cellEs.AroundCellE(cellIdx_1).CellAroundC;
+                    cellAroundCs[cellIdx_0, cellIdx_1] = cellEs.AroundCellE(cellIdx_1).CellAroundC;
                 }
 
                 var cellE = cellEs.CellE;
@@ -176,20 +179,20 @@ namespace Chessy.Model
                 var environmentE = cellEs.EnvironmentE;
 
 
-                _cellCs[cellIdx_0] = cellE.CellC;
-                _possitionCellCs[cellIdx_0] = cellE.PositionC;
-                _xyCellsCs[cellIdx_0] = cellE.XyCellC;
-                _isStartedCellCs[cellIdx_0] = cellE.IsStartedCellC;
-                _cellsByDirectAroundC[cellIdx_0] = cellE.CellsByDirectAroundC;
-                _idxsAroundCellCs[cellIdx_0] = cellE.IdxsAroundCellC;
+                cellCs[cellIdx_0] = cellE.CellC;
+                positionCellCs[cellIdx_0] = cellE.PositionC;
+                xyCellsCs[cellIdx_0] = cellE.XyCellC;
+                isStartedCellCs[cellIdx_0] = cellE.IsStartedCellC;
+                cellsByDirectAroundC[cellIdx_0] = cellE.CellsByDirectAroundC;
+                idxsAroundCellCs[cellIdx_0] = cellE.IdxsAroundCellC;
 
                 _unitEs[cellIdx_0] = unitE;
-                _unitCs[cellIdx_0] = unitE.MainC;
+                unitCs[cellIdx_0] = unitE.MainC;
                 _unitAttackDamageCs[cellIdx_0] = unitE.AttackDamageC;
-                _hpUnitCs[cellIdx_0] = unitE.HealthC;
+                unitHpCs[cellIdx_0] = unitE.HealthC;
                 _unitWaterCs[cellIdx_0] = unitE.WaterC;
                 _effectsUnitCs[cellIdx_0] = unitE.EffectsC;
-                _shiftingUnitCs[cellIdx_0] = unitE.ShiftingInfoForUnitC;
+                shiftingUnitCs[cellIdx_0] = unitE.ShiftingInfoForUnitC;
                 _mainTWC[cellIdx_0] = unitE.MainToolWeaponC;
                 _extraTWC[cellIdx_0] = unitE.ExtraToolWeaponC;
                 _howManyDistanceNeedForShiftingUnitCs[cellIdx_0] = unitE.HowManyDistanceNeedForShiftingUnitC;
@@ -208,46 +211,46 @@ namespace Chessy.Model
                 _extractionResourcesWithUnitCs[cellIdx_0] = unitE.ExtractionResourcesC;
                 _whereUnitCanFireAdultForestCs[cellIdx_0] = unitE.WhereUnitCanFireAdultForestC;
 
-                _buildingCs[cellIdx_0] = buildingE.BuildingMainC;
-                _extractionBuildingCs[cellIdx_0] = buildingE.ExtractionC;
-                _visibleBuildingCs[cellIdx_0] = buildingE.VisibleToOtherPlayerC;
+                buildingCs[cellIdx_0] = buildingE.BuildingMainC;
+                extractionBuildingCs[cellIdx_0] = buildingE.ExtractionC;
+                visibleBuildingCs[cellIdx_0] = buildingE.VisibleToOtherPlayerC;
 
-                _environmentCs[cellIdx_0] = environmentE.EnvironmentC;
+                environmentCs[cellIdx_0] = environmentE.EnvironmentC;
 
-                _cloudCs[cellIdx_0] = cloudE.CloudC;
-                _cloudWhereViewDataCs[cellIdx_0] = cloudE.WhereSkinAndWhereDataInfoC;
-                _shiftCloudCs[cellIdx_0] = cloudE.ShiftingC;
+                cloudCs[cellIdx_0] = cloudE.CloudC;
+                cloudWhereViewDataCs[cellIdx_0] = cloudE.WhereSkinAndWhereDataInfoC;
+                shiftCloudCs[cellIdx_0] = cloudE.ShiftingC;
 
-                _riverCs[cellIdx_0] = riverE.RiverC;
-                _haveRiverAroundCellCs[cellIdx_0] = riverE.HaveRiverC;
+                riverCs[cellIdx_0] = riverE.RiverC;
+                haveRiverAroundCellCs[cellIdx_0] = riverE.HaveRiverC;
 
-                _fireCs[cellIdx_0] = effectE.FireC;
+                fireCs[cellIdx_0] = effectE.FireC;
 
-                _hpTrailCs[cellIdx_0] = trailE.HealthC;
-                _visibleTrailCs[cellIdx_0] = trailE.VisibleC;
+                hpTrailCs[cellIdx_0] = trailE.HealthC;
+                visibleTrailCs[cellIdx_0] = trailE.VisibleC;
             }
 
             var commonInfoE = eM.CommonGameE;
 
-            AboutGameC = commonInfoE.CommonInfoAboutGameC;
-            _inputC = commonInfoE.InputC;
-            _bookC = commonInfoE.BookC;
-            _selectedBuildingsInTownC = commonInfoE.SelectedBuildingsC;
-            _selectedToolWeaponC = commonInfoE.SelectedToolWeaponC;
-            _settingsC = commonInfoE.SettingsC;
-            _shopC = commonInfoE.ShopC;
-            IndexesCellsC = commonInfoE.CellsC;
-            _rpcC = commonInfoE.RpcC;
-            _dataFromViewC = commonInfoE.DataFromViewC;
-            _mistakeC = commonInfoE.MistakeC;
-            _updateAllViewC = commonInfoE.UpdateAllViewC;
-            _zonesInfoC = commonInfoE.ZoneInfoC;
-            _selectedUnitC = commonInfoE.SelectedUnitC;
-            _fromResourcesC = commonInfoE.Resources;
+            aboutGameC = commonInfoE.CommonInfoAboutGameC;
+            inputC = commonInfoE.InputC;
+            bookC = commonInfoE.BookC;
+            selectedBuildingsInTownC = commonInfoE.SelectedBuildingsC;
+            selectedToolWeaponC = commonInfoE.SelectedToolWeaponC;
+            settingsC = commonInfoE.SettingsC;
+            shopC = commonInfoE.ShopC;
+            indexesCellsC = commonInfoE.CellsC;
+            rpcC = commonInfoE.RpcC;
+            dataFromViewC = commonInfoE.DataFromViewC;
+            mistakeC = commonInfoE.MistakeC;
+            updateAllViewC = commonInfoE.UpdateAllViewC;
+            zonesInfoC = commonInfoE.ZoneInfoC;
+            selectedUnitC = commonInfoE.SelectedUnitC;
+            fromResourcesC = commonInfoE.Resources;
 
-            _weatherE = eM.WeatherE;
-            SunC = _weatherE.SunC;
-            WindC = _weatherE.WindC;
+            var weatherE = eM.WeatherE;
+            sunC = weatherE.SunC;
+            windC = weatherE.WindC;
 
             for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
             {
@@ -255,13 +258,13 @@ namespace Chessy.Model
 
                 var playerInfoE = eM.PlayerInfoE(playerTByte);
 
-                _playerInfoCs[playerTByte] = playerInfoE.PlayerInfoC;
-                _playerInfoEs[playerTByte] = playerInfoE;
-                _godInfoCs[playerTByte] = playerInfoE.GodInfoC;
-                _pawnPeopleInfoCs[playerTByte] = playerInfoE.PawnInfoC;
-                _buildingsInTownInfoCs[playerTByte] = playerInfoE.BuildingsInTownInfoC;
-                _resourcesInInventoryCs[playerTByte] = playerInfoE.ResourcesInInventoryC;
-                _howManyToolWeaponsInInventoryCs[playerTByte] = playerInfoE.HowManyToolWeaponsInInventoryC;
+                playerInfoCs[playerTByte] = playerInfoE.PlayerInfoC;
+                playerInfoEs[playerTByte] = playerInfoE;
+                godInfoCs[playerTByte] = playerInfoE.GodInfoC;
+                pawnPeopleInfoCs[playerTByte] = playerInfoE.PawnInfoC;
+                buildingsInTownInfoCs[playerTByte] = playerInfoE.BuildingsInTownInfoC;
+                resourcesInInventoryCs[playerTByte] = playerInfoE.ResourcesInInventoryC;
+                howManyToolWeaponsInInventoryCs[playerTByte] = playerInfoE.HowManyToolWeaponsInInventoryC;
             }
         }
     }

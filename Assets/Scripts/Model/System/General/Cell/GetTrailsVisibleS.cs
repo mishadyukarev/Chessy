@@ -10,25 +10,25 @@ namespace Chessy.Model.System
             {
                 for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
                 {
-                    _visibleTrailCs[cellIdxCurrent].Set(playerT, false);
+                    visibleTrailCs[cellIdxCurrent].Set(playerT, false);
                 }
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (!_cellCs[cellIdxCurrent].IsBorder)
+                if (!CellC(cellIdxCurrent).IsBorder)
                 {
-                    if (_hpTrailCs[cellIdxCurrent].HaveAnyTrail)
+                    if (hpTrailCs[cellIdxCurrent].HaveAnyTrail)
                     {
-                        if (_unitCs[cellIdxCurrent].HaveUnit)
-                            _visibleTrailCs[cellIdxCurrent].Set(_unitCs[cellIdxCurrent].PlayerT, true);
+                        if (unitCs[cellIdxCurrent].HaveUnit)
+                            visibleTrailCs[cellIdxCurrent].Set(unitCs[cellIdxCurrent].PlayerT, true);
 
 
-                        foreach (var cellIdx1 in _idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
+                        foreach (var cellIdx1 in IdxsAroundCellC(cellIdxCurrent).IdxCellsAroundArray)
                         {
-                            if (_unitCs[cellIdx1].HaveUnit && !_unitCs[cellIdxCurrent].UnitT.IsAnimal())
+                            if (unitCs[cellIdx1].HaveUnit && !unitCs[cellIdxCurrent].UnitT.IsAnimal())
                             {
-                                _visibleTrailCs[cellIdxCurrent].Set(_unitCs[cellIdx1].PlayerT, true);
+                                visibleTrailCs[cellIdxCurrent].Set(unitCs[cellIdx1].PlayerT, true);
                             }
                         }
                     }

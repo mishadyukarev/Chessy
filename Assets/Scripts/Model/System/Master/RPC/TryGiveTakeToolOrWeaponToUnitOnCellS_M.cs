@@ -11,7 +11,7 @@ namespace Chessy.Model.System
         {
             var whoseMove = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (_unitCs[cellIdxForDoing].UnitT == UnitTypes.Pawn)
+            if (unitCs[cellIdxForDoing].UnitT == UnitTypes.Pawn)
             {
                 //if (_e.EnergyUnitC(cellIdxForDoing).Energy >= StepValues.FOR_GIVE_TAKE_TOOLWEAPON)
                 //{
@@ -19,7 +19,7 @@ namespace Chessy.Model.System
                 {
                     if (_extraTWC[cellIdxForDoing].HaveToolWeapon)
                     {
-                        ToolWeaponsInInventoryC(_unitCs[cellIdxForDoing].PlayerT).Add(_extraTWC[cellIdxForDoing].ToolWeaponT, _extraTWC[cellIdxForDoing].LevelT);
+                        ToolWeaponsInInventoryC(unitCs[cellIdxForDoing].PlayerT).Add(_extraTWC[cellIdxForDoing].ToolWeaponT, _extraTWC[cellIdxForDoing].LevelT);
                         _extraTWC[cellIdxForDoing].ToolWeaponT = ToolsWeaponsWarriorTypes.None;
                     }
                     else
@@ -125,7 +125,7 @@ namespace Chessy.Model.System
 
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
-                                    if (AboutGameC.LessonT == LessonTypes.GiveIronAxe)
+                                    if (aboutGameC.LessonT == LessonTypes.GiveIronAxe)
                                     {
                                         SetNextLesson();
                                     }
@@ -157,11 +157,11 @@ namespace Chessy.Model.System
 
                 else
                 {
-                    var ownUnit_0 = _unitCs[cellIdxForDoing].PlayerT;
+                    var ownUnit_0 = unitCs[cellIdxForDoing].PlayerT;
 
                     if (_mainTWC[cellIdxForDoing].ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
                     {
-                        ToolWeaponsInInventoryC(_unitCs[cellIdxForDoing].PlayerT).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
+                        ToolWeaponsInInventoryC(unitCs[cellIdxForDoing].PlayerT).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
                         _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
                     }
 
@@ -219,7 +219,7 @@ namespace Chessy.Model.System
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
 
-                                    if (AboutGameC.LessonT == LessonTypes.GiveTakePickPawn)
+                                    if (aboutGameC.LessonT == LessonTypes.GiveTakePickPawn)
                                     {
 
                                         SetNextLesson();

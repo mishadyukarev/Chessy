@@ -9,18 +9,18 @@ namespace Chessy.Model.System
         {
             var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (_isStartedCellCs[cellIdx].IsStartedCellForPlayer(whoDoing) && !_unitCs[cellIdx].HaveUnit)
+            if (isStartedCellCs[cellIdx].IsStartedCellForPlayer(whoDoing) && !unitCs[cellIdx].HaveUnit)
             {
                 if (unitT == UnitTypes.King)
                 {
-                    if (AboutGameC.LessonT == LessonTypes.SettingKing)
+                    if (aboutGameC.LessonT == LessonTypes.SettingKing)
                     {
                         SetNextLesson();
                     }
                 }
                 else if (unitT.IsGod())
                 {
-                    if (AboutGameC.LessonT == LessonTypes.SettingGod)
+                    if (aboutGameC.LessonT == LessonTypes.SettingGod)
                     {
                         SetNextLesson();
                     }

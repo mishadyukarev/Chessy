@@ -149,11 +149,11 @@ namespace Chessy.View.System
                 }
             }
 
-            if (_updateAllViewC.NeedUpdateView)
+            if (updateAllViewC.NeedUpdateView)
             {
                 _updates.ForEach((Action action) => action.Invoke());
 
-                _updateAllViewC.NeedUpdateView = false;
+                updateAllViewC.NeedUpdateView = false;
             }
 
             _shiftUnitVS.Sync();

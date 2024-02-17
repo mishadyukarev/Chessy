@@ -1,13 +1,18 @@
-﻿using Photon.Realtime;
+﻿using Chessy.Model.Entity;
+using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    sealed partial class UnitAbilitiesSystems : SystemModelAbstract
+    sealed class ChangeCornerArcherS : SystemModelAbstract
     {
+        public ChangeCornerArcherS(in SystemsModel sM, EntitiesModel eM) : base(sM, eM)
+        {
+        }
+
         internal void TryChangeCornerArcher(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            _unitCs[cell_0].ToggleSide();
+            unitCs[cell_0].ToggleSide();
 
-            _s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickArcher);
+            s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickArcher);
         }
     }
 }

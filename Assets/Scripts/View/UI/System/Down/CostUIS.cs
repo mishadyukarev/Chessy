@@ -16,8 +16,8 @@ namespace Chessy.View.UI.System
         internal override void Sync()
         {
             //_costUIE.StepsTextC.TextUI.text = StepValues.FOR_GIVE_TAKE_TOOLWEAPON.ToString();
-            _costUIE.WoodTextC.TextUI.text = ((int)(100 * CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(_selectedToolWeaponC.ToolWeaponT, _selectedToolWeaponC.LevelT, ResourceTypes.Wood))).ToString();
-            _costUIE.IronTextC.TextUI.text = CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(_selectedToolWeaponC.ToolWeaponT, _selectedToolWeaponC.LevelT, ResourceTypes.Iron).ToString();
+            _costUIE.WoodTextC.TextUI.text = ((int)(100 * CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(selectedToolWeaponC.ToolWeaponT, selectedToolWeaponC.LevelT, ResourceTypes.Wood))).ToString();
+            _costUIE.IronTextC.TextUI.text = CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(selectedToolWeaponC.ToolWeaponT, selectedToolWeaponC.LevelT, ResourceTypes.Iron).ToString();
         }
     }
 }

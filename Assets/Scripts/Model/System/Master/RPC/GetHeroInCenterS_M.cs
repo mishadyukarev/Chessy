@@ -9,7 +9,7 @@ namespace Chessy.Model.System
         {
             var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (AboutGameC.LessonT == LessonTypes.PickingGod)
+            if (aboutGameC.LessonT == LessonTypes.PickingGod)
             {
                 SetNextLesson();
             }

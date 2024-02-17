@@ -5,7 +5,7 @@ namespace Chessy.Model.Entity
     public sealed class TrailE
     {
         public readonly VisibleToOtherPlayerOrNotC VisibleC = new(default);
-        public readonly HealthTrailC HealthC = new(new float[(byte)DirectTypes.End]);
+        public readonly TrailsHealthOnCellC HealthC = new(new float[(byte)DirectTypes.End]);
 
         internal void Dispose()
         {

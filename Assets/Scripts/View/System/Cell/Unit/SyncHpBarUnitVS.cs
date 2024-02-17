@@ -37,11 +37,11 @@ namespace Chessy.View.System
                 _needSetColorToBar[cellIdxCurrent] = _whiteColor;
             }
 
-            _currentPlayerT = AboutGameC.CurrentPlayerIType;
+            _currentPlayerT = aboutGameC.CurrentPlayerIType;
 
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (_cellCs[currentCellIdx_0].IsBorder) continue;
+                if (CellC(currentCellIdx_0).IsBorder) continue;
 
 
                 var unitViewData_0 = UnitViewDataC(currentCellIdx_0);
@@ -50,7 +50,7 @@ namespace Chessy.View.System
                 {
                     var dataIdxCell_1 = unitViewData_0.DataIdxCellP;
 
-                    if (UnitVisibleC(dataIdxCell_1).IsVisible(_currentPlayerT))
+                    if (_unitVisibleCs[dataIdxCell_1].IsVisible(_currentPlayerT))
                     {
                         var unitC_1 = UnitC(dataIdxCell_1);
 
@@ -58,7 +58,7 @@ namespace Chessy.View.System
                         {
                             _needActiveBar[currentCellIdx_0] = true;
 
-                            var xCordinate = (float)(UnitHpC(dataIdxCell_1).HealthP / HpUnitValues.MAX);
+                            var xCordinate = (float)(unitHpCs[dataIdxCell_1].HealthP / HpUnitValues.MAX);
                             _hpBarSRs[currentCellIdx_0].transform.localScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
                             _needSetColorToBar[currentCellIdx_0] = unitC_1.PlayerType == PlayerTypes.First ? Color.blue : Color.red;

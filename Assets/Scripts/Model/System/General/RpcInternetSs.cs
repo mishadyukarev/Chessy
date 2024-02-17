@@ -25,127 +25,127 @@ namespace Chessy.Model.System
             {
                 switch (nameMethod)
                 {
-                    case nameof(_s.TryExecuteDoneReadyM):
-                        _s.TryExecuteDoneReadyM(sender);
+                    case nameof(s.TryExecuteDoneReadyM):
+                        s.TryExecuteDoneReadyM(sender);
                         break;
 
-                    case nameof(_s.TryExecuteReadyForOnlineM):
-                        _s.TryExecuteReadyForOnlineM(sender);
+                    case nameof(s.TryExecuteReadyForOnlineM):
+                        s.TryExecuteReadyForOnlineM(sender);
                         break;
 
-                    case nameof(_s.TryShiftUnitOntoOtherCellM):
-                        _s.TryShiftUnitOntoOtherCellM((byte)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], sender);
+                    case nameof(s.TryShiftUnitOntoOtherCellM):
+                        s.TryShiftUnitOntoOtherCellM((byte)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.TryAttackUnitOnCellM):
-                        _s.TryAttackUnitOnCellM((byte)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], sender);
+                    case nameof(s.TryAttackUnitOnCellM):
+                        s.TryAttackUnitOnCellM((byte)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.TrySetConditionUnitOnCellM):
-                        _s.TrySetConditionUnitOnCellM((ConditionUnitTypes)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], sender);
+                    case nameof(s.TrySetConditionUnitOnCellM):
+                        s.TrySetConditionUnitOnCellM((ConditionUnitTypes)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.TrySetUnitOnCellM):
+                    case nameof(s.TrySetUnitOnCellM):
                         var cellIdx = (byte)objects[cellIdxCurrent++];
-                        _s.TrySetUnitOnCellM((UnitTypes)objects[cellIdxCurrent++], sender, cellIdx);
+                        s.TrySetUnitOnCellM((UnitTypes)objects[cellIdxCurrent++], sender, cellIdx);
                         break;
 
-                    case nameof(_s.GetHeroInCenterM):
-                        _s.GetHeroInCenterM((UnitTypes)objects[cellIdxCurrent++], sender);
+                    case nameof(s.GetHeroInCenterM):
+                        s.GetHeroInCenterM((UnitTypes)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.TryMeltInMelterBuildingM):
-                        _s.TryMeltInMelterBuildingM(sender);
+                    case nameof(s.TryMeltInMelterBuildingM):
+                        s.TryMeltInMelterBuildingM(sender);
                         break;
 
-                    case nameof(_s.TryGiveTakeToolOrWeaponToUnitOnCellM):
+                    case nameof(s.TryGiveTakeToolOrWeaponToUnitOnCellM):
                         var idxCell = (byte)objects[cellIdxCurrent++];
-                        _s.TryGiveTakeToolOrWeaponToUnitOnCellM((ToolsWeaponsWarriorTypes)objects[cellIdxCurrent++], (LevelTypes)objects[cellIdxCurrent++], idxCell, sender);
+                        s.TryGiveTakeToolOrWeaponToUnitOnCellM((ToolsWeaponsWarriorTypes)objects[cellIdxCurrent++], (LevelTypes)objects[cellIdxCurrent++], idxCell, sender);
                         break;
 
-                    case nameof(_s.TryBuyFromMarketBuildingM):
-                        _s.TryBuyFromMarketBuildingM((MarketBuyTypes)objects[cellIdxCurrent++], sender);
+                    case nameof(s.TryBuyFromMarketBuildingM):
+                        s.TryBuyFromMarketBuildingM((MarketBuyTypes)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.UnitSs.UnitAbilitiesSs.CircularAttackKingM):
-                        _s.UnitSs.UnitAbilitiesSs.CircularAttackKingM((byte)objects[cellIdxCurrent++], AbilityTypes.CircularAttack, sender);
+                    case nameof(s.unitSs.unitAbilitiesSs.CircularAttackKingM):
+                        s.unitSs.unitAbilitiesSs.CircularAttackKingM((byte)objects[cellIdxCurrent++], AbilityTypes.CircularAttack, sender);
                         break;
 
-                    case nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithSimplePawnM):
-                        _s.UnitSs.UnitAbilitiesSs.TryFireForestWithSimplePawnM((byte)objects[cellIdxCurrent++], sender);
+                    case nameof(s.unitSs.unitAbilitiesSs.TryFireForestWithSimplePawnM):
+                        s.unitSs.unitAbilitiesSs.TryFireForestWithSimplePawnM((byte)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.UnitSs.UnitAbilitiesSs.TryPutOutFireForestWithSimplePawnM):
-                        _s.UnitSs.UnitAbilitiesSs.TryPutOutFireForestWithSimplePawnM((byte)objects[cellIdxCurrent++], sender);
+                    case nameof(s.unitSs.unitAbilitiesSs.TryPutOutFireForestWithSimplePawnM):
+                        s.unitSs.unitAbilitiesSs.TryPutOutFireForestWithSimplePawnM((byte)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.TrySeedYoungForestOnCellWithPawnM):
-                        _s.TrySeedYoungForestOnCellWithPawnM(AbilityTypes.Seed, sender, (byte)objects[cellIdxCurrent++]);
+                    case nameof(s.TrySeedYoungForestOnCellWithPawnM):
+                        s.TrySeedYoungForestOnCellWithPawnM(AbilityTypes.Seed, sender, (byte)objects[cellIdxCurrent++]);
                         break;
 
-                    case nameof(_s.TryBuildFarmOnCellWithSimplePawnM):
-                        _s.TryBuildFarmOnCellWithSimplePawnM((byte)objects[cellIdxCurrent++], sender);
+                    case nameof(s.TryBuildFarmOnCellWithSimplePawnM):
+                        s.TryBuildFarmOnCellWithSimplePawnM((byte)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.UnitSs.TryDestroyBuildingWithSimplePawnM):
-                        _s.UnitSs.TryDestroyBuildingWithSimplePawnM((byte)objects[cellIdxCurrent++], sender);
+                    case nameof(s.unitSs.TryDestroyBuildingWithSimplePawnM):
+                        s.unitSs.TryDestroyBuildingWithSimplePawnM((byte)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithArcherM):
-                        _s.UnitSs.UnitAbilitiesSs.TryFireForestWithArcherM((byte)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], sender);
+                    case nameof(s.unitSs.unitAbilitiesSs.TryFireForestWithArcherM):
+                        s.unitSs.unitAbilitiesSs.TryFireForestWithArcherM((byte)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.UnitSs.UnitAbilitiesSs.TryGrowAdultForestWithElfemaleM):
-                        _s.UnitSs.UnitAbilitiesSs.TryGrowAdultForestWithElfemaleM((byte)objects[cellIdxCurrent++], AbilityTypes.GrowAdultForest, sender);
+                    case nameof(s.unitSs.unitAbilitiesSs.TryGrowAdultForestWithElfemaleM):
+                        s.unitSs.unitAbilitiesSs.TryGrowAdultForestWithElfemaleM((byte)objects[cellIdxCurrent++], AbilityTypes.GrowAdultForest, sender);
                         break;
 
-                    case nameof(_s.UnitSs.UnitAbilitiesSs.TryStunEnemyWithElfemaleM):
-                        _s.UnitSs.UnitAbilitiesSs.TryStunEnemyWithElfemaleM((byte)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], AbilityTypes.StunElfemale, sender);
+                    case nameof(s.unitSs.unitAbilitiesSs.stunElfemaleS_M.TryStunEnemyWithElfemaleM):
+                        s.unitSs.unitAbilitiesSs.stunElfemaleS_M.TryStunEnemyWithElfemaleM((byte)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], AbilityTypes.StunElfemale, sender);
                         break;
 
-                    case nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher):
-                        _s.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher((byte)objects[cellIdxCurrent++], AbilityTypes.ChangeCornerArcher, sender);
+                    case nameof(s.unitSs.unitAbilitiesSs.changeCornerArcherS.TryChangeCornerArcher):
+                        s.unitSs.unitAbilitiesSs.changeCornerArcherS.TryChangeCornerArcher((byte)objects[cellIdxCurrent++], AbilityTypes.ChangeCornerArcher, sender);
                         break;
 
-                    case nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeDirectWindWithSnowyM):
-                        _s.UnitSs.UnitAbilitiesSs.TryChangeDirectWindWithSnowyM((byte)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], AbilityTypes.ChangeDirectionWind, sender);
+                    case nameof(s.unitSs.unitAbilitiesSs.TryChangeDirectWindWithSnowyM):
+                        s.unitSs.unitAbilitiesSs.TryChangeDirectWindWithSnowyM((byte)objects[cellIdxCurrent++], (byte)objects[cellIdxCurrent++], AbilityTypes.ChangeDirectionWind, sender);
                         break;
 
-                    case nameof(_s.UnitSs.UnitAbilitiesSs.IncreaseWindWithRainyM):
-                        _s.UnitSs.UnitAbilitiesSs.IncreaseWindWithRainyM((byte)objects[cellIdxCurrent++], AbilityTypes.IncreaseWindSnowy, sender);
+                    case nameof(s.unitSs.unitAbilitiesSs.IncreaseWindWithRainyM):
+                        s.unitSs.unitAbilitiesSs.IncreaseWindWithRainyM((byte)objects[cellIdxCurrent++], AbilityTypes.IncreaseWindSnowy, sender);
                         break;
 
-                    case nameof(_s.UnitSs.UnitAbilitiesSs.DecreaseWindWithRainyM):
-                        _s.UnitSs.UnitAbilitiesSs.DecreaseWindWithRainyM((byte)objects[cellIdxCurrent++], AbilityTypes.DecreaseWindSnowy, sender);
+                    case nameof(s.unitSs.unitAbilitiesSs.DecreaseWindWithRainyM):
+                        s.unitSs.unitAbilitiesSs.DecreaseWindWithRainyM((byte)objects[cellIdxCurrent++], AbilityTypes.DecreaseWindSnowy, sender);
                         break;
 
-                    case nameof(_s.ExecuteSoundActionClip):
-                        _s.ExecuteSoundActionClip((ClipTypes)objects[cellIdxCurrent++]);
+                    case nameof(s.ExecuteSoundActionClip):
+                        s.ExecuteSoundActionClip((ClipTypes)objects[cellIdxCurrent++]);
                         break;
 
-                    case nameof(_s.ExecuteSoundActionAbility):
-                        _s.ExecuteSoundActionAbility((AbilityTypes)objects[cellIdxCurrent++]);
+                    case nameof(s.ExecuteSoundActionAbility):
+                        s.ExecuteSoundActionAbility((AbilityTypes)objects[cellIdxCurrent++]);
                         break;
 
-                    case nameof(_s.ExecuteAnimationClip):
-                        _s.ExecuteAnimationClip((byte)objects[cellIdxCurrent++], (AnimationCellTypes)objects[cellIdxCurrent++]);
+                    case nameof(s.ExecuteAnimationClip):
+                        s.ExecuteAnimationClip((byte)objects[cellIdxCurrent++], (AnimationCellTypes)objects[cellIdxCurrent++]);
                         break;
 
-                    case nameof(_s.ExecuteAnimationCellDirectlyClip):
-                        _s.ExecuteAnimationCellDirectlyClip((byte)objects[cellIdxCurrent++], (CellAnimationDirectlyTypes)objects[cellIdxCurrent++]);
+                    case nameof(s.ExecuteAnimationCellDirectlyClip):
+                        s.ExecuteAnimationCellDirectlyClip((byte)objects[cellIdxCurrent++], (CellAnimationDirectlyTypes)objects[cellIdxCurrent++]);
                         break;
 
-                    case nameof(_s.ExecuteMistake):
+                    case nameof(s.ExecuteMistake):
                         var mistakeT = (MistakeTypes)objects[cellIdxCurrent++];
-                        _s.ExecuteMistake(mistakeT, mistakeT == MistakeTypes.Economy ? (float[])objects[cellIdxCurrent++] : default);
+                        s.ExecuteMistake(mistakeT, mistakeT == MistakeTypes.Economy ? (float[])objects[cellIdxCurrent++] : default);
                         break;
 
-                    case nameof(_s.TryBuyBuildingInTownM):
-                        _s.TryBuyBuildingInTownM((BuildingTypes)objects[cellIdxCurrent++], sender);
+                    case nameof(s.TryBuyBuildingInTownM):
+                        s.TryBuyBuildingInTownM((BuildingTypes)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.GetDataCellsS.GetDataCells):
-                        _s.GetDataCellsS.GetDataCells();
+                    case nameof(s.GetDataCellsS.GetDataCells):
+                        s.GetDataCellsS.GetDataCells();
                         break;
 
                     default:
@@ -156,20 +156,20 @@ namespace Chessy.Model.System
                 }
             }
 
-            _s.GetDataCellsS.GetDataCells();
+            s.GetDataCellsS.GetDataCells();
 
             //_s.SyncDataS.TrySyncDataM();
         }
-        internal void ExecuteSoundActionToGeneral(in RpcTarget rpcTargetT, in ClipTypes clipT) => _rpcC.Rpc(rpcTargetT, new object[] { nameof(_s.ExecuteSoundActionClip), clipT });
-        internal void ExecuteSoundActionToGeneral(in Player playerTo, ClipTypes clipT) => _rpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteSoundActionClip), clipT });
-        internal void SoundToGeneral(RpcTarget rpcTarget, AbilityTypes abilityT) => _rpcC.Rpc(rpcTarget, new object[] { nameof(_s.ExecuteSoundActionAbility), abilityT });
-        internal void SoundToGeneral(Player playerTo, AbilityTypes abilityT) => _rpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteSoundActionAbility), abilityT });
+        internal void ExecuteSoundActionToGeneral(in RpcTarget rpcTargetT, in ClipTypes clipT) => rpcC.Rpc(rpcTargetT, new object[] { nameof(s.ExecuteSoundActionClip), clipT });
+        internal void ExecuteSoundActionToGeneral(in Player playerTo, ClipTypes clipT) => rpcC.Rpc(playerTo, new object[] { nameof(s.ExecuteSoundActionClip), clipT });
+        internal void SoundToGeneral(RpcTarget rpcTarget, AbilityTypes abilityT) => rpcC.Rpc(rpcTarget, new object[] { nameof(s.ExecuteSoundActionAbility), abilityT });
+        internal void SoundToGeneral(Player playerTo, AbilityTypes abilityT) => rpcC.Rpc(playerTo, new object[] { nameof(s.ExecuteSoundActionAbility), abilityT });
 
-        internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in RpcTarget rpcTarget) => _rpcC.Rpc(rpcTarget, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
-        internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in Player sender) => _rpcC.Rpc(sender, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
-        internal void ExecuteAnimationCellDirectlyToGeneral(in byte cellIdx, in CellAnimationDirectlyTypes animationCellT, in RpcTarget rpcTarget) => _rpcC.Rpc(rpcTarget, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
+        internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in RpcTarget rpcTarget) => rpcC.Rpc(rpcTarget, new object[] { nameof(s.ExecuteAnimationClip), cellIdx, animationCellT });
+        internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in Player sender) => rpcC.Rpc(sender, new object[] { nameof(s.ExecuteAnimationClip), cellIdx, animationCellT });
+        internal void ExecuteAnimationCellDirectlyToGeneral(in byte cellIdx, in CellAnimationDirectlyTypes animationCellT, in RpcTarget rpcTarget) => rpcC.Rpc(rpcTarget, new object[] { nameof(s.ExecuteAnimationClip), cellIdx, animationCellT });
 
-        internal void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => _rpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteMistake), mistakeType });
+        internal void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => rpcC.Rpc(playerTo, new object[] { nameof(s.ExecuteMistake), mistakeType });
         internal void SimpleMistakeToGeneral(Player playerTo, Dictionary<ResourceTypes, float> needRes)
         {
             var needRes2 = new float[(int)ResourceTypes.End];
@@ -179,7 +179,7 @@ namespace Chessy.Model.System
             needRes2[3] = needRes[ResourceTypes.Iron];
             needRes2[4] = needRes[ResourceTypes.Gold];
 
-            _rpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteMistake), MistakeTypes.Economy, needRes2 });
+            rpcC.Rpc(playerTo, new object[] { nameof(s.ExecuteMistake), MistakeTypes.Economy, needRes2 });
         }
     }
 }

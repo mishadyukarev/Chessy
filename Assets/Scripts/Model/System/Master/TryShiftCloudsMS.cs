@@ -17,19 +17,19 @@ namespace Chessy.Model.System
         {
             for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
             {
-                if (_cellCs[cell_0].IsBorder) continue;
+                if (CellC(cell_0).IsBorder) continue;
                 if (!CloudC(cell_0).IsCenter) continue;
 
 
                 var cell_1 = CloudShiftC(cell_0).WhereNeedShiftIdxCell;
-                var directXy_1 = _xyCellsCs[cell_1].Xy;
+                var directXy_1 = XyCellC(cell_1).Xy;
 
 
                 var isInSquareNextCell = directXy_1[0] >= 4 && directXy_1[0] <= 11 && directXy_1[1] >= 3 && directXy_1[1] <= 7;
 
                 if (isInSquareNextCell)
                 {
-                    var adding = Time.deltaTime * WindC.Speed * 0.25f;
+                    var adding = Time.deltaTime * windC.Speed * 0.25f;
 
                     CloudShiftC(cell_0).Distance += adding;
 
@@ -37,7 +37,7 @@ namespace Chessy.Model.System
                     {
                         var savedAroundComponents = new List<WhereViewIdxCellC>();
 
-                        foreach (var aroundCell_0_0 in _idxsAroundCellCs[cell_0].IdxCellsAroundArray)
+                        foreach (var aroundCell_0_0 in IdxsAroundCellC(cell_0).IdxCellsAroundArray)
                         {
                             savedAroundComponents.Add(CloudViewDataC(aroundCell_0_0).Clone());
 
@@ -61,12 +61,12 @@ namespace Chessy.Model.System
 
                         CloudViewDataC(viewIdx_0_1).DataIdxCell = cell_1;
                         CloudShiftC(cell_1).Dispose();
-                        CloudShiftC(cell_1).WhereNeedShiftIdxCell = _cellsByDirectAroundC[cell_1].Get(WindC.DirectT);
+                        CloudShiftC(cell_1).WhereNeedShiftIdxCell = CellsByDirectAroundC(cell_1).Get(windC.DirectT);
 
 
 
                         var idxArray = 0;
-                        foreach (var aroundCell_1_0 in _idxsAroundCellCs[cell_1].IdxCellsAroundArray)
+                        foreach (var aroundCell_1_0 in IdxsAroundCellC(cell_1).IdxCellsAroundArray)
                         {
                             var savedViewIdx = savedAroundComponents[idxArray].ViewIdxCell;
 
@@ -79,10 +79,10 @@ namespace Chessy.Model.System
                 }
                 else
                 {
-                    WindC.DirectT = (DirectTypes)Random.Range(1, (byte)DirectTypes.End);
+                    windC.DirectT = (DirectTypes)Random.Range(1, (byte)DirectTypes.End);
 
 
-                    CloudShiftC(cell_0).WhereNeedShiftIdxCell = _cellsByDirectAroundC[cell_0].Get(WindC.DirectT);
+                    CloudShiftC(cell_0).WhereNeedShiftIdxCell = CellsByDirectAroundC(cell_0).Get(windC.DirectT);
                 }
             }
         }

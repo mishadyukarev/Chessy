@@ -12,19 +12,19 @@ namespace Chessy.Model.System
                 switch (condT)
                 {
                     case ConditionUnitTypes.None:
-                        _unitCs[cellIdx].ConditionT = ConditionUnitTypes.None;
+                        unitCs[cellIdx].ConditionT = ConditionUnitTypes.None;
                         break;
 
                     case ConditionUnitTypes.Protected:
-                        if (_unitCs[cellIdx].ConditionT == ConditionUnitTypes.Protected)
+                        if (unitCs[cellIdx].ConditionT == ConditionUnitTypes.Protected)
                         {
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _unitCs[cellIdx].ConditionT = ConditionUnitTypes.None;
+                            unitCs[cellIdx].ConditionT = ConditionUnitTypes.None;
                         }
                         else
                         {
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _unitCs[cellIdx].ConditionT = condT;
+                            unitCs[cellIdx].ConditionT = condT;
 
                             //if (_aboutGameC.LessonT == LessonTypes.ClickDefend) SetNextLesson();
                         }
@@ -32,27 +32,27 @@ namespace Chessy.Model.System
 
 
                     case ConditionUnitTypes.Relaxed:
-                        if (_unitCs[cellIdx].ConditionT == ConditionUnitTypes.Relaxed)
+                        if (unitCs[cellIdx].ConditionT == ConditionUnitTypes.Relaxed)
                         {
                             //RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _unitCs[cellIdx].ConditionT = ConditionUnitTypes.None;
+                            unitCs[cellIdx].ConditionT = ConditionUnitTypes.None;
                         }
                         else
                         {
-                            _unitCs[cellIdx].ConditionT = condT;
+                            unitCs[cellIdx].ConditionT = condT;
 
                             var clipT = ClipTypes.SighUnit;
 
-                            if (_unitCs[cellIdx].UnitT == UnitTypes.Pawn)
+                            if (unitCs[cellIdx].UnitT == UnitTypes.Pawn)
                             {
-                                if (_environmentCs[cellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
+                                if (environmentCs[cellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
                                 {
-                                    if (!_buildingCs[cellIdx].HaveBuilding)
+                                    if (!buildingCs[cellIdx].HaveBuilding)
                                     {
 
-                                        if (_hpUnitCs[cellIdx].Health >= HpUnitValues.MAX)
+                                        if (unitHpCs[cellIdx].Health >= HpUnitValues.MAX)
                                         {
-                                            if (PlayerInfoE(_unitCs[cellIdx].PlayerT).GodInfoC.UnitType.Is(UnitTypes.Elfemale))
+                                            if (PlayerInfoE(unitCs[cellIdx].PlayerT).GodInfoC.UnitType.Is(UnitTypes.Elfemale))
                                             {
                                                 Build(BuildingTypes.Woodcutter, LevelTypes.First, UnitC(cellIdx).PlayerT, cellIdx);
                                             }
@@ -73,7 +73,7 @@ namespace Chessy.Model.System
                         throw new Exception();
                 }
 
-                _unitCs[cellIdx].HowManySecondUnitWasHereInThisCondition = 0;
+                unitCs[cellIdx].HowManySecondUnitWasHereInThisCondition = 0;
             }
 
             else

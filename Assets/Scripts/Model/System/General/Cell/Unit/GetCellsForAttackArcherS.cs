@@ -12,13 +12,13 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCell_0 = 0; cellIdxCell_0 < IndexCellsValues.CELLS; cellIdxCell_0++)
             {
-                if (_cellCs[cellIdxCell_0].IsBorder) continue;
+                if (CellC(cellIdxCell_0).IsBorder) continue;
                 if (_effectsUnitCs[cellIdxCell_0].IsStunned) continue;
 
-                var curUnitC = _unitCs[cellIdxCell_0];
+                var curUnitC = unitCs[cellIdxCell_0];
                 var curUnitT = curUnitC.UnitT;
 
-                if (!curUnitT.HaveUnit() && _shiftingUnitCs[cellIdxCell_0].IsShifting) continue;
+                if (!curUnitT.HaveUnit() && shiftingUnitCs[cellIdxCell_0].IsShifting) continue;
 
 
 
@@ -26,19 +26,19 @@ namespace Chessy.Model.System
 
                 if (!curUnitT.IsMelee(_mainTWC[cellIdxCell_0].ToolWeaponT))
                 {
-                    foreach (var idx_1 in _idxsAroundCellCs[cellIdxCell_0].IdxCellsAroundArray)
+                    foreach (var idx_1 in IdxsAroundCellC(cellIdxCell_0).IdxCellsAroundArray)
                     {
-                        var directShotingT = _cellAroundCs[cellIdxCell_0, idx_1].DirectT;
+                        var directShotingT = cellAroundCs[cellIdxCell_0, idx_1].DirectT;
 
-                        var isRight_0 = _unitCs[cellIdxCell_0].IsArcherDirectedToRight;
+                        var isRight_0 = unitCs[cellIdxCell_0].IsArcherDirectedToRight;
 
-                        if (!_cellCs[idx_1].IsBorder && !_environmentCs[idx_1].HaveEnvironment(EnvironmentTypes.Mountain))
+                        if (!CellC(idx_1).IsBorder && !environmentCs[idx_1].HaveEnvironment(EnvironmentTypes.Mountain))
                         {
-                            if (_unitCs[idx_1].HaveUnit && !_shiftingUnitCs[idx_1].IsShifting)
+                            if (unitCs[idx_1].HaveUnit && !shiftingUnitCs[idx_1].IsShifting)
                             {
-                                if (_unitCs[idx_1].PlayerT != _unitCs[cellIdxCell_0].PlayerT)
+                                if (unitCs[idx_1].PlayerT != unitCs[cellIdxCell_0].PlayerT)
                                 {
-                                    if (_unitCs[cellIdxCell_0].UnitT == UnitTypes.Pawn && _mainTWC[cellIdxCell_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
+                                    if (unitCs[cellIdxCell_0].UnitT == UnitTypes.Pawn && _mainTWC[cellIdxCell_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
                                     {
                                         if (isRight_0)
                                         {
@@ -64,14 +64,14 @@ namespace Chessy.Model.System
                                 }
                             }
 
-                            var idx_2 = _cellsByDirectAroundC[idx_1].Get(directShotingT);
+                            var idx_2 = CellsByDirectAroundC(idx_1).Get(directShotingT);
 
 
-                            if (_unitCs[idx_2].HaveUnit && !_shiftingUnitCs[idx_2].IsShifting && !_unitCs[idx_2].UnitT.IsAnimal()
-                                && _unitVisibleCs[idx_2].IsVisible(_unitCs[cellIdxCell_0].PlayerT)
-                                && _unitCs[idx_2].PlayerT != _unitCs[cellIdxCell_0].PlayerT)
+                            if (unitCs[idx_2].HaveUnit && !shiftingUnitCs[idx_2].IsShifting && !unitCs[idx_2].UnitT.IsAnimal()
+                                && _unitVisibleCs[idx_2].IsVisible(unitCs[cellIdxCell_0].PlayerT)
+                                && unitCs[idx_2].PlayerT != unitCs[cellIdxCell_0].PlayerT)
                             {
-                                if (_unitCs[cellIdxCell_0].UnitT == UnitTypes.Pawn && _mainTWC[cellIdxCell_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
+                                if (unitCs[cellIdxCell_0].UnitT == UnitTypes.Pawn && _mainTWC[cellIdxCell_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
                                 {
                                     if (!isRight_0)
                                     {

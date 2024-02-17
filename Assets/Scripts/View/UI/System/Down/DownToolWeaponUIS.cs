@@ -18,7 +18,7 @@ namespace Chessy.Model
             var needActiveZone = false;
 
 
-            if (!AboutGameC.LessonType.HaveLesson() || AboutGameC.LessonType >= LessonTypes.GiveTakePickPawn)
+            if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= LessonTypes.GiveTakePickPawn)
             {
                 needActiveZone = true;
 
@@ -38,11 +38,11 @@ namespace Chessy.Model
                 var needSword = false;
 
 
-                if (AboutGameC.LessonType.HaveLesson())
+                if (aboutGameC.LessonType.HaveLesson())
                 {
                     needPick = true;
 
-                    if (AboutGameC.LessonType >= LessonTypes.GiveIronAxe)
+                    if (aboutGameC.LessonType >= LessonTypes.GiveIronAxe)
                     {
                         needAxe = true;
 
@@ -105,8 +105,8 @@ namespace Chessy.Model
                 }
 
 
-                var tw_sel = _selectedToolWeaponC.ToolWeaponT;
-                var levTw_sel = _selectedToolWeaponC.LevelT;
+                var tw_sel = selectedToolWeaponC.ToolWeaponT;
+                var levTw_sel = selectedToolWeaponC.LevelT;
 
                 color = _twE.ImageC(tw_sel).Image.color;
                 color.a = 1;
@@ -121,13 +121,13 @@ namespace Chessy.Model
                     _twE.LevelImageC(twT, levTw_sel).SetActive(true);
                 }
 
-                var curPlayerI = AboutGameC.CurrentPlayerIType;
+                var curPlayerI = aboutGameC.CurrentPlayerIType;
 
                 _twE.TextC(ToolsWeaponsWarriorTypes.Pick).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Pick, LevelTypes.First).ToString();
                 _twE.TextC(ToolsWeaponsWarriorTypes.Sword).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Sword, LevelTypes.Second).ToString();
                 _twE.TextC(ToolsWeaponsWarriorTypes.Axe).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Axe, LevelTypes.Second).ToString();
-                _twE.TextC(ToolsWeaponsWarriorTypes.Shield).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Shield, _selectedToolWeaponC.LevelT).ToString();
-                _twE.TextC(ToolsWeaponsWarriorTypes.BowCrossbow).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.BowCrossbow, _selectedToolWeaponC.LevelT).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Shield).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Shield, selectedToolWeaponC.LevelT).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.BowCrossbow).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.BowCrossbow, selectedToolWeaponC.LevelT).ToString();
                 _twE.TextC(ToolsWeaponsWarriorTypes.Staff).TextUI.text = ToolWeaponsInInventoryC(curPlayerI).ToolWeapons(ToolsWeaponsWarriorTypes.Staff, LevelTypes.First).ToString();
             }
         }

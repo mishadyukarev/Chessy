@@ -23,16 +23,16 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            var idx_sel = IndexesCellsC.Selected;
+            var idx_sel = indexesCellsC.Selected;
 
             _needAppear = false;
 
 
-            if (IndexesCellsC.Selected > 0)
+            if (indexesCellsC.Selected > 0)
             {
-                if (_unitCs[idx_sel].UnitType.HaveUnit())
+                if (unitCs[idx_sel].UnitType.HaveUnit())
                 {
-                    if (_unitVisibleCs[idx_sel].IsVisible(AboutGameC.CurrentPlayerIType))
+                    if (_unitVisibleCs[idx_sel].IsVisible(aboutGameC.CurrentPlayerIType))
                     {
                         _needAppear = true;
                     }
