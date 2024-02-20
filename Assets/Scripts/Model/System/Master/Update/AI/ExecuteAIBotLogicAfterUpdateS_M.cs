@@ -26,7 +26,7 @@ namespace Chessy.Model.System
             {
                 if (unitCs[cellIdxStart].UnitT == UnitTypes.Pawn && unitCs[cellIdxStart].PlayerT == playerBotT)
                 {
-                    foreach (var cellIdxDirect in IdxsAroundCellC(cellIdxStart).IdxCellsAroundArray)
+                    foreach (var cellIdxDirect in idxsAroundCellCs[cellIdxStart].IdxCellsAroundArray)
                     {
                         if (unitCs[cellIdxDirect].HaveUnit)
                         {

@@ -22,17 +22,17 @@ namespace Chessy.View.System
         {
             for (byte cellIdxCurrent_0 = 0; cellIdxCurrent_0 < IndexCellsValues.CELLS; cellIdxCurrent_0++)
             {
-                if (CellC(cellIdxCurrent_0).IsBorder) continue;
+                if (cellCs[cellIdxCurrent_0].IsBorder) continue;
 
 
-                var whereDataViewC_0 = CloudViewDataC(cellIdxCurrent_0);
+                var whereDataViewC_0 = cloudWhereViewDataCs[cellIdxCurrent_0];
 
                 if (!whereDataViewC_0.HaveDataReference) continue;
 
 
-                var whereDataIdx_1 = CloudViewDataC(cellIdxCurrent_0).DataIdxCellP;
-                if (!CloudC(whereDataIdx_1).IsCenterP) continue;
-                var whereShiftC_1 = CloudShiftC(whereDataIdx_1);
+                var whereDataIdx_1 = cloudWhereViewDataCs[cellIdxCurrent_0].DataIdxCellP;
+                if (!cloudCs[whereDataIdx_1].IsCenterP) continue;
+                var whereShiftC_1 = shiftCloudCs[whereDataIdx_1];
 
                 var whereShiftIdx_2 = whereShiftC_1.WhereNeedShiftIdxCellP;
 
@@ -43,12 +43,12 @@ namespace Chessy.View.System
 
                 SmoothShiftCloud(_cloudTrans[cellIdxCurrent_0], Vector3.Lerp(pos_1, pos_2, t));
 
-                foreach (var aroundCell_1_0 in IdxsAroundCellC(whereDataIdx_1).IdxCellsAroundArray)
+                foreach (var aroundCell_1_0 in idxsAroundCellCs[whereDataIdx_1].IdxCellsAroundArray)
                 {
                     var pos_1_0 = positionCellCs[aroundCell_1_0].PositionP;
-                    var pos_1_1 = positionCellCs[CellsByDirectAroundC(aroundCell_1_0).Get(windC.DirectType)].PositionP;
+                    var pos_1_1 = positionCellCs[cellsByDirectAroundC[aroundCell_1_0].Get(windC.DirectType)].PositionP;
 
-                    SmoothShiftCloud(_cloudTrans[CloudViewDataC(aroundCell_1_0).ViewIdxCellP], Vector3.Lerp(pos_1_0, pos_1_1, t));
+                    SmoothShiftCloud(_cloudTrans[cloudWhereViewDataCs[aroundCell_1_0].ViewIdxCellP], Vector3.Lerp(pos_1_0, pos_1_1, t));
                 }
             }
 

@@ -50,12 +50,12 @@ namespace Chessy.Model
                     _pointsCellsForSettingPawn[cellIdxStart]++;
                 }
 
-                if (XyCellC(cellIdxStart).Y == 8)
+                if (xyCellsCs[cellIdxStart].Y == 8)
                 {
                     _pointsCellsForSettingKing[cellIdxStart] += 3;
                     _pointsCellsForSettingPawn[cellIdxStart] += 3;
 
-                    if (XyCellC(cellIdxStart).X >= 4 && XyCellC(cellIdxStart).X <= 7)
+                    if (xyCellsCs[cellIdxStart].X >= 4 && xyCellsCs[cellIdxStart].X <= 7)
                     {
                         _pointsCellsForSettingKing[cellIdxStart]++;
                         _pointsCellsForSettingPawn[cellIdxStart]++;
@@ -73,7 +73,7 @@ namespace Chessy.Model
                 }
             }
 
-            if (PlayerInfoE(playerBotT).PlayerInfoC.HaveKingInInventor)
+            if (playerInfoCs[(byte)playerBotT].HaveKingInInventor)
             {
                 byte cellIdx = 85;
 
@@ -83,7 +83,7 @@ namespace Chessy.Model
                 //TrySetUnit(ref _theMostBigPointForSettingKing, _pointsCellsForSettingKing, UnitTypes.King, playerBotT);
             }
 
-            if (PawnPeopleInfoC(playerBotT).CanGetPawn(PlayerInfoC(playerBotT).AmountBuiltHouses))
+            if (PawnPeopleInfoC(playerBotT).CanGetPawn(playerInfoCs[(byte)playerBotT].AmountBuiltHouses))
             {
                 TrySetUnit(ref _theMostBigPointForSettingPawn, _pointsCellsForSettingPawn, UnitTypes.Pawn, playerBotT);
             }
@@ -134,10 +134,10 @@ namespace Chessy.Model
 
                 if (unitT == UnitTypes.King)
                 {
-                    if (!PlayerInfoE(playerBotT).PlayerInfoC.HaveKingInInventor) break;
+                    if (!playerInfoCs[(byte)playerBotT].HaveKingInInventor) break;
                 }
 
-                if (!PawnPeopleInfoC(playerBotT).CanGetPawn(PlayerInfoC(playerBotT).AmountBuiltHouses))
+                if (!PawnPeopleInfoC(playerBotT).CanGetPawn(playerInfoCs[(byte)playerBotT].AmountBuiltHouses))
                 {
                     break;
                 }

@@ -1,16 +1,17 @@
 ﻿using Photon.Realtime;
+
 namespace Chessy.Model.System
 {
     public partial class SystemsModel
     {
         internal void TryExecuteReadyForOnlineM(in Player sender)
         {
-            var playerSend = sender.GetPlayer();
+            var playerTSender_byte = (byte)sender.GetPlayer();
 
-            PlayerInfoE(playerSend).PlayerInfoC.IsReadyForStartOnlineGame = !PlayerInfoE(playerSend).PlayerInfoC.IsReadyForStartOnlineGame;
+            playerInfoCs[playerTSender_byte].IsReadyForStartOnlineGame = !playerInfoCs[playerTSender_byte].IsReadyForStartOnlineGame;
 
-            if (PlayerInfoE(PlayerTypes.First).PlayerInfoC.IsReadyForStartOnlineGame
-                && PlayerInfoE(PlayerTypes.Second).PlayerInfoC.IsReadyForStartOnlineGame)
+            if (playerInfoCs[(byte)PlayerTypes.First].IsReadyForStartOnlineGame
+                && playerInfoCs[(byte)PlayerTypes.Second].IsReadyForStartOnlineGame)
             {
                 aboutGameC.IsStartedGame = true;
             }

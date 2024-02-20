@@ -15,7 +15,7 @@ namespace Chessy.Model.System
 
                     _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
-                    foreach (var idx_1 in IdxsAroundCellC(cell_0).IdxCellsAroundArray)
+                    foreach (var idx_1 in idxsAroundCellCs[cell_0].IdxCellsAroundArray)
                     {
                         if (environmentCs[idx_1].HaveEnvironment(EnvironmentTypes.YoungForest))
                         {

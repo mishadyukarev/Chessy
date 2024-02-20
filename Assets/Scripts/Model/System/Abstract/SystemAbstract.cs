@@ -29,10 +29,10 @@ namespace Chessy.Model
         protected readonly UnitOnCellC[] unitCs = new UnitOnCellC[IndexCellsValues.CELLS];
         protected readonly AttackDamageUnitC[] _unitAttackDamageCs = new AttackDamageUnitC[IndexCellsValues.CELLS];
         protected readonly HealthC[] unitHpCs = new HealthC[IndexCellsValues.CELLS];
-        protected readonly WaterAmountC[] _unitWaterCs = new WaterAmountC[IndexCellsValues.CELLS];
-        protected readonly EffectsUnitC[] _effectsUnitCs = new EffectsUnitC[IndexCellsValues.CELLS];
+        protected readonly WaterAmountC[] unitWaterCs = new WaterAmountC[IndexCellsValues.CELLS];
+        protected readonly EffectsUnitC[] effectsUnitCs = new EffectsUnitC[IndexCellsValues.CELLS];
         protected readonly ShiftingObjectC[] shiftingUnitCs = new ShiftingObjectC[IndexCellsValues.CELLS];
-        protected readonly MainToolWeaponUnitC[] _mainTWC = new MainToolWeaponUnitC[IndexCellsValues.CELLS];
+        protected readonly MainToolWeaponUnitC[] mainTWC = new MainToolWeaponUnitC[IndexCellsValues.CELLS];
         protected readonly ExtraToolWeaponUnitC[] _extraTWC = new ExtraToolWeaponUnitC[IndexCellsValues.CELLS];
         protected readonly HowManyDistanceNeedForShiftingUnitC[] _howManyDistanceNeedForShiftingUnitCs = new HowManyDistanceNeedForShiftingUnitC[IndexCellsValues.CELLS];
         protected readonly WhereUnitCanAttackToEnemyC[] _whereSimpleAttackCs = new WhereUnitCanAttackToEnemyC[IndexCellsValues.CELLS];
@@ -40,7 +40,7 @@ namespace Chessy.Model
         protected readonly bool[][] _whereSimple = new bool[IndexCellsValues.CELLS][];
         protected readonly bool[][] _whereUnque = new bool[IndexCellsValues.CELLS][];
         protected readonly VisibleToOtherPlayerOrNotC[] _unitVisibleCs = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
-        protected readonly WhereViewIdxCellC[] _unitWhereViewDataCs = new WhereViewIdxCellC[IndexCellsValues.CELLS];
+        protected readonly WhereViewIdxCellC[] unitWhereViewDataCs = new WhereViewIdxCellC[IndexCellsValues.CELLS];
         protected readonly HasUnitKingEffectHereC[] _hasUnitKingEffectHereCs = new HasUnitKingEffectHereC[IndexCellsValues.CELLS];
         protected readonly CooldownAbilitiesInSecondsC[] _cooldownAbilityCs = new CooldownAbilitiesInSecondsC[IndexCellsValues.CELLS];
         protected readonly WhereUnitCanShiftC[] _whereUnitCanShiftCs = new WhereUnitCanShiftC[IndexCellsValues.CELLS];
@@ -111,47 +111,17 @@ namespace Chessy.Model
 
         #region
 
-        protected CellC CellC(in byte cellIdx) => cellCs[cellIdx];
-        //protected PositionCellC PositionCellC(in byte cellIdx) => _positionCellCs[cellIdx];
-        protected XyCellC XyCellC(in byte cellIdx) => xyCellsCs[cellIdx];
-        //protected IsStartedCellC IsStartedCellC(in byte cellIdx) => isStartedCellCs[cellIdx];
-        protected IdxsAroundCellC IdxsAroundCellC(in byte cellIdx) => idxsAroundCellCs[cellIdx];
-        protected CellsByDirectAroundC CellsByDirectAroundC(in byte cellIdx) => cellsByDirectAroundC[cellIdx];
-        //public CellAroundC CellAroundC(in byte cellIdx) => _cellAroundCs[cellIdx];
-
-        protected UnitOnCellC UnitC(in byte cellIdx) => unitCs[cellIdx];
-        protected WhereViewIdxCellC UnitViewDataC(in byte cellIdx) => _unitWhereViewDataCs[cellIdx];
-        protected MainToolWeaponUnitC UnitMainTWC(in byte cellIdx) => _mainTWC[cellIdx];
         protected ExtraToolWeaponUnitC UnitExtraTWC(in byte cellIdx) => _extraTWC[cellIdx];
         protected AttackDamageUnitC UnitAttackC(in byte cellIdx) => _unitAttackDamageCs[cellIdx];
         protected ButtonsAbilitiesUnitC UnitButtonsC(in byte cellIdx) => _buttonsAbilitiesUnitCs[cellIdx];
         protected ShiftingObjectC UnitShiftC(in byte cellIdx) => shiftingUnitCs[cellIdx];
-        protected WaterAmountC UnitWaterC(in byte cellIdx) => _unitWaterCs[cellIdx];
-        //protected EffectsUnitC UnitEffectC(in byte cellIdx) => _effectsUnitCs[cellIdx];
-        //protected CooldownAbilitiesInSecondsC UnitCooldownC(in byte cellIdx) => _cooldownAbilityCs[cellIdx];
         protected WhereUnitCanShiftC WhereUnitCanShiftC(in byte cellIdx) => _whereUnitCanShiftCs[cellIdx];
 
-
-        protected BuildingOnCellC BuildingC(in byte cellIdx) => buildingCs[cellIdx];
-
-        protected EnvironmentC EnvironmentC(in byte cellIdx) => environmentCs[cellIdx];
-
-        protected CloudC CloudC(in byte cellIdx) => cloudCs[cellIdx];
-        protected WhereViewIdxCellC CloudViewDataC(in byte cellIdx) => cloudWhereViewDataCs[cellIdx];
-        protected ShiftingObjectC CloudShiftC(in byte cellIdx) => shiftCloudCs[cellIdx];
-
-
-        protected FireC FireC(in byte cellIdx) => fireCs[cellIdx];
-        protected RiverC RiverC(in byte cellIdx) => riverCs[cellIdx];
 
         #endregion
 
 
-        protected PlayerInfoE PlayerInfoE(in PlayerTypes player) => playerInfoEs[(byte)player];
-        protected PlayerInfoC PlayerInfoC(in PlayerTypes playerT) => playerInfoCs[(byte)playerT];
-        //protected GodInfoC GodInfoC(in PlayerTypes playerT) => godInfoCs[(byte)playerT];
         protected PawnPeopleInfoC PawnPeopleInfoC(in PlayerTypes playerT) => pawnPeopleInfoCs[(byte)playerT];
-        //protected BuildingsInTownInfoC BuildingsInTownInfoC(in PlayerTypes playerT) => _buildingsInTownInfoCs[(byte)playerT];
         protected ResourcesInInventoryC ResourcesInInventoryC(in PlayerTypes playerT) => resourcesInInventoryCs[(byte)playerT];
         protected HowManyToolWeaponsInInventoryC ToolWeaponsInInventoryC(in PlayerTypes playerT) => howManyToolWeaponsInInventoryCs[(byte)playerT];
 
@@ -190,10 +160,10 @@ namespace Chessy.Model
                 unitCs[cellIdx_0] = unitE.MainC;
                 _unitAttackDamageCs[cellIdx_0] = unitE.AttackDamageC;
                 unitHpCs[cellIdx_0] = unitE.HealthC;
-                _unitWaterCs[cellIdx_0] = unitE.WaterC;
-                _effectsUnitCs[cellIdx_0] = unitE.EffectsC;
+                unitWaterCs[cellIdx_0] = unitE.WaterC;
+                effectsUnitCs[cellIdx_0] = unitE.EffectsC;
                 shiftingUnitCs[cellIdx_0] = unitE.ShiftingInfoForUnitC;
-                _mainTWC[cellIdx_0] = unitE.MainToolWeaponC;
+                mainTWC[cellIdx_0] = unitE.MainToolWeaponC;
                 _extraTWC[cellIdx_0] = unitE.ExtraToolWeaponC;
                 _howManyDistanceNeedForShiftingUnitCs[cellIdx_0] = unitE.HowManyDistanceNeedForShiftingUnitC;
                 _whereSimpleAttackCs[cellIdx_0] = unitE.WhereCanAttackSimpleAttackToEnemyC;
@@ -201,7 +171,7 @@ namespace Chessy.Model
                 _whereSimple[cellIdx_0] = _whereSimpleAttackCs[cellIdx_0].WhereUnitCanAttack;
                 _whereUnque[cellIdx_0] = _whereUniqueAttackCs[cellIdx_0].WhereUnitCanAttack;
                 _unitVisibleCs[cellIdx_0] = unitE.VisibleToOtherPlayerOrNotC;
-                _unitWhereViewDataCs[cellIdx_0] = unitE.WhereViewDataUnitC;
+                unitWhereViewDataCs[cellIdx_0] = unitE.WhereViewDataUnitC;
                 _hasUnitKingEffectHereCs[cellIdx_0] = unitE.HasKingEffectHereC;
                 _cooldownAbilityCs[cellIdx_0] = unitE.CooldownsC;
                 _whereUnitCanShiftCs[cellIdx_0] = unitE.WhereCanShiftC;

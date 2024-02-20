@@ -53,7 +53,7 @@ namespace Chessy.View.System
             {
                 for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
                 {
-                    if (CellC(currentCellIdx_0).IsBorder) continue;
+                    if (cellCs[currentCellIdx_0].IsBorder) continue;
 
 
                     var curEnvirC_0 = environmentCs[currentCellIdx_0];
@@ -103,7 +103,7 @@ namespace Chessy.View.System
             {
                 for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                 {
-                    if (CellC(cellIdxCurrent).IsBorder) continue;
+                    if (cellCs[cellIdxCurrent].IsBorder) continue;
 
                     _needActiveFood[cellIdxCurrent] = false;
                     _needActiveWood[cellIdxCurrent] = false;
@@ -114,7 +114,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (CellC(cellIdxCurrent).IsBorder) continue;
+                if (cellCs[cellIdxCurrent].IsBorder) continue;
 
                 _foorGOs[cellIdxCurrent].TrySetActive2(_needActiveFood[cellIdxCurrent], ref _wasActivatedFood[cellIdxCurrent]);
                 _woodGOs[cellIdxCurrent].TrySetActive2(_needActiveWood[cellIdxCurrent], ref _wasActivatedWood[cellIdxCurrent]);

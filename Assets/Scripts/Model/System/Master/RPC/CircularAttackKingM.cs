@@ -14,7 +14,7 @@ namespace Chessy.Model.System
                 _cooldownAbilityCs[cell_0].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
 
-                foreach (byte idx_1 in IdxsAroundCellC(cell_0).IdxCellsAroundArray)
+                foreach (byte idx_1 in idxsAroundCellCs[cell_0].IdxCellsAroundArray)
                 {
                     if (unitCs[idx_1].HaveUnit)
                     {
@@ -26,9 +26,9 @@ namespace Chessy.Model.System
                                 {
                                     s.unitSs.AttackShield(1f, idx_1);
                                 }
-                                else if (_effectsUnitCs[idx_1].HaveAnyProtectionRainyMagicShield)
+                                else if (effectsUnitCs[idx_1].HaveAnyProtectionRainyMagicShield)
                                 {
-                                    _effectsUnitCs[idx_1].ProtectionRainyMagicShield--;
+                                    effectsUnitCs[idx_1].ProtectionRainyMagicShield--;
                                 }
 
                                 else
@@ -40,7 +40,7 @@ namespace Chessy.Model.System
                     }
                 }
 
-                s.RpcSs.AnimationCellToGeneral(_unitWhereViewDataCs[cell_0].ViewIdxCell, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
+                s.RpcSs.AnimationCellToGeneral(unitWhereViewDataCs[cell_0].ViewIdxCell, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
 
                 unitCs[cell_0].ConditionT = ConditionUnitTypes.None;
 

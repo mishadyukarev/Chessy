@@ -20,7 +20,7 @@ namespace Chessy.Model.System
                 //    }
                 //}
 
-                if (PlayerInfoE(aboutGameC.CurrentPlayerIT).PawnInfoC.AmountInGame > 0)
+                if (pawnPeopleInfoCs[(byte)aboutGameC.CurrentPlayerIT].AmountInGame > 0)
                 {
                     //if (tw == ToolWeaponTypes.Pick)
                     //{

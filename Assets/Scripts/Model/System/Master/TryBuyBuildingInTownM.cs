@@ -46,7 +46,7 @@ namespace Chessy.Model.System
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse;
+                                need = playerInfoCs[(byte)whoseMove].WoodForBuyHouse;
                                 break;
 
                             case BuildingTypes.Market:
@@ -139,9 +139,9 @@ namespace Chessy.Model.System
                 switch (buildT)
                 {
                     case BuildingTypes.House:
-                        PlayerInfoC(whoseMove).AmountBuiltHouses++;
+                        playerInfoCs[(byte)whoseMove].AmountBuiltHouses++;
                         //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns + E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns);
-                        PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse += PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse;
+                        playerInfoCs[(byte)whoseMove].WoodForBuyHouse += playerInfoCs[(byte)whoseMove].WoodForBuyHouse;
 
                         if (aboutGameC.LessonT == LessonTypes.BuildHouseForWarrior)
                         {
@@ -150,11 +150,11 @@ namespace Chessy.Model.System
                         break;
 
                     case BuildingTypes.Market:
-                        PlayerInfoE(whoseMove).BuildingsInTownInfoC.Build(BuildingTypes.Market);
+                        buildingsInTownInfoCs[(byte)whoseMove].Build(BuildingTypes.Market);
                         break;
 
                     case BuildingTypes.Smelter:
-                        PlayerInfoE(whoseMove).BuildingsInTownInfoC.Build(BuildingTypes.Smelter);
+                        buildingsInTownInfoCs[(byte)whoseMove].Build(BuildingTypes.Smelter);
                         break;
 
                     default: throw new Exception();

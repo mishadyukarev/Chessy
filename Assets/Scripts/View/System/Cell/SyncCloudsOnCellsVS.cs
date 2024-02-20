@@ -23,13 +23,13 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (CloudC(cellIdxCurrent).IsCenterP)
+                if (cloudCs[cellIdxCurrent].IsCenterP)
                 {
-                    _needActive[CloudViewDataC(cellIdxCurrent).ViewIdxCellP] = true;
+                    _needActive[cloudWhereViewDataCs[cellIdxCurrent].ViewIdxCellP] = true;
 
-                    foreach (var item in IdxsAroundCellC(cellIdxCurrent).IdxCellsAroundArray)
+                    foreach (var item in idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
                     {
-                        _needActive[CloudViewDataC(item).ViewIdxCellP] = true;
+                        _needActive[cloudWhereViewDataCs[item].ViewIdxCellP] = true;
                     }
                 }
             }

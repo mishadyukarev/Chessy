@@ -11,11 +11,11 @@
 
             var curPlayer = aboutGameC.CurrentPlayerIT;
 
-            var myHeroT = PlayerInfoE(curPlayer).GodInfoC.UnitType;
+            var myHeroT = godInfoCs[(byte)curPlayer].UnitType;
 
-            if (PlayerInfoE(curPlayer).GodInfoC.HaveGodInInventor)
+            if (godInfoCs[(byte)curPlayer].HaveGodInInventor)
             {
-                if (!PlayerInfoE(aboutGameC.CurrentPlayerIT).GodInfoC.HaveCooldown)
+                if (!godInfoCs[(byte)aboutGameC.CurrentPlayerIT].HaveCooldown)
                 {
                     selectedUnitC.UnitT = myHeroT;
                     selectedUnitC.LevelT = LevelTypes.First;

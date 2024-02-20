@@ -61,23 +61,23 @@ namespace Chessy.View.System
                 }
             }
 
-            if (_unitWhereViewDataCs[cellIdxForSync_0].HaveDataReference)
+            if (unitWhereViewDataCs[cellIdxForSync_0].HaveDataReference)
             {
-                var dataUnitIdxCell_1 = _unitWhereViewDataCs[cellIdxForSync_0].DataIdxCellP;
+                var dataUnitIdxCell_1 = unitWhereViewDataCs[cellIdxForSync_0].DataIdxCellP;
 
                 var unitT = unitCs[dataUnitIdxCell_1].UnitType;
 
                 if (unitT == UnitTypes.Pawn)
                 {
-                    if (_mainTWC[dataUnitIdxCell_1].ToolWeaponType != ToolsWeaponsWarriorTypes.BowCrossbow)
+                    if (mainTWC[dataUnitIdxCell_1].ToolWeaponType != ToolsWeaponsWarriorTypes.BowCrossbow)
                     {
                         if (_unitVisibleCs[dataUnitIdxCell_1].IsVisible(aboutGameC.CurrentPlayerIType))
                         {
                             var nextPlayer = unitCs[dataUnitIdxCell_1].PlayerType.NextPlayer();
                             var isVisibleForNextPlayer = _unitVisibleCs[dataUnitIdxCell_1].IsVisible(nextPlayer);
 
-                            _needActiveMainTW[cellIdxForSync_0, (byte)_mainTWC[dataUnitIdxCell_1].ToolWeaponType, (byte)_mainTWC[dataUnitIdxCell_1].LevelType] = true;
-                            _needColorMainTW[cellIdxForSync_0, (byte)_mainTWC[dataUnitIdxCell_1].ToolWeaponType, (byte)_mainTWC[dataUnitIdxCell_1].LevelType] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+                            _needActiveMainTW[cellIdxForSync_0, (byte)mainTWC[dataUnitIdxCell_1].ToolWeaponType, (byte)mainTWC[dataUnitIdxCell_1].LevelType] = true;
+                            _needColorMainTW[cellIdxForSync_0, (byte)mainTWC[dataUnitIdxCell_1].ToolWeaponType, (byte)mainTWC[dataUnitIdxCell_1].LevelType] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
                         }
                     }
                 }

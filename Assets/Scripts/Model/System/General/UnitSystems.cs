@@ -27,7 +27,7 @@ namespace Chessy.Model.System
         {
             s.RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
-            BuildingC(cellIdx_0).Dispose();
+            buildingCs[cellIdx_0].Dispose();
         }
     }
 

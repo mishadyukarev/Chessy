@@ -21,16 +21,16 @@ namespace Chessy.Model.System
             {
                 _needActive[cellIdxCurrent] = false;
 
-                if (_unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
+                if (unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
                 {
-                    var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
+                    var dataIdxCell = unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
 
                     if (unitCs[dataIdxCell].HaveUnit)
                     {
                         if (_unitVisibleCs[dataIdxCell].IsVisible(aboutGameC.CurrentPlayerIType))
                         {
-                            _needActive[cellIdxCurrent] = _effectsUnitCs[dataIdxCell].IsStunned;
+                            _needActive[cellIdxCurrent] = effectsUnitCs[dataIdxCell].IsStunned;
                         }
                     }
                 }

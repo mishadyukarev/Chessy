@@ -14,10 +14,10 @@ namespace Chessy.Model.System
             unitCs[forSettingCellIdx].Set((unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false));
 
             unitHpCs[forSettingCellIdx].Health = HpUnitValues.MAX;
-            _unitWaterCs[forSettingCellIdx].Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
+            unitWaterCs[forSettingCellIdx].Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
 
             _extraTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None, 0);
-            _effectsUnitCs[forSettingCellIdx].Set(0, 0, false);
+            effectsUnitCs[forSettingCellIdx].Set(0, 0, false);
 
             if (unitCs[forSettingCellIdx].UnitT == UnitTypes.Pawn)
             {
@@ -30,7 +30,7 @@ namespace Chessy.Model.System
             {
                 PawnPeopleInfoC(playerT).PeopleInCity--;
 
-                _mainTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                mainTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
             }
 
             else
@@ -44,20 +44,20 @@ namespace Chessy.Model.System
                 }
                 else if (unitT == UnitTypes.King)
                 {
-                    PlayerInfoC(playerT).HaveKingInInventor = false;
+                    playerInfoCs[(byte)playerT].HaveKingInInventor = false;
                 }
 
-                _mainTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None);
+                mainTWC[forSettingCellIdx].Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None);
             }
 
             for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
             {
-                if (CellC(currentCellIdx).IsBorder) continue;
+                if (cellCs[currentCellIdx].IsBorder) continue;
 
-                if (!_unitWhereViewDataCs[currentCellIdx].HaveDataReference)
+                if (!unitWhereViewDataCs[currentCellIdx].HaveDataReference)
                 {
-                    _unitWhereViewDataCs[currentCellIdx].DataIdxCell = forSettingCellIdx;
-                    _unitWhereViewDataCs[forSettingCellIdx].ViewIdxCell = currentCellIdx;
+                    unitWhereViewDataCs[currentCellIdx].DataIdxCell = forSettingCellIdx;
+                    unitWhereViewDataCs[forSettingCellIdx].ViewIdxCell = currentCellIdx;
 
 
                     //var pos_0 = _e.CellE(currentCellIdx).StartPositionC.Possition;

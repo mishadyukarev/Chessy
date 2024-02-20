@@ -18,19 +18,19 @@ namespace Chessy.Model.System
                 {
                     if (unitCs[cell_from].PlayerT != unitCs[cell_to].PlayerT)
                     {
-                        _effectsUnitCs[cell_to].StunHowManyUpdatesNeedStay = StunUnitValues.AMOUNT_STUN_AFTER_ABILITY_ELFEMALE;
+                        effectsUnitCs[cell_to].StunHowManyUpdatesNeedStay = StunUnitValues.AMOUNT_STUN_AFTER_ABILITY_ELFEMALE;
                         _cooldownAbilityCs[cell_from].Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
                         s.RpcSs.SoundToGeneral(RpcTarget.All, abilityT);
 
 
-                        foreach (var idx_1 in IdxsAroundCellC(cell_to).IdxCellsAroundArray)
+                        foreach (var idx_1 in idxsAroundCellCs[cell_to].IdxCellsAroundArray)
                         {
                             if (environmentCs[idx_1].HaveEnvironment(EnvironmentTypes.AdultForest))
                             {
                                 if (unitCs[idx_1].HaveUnit && unitCs[idx_1].PlayerT == unitCs[cell_to].PlayerT)
                                 {
-                                    _effectsUnitCs[idx_1].StunHowManyUpdatesNeedStay = StunUnitValues.AMOUNT_STUN_AFTER_ABILITY_ELFEMALE;
+                                    effectsUnitCs[idx_1].StunHowManyUpdatesNeedStay = StunUnitValues.AMOUNT_STUN_AFTER_ABILITY_ELFEMALE;
                                 }
                             }
                         }

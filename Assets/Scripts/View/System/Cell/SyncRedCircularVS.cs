@@ -28,7 +28,7 @@ namespace Chessy.Model
 
             for (byte currentIdxCell = 0; currentIdxCell < IndexCellsValues.CELLS; currentIdxCell++)
             {
-                if (CellC(currentIdxCell).IsBorder) continue;
+                if (cellCs[currentIdxCell].IsBorder) continue;
 
                 var currentUnitT_0 = unitCs[currentIdxCell].UnitType;
                 ref var needActiveRef = ref _needActive[currentIdxCell];

@@ -33,18 +33,18 @@ namespace Chessy.View.System
 
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (CellC(currentCellIdx_0).IsBorder) continue;
+                if (cellCs[currentCellIdx_0].IsBorder) continue;
 
                 _needActive[currentCellIdx_0] = false;
                 _needColor[currentCellIdx_0] = _whiteColor;
 
-                if (UnitViewDataC(currentCellIdx_0).HaveDataReference)
+                if (unitWhereViewDataCs[currentCellIdx_0].HaveDataReference)
                 {
-                    var dataIdxCell_1 = UnitViewDataC(currentCellIdx_0).DataIdxCellP;
+                    var dataIdxCell_1 = unitWhereViewDataCs[currentCellIdx_0].DataIdxCellP;
 
                     if (_unitVisibleCs[dataIdxCell_1].IsVisible(currentPlayerT))
                     {
-                        var unitC_1 = UnitC(dataIdxCell_1);
+                        var unitC_1 = unitCs[dataIdxCell_1];
 
                         if (unitC_1.HaveUnit && !unitC_1.IsAnimal)
                         {
@@ -66,7 +66,7 @@ namespace Chessy.View.System
 
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (CellC(currentCellIdx_0).IsBorder) continue;
+                if (cellCs[currentCellIdx_0].IsBorder) continue;
 
                 var needActive = _needActive[currentCellIdx_0];
 

@@ -27,7 +27,7 @@ namespace Chessy.View.System
 
                 if (_needActive[cellIdxCurrent])
                 {
-                    _tMPCs[cellIdxCurrent].TextMeshPro.text = cellIdxCurrent + "\n " + XyCellC(cellIdxCurrent).X + "|" + XyCellC(cellIdxCurrent).Y + "  ";
+                    _tMPCs[cellIdxCurrent].TextMeshPro.text = cellIdxCurrent + "\n " + xyCellsCs[cellIdxCurrent].X + "|" + xyCellsCs[cellIdxCurrent].Y + "  ";
                 }
             }
         }

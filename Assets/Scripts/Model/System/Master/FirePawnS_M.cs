@@ -10,7 +10,7 @@ namespace Chessy.Model.System
             {
                 s.RpcSs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
-                FireC(cellIdxForFire).HaveFire = true;
+                fireCs[cellIdxForFire].HaveFire = true;
             }
             else
             {

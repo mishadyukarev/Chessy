@@ -18,7 +18,7 @@ namespace Chessy.Model.System
             }
             else
             {
-                if (unitCs[idx_from].UnitT.IsMelee(_mainTWC[idx_from].ToolWeaponT))
+                if (unitCs[idx_from].UnitT.IsMelee(mainTWC[idx_from].ToolWeaponT))
                 {
                     RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
                 }
@@ -117,11 +117,11 @@ namespace Chessy.Model.System
                 }
             }
 
-            if (unitCs[idx_from].UnitT.IsMelee(_mainTWC[idx_from].ToolWeaponT))
+            if (unitCs[idx_from].UnitT.IsMelee(mainTWC[idx_from].ToolWeaponT))
             {
-                if (_effectsUnitCs[idx_from].ProtectionRainyMagicShield >= 1)
+                if (effectsUnitCs[idx_from].ProtectionRainyMagicShield >= 1)
                 {
-                    _effectsUnitCs[idx_from].ProtectionRainyMagicShield--;
+                    effectsUnitCs[idx_from].ProtectionRainyMagicShield--;
                 }
 
                 else if (_extraTWC[idx_from].ToolWeaponT == ToolsWeaponsWarriorTypes.Shield)
@@ -136,16 +136,16 @@ namespace Chessy.Model.System
             }
             else
             {
-                if (_effectsUnitCs[idx_from].HaveFrozenArrawArcher)
+                if (effectsUnitCs[idx_from].HaveFrozenArrawArcher)
                 {
-                    _effectsUnitCs[idx_from].HaveFrozenArrawArcher = false;
-                    _effectsUnitCs[idx_to].StunHowManyUpdatesNeedStay = StunUnitValues.AFTER_FROZEN_ARRAW_PAWN;
+                    effectsUnitCs[idx_from].HaveFrozenArrawArcher = false;
+                    effectsUnitCs[idx_to].StunHowManyUpdatesNeedStay = StunUnitValues.AFTER_FROZEN_ARRAW_PAWN;
                 }
             }
 
-            if (_effectsUnitCs[idx_to].ProtectionRainyMagicShield >= 1)
+            if (effectsUnitCs[idx_to].ProtectionRainyMagicShield >= 1)
             {
-                _effectsUnitCs[idx_to].ProtectionRainyMagicShield--;
+                effectsUnitCs[idx_to].ProtectionRainyMagicShield--;
             }
 
             else if (_extraTWC[idx_to].ToolWeaponT == ToolsWeaponsWarriorTypes.Shield)
@@ -175,7 +175,7 @@ namespace Chessy.Model.System
                 {
                     if (unitCs[idx_from].HaveUnit)
                     {
-                        if (unitCs[idx_from].UnitT.IsMelee(_mainTWC[idx_from].ToolWeaponT))
+                        if (unitCs[idx_from].UnitT.IsMelee(mainTWC[idx_from].ToolWeaponT))
                         {
                             //ShiftUnitOnOtherCellM(idx_from, idx_to);
                         }

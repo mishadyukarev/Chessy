@@ -14,7 +14,7 @@ namespace Chessy.Model.System
         {
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (CellC(currentCellIdx_0).IsBorder) continue;
+                if (cellCs[currentCellIdx_0].IsBorder) continue;
 
                 var unitButtonC_0 = UnitButtonsC(currentCellIdx_0);
 
@@ -24,9 +24,9 @@ namespace Chessy.Model.System
                 }
 
 
-                if (UnitC(currentCellIdx_0).HaveUnit)
+                if (unitCs[currentCellIdx_0].HaveUnit)
                 {
-                    switch (UnitC(currentCellIdx_0).UnitT)
+                    switch (unitCs[currentCellIdx_0].UnitT)
                     {
                         case UnitTypes.None: throw new Exception();
 
@@ -37,12 +37,12 @@ namespace Chessy.Model.System
 
                         case UnitTypes.Pawn:
 
-                            if (_mainTWC[currentCellIdx_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
+                            if (mainTWC[currentCellIdx_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
                                 unitButtonC_0.SetAbility(ButtonTypes.First, AbilityTypes.FireArcher);
                                 unitButtonC_0.SetAbility(ButtonTypes.Second, AbilityTypes.ChangeCornerArcher);
                             }
-                            else if (_mainTWC[currentCellIdx_0].ToolWeaponT == ToolsWeaponsWarriorTypes.Staff)
+                            else if (mainTWC[currentCellIdx_0].ToolWeaponT == ToolsWeaponsWarriorTypes.Staff)
                             {
 
                             }
@@ -50,7 +50,7 @@ namespace Chessy.Model.System
                             {
                                 unitButtonC_0.SetAbility(ButtonTypes.First, AbilityTypes.Seed);
 
-                                if (BuildingC(currentCellIdx_0).HaveBuilding)
+                                if (buildingCs[currentCellIdx_0].HaveBuilding)
                                 {
                                     unitButtonC_0.SetAbility(ButtonTypes.Second, AbilityTypes.DestroyBuilding);
                                 }
@@ -59,7 +59,7 @@ namespace Chessy.Model.System
                                     unitButtonC_0.SetAbility(ButtonTypes.Second, AbilityTypes.SetFarm);
                                 }
 
-                                if (FireC(currentCellIdx_0).HaveFire) unitButtonC_0.SetAbility(ButtonTypes.Third, AbilityTypes.PutOutFirePawn);
+                                if (fireCs[currentCellIdx_0].HaveFire) unitButtonC_0.SetAbility(ButtonTypes.Third, AbilityTypes.PutOutFirePawn);
                                 else unitButtonC_0.SetAbility(ButtonTypes.Third, AbilityTypes.FirePawn);
 
 
@@ -99,7 +99,7 @@ namespace Chessy.Model.System
                             unitButtonC_0.SetAbility(ButtonTypes.First, AbilityTypes.Resurrect);
                             unitButtonC_0.SetAbility(ButtonTypes.Second, AbilityTypes.SetTeleport);
                             unitButtonC_0.SetAbility(ButtonTypes.Third, AbilityTypes.InvokeSkeletons);
-                            if (BuildingC(currentCellIdx_0).HaveBuilding) unitButtonC_0.SetAbility(ButtonTypes.Fourth, AbilityTypes.DestroyBuilding);
+                            if (buildingCs[currentCellIdx_0].HaveBuilding) unitButtonC_0.SetAbility(ButtonTypes.Fourth, AbilityTypes.DestroyBuilding);
                             break;
 
                         case UnitTypes.Hell:

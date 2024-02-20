@@ -17,11 +17,11 @@ namespace Chessy.Model.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (!CellC(cellIdxCurrent).IsBorder)
+                if (!cellCs[cellIdxCurrent].IsBorder)
                 {
                     if (unitCs[cellIdxCurrent].UnitT == UnitTypes.King)
                     {
-                        foreach (var cellIdxNext in IdxsAroundCellC(cellIdxCurrent).IdxCellsAroundArray)
+                        foreach (var cellIdxNext in idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
                         {
                             _hasUnitKingEffectHereCs[cellIdxNext].Set(unitCs[cellIdxCurrent].PlayerT, true);
                         }

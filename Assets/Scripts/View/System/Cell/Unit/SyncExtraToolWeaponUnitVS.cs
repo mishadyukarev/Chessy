@@ -37,7 +37,7 @@ namespace Chessy.View.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (CellC(cellIdxCurrent).IsBorder) continue;
+                if (cellCs[cellIdxCurrent].IsBorder) continue;
 
                 Sync(cellIdxCurrent);
             }
@@ -56,9 +56,9 @@ namespace Chessy.View.System
                 }
             }
 
-            if (_unitWhereViewDataCs[cellIdxForSync].HaveDataReference)
+            if (unitWhereViewDataCs[cellIdxForSync].HaveDataReference)
             {
-                var dataUnitIdxCell = _unitWhereViewDataCs[cellIdxForSync].DataIdxCellP;
+                var dataUnitIdxCell = unitWhereViewDataCs[cellIdxForSync].DataIdxCellP;
 
                 if (unitCs[dataUnitIdxCell].HaveUnit)
                 {

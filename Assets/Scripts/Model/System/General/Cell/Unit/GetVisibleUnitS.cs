@@ -27,7 +27,7 @@ namespace Chessy.Model.System
 
                             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                var cell_1 = CellsByDirectAroundC(cellIdxCurrent).Get(dirT);
+                                var cell_1 = cellsByDirectAroundC[cellIdxCurrent].Get(dirT);
 
                                 if (unitCs[cell_1].HaveUnit)
                                 {
@@ -47,7 +47,7 @@ namespace Chessy.Model.System
                         {
                             var isVisibledNextPlayer = false;
 
-                            foreach (var idx_1 in IdxsAroundCellC(cellIdxCurrent).IdxCellsAroundArray)
+                            foreach (var idx_1 in idxsAroundCellCs[cellIdxCurrent].IdxCellsAroundArray)
                             {
                                 if (unitCs[idx_1].HaveUnit)
                                 {

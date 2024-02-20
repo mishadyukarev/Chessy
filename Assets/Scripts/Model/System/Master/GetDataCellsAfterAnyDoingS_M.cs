@@ -63,17 +63,17 @@ namespace Chessy.Model.System
                     {
                         _effectsUnitsRightBarsCs[cellIdxCurrent].Set(buttonT, EffectTypes.None);
 
-                        if (!_isFilled[(byte)EffectTypes.Shield] && _effectsUnitCs[cellIdxCurrent].HaveAnyProtectionRainyMagicShield)
+                        if (!_isFilled[(byte)EffectTypes.Shield] && effectsUnitCs[cellIdxCurrent].HaveAnyProtectionRainyMagicShield)
                         {
                             _effectsUnitsRightBarsCs[cellIdxCurrent].Set(buttonT, EffectTypes.Shield);
                             _isFilled[(byte)EffectTypes.Shield] = true;
                         }
-                        else if (!_isFilled[(byte)EffectTypes.Arraw] && _effectsUnitCs[cellIdxCurrent].HaveFrozenArrawArcher)
+                        else if (!_isFilled[(byte)EffectTypes.Arraw] && effectsUnitCs[cellIdxCurrent].HaveFrozenArrawArcher)
                         {
                             _effectsUnitsRightBarsCs[cellIdxCurrent].Set(buttonT, EffectTypes.Arraw);
                             _isFilled[(byte)EffectTypes.Arraw] = true;
                         }
-                        else if (!_isFilled[(byte)EffectTypes.Stun] && _effectsUnitCs[cellIdxCurrent].IsStunned)
+                        else if (!_isFilled[(byte)EffectTypes.Stun] && effectsUnitCs[cellIdxCurrent].IsStunned)
                         {
                             _effectsUnitsRightBarsCs[cellIdxCurrent].Set(buttonT, EffectTypes.Stun);
                             _isFilled[(byte)EffectTypes.Stun] = true;

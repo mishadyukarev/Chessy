@@ -60,7 +60,7 @@ namespace Chessy.Model
                 _statsUIE.Stat(UnitStatsTypes.Hp).TextC.TextUI.text = Math.Truncate(100 * unitHpCs[idx_sel].HealthP).ToString();
                 _statsUIE.DamageE.TextC.TextUI.text = (Math.Truncate(10 * damageAttack) / 10) + "/" + (Math.Truncate(10 * damageOnCell) / 10).ToString();
                 //_statsUIE.EnergyE.TextUIC.TextUI.text = (Math.Truncate(100 * _e.EnergyUnitC(idx_sel).Energy) / 100).ToString();
-                _statsUIE.WaterE.TextC.TextUI.text = (Math.Truncate(100 * _unitWaterCs[idx_sel].WaterP) / 100).ToString();
+                _statsUIE.WaterE.TextC.TextUI.text = (Math.Truncate(100 * unitWaterCs[idx_sel].WaterP) / 100).ToString();
 
                 _statsUIE.Stat(UnitStatsTypes.Hp).ImageC.Image.fillAmount = (float)(unitHpCs[idx_sel].HealthP / HpUnitValues.MAX);
 
@@ -69,7 +69,7 @@ namespace Chessy.Model
                 _statsUIE.DamageE.ImageC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
 
                 //_statsUIE.EnergyE.ImageUIC.Image.fillAmount = (float)_e.EnergyUnitC(idx_sel).Energy / StepValues.MAX;
-                _statsUIE.WaterE.ImageC.Image.fillAmount = (float)(_unitWaterCs[idx_sel].WaterP / ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
+                _statsUIE.WaterE.ImageC.Image.fillAmount = (float)(unitWaterCs[idx_sel].WaterP / ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
             }
 
             else

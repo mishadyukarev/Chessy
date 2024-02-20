@@ -20,7 +20,7 @@ namespace Chessy.Model
                     dataFromViewC.SoundAction(ClipTypes.Leaf).Invoke();
                 }
 
-                else if (unitCs[cell_0].UnitT.IsMelee(_mainTWC[cell_0].ToolWeaponT))
+                else if (unitCs[cell_0].UnitT.IsMelee(mainTWC[cell_0].ToolWeaponT))
                 {
                     dataFromViewC.SoundAction(ClipTypes.PickMelee).Invoke();
                 }
@@ -53,15 +53,15 @@ namespace Chessy.Model
 
 
 
-                if (CloudC(cell_0).IsCenterP)
+                if (cloudCs[cell_0].IsCenterP)
                 {
                     dataFromViewC.SoundAction(ClipTypes.ShortRain).Invoke();
                 }
                 else
                 {
-                    foreach (var item in IdxsAroundCellC(cell_0).IdxCellsAroundArray)
+                    foreach (var item in idxsAroundCellCs[cell_0].IdxCellsAroundArray)
                     {
-                        if (CloudC(item).IsCenterP)
+                        if (cloudCs[item].IsCenterP)
                         {
                             dataFromViewC.SoundAction(ClipTypes.ShortRain).Invoke();
                             break;

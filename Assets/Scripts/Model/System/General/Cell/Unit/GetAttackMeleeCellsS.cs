@@ -14,20 +14,20 @@ namespace Chessy.Model.System
         {
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (CellC(currentCellIdx_0).IsBorder) continue;
+                if (cellCs[currentCellIdx_0].IsBorder) continue;
 
 
-                if (!_effectsUnitCs[currentCellIdx_0].IsStunned)
+                if (!effectsUnitCs[currentCellIdx_0].IsStunned)
                 {
                     var curUnitMainC_0 = unitCs[currentCellIdx_0];
                     var curUnitT_0 = curUnitMainC_0.UnitT;
                     var curUnitPlayerT_0 = curUnitMainC_0.PlayerT;
 
-                    if (curUnitT_0.HaveUnit() && curUnitT_0.IsMelee(_mainTWC[currentCellIdx_0].ToolWeaponT) && !curUnitT_0.IsAnimal() && !shiftingUnitCs[currentCellIdx_0].IsShifting)
+                    if (curUnitT_0.HaveUnit() && curUnitT_0.IsMelee(mainTWC[currentCellIdx_0].ToolWeaponT) && !curUnitT_0.IsAnimal() && !shiftingUnitCs[currentCellIdx_0].IsShifting)
                     {
                         DirectTypes directT_1 = default;
 
-                        foreach (var idx_1 in IdxsAroundCellC(currentCellIdx_0).IdxCellsAroundArray)
+                        foreach (var idx_1 in idxsAroundCellCs[currentCellIdx_0].IdxCellsAroundArray)
                         {
                             directT_1 = cellAroundCs[currentCellIdx_0, idx_1].DirectT;
 

@@ -26,9 +26,9 @@ namespace Chessy.View.System
 
             for (byte cellCurrent_0 = 0; cellCurrent_0 < IndexCellsValues.CELLS; cellCurrent_0++)
             {
-                if (CellC(cellCurrent_0).IsBorder) continue;
+                if (cellCs[cellCurrent_0].IsBorder) continue;
 
-                var unitWhereViewDataC_0 = _unitWhereViewDataCs[cellCurrent_0];
+                var unitWhereViewDataC_0 = unitWhereViewDataCs[cellCurrent_0];
                 if (!unitWhereViewDataC_0.HaveDataReference) continue;
 
 

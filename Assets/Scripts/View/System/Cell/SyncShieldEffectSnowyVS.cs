@@ -20,12 +20,12 @@ namespace Chessy.View.System
             {
                 _needActive[cellIdxCurrent] = false;
 
-                if (_unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
+                if (unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
                 {
-                    var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
+                    var dataIdxCell = unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
 
-                    if (_effectsUnitCs[dataIdxCell].HaveAnyProtectionRainyMagicShield)
+                    if (effectsUnitCs[dataIdxCell].HaveAnyProtectionRainyMagicShield)
                     {
                         if (unitCs[dataIdxCell].HaveUnit)
                         {

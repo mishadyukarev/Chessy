@@ -7,7 +7,7 @@ namespace Chessy.Model.System
     {
         internal void TrySetConditionUnitOnCellM(in ConditionUnitTypes condT, in byte cellIdx, in Player sender)
         {
-            if (!_effectsUnitCs[cellIdx].IsStunned)
+            if (!effectsUnitCs[cellIdx].IsStunned)
             {
                 switch (condT)
                 {
@@ -52,9 +52,9 @@ namespace Chessy.Model.System
 
                                         if (unitHpCs[cellIdx].Health >= HpUnitValues.MAX)
                                         {
-                                            if (PlayerInfoE(unitCs[cellIdx].PlayerT).GodInfoC.UnitType.Is(UnitTypes.Elfemale))
+                                            if (godInfoCs[(byte)unitCs[cellIdx].PlayerT].UnitType.Is(UnitTypes.Elfemale))
                                             {
-                                                Build(BuildingTypes.Woodcutter, LevelTypes.First, UnitC(cellIdx).PlayerT, cellIdx);
+                                                Build(BuildingTypes.Woodcutter, LevelTypes.First, unitCs[cellIdx].PlayerT, cellIdx);
                                             }
                                         }
                                     }

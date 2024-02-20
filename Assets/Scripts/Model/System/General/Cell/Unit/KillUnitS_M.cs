@@ -47,11 +47,15 @@ namespace Chessy.Model.System
                     default: throw new Exception();
                 }
 
-                PlayerInfoE(unitCs[cellIdxForKilling].PlayerT).GodInfoC.CooldownInSecondsForNextAppearance = cooldown;
-                PlayerInfoE(unitCs[cellIdxForKilling].PlayerT).GodInfoC.HaveGodInInventor = true;
+
+
+                var playerT_byte = (byte)unitCs[cellIdxForKilling].PlayerT;
+
+                godInfoCs[playerT_byte].CooldownInSecondsForNextAppearance = cooldown;
+                godInfoCs[playerT_byte].HaveGodInInventor = true;
             }
 
-            if (UnitC(cellIdxForKilling).UnitT.Is(UnitTypes.Tree)) aboutGameC.HaveTreeUnitInGame = false;
+            if (unitCs[cellIdxForKilling].UnitT.Is(UnitTypes.Tree)) aboutGameC.HaveTreeUnitInGame = false;
 
 
             //_e.SetLastDiedUnitOnCell(cellIdxForKilling);
@@ -61,14 +65,14 @@ namespace Chessy.Model.System
                 PawnPeopleInfoC(unitCs[cellIdxForKilling].PlayerT).AmountInGame--;
             }
 
-            _unitWhereViewDataCs[_unitWhereViewDataCs[cellIdxForKilling].ViewIdxCell].DataIdxCell = 0;
+            unitWhereViewDataCs[unitWhereViewDataCs[cellIdxForKilling].ViewIdxCell].DataIdxCell = 0;
 
 
-            var dataIdxCell = _unitWhereViewDataCs[cellIdxForKilling].DataIdxCell;
+            var dataIdxCell = unitWhereViewDataCs[cellIdxForKilling].DataIdxCell;
 
             _unitEs[cellIdxForKilling].Dispose();
 
-            _unitWhereViewDataCs[cellIdxForKilling].DataIdxCell = dataIdxCell;
+            unitWhereViewDataCs[cellIdxForKilling].DataIdxCell = dataIdxCell;
         }
     }
 }

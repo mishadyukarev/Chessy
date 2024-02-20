@@ -11,7 +11,7 @@ namespace Chessy.Model.System
             {
                 if (PawnPeopleInfoC(aboutGameC.CurrentPlayerIT).HaveAnyPeopleInCity)
                 {
-                    if (PawnPeopleInfoC(aboutGameC.CurrentPlayerIT).AmountInGame < PawnPeopleInfoC(aboutGameC.CurrentPlayerIT).MaxAvailablePawns(PlayerInfoC(aboutGameC.CurrentPlayerIT).AmountBuiltHouses))
+                    if (PawnPeopleInfoC(aboutGameC.CurrentPlayerIT).AmountInGame < PawnPeopleInfoC(aboutGameC.CurrentPlayerIT).MaxAvailablePawns(playerInfoCs[(byte)aboutGameC.CurrentPlayerIT].AmountBuiltHouses))
                     {
                         indexesCellsC.Selected = 0;
 

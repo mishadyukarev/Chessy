@@ -9,15 +9,15 @@ namespace Chessy.Model.System
             {
                 _whereUnitCanFireAdultForestCs[cellIdxCurrent].Set(cellIdxCurrent, false);
 
-                if (!_effectsUnitCs[cellIdxCurrent].IsStunned)
+                if (!effectsUnitCs[cellIdxCurrent].IsStunned)
                 {
-                    if (unitCs[cellIdxCurrent].UnitT == UnitTypes.Pawn && _mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
+                    if (unitCs[cellIdxCurrent].UnitT == UnitTypes.Pawn && mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
                     {
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            var idx_1 = CellsByDirectAroundC(cellIdxCurrent).Get(dirT);
+                            var idx_1 = cellsByDirectAroundC[cellIdxCurrent].Get(dirT);
 
-                            if (!FireC(idx_1).HaveFire)
+                            if (!fireCs[idx_1].HaveFire)
                             {
                                 if (environmentCs[idx_1].HaveEnvironment(EnvironmentTypes.AdultForest))
                                 {

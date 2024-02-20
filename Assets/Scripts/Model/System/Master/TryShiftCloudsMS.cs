@@ -17,12 +17,12 @@ namespace Chessy.Model.System
         {
             for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
             {
-                if (CellC(cell_0).IsBorder) continue;
-                if (!CloudC(cell_0).IsCenter) continue;
+                if (cellCs[cell_0].IsBorder) continue;
+                if (!cloudCs[cell_0].IsCenter) continue;
 
 
-                var cell_1 = CloudShiftC(cell_0).WhereNeedShiftIdxCell;
-                var directXy_1 = XyCellC(cell_1).Xy;
+                var cell_1 = shiftCloudCs[cell_0].WhereNeedShiftIdxCell;
+                var directXy_1 = xyCellsCs[cell_1].Xy;
 
 
                 var isInSquareNextCell = directXy_1[0] >= 4 && directXy_1[0] <= 11 && directXy_1[1] >= 3 && directXy_1[1] <= 7;
@@ -31,47 +31,47 @@ namespace Chessy.Model.System
                 {
                     var adding = Time.deltaTime * windC.Speed * 0.25f;
 
-                    CloudShiftC(cell_0).Distance += adding;
+                    shiftCloudCs[cell_0].Distance += adding;
 
-                    if (CloudShiftC(cell_0).Distance >= 1)
+                    if (shiftCloudCs[cell_0].Distance >= 1)
                     {
                         var savedAroundComponents = new List<WhereViewIdxCellC>();
 
-                        foreach (var aroundCell_0_0 in IdxsAroundCellC(cell_0).IdxCellsAroundArray)
+                        foreach (var aroundCell_0_0 in idxsAroundCellCs[cell_0].IdxCellsAroundArray)
                         {
-                            savedAroundComponents.Add(CloudViewDataC(aroundCell_0_0).Clone());
+                            savedAroundComponents.Add(cloudWhereViewDataCs[aroundCell_0_0].Clone());
 
                             //savedAroundComponents.Add(CloudViewDataC(aroundCell_0_0));
                             //CloudViewDataC(CloudViewDataC(aroundCell_0_0).ViewIdxCell).Dispose();
 
-                            CloudViewDataC(aroundCell_0_0).Dispose();
-                            CloudC(aroundCell_0_0).Dispose();
+                            cloudWhereViewDataCs[aroundCell_0_0].Dispose();
+                            cloudCs[aroundCell_0_0].Dispose();
                         }
 
-                        var viewIdx_0_1 = CloudViewDataC(cell_0).ViewIdxCell;
+                        var viewIdx_0_1 = cloudWhereViewDataCs[cell_0].ViewIdxCell;
 
 
-                        CloudC(cell_1).Copy(CloudC(cell_0));
-                        CloudViewDataC(cell_1).Copy(CloudViewDataC(cell_0));
-                        CloudShiftC(cell_1).Copy(CloudShiftC(cell_0));
+                        cloudCs[cell_1].Copy(cloudCs[cell_0]);
+                        cloudWhereViewDataCs[cell_1].Copy(cloudWhereViewDataCs[cell_0]);
+                        shiftCloudCs[cell_1].Copy(shiftCloudCs[cell_0]);
 
-                        CloudC(cell_0).Dispose();
-                        CloudViewDataC(cell_0).Dispose();
-                        CloudShiftC(cell_0).Dispose();
+                        cloudCs[cell_0].Dispose();
+                        cloudWhereViewDataCs[cell_0].Dispose();
+                        shiftCloudCs[cell_0].Dispose();
 
-                        CloudViewDataC(viewIdx_0_1).DataIdxCell = cell_1;
-                        CloudShiftC(cell_1).Dispose();
-                        CloudShiftC(cell_1).WhereNeedShiftIdxCell = CellsByDirectAroundC(cell_1).Get(windC.DirectT);
+                        cloudWhereViewDataCs[viewIdx_0_1].DataIdxCell = cell_1;
+                        shiftCloudCs[cell_1].Dispose();
+                        shiftCloudCs[cell_1].WhereNeedShiftIdxCell = cellsByDirectAroundC[cell_1].Get(windC.DirectT);
 
 
 
                         var idxArray = 0;
-                        foreach (var aroundCell_1_0 in IdxsAroundCellC(cell_1).IdxCellsAroundArray)
+                        foreach (var aroundCell_1_0 in idxsAroundCellCs[cell_1].IdxCellsAroundArray)
                         {
                             var savedViewIdx = savedAroundComponents[idxArray].ViewIdxCell;
 
-                            CloudViewDataC(aroundCell_1_0).ViewIdxCell = savedViewIdx;
-                            CloudViewDataC(savedViewIdx).DataIdxCell = aroundCell_1_0;
+                            cloudWhereViewDataCs[aroundCell_1_0].ViewIdxCell = savedViewIdx;
+                            cloudWhereViewDataCs[savedViewIdx].DataIdxCell = aroundCell_1_0;
 
                             idxArray++;
                         }
@@ -82,7 +82,7 @@ namespace Chessy.Model.System
                     windC.DirectT = (DirectTypes)Random.Range(1, (byte)DirectTypes.End);
 
 
-                    CloudShiftC(cell_0).WhereNeedShiftIdxCell = CellsByDirectAroundC(cell_0).Get(windC.DirectT);
+                    shiftCloudCs[cell_0].WhereNeedShiftIdxCell = cellsByDirectAroundC[cell_0].Get(windC.DirectT);
                 }
             }
         }

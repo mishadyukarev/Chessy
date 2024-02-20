@@ -36,7 +36,7 @@ namespace Chessy.Model
 
                 for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
-                    int one = CellC(cell_0).InstanceID;
+                    int one = cellCs[cell_0].InstanceID;
 
                     if (one == two)
                     {

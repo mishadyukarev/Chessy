@@ -26,9 +26,9 @@ namespace Chessy.View.UI.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
+                if (unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
                 {
-                    var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
+                    var dataIdxCell = unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
                     if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= LessonTypes.Build1Farms)
                     {

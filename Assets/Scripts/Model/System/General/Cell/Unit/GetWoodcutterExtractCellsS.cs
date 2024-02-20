@@ -7,7 +7,7 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (CellC(cellIdxCurrent).IsBorder) continue;
+                if (cellCs[cellIdxCurrent].IsBorder) continue;
 
                 GetWoodcutterExtractCells(cellIdxCurrent);
             }

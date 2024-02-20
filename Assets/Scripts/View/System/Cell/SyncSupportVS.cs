@@ -33,7 +33,7 @@ namespace Chessy.View.System
                         switch (aboutGameC.AbilityType)
                         {
                             case AbilityTypes.ChangeDirectionWind:
-                                if (FireC(cell_start).HaveFire)
+                                if (fireCs[cell_start].HaveFire)
                                 {
                                     _needActive[cell_start] = true;
                                     _needColor[cell_start] = ColorsValues.Color(aboutGameC.AbilityType);
@@ -60,9 +60,9 @@ namespace Chessy.View.System
                 {
                     for (byte curCellIdx = 0; curCellIdx < IndexCellsValues.CELLS; curCellIdx++)
                     {
-                        if (CloudC(curCellIdx).IsCenterP)
+                        if (cloudCs[curCellIdx].IsCenterP)
                         {
-                            foreach (var item in IdxsAroundCellC(curCellIdx).IdxCellsAroundArray)
+                            foreach (var item in idxsAroundCellCs[curCellIdx].IdxCellsAroundArray)
                             {
                                 _needActive[item] = true;
                                 _needColor[item] = ColorsValues.Color(SupportCellVisionTypes.Shift);

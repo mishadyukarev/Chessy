@@ -7,10 +7,10 @@ namespace Chessy.Model.System
     {
         internal void ShiftUnitOnOtherCellM(in byte fromCellIdx, in byte toCellIdx)
         {
-            var dataFromIdxCell = _unitWhereViewDataCs[fromCellIdx].DataIdxCell;
+            var dataFromIdxCell = unitWhereViewDataCs[fromCellIdx].DataIdxCell;
             //var possitionFrom = _e.UnitPossitionOnCellC(fromCellIdx).Position;
 
-            var dataToIdxCell = _unitWhereViewDataCs[toCellIdx].DataIdxCell;
+            var dataToIdxCell = unitWhereViewDataCs[toCellIdx].DataIdxCell;
             //var possitionTo = _e.UnitPossitionOnCellC(toCellIdx).Position;
 
 
@@ -20,8 +20,8 @@ namespace Chessy.Model.System
 
 
 
-            _unitWhereViewDataCs[fromCellIdx].DataIdxCell = dataFromIdxCell;
-            _unitWhereViewDataCs[toCellIdx].DataIdxCell = dataToIdxCell;
+            unitWhereViewDataCs[fromCellIdx].DataIdxCell = dataFromIdxCell;
+            unitWhereViewDataCs[toCellIdx].DataIdxCell = dataToIdxCell;
 
             //_e.UnitPossitionOnCellC(fromCellIdx).Position = possitionFrom;
             //_e.UnitPossitionOnCellC(toCellIdx).Position = possitionTo;
@@ -30,11 +30,11 @@ namespace Chessy.Model.System
 
 
 
-            if (!_unitWhereViewDataCs[toCellIdx].HaveDataReference)
+            if (!unitWhereViewDataCs[toCellIdx].HaveDataReference)
             {
                 //_e.UnitPossitionOnCellC(_unitWhereViewDataCs[toCellIdx).ViewIdxCell).Position = _e.CellE(toCellIdx).PositionC.Position;
             }
-            _unitWhereViewDataCs[_unitWhereViewDataCs[toCellIdx].ViewIdxCell].DataIdxCell = toCellIdx;
+            unitWhereViewDataCs[unitWhereViewDataCs[toCellIdx].ViewIdxCell].DataIdxCell = toCellIdx;
 
 
             unitCs[toCellIdx].ConditionT = ConditionUnitTypes.None;
@@ -67,7 +67,7 @@ namespace Chessy.Model.System
 
                     if (aboutGameC.LessonT == LessonTypes.ComeToYourKing)
                     {
-                        foreach (var cellIdx in IdxsAroundCellC(toCellIdx).IdxCellsAroundArray)
+                        foreach (var cellIdx in idxsAroundCellCs[toCellIdx].IdxCellsAroundArray)
                         {
                             if (unitCs[cellIdx].UnitT == UnitTypes.King && unitCs[cellIdx].PlayerT == unitCs[toCellIdx].PlayerT)
                             {
@@ -84,11 +84,11 @@ namespace Chessy.Model.System
 
                 if (unitCs[toCellIdx].UnitT == UnitTypes.Snowy)
                 {
-                    if (_unitWaterCs[toCellIdx].HaveAnyWater())
+                    if (unitWaterCs[toCellIdx].HaveAnyWater())
                     {
                         environmentCs[toCellIdx].Set(EnvironmentTypes.Fertilizer, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
-                        FireC(toCellIdx).HaveFire = false;
-                        _unitWaterCs[toCellIdx].Water -= ValuesChessy.TAKING_WATER_AFTER_SHIFT_SNOWY;
+                        fireCs[toCellIdx].HaveFire = false;
+                        unitWaterCs[toCellIdx].Water -= ValuesChessy.TAKING_WATER_AFTER_SHIFT_SNOWY;
                     }
                 }
 
@@ -103,11 +103,11 @@ namespace Chessy.Model.System
                     hpTrailCs[toCellIdx].Health(dirTrail) = ValuesChessy.HEALTH_TRAIL_ANY_TRAIL;
                 }
 
-                if (RiverC(toCellIdx).HaveRiverNear)
+                if (riverCs[toCellIdx].HaveRiverNear)
                 {
                     TryExecuteAddingUnitAnimationM(toCellIdx);
 
-                    _unitWaterCs[toCellIdx].Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
+                    unitWaterCs[toCellIdx].Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
 
                     if (aboutGameC.LessonT == LessonTypes.Install1WarriorsNextToTheRiver) SetNextLesson();
                 }
@@ -135,7 +135,7 @@ namespace Chessy.Model.System
                 case UnitTypes.Hell:
                     if (environmentCs[toCellIdx].HaveEnvironment(EnvironmentTypes.AdultForest))
                     {
-                        FireC(toCellIdx).HaveFire = true;
+                        fireCs[toCellIdx].HaveFire = true;
                     }
                     break;
             }

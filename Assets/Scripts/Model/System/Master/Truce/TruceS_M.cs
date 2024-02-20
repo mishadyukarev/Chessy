@@ -27,12 +27,12 @@ namespace Chessy.Model.System
 
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                FireC(currentCellIdx_0).HaveFire = false;
+                fireCs[currentCellIdx_0].HaveFire = false;
 
                 s.TryDestroyAllTrailsOnCell(currentCellIdx_0);
 
 
-                var unitC_0 = UnitC(currentCellIdx_0);
+                var unitC_0 = unitCs[currentCellIdx_0];
 
                 if (unitC_0.HaveUnit)
                 {
@@ -50,9 +50,9 @@ namespace Chessy.Model.System
                 }
 
 
-                if (BuildingC(currentCellIdx_0).HaveBuilding)
+                if (buildingCs[currentCellIdx_0].HaveBuilding)
                 {
-                    BuildingC(currentCellIdx_0).Dispose();
+                    buildingCs[currentCellIdx_0].Dispose();
                 }
 
                 else
@@ -60,18 +60,18 @@ namespace Chessy.Model.System
 
                 }
 
-                if (EnvironmentC(currentCellIdx_0).HaveEnvironment(EnvironmentTypes.YoungForest))
+                if (environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.YoungForest))
                 {
-                    EnvironmentC(currentCellIdx_0).Set(EnvironmentTypes.YoungForest, 0);
-                    EnvironmentC(currentCellIdx_0).SetRandom(EnvironmentTypes.AdultForest, ValuesChessy.MIN_RESOURCES_FOR_SPAWN, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
+                    environmentCs[currentCellIdx_0].Set(EnvironmentTypes.YoungForest, 0);
+                    environmentCs[currentCellIdx_0].SetRandom(EnvironmentTypes.AdultForest, ValuesChessy.MIN_RESOURCES_FOR_SPAWN, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                 }
                 else
                 {
-                    if (!EnvironmentC(currentCellIdx_0).HaveEnvironment(EnvironmentTypes.AdultForest))
+                    if (!environmentCs[currentCellIdx_0].HaveEnvironment(EnvironmentTypes.AdultForest))
                     {
                         if (Random.Range(0f, 1f) < 0.1f)
                         {
-                            EnvironmentC(currentCellIdx_0).Set(EnvironmentTypes.AdultForest, 1);
+                            environmentCs[currentCellIdx_0].Set(EnvironmentTypes.AdultForest, 1);
                         }
                     }
                 }
@@ -80,8 +80,8 @@ namespace Chessy.Model.System
 
         void TakeUnitFromField(in byte cellIdx_0)
         {
-            var unitC_0 = UnitC(cellIdx_0);
-            var mainTWC_0 = UnitMainTWC(cellIdx_0);
+            var unitC_0 = unitCs[cellIdx_0];
+            var mainTWC_0 = mainTWC[cellIdx_0];
             var extaTWC_0 = UnitExtraTWC(cellIdx_0);
 
             if (mainTWC_0.ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff) || mainTWC_0.ToolWeaponT == ToolsWeaponsWarriorTypes.Axe && mainTWC_0.LevelT == LevelTypes.Second)
@@ -99,7 +99,7 @@ namespace Chessy.Model.System
                 aboutGameC.HaveTreeUnitInGame = false;
             }
 
-            UnitViewDataC(UnitViewDataC(cellIdx_0).ViewIdxCell).DataIdxCell = 0;
+            unitWhereViewDataCs[unitWhereViewDataCs[cellIdx_0].ViewIdxCell].DataIdxCell = 0;
             unitC_0.Dispose();
         }
     }

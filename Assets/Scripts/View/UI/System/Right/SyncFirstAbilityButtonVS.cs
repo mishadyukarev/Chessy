@@ -28,7 +28,7 @@ namespace Chessy.View.UI.System
 
                 var currentAbility = UnitButtonsC(selectedIdxCell).Ability(ButtonTypes.First);
 
-                if (UnitC(selectedIdxCell).PlayerType == aboutGameC.CurrentPlayerIType && currentAbility != AbilityTypes.None)
+                if (unitCs[selectedIdxCell].PlayerType == aboutGameC.CurrentPlayerIType && currentAbility != AbilityTypes.None)
                 {
                     if (!aboutGameC.LessonType.HaveLesson() || aboutGameC.LessonType >= LessonTypes.SeedingPawn)
                     {

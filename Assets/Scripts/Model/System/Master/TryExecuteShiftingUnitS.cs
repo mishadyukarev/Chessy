@@ -14,14 +14,14 @@ namespace Chessy.Model.System
         {
             for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (CellC(currentCellIdx_0).IsBorder) continue;
+                if (cellCs[currentCellIdx_0].IsBorder) continue;
 
 
                 var shiftUnit_0 = shiftingUnitCs[currentCellIdx_0];
                 var neededDistanceForShiftingUnitC_0 = _howManyDistanceNeedForShiftingUnitCs[currentCellIdx_0];
 
                 var whereNeedShiftIdxCell_1 = shiftUnit_0.WhereNeedShiftIdxCell;
-                var unitC_1 = UnitC(whereNeedShiftIdxCell_1);
+                var unitC_1 = unitCs[whereNeedShiftIdxCell_1];
                 var unitShiftC_1 = UnitShiftC(whereNeedShiftIdxCell_1);
 
 

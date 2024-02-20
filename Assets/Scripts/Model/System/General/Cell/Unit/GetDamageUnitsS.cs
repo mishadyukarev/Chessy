@@ -69,11 +69,11 @@ namespace Chessy.Model.System
                     }
 
 
-                    if (_mainTWC[cellIdxCurrent].ToolWeaponT.HaveToolWeapon())
+                    if (mainTWC[cellIdxCurrent].ToolWeaponT.HaveToolWeapon())
                     {
-                        if (_mainTWC[cellIdxCurrent].LevelT == LevelTypes.Second)
+                        if (mainTWC[cellIdxCurrent].LevelT == LevelTypes.Second)
                         {
-                            if (_mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
+                            if (mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
                                 powerDamage += DamageUnitValues.BOW_CROSSBOW_SECOND_ADDING;
                             }
@@ -81,7 +81,7 @@ namespace Chessy.Model.System
                     }
                     if (_extraTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Sword) powerDamage += DamageUnitValues.SWORD_ADDING;
 
-                    if (_mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Staff) powerDamage -= DamageUnitValues.STAFF_EFFECT_ON_PAWN_TAKING;
+                    if (mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Staff) powerDamage -= DamageUnitValues.STAFF_EFFECT_ON_PAWN_TAKING;
 
 
                     UnitAttackC(cellIdxCurrent).DamageSimpleAttack = powerDamage;

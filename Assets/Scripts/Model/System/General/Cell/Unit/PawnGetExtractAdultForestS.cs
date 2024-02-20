@@ -12,7 +12,7 @@ namespace Chessy.Model.System
                 if (environmentCs[cellIdxCurrent].HaveEnvironment(EnvironmentTypes.AdultForest))
                 {
                     if (unitCs[cellIdxCurrent].UnitT == UnitTypes.Pawn && unitCs[cellIdxCurrent].ConditionT == ConditionUnitTypes.Relaxed
-                        && !_mainTWC[cellIdxCurrent].ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
+                        && !mainTWC[cellIdxCurrent].ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
                     {
                         double extract = ExtractPawnValues.EXTRACT_PAWM_ADULT_FOREST;
 
@@ -26,9 +26,9 @@ namespace Chessy.Model.System
 
 
 
-                        if (_mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
+                        if (mainTWC[cellIdxCurrent].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
                         {
-                            if (_mainTWC[cellIdxCurrent].LevelT == LevelTypes.Second)
+                            if (mainTWC[cellIdxCurrent].LevelT == LevelTypes.Second)
                             {
                                 extract *= ExtractPawnValues.PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT;
                             }

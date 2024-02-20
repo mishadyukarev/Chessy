@@ -14,7 +14,7 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent_0 = 0; cellIdxCurrent_0 < IndexCellsValues.CELLS; cellIdxCurrent_0++)
             {
-                if (CellC(cellIdxCurrent_0).IsBorder) continue;
+                if (cellCs[cellIdxCurrent_0].IsBorder) continue;
 
                 for (byte idxCell = 0; idxCell < IndexCellsValues.CELLS; idxCell++)
                 {
@@ -25,9 +25,9 @@ namespace Chessy.Model.System
 
                 var curUnitC = unitCs[cellIdxCurrent_0];
 
-                if (!_effectsUnitCs[cellIdxCurrent_0].IsStunned && curUnitC.UnitT.HaveUnit())
+                if (!effectsUnitCs[cellIdxCurrent_0].IsStunned && curUnitC.UnitT.HaveUnit())
                 {
-                    foreach (var toCellIdx in IdxsAroundCellC(cellIdxCurrent_0).IdxCellsAroundArray)
+                    foreach (var toCellIdx in idxsAroundCellCs[cellIdxCurrent_0].IdxCellsAroundArray)
                     {
                         var dirT = cellAroundCs[cellIdxCurrent_0, toCellIdx].DirectT;
 
@@ -49,7 +49,7 @@ namespace Chessy.Model.System
                                 break;
 
                             case UnitTypes.Pawn:
-                                if (_mainTWC[cellIdxCurrent_0].ToolWeaponT == ToolsWeaponsWarriorTypes.Staff)
+                                if (mainTWC[cellIdxCurrent_0].ToolWeaponT == ToolsWeaponsWarriorTypes.Staff)
                                 {
                                     needDistance -= StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
 
@@ -66,7 +66,7 @@ namespace Chessy.Model.System
                                         needDistance -= StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
                                     }
                                 }
-                                else if (_mainTWC[cellIdxCurrent_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
+                                else if (mainTWC[cellIdxCurrent_0].ToolWeaponT == ToolsWeaponsWarriorTypes.BowCrossbow)
                                 {
                                     needDistance -= StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
                                 }

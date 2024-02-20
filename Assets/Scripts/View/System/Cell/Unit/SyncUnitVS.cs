@@ -98,9 +98,9 @@ namespace Chessy.Model
                 }
             }
 
-            if (_unitWhereViewDataCs[cellIdx].HaveDataReference)
+            if (unitWhereViewDataCs[cellIdx].HaveDataReference)
             {
-                var dataUnitIdxCell = _unitWhereViewDataCs[cellIdx].DataIdxCellP;
+                var dataUnitIdxCell = unitWhereViewDataCs[cellIdx].DataIdxCellP;
 
                 if (unitCs[dataUnitIdxCell].HaveUnit)
                 {
@@ -119,10 +119,10 @@ namespace Chessy.Model
 
                         if (unitT == UnitTypes.Pawn)
                         {
-                            if (_mainTWC[dataUnitIdxCell].ToolWeaponType == ToolsWeaponsWarriorTypes.BowCrossbow)
+                            if (mainTWC[dataUnitIdxCell].ToolWeaponType == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
-                                _needActiveBowCrossbow[cellIdx, (byte)_mainTWC[dataUnitIdxCell].LevelType, unitCs[dataUnitIdxCell].IsArcherDirectedToRightP ? 1 : 0] = true;
-                                _needColorBowCrossbow[cellIdx, (byte)_mainTWC[dataUnitIdxCell].LevelType, unitCs[dataUnitIdxCell].IsArcherDirectedToRightP ? 1 : 0] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+                                _needActiveBowCrossbow[cellIdx, (byte)mainTWC[dataUnitIdxCell].LevelType, unitCs[dataUnitIdxCell].IsArcherDirectedToRightP ? 1 : 0] = true;
+                                _needColorBowCrossbow[cellIdx, (byte)mainTWC[dataUnitIdxCell].LevelType, unitCs[dataUnitIdxCell].IsArcherDirectedToRightP ? 1 : 0] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
                             }
                         }
                         else

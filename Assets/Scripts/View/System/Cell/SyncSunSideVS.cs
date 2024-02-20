@@ -30,7 +30,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent_0 = 0; cellIdxCurrent_0 < IndexCellsValues.CELLS; cellIdxCurrent_0++)
             {
-                if (CellC(cellIdxCurrent_0).IsBorder) continue;
+                if (cellCs[cellIdxCurrent_0].IsBorder) continue;
 
                 if (indexesCellsC.Selected == cellIdxCurrent_0 && sunC.IsAcitveSun)
                 {

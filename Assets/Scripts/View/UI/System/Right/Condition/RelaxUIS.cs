@@ -42,7 +42,7 @@ namespace Chessy.View.UI.System
 
                         if (unitCs[idx_0].UnitType == UnitTypes.Pawn)
                         {
-                            if (_mainTWC[idx_0].ToolWeaponType == ToolsWeaponsWarriorTypes.Axe)
+                            if (mainTWC[idx_0].ToolWeaponType == ToolsWeaponsWarriorTypes.Axe)
                             {
                                 _needActiveZone[(byte)unitCs[idx_0].UnitType] = true;
                             }

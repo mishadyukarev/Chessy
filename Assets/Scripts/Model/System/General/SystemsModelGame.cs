@@ -87,7 +87,7 @@ namespace Chessy.Model.System
 
         internal void RainyGiveWaterToUnitsAround(in byte cellIdx)
         {
-            foreach (var cellIdxDirect in IdxsAroundCellC(cellIdx).IdxCellsAroundArray)
+            foreach (var cellIdxDirect in idxsAroundCellCs[cellIdx].IdxCellsAroundArray)
             {
                 if (unitCs[cellIdxDirect].HaveUnit)
                 {
@@ -95,7 +95,7 @@ namespace Chessy.Model.System
                     {
                         TryExecuteAddingUnitAnimationM(cellIdxDirect);
 
-                        _unitWaterCs[cellIdxDirect].Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
+                        unitWaterCs[cellIdxDirect].Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
                     }
                 }
             }
@@ -103,9 +103,9 @@ namespace Chessy.Model.System
 
         internal void TryExecuteAddingUnitAnimationM(in byte cellIdx)
         {
-            if (ValuesChessy.MAX_WATER_FOR_ANY_UNIT - _unitWaterCs[cellIdx].Water >= ValuesChessy.WATER_FOR_ADDING_WATER_ANIMATION)
+            if (ValuesChessy.MAX_WATER_FOR_ANY_UNIT - unitWaterCs[cellIdx].Water >= ValuesChessy.WATER_FOR_ADDING_WATER_ANIMATION)
             {
-                var idxCellView = _unitWhereViewDataCs[cellIdx].ViewIdxCell;
+                var idxCellView = unitWhereViewDataCs[cellIdx].ViewIdxCell;
 
                 RpcSs.ExecuteAnimationCellDirectlyToGeneral(idxCellView, CellAnimationDirectlyTypes.AddingWaterUnit, RpcTarget.All);
 

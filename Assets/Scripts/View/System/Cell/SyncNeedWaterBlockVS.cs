@@ -23,15 +23,15 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
+                if (unitWhereViewDataCs[cellIdxCurrent].HaveDataReference)
                 {
-                    var dataIdxCell = _unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
+                    var dataIdxCell = unitWhereViewDataCs[cellIdxCurrent].DataIdxCellP;
 
                     if (_unitVisibleCs[dataIdxCell].IsVisible(aboutGameC.CurrentPlayerIType))
                     {
                         if (unitCs[dataIdxCell].HaveUnit && !unitCs[dataIdxCell].UnitType.IsAnimal())
                         {
-                            _needActive[cellIdxCurrent] = _unitWaterCs[dataIdxCell].WaterP <= ValuesChessy.MAX_WATER_FOR_ANY_UNIT * 0.4f;
+                            _needActive[cellIdxCurrent] = unitWaterCs[dataIdxCell].WaterP <= ValuesChessy.MAX_WATER_FOR_ANY_UNIT * 0.4f;
                         }
                     }
                 }

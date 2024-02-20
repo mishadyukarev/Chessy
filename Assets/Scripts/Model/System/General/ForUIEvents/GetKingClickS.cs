@@ -8,7 +8,7 @@
 
             dataFromViewC.SoundAction(ClipTypes.Click).Invoke();
 
-            if (PlayerInfoE(aboutGameC.CurrentPlayerIT).PlayerInfoC.HaveKingInInventor)
+            if (playerInfoCs[(byte)aboutGameC.CurrentPlayerIT].HaveKingInInventor)
             {
                 selectedUnitC.UnitT = UnitTypes.King;
                 selectedUnitC.LevelT = LevelTypes.First;

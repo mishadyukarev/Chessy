@@ -21,7 +21,7 @@ namespace Chessy.Model
 
                 var curPlayerI = aboutGameC.CurrentPlayerIType;
 
-                _pawnE.AmountTextC.TextUI.text = PawnPeopleInfoC(curPlayerI).AmountInGame.ToString() + "/" + PawnPeopleInfoC(curPlayerI).MaxAvailablePawns(PlayerInfoC(curPlayerI).AmountBuiltHousesP);
+                _pawnE.AmountTextC.TextUI.text = PawnPeopleInfoC(curPlayerI).AmountInGame.ToString() + "/" + PawnPeopleInfoC(curPlayerI).MaxAvailablePawns(playerInfoCs[(byte)curPlayerI].AmountBuiltHousesP);
                 _pawnE.MaxPawnsTextC.TextUI.text = PawnPeopleInfoC(curPlayerI).PeopleInCity.ToString();
             }
             else

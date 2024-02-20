@@ -26,17 +26,17 @@ namespace Chessy.Model.System
                     {
 
 
-                        if (_mainTWC[cellIdxForDoing].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
+                        if (mainTWC[cellIdxForDoing].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
                         {
 
 
-                            if (_mainTWC[cellIdxForDoing].LevelT == LevelTypes.First)
+                            if (mainTWC[cellIdxForDoing].LevelT == LevelTypes.First)
                             {
                                 if (ToolWeaponsInInventoryC(whoseMove).ToolWeapons(twT, levTW) > 0)
                                 {
                                     ToolWeaponsInInventoryC(whoseMove).Subtract(twT, levTW);
 
-                                    _mainTWC[cellIdxForDoing].Set(twT, levTW);
+                                    mainTWC[cellIdxForDoing].Set(twT, levTW);
 
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -58,7 +58,7 @@ namespace Chessy.Model.System
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                             ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
 
-                                        _mainTWC[cellIdxForDoing].Set(twT, levTW);
+                                        mainTWC[cellIdxForDoing].Set(twT, levTW);
 
                                         RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
@@ -76,30 +76,30 @@ namespace Chessy.Model.System
                             }
                             else
                             {
-                                ToolWeaponsInInventoryC(whoseMove).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
-                                _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                                ToolWeaponsInInventoryC(whoseMove).Add(mainTWC[cellIdxForDoing].ToolWeaponT, mainTWC[cellIdxForDoing].LevelT);
+                                mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
 
                             }
                         }
 
                         else
                         {
-                            ToolWeaponsInInventoryC(whoseMove).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
-                            _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                            ToolWeaponsInInventoryC(whoseMove).Add(mainTWC[cellIdxForDoing].ToolWeaponT, mainTWC[cellIdxForDoing].LevelT);
+                            mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
                         }
                     }
                 }
 
                 else if (twT == ToolsWeaponsWarriorTypes.Axe)
                 {
-                    if (_mainTWC[cellIdxForDoing].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
+                    if (mainTWC[cellIdxForDoing].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
                     {
-                        if (_mainTWC[cellIdxForDoing].LevelT == LevelTypes.First)
+                        if (mainTWC[cellIdxForDoing].LevelT == LevelTypes.First)
                         {
                             if (ToolWeaponsInInventoryC(whoseMove).ToolWeapons(twT, levTW) > 0)
                             {
                                 ToolWeaponsInInventoryC(whoseMove).Subtract(twT, levTW);
-                                _mainTWC[cellIdxForDoing].Set(twT, levTW);
+                                mainTWC[cellIdxForDoing].Set(twT, levTW);
 
                                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -121,7 +121,7 @@ namespace Chessy.Model.System
                                     for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                         ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
 
-                                    _mainTWC[cellIdxForDoing].Set(twT, levTW);
+                                    mainTWC[cellIdxForDoing].Set(twT, levTW);
 
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
@@ -141,15 +141,15 @@ namespace Chessy.Model.System
 
                         else
                         {
-                            ToolWeaponsInInventoryC(whoseMove).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
-                            _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                            ToolWeaponsInInventoryC(whoseMove).Add(mainTWC[cellIdxForDoing].ToolWeaponT, mainTWC[cellIdxForDoing].LevelT);
+                            mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
                         }
                     }
 
                     else
                     {
-                        ToolWeaponsInInventoryC(whoseMove).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
-                        _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                        ToolWeaponsInInventoryC(whoseMove).Add(mainTWC[cellIdxForDoing].ToolWeaponT, mainTWC[cellIdxForDoing].LevelT);
+                        mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
 
                         RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                     }
@@ -159,15 +159,15 @@ namespace Chessy.Model.System
                 {
                     var ownUnit_0 = unitCs[cellIdxForDoing].PlayerT;
 
-                    if (_mainTWC[cellIdxForDoing].ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
+                    if (mainTWC[cellIdxForDoing].ToolWeaponT.Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
                     {
-                        ToolWeaponsInInventoryC(unitCs[cellIdxForDoing].PlayerT).Add(_mainTWC[cellIdxForDoing].ToolWeaponT, _mainTWC[cellIdxForDoing].LevelT);
-                        _mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                        ToolWeaponsInInventoryC(unitCs[cellIdxForDoing].PlayerT).Add(mainTWC[cellIdxForDoing].ToolWeaponT, mainTWC[cellIdxForDoing].LevelT);
+                        mainTWC[cellIdxForDoing].Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
                     }
 
                     else
                     {
-                        if (_mainTWC[cellIdxForDoing].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
+                        if (mainTWC[cellIdxForDoing].ToolWeaponT == ToolsWeaponsWarriorTypes.Axe)
                         {
                             if (_extraTWC[cellIdxForDoing].HaveToolWeapon)
                             {

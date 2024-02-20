@@ -33,15 +33,15 @@ namespace Chessy.Model.System
                 if (playerT == PlayerTypes.Second)
                 {
                     if (aboutGameC.GameModeT == GameModeTypes.TrainingOffline)
-                        PlayerInfoC(playerT).AmountBuiltHouses += 5;
+                        playerInfoCs[(byte)playerT].AmountBuiltHouses += 5;
                 }
 
 
 
-                PlayerInfoE(playerT).PlayerInfoC.HaveKingInInventor = true;
-                PlayerInfoE(playerT).PlayerInfoC.WoodForBuyHouse = StartGameValues.NEED_WOOD_FOR_BUILDING_HOUSE;
+                playerInfoCs[(byte)playerT].HaveKingInInventor = true;
+                playerInfoCs[(byte)playerT].WoodForBuyHouse = StartGameValues.NEED_WOOD_FOR_BUILDING_HOUSE;
 
-                PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = true;
+                godInfoCs[(byte)playerT].HaveGodInInventor = true;
 
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
@@ -75,13 +75,13 @@ namespace Chessy.Model.System
 
                 for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
-                    var x = XyCellC(cell_0).X;
-                    var y = XyCellC(cell_0).Y;
+                    var x = xyCellsCs[cell_0].X;
+                    var y = xyCellsCs[cell_0].Y;
 
-                    FireC(cell_0).HaveFire = false;
+                    fireCs[cell_0].HaveFire = false;
 
 
-                    if (!CellC(cell_0).IsBorder)
+                    if (!cellCs[cell_0].IsBorder)
                     {
                         if (y >= 4 && y <= 6 && x > 6)
                         {
@@ -114,7 +114,7 @@ namespace Chessy.Model.System
 
                         if (x >= 3 && x < 4 && y == 5)
                         {
-                            RiverC(cell_0).RiverT = RiverTypes.Start;
+                            riverCs[cell_0].RiverT = RiverTypes.Start;
                             haveRiverAroundCellCs[cell_0].HaveRive(DirectTypes.Up) = true;
                         }
                         else if (x == 4 && y == 5)
@@ -122,13 +122,13 @@ namespace Chessy.Model.System
                             corners.Add(DirectTypes.UpRight);
                             corners.Add(DirectTypes.Down);
 
-                            RiverC(cell_0).RiverT = RiverTypes.Start;
+                            riverCs[cell_0].RiverT = RiverTypes.Start;
                             haveRiverAroundCellCs[cell_0].HaveRive(DirectTypes.Up) = true;
                             haveRiverAroundCellCs[cell_0].HaveRive(DirectTypes.Right) = true;
                         }
                         else if (x >= 5 && x < 7 && y == 4)
                         {
-                            RiverC(cell_0).RiverT = RiverTypes.Start;
+                            riverCs[cell_0].RiverT = RiverTypes.Start;
                             haveRiverAroundCellCs[cell_0].HaveRive(DirectTypes.Up) = true;
                         }
 
@@ -137,17 +137,17 @@ namespace Chessy.Model.System
                         {
                             if (haveRiverAroundCellCs[cell_0].HaveRive(dir))
                             {
-                                var idx_next = CellsByDirectAroundC(cell_0).Get(dir);
+                                var idx_next = cellsByDirectAroundC[cell_0].Get(dir);
 
-                                RiverC(idx_next).RiverT = RiverTypes.EndRiver;
+                                riverCs[idx_next].RiverT = RiverTypes.EndRiver;
                             }
                         }
 
                         foreach (var dir in corners)
                         {
-                            var idx_next = CellsByDirectAroundC(cell_0).Get(dir);
+                            var idx_next = cellsByDirectAroundC[cell_0].Get(dir);
 
-                            RiverC(idx_next).RiverT = RiverTypes.Corner;
+                            riverCs[idx_next].RiverT = RiverTypes.Corner;
                         }
 
 
@@ -161,17 +161,17 @@ namespace Chessy.Model.System
 
                 for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
-                    if (!CellC(cell_0).IsBorder)
+                    if (!cellCs[cell_0].IsBorder)
                     {
                         if (environmentCs[cell_0].HaveEnvironment(EnvironmentTypes.Mountain))
                         {
                             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                var idx_1 = CellsByDirectAroundC(cell_0).Get(dirT);
+                                var idx_1 = cellsByDirectAroundC[cell_0].Get(dirT);
 
                                 if (UnityEngine.Random.Range(0f, 1f) <= 0.7)
                                 {
-                                    if (!environmentCs[CellsByDirectAroundC(cell_0).Get(dirT)].HaveEnvironment(EnvironmentTypes.Mountain) && !buildingCs[idx_1].HaveBuilding)
+                                    if (!environmentCs[cellsByDirectAroundC[cell_0].Get(dirT)].HaveEnvironment(EnvironmentTypes.Mountain) && !buildingCs[idx_1].HaveBuilding)
                                     {
                                         environmentCs[idx_1].ResourcesRef(EnvironmentTypes.Hill) = UnityEngine.Random.Range(0.5f, 1f);
                                     }
@@ -191,8 +191,8 @@ namespace Chessy.Model.System
 
                 for (byte cellUdxCurrent = 0; cellUdxCurrent < IndexCellsValues.CELLS; cellUdxCurrent++)
                 {
-                    var x = XyCellC(cellUdxCurrent).X;
-                    var y = XyCellC(cellUdxCurrent).Y;
+                    var x = xyCellsCs[cellUdxCurrent].X;
+                    var y = xyCellsCs[cellUdxCurrent].Y;
 
                     if (x == 7 && y == 8)
                     {
@@ -265,12 +265,12 @@ namespace Chessy.Model.System
 
         internal void SetClouds(in byte centerCellIdx)
         {
-            CloudC(centerCellIdx).IsCenter = true;
+            cloudCs[centerCellIdx].IsCenter = true;
             SetDataAndViewCloud(centerCellIdx);
 
-            CloudShiftC(centerCellIdx).WhereNeedShiftIdxCell = CellsByDirectAroundC(centerCellIdx).Get(windC.DirectT);
+            shiftCloudCs[centerCellIdx].WhereNeedShiftIdxCell = cellsByDirectAroundC[centerCellIdx].Get(windC.DirectT);
 
-            foreach (var aroundCell_0 in IdxsAroundCellC(centerCellIdx).IdxCellsAroundArray)
+            foreach (var aroundCell_0 in idxsAroundCellCs[centerCellIdx].IdxCellsAroundArray)
             {
                 SetDataAndViewCloud(aroundCell_0);
             }
@@ -280,12 +280,12 @@ namespace Chessy.Model.System
         {
             for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
             {
-                if (CellC(currentCellIdx).IsBorder) continue;
+                if (cellCs[currentCellIdx].IsBorder) continue;
 
-                if (CloudViewDataC(currentCellIdx).HaveDataReference) continue;
+                if (cloudWhereViewDataCs[currentCellIdx].HaveDataReference) continue;
 
-                CloudViewDataC(currentCellIdx).DataIdxCell = cellIdx;
-                CloudViewDataC(cellIdx).ViewIdxCell = currentCellIdx;
+                cloudWhereViewDataCs[currentCellIdx].DataIdxCell = cellIdx;
+                cloudWhereViewDataCs[cellIdx].ViewIdxCell = currentCellIdx;
 
 
                 break;

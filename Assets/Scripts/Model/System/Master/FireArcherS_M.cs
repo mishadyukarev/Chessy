@@ -13,7 +13,7 @@ namespace Chessy.Model.System
                 if (!UnitAttackC(cell_from).HaveCoolDownForAttackAnyUnit)
                 {
                     s.RpcSs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
-                    FireC(cell_to).HaveFire = true;
+                    fireCs[cell_to].HaveFire = true;
 
                     UnitAttackC(cell_from).CooldownForAttackAnyUnitInSeconds = ValuesChessy.COOLDOWN_AFTER_ATTACK;
 

@@ -42,7 +42,7 @@ namespace Chessy.Model.System
                         }
 
                         RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
-                        EnvironmentC(cell_0).Set(EnvironmentTypes.YoungForest, 0);
+                        environmentCs[cell_0].Set(EnvironmentTypes.YoungForest, 0);
                         Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, cell_0);
 
                         if (aboutGameC.LessonT == LessonTypes.Build1Farms)
